@@ -1622,18 +1622,29 @@
 
       return offers;
     }
+function getProductCategories(product) {
+  if (
+    Array.isArray(product.categories) &&
+    product.categories.length > 0
+  ) {
+    return product.categories;
+  }
 
-    function getCategories() {
-      return [
-        "Todas",
-        ...new Set(
-          CATALOG.map(
-            (product) => product.category
-          )
-        )
-      ];
-    }
+  return product.category
+    ? [product.category]
+    : [];
+}
 
+function getCategories() {
+  return [
+    "Todas",
+    ...new Set(
+      CATALOG.flatMap(
+        getProductCategories
+      )
+    )
+  ];
+}
     function renderCategories() {
       categoryList.innerHTML =
         getCategories()
@@ -1670,17 +1681,16 @@
           if (offers.length === 0) {
             return false;
           }
-
-          const categoryMatches =
-            state.category === "Todas" ||
-            product.category ===
-              state.category;
-
+const categoryMatches =
+  state.category === "Todas" ||
+  getProductCategories(product).includes(
+    state.category
+  );
           const text =
             [
               product.name,
               product.description,
-              product.category,
+              ...getProductCategories(product),
               ...product.offers.map(
                 (offer) => offer.store
               )
@@ -1821,9 +1831,11 @@
 
             <div class="product-meta">
 
-              <span class="product-category">
-                ${escapeHtml(product.category)}
-              </span>
+            <span class="product-category">
+  ${escapeHtml(
+    getProductCategories(product).join(" · ")
+  )}
+</span>
 
               <span>
                 ${
