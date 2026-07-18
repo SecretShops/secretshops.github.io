@@ -1,34 +1,32 @@
-ATLAS SECRETO · CATÁLOGO COLOMBIA
+AJUSTE DE REINTENTOS · ALIEXPRESS MÉXICO
 
-ARCHIVOS NUEVOS O MODIFICADOS
-- index.html
-- catalog-base.js
-- catalog-aliexpress-mx.js
-- catalog-aliexpress-co.js
-- images/products/co/...
+Este paquete corrige el problema por el que cada ejecución volvía a gastar
+la cuota en los mismos productos fallidos.
 
-RESULTADO
-- Colombia muestra 4 productos.
-- El producto de la tira LED ya existía para México.
-- El nuevo index fusiona productos con el mismo ID y conserva las ofertas
-  de México y Colombia dentro de una única tarjeta.
-- Se han asociado 15 imágenes a 4 productos.
-- Las 3 imágenes del pasamontañas PHMAX no se incluyen porque no existe
-  un enlace correspondiente en el CSV ni una fila de producto en el catálogo.
+Sustituye o añade exactamente estos tres archivos:
 
-CÓMO SUBIRLO
-1. Descomprime el ZIP.
-2. Abre la página de carga del repositorio:
-   https://github.com/SecretoAtlas/atlas-secreto/upload/main
-3. Arrastra todos los archivos y la carpeta images.
-4. Confirma que catalog-aliexpress-co.js aparece como archivo nuevo.
-5. Confirma que index.html aparece como modificado.
-6. Pulsa Commit changes.
-7. Espera el despliegue de GitHub Pages y recarga con Ctrl + F5.
+1. scripts/update_aliexpress_mx_metadata.py
+2. .github/workflows/complete-aliexpress-mx-metadata.yml
+3. data/aliexpress-mx-attempts.json
 
-COMPROBACIÓN
-- Selecciona Colombia.
-- Deben aparecer 4 productos de AliExpress.
-- Selecciona México.
-- La tira LED debe seguir apareciendo con su enlace de México.
-- En la vista Todos, la tira LED debe aparecer una sola vez.
+IMPORTANTE
+No sustituyas ni elimines:
+data/aliexpress-mx-metadata-cache.json
+
+Ese archivo contiene los cinco productos que ya se completaron.
+
+NUEVO COMPORTAMIENTO
+- Primero procesa productos nunca consultados.
+- Los fallos se aplazan 7 días.
+- Los fallos posteriores esperan 14, 30 y 60 días.
+- Cada producto conserva el número de intentos y el último error.
+- El progreso se guarda después de cada consulta.
+- El workflow guarda también el historial de intentos.
+
+Después de subir los tres archivos:
+1. Commit to main.
+2. Push origin.
+3. Ejecuta de nuevo «Completar catálogo AliExpress México».
+
+La siguiente ejecución debería avanzar hacia productos todavía no consultados,
+en lugar de repetir los 15 fallos de la primera ejecución.

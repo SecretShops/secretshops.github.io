@@ -37,10 +37,12 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add catalog-aliexpress-mx.js data/aliexpress-mx-metadata-cache.json
+          git add catalog-aliexpress-mx.js
+          git add data/aliexpress-mx-metadata-cache.json
+          git add data/aliexpress-mx-attempts.json
           if git diff --cached --quiet; then
             echo "No hay cambios que publicar."
           else
-            git commit -m "Completar metadatos del catálogo de México"
+            git commit -m "Avanzar metadatos del catálogo de México"
             git push
           fi
