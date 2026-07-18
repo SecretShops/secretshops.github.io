@@ -17,6 +17,17 @@
 
   <title>Atlas Secreto | Productos seleccionados</title>
 
+  <link
+    rel="icon"
+    type="image/png"
+    href="images/atlas-favicon.png?v=20260718-1"
+  >
+
+  <link
+    rel="apple-touch-icon"
+    href="images/atlas-profile.webp?v=20260718-1"
+  >
+
   <style>
     /* =====================================================
        DISEÑO GENERAL
@@ -1108,6 +1119,389 @@
       }
     }
 
+    /* =====================================================
+       DISEÑO COMPACTO · 2026-07-18
+    ===================================================== */
+
+    :root {
+      --maximum-width: 1460px;
+      --radius-large: 18px;
+      --shadow:
+        0 12px 34px rgba(0, 0, 0, 0.30);
+    }
+
+    .brand-logo {
+      width: 50px;
+      height: 50px;
+      padding: 2px;
+      overflow: hidden;
+      display: block;
+
+      border: 1px solid var(--border-gold);
+      border-radius: 50%;
+
+      background: #050708;
+      box-shadow:
+        0 0 0 3px rgba(214, 173, 82, 0.07);
+    }
+
+    .brand-logo img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .controls {
+      position: relative;
+      top: auto;
+      z-index: 2;
+
+      margin-bottom: 18px;
+      padding: 8px 0 4px;
+
+      background: transparent;
+      backdrop-filter: none;
+    }
+
+    .control-row {
+      grid-template-columns:
+        minmax(0, 1fr)
+        minmax(180px, 245px);
+
+      gap: 10px;
+    }
+
+    .search-container input,
+    .controls select {
+      min-height: 46px;
+    }
+
+    .category-list {
+      margin-top: 10px;
+      padding: 0;
+
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+
+      overflow: visible;
+    }
+
+    .category-list::-webkit-scrollbar {
+      display: initial;
+    }
+
+    .category-button {
+      flex: 0 0 auto;
+      min-height: 34px;
+      padding: 6px 10px;
+
+      font-size: 0.72rem;
+      line-height: 1.15;
+      white-space: nowrap;
+    }
+
+    .mobile-category-control {
+      display: none;
+    }
+
+    .section-heading {
+      margin: 20px 0 14px;
+    }
+
+    .product-grid {
+      grid-template-columns:
+        repeat(5, minmax(0, 1fr));
+
+      gap: 14px;
+    }
+
+    .product-card {
+      border-radius: 16px;
+      box-shadow:
+        0 10px 28px rgba(0, 0, 0, 0.28);
+    }
+
+    .product-card:hover {
+      transform: translateY(-3px);
+      box-shadow:
+        0 18px 42px rgba(0, 0, 0, 0.36);
+    }
+
+    .product-image-container {
+      aspect-ratio: 1 / 1;
+    }
+
+    .featured-label {
+      top: 8px;
+      left: 8px;
+      padding: 4px 7px;
+      font-size: 0.58rem;
+    }
+
+    .product-content {
+      padding: 12px;
+    }
+
+    .product-meta {
+      min-width: 0;
+      margin-bottom: 7px;
+      gap: 6px;
+      font-size: 0.62rem;
+    }
+
+    .product-category {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .product-content h3 {
+      min-height: 2.55em;
+
+      display: -webkit-box;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+
+      font-size: 0.88rem;
+      line-height: 1.28;
+    }
+
+    .product-description {
+      min-height: 3.7em;
+      margin: 7px 0 10px;
+
+      display: -webkit-box;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+
+      font-size: 0.72rem;
+      line-height: 1.4;
+    }
+
+    .product-offers {
+      gap: 6px;
+    }
+
+    .offer-button {
+      min-height: 40px;
+      padding: 7px 9px;
+      gap: 6px;
+      border-radius: 10px;
+    }
+
+    .offer-store {
+      min-width: 0;
+      gap: 6px;
+      font-size: 0.68rem;
+    }
+
+    .offer-price {
+      font-size: 0.66rem;
+    }
+
+    .offer-cta {
+      font-size: 0.57rem;
+    }
+
+    .offer-country {
+      font-size: 0.56rem;
+    }
+
+    .store-dot {
+      flex: 0 0 auto;
+      width: 8px;
+      height: 8px;
+    }
+
+    @media (max-width: 1240px) {
+      .product-grid {
+        grid-template-columns:
+          repeat(4, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 960px) {
+      .product-grid {
+        grid-template-columns:
+          repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 700px) {
+      main {
+        width: min(
+          calc(100% - 20px),
+          var(--maximum-width)
+        );
+      }
+
+      .controls {
+        margin-bottom: 10px;
+      }
+
+      .control-row {
+        grid-template-columns: 1fr;
+      }
+
+      .category-list {
+        display: none;
+      }
+
+      .mobile-category-control {
+        margin-top: 9px;
+
+        display: grid;
+        grid-template-columns:
+          auto minmax(0, 1fr);
+        align-items: center;
+        gap: 10px;
+
+        color: var(--text-secondary);
+        font-size: 0.72rem;
+        font-weight: 700;
+      }
+
+      .mobile-category-control select {
+        width: 100%;
+        min-height: 42px;
+        border-radius: 12px;
+      }
+
+      .section-heading {
+        margin-top: 16px;
+      }
+
+      .section-heading h2 {
+        font-size: 1.55rem;
+      }
+
+      .product-grid {
+        grid-template-columns:
+          repeat(2, minmax(0, 1fr));
+
+        gap: 10px;
+      }
+
+      .product-content {
+        padding: 10px;
+      }
+
+      .product-content h3 {
+        min-height: 2.45em;
+        font-size: 0.78rem;
+      }
+
+      .product-description {
+        min-height: 2.9em;
+        margin: 6px 0 8px;
+        -webkit-line-clamp: 2;
+        font-size: 0.65rem;
+      }
+
+      .product-meta {
+        margin-bottom: 6px;
+        font-size: 0.56rem;
+      }
+
+      .offer-button {
+        min-height: 38px;
+        padding: 7px;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .offer-action {
+        width: 100%;
+        align-items: flex-start;
+      }
+
+      .offer-price {
+        text-align: left;
+      }
+
+      .offer-cta {
+        display: none;
+      }
+
+      .pagination-controls {
+        margin-top: 18px;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .header-inner {
+        width: min(
+          calc(100% - 16px),
+          var(--maximum-width)
+        );
+      }
+
+      .brand {
+        gap: 8px;
+      }
+
+      .brand-logo {
+        width: 42px;
+        height: 42px;
+      }
+
+      .brand-text strong {
+        font-size: 0.82rem;
+      }
+
+      .header-country select {
+        max-width: 124px;
+        min-height: 38px;
+        font-size: 0.76rem;
+      }
+
+      .hero {
+        width: min(calc(100% - 20px), 900px);
+      }
+
+      .hero h1 {
+        font-size: clamp(2.35rem, 12vw, 3.25rem);
+      }
+
+      .product-grid {
+        gap: 8px;
+      }
+
+      .product-card {
+        border-radius: 13px;
+      }
+
+      .product-content {
+        padding: 8px;
+      }
+
+      .product-description {
+        display: none;
+      }
+
+      .featured-label {
+        top: 6px;
+        left: 6px;
+      }
+    }
+
+    @media (max-width: 340px) {
+      .product-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .product-description {
+        display: -webkit-box;
+      }
+    }
+
   </style>
 </head>
 
@@ -1121,7 +1515,14 @@
     <div class="header-inner">
 
       <a class="brand" href="#">
-        <div class="brand-logo">AS</div>
+        <div class="brand-logo">
+          <img
+            src="images/atlas-profile.webp?v=20260718-1"
+            alt="Atlas Secreto"
+            width="320"
+            height="320"
+          >
+        </div>
 
         <div class="brand-text">
           <strong>Atlas Secreto</strong>
@@ -1311,6 +1712,17 @@
         aria-label="Categorías"
       ></div>
 
+      <label class="mobile-category-control">
+        <span>
+          Categoría
+        </span>
+
+        <select
+          id="mobile-category-selector"
+          aria-label="Seleccionar categoría"
+        ></select>
+      </label>
+
     </section>
 
     <div class="section-heading">
@@ -1453,7 +1865,7 @@
        - catalog-aliexpress-co.js
 
        Cada archivo funciona de forma independiente.
-       Los productos incompletos o repetidos se ignoran.
+       Los productos incompletos se ignoran y los repetidos se fusionan.
     ====================================================== */
 
     const DEFAULT_PRODUCT_IMAGE =
@@ -1653,6 +2065,11 @@
 
     const categoryList =
       document.getElementById("category-list");
+
+    const mobileCategorySelector =
+      document.getElementById(
+        "mobile-category-selector"
+      );
 
     const searchInput =
       document.getElementById("search-input");
@@ -1854,8 +2271,11 @@ function getProductCategories(product) {
     }
 
     function renderCategories() {
+      const categories =
+        getCategories();
+
       categoryList.innerHTML =
-        getCategories()
+        categories
           .map((category) => {
             const active =
               state.category === category
@@ -1873,6 +2293,22 @@ function getProductCategories(product) {
             `;
           })
           .join("");
+
+      mobileCategorySelector.innerHTML =
+        categories
+          .map((category) => {
+            return `
+              <option
+                value="${escapeHtml(category)}"
+              >
+                ${escapeHtml(category)}
+              </option>
+            `;
+          })
+          .join("");
+
+      mobileCategorySelector.value =
+        state.category;
     }
 
     function updateStoreButtons() {
@@ -2359,6 +2795,18 @@ const categoryMatches =
 
         state.category =
           button.dataset.category;
+
+        resetVisibleCount();
+        renderCategories();
+        renderProducts();
+      }
+    );
+
+    mobileCategorySelector.addEventListener(
+      "change",
+      () => {
+        state.category =
+          mobileCategorySelector.value;
 
         resetVisibleCount();
         renderCategories();

@@ -1,0 +1,38 @@
+ATLAS SECRETO · DISEÑO COMPACTO
+
+CAMBIOS APLICADOS
+- Categorías más pequeñas y completas en ordenador.
+- Las categorías se distribuyen en varias líneas y ya no quedan cortadas.
+- En móvil se usa un selector compacto con todas las categorías.
+- Cinco columnas de productos en pantallas grandes.
+- Cuatro, tres o dos columnas según el ancho.
+- Dos columnas en la mayoría de móviles.
+- Una columna únicamente en pantallas muy estrechas.
+- Tarjetas, textos, imágenes y botones más compactos.
+- Títulos y descripciones limitados para evitar tarjetas demasiado altas.
+- Foto de Atlas Secreto en el icono de la cabecera.
+- Favicon de Atlas Secreto para la pestaña del navegador.
+
+PUBLICACIÓN
+Sube a GitHub todo el contenido de esta carpeta, incluida:
+- index.html
+- catalog-base.js
+- catalog-aliexpress-mx.js
+- catalog-aliexpress-co.js
+- carpeta images
+
+ARCHIVOS NUEVOS DE MARCA
+- images/atlas-profile.webp
+- images/atlas-favicon.png
+
+PRODUCTOS DE MÉXICO
+El CSV y el catálogo actuales no contienen nombres ni imágenes reales de
+los 60 productos mexicanos. No se han inventado ni asignado imágenes que
+puedan representar un producto distinto.
+
+Se incluye:
+- mexico-metadata-pendiente.csv
+
+Cuando AliExpress apruebe la API, podremos completar automáticamente los
+nombres, las descripciones y las imágenes reales. También puede hacerse
+antes con una exportación que incluya esos campos.
