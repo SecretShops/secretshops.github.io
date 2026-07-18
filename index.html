@@ -1271,12 +1271,15 @@
     </div>
   </footer>
 
+  <script src="catalog-base.js"></script>
+  <script src="catalog-aliexpress-mx.js"></script>
+
   <script>
     /* =====================================================
        CONFIGURACIÓN GENERAL
 
-       En el futuro solo tendrás que editar el catálogo
-       situado unas líneas más abajo para añadir productos.
+       Los catálogos se administran en archivos JavaScript
+       independientes para reducir errores de publicación.
     ====================================================== */
 
     const COUNTRY_NAMES = {
@@ -1294,431 +1297,114 @@
     };
 
     /* =====================================================
-       CATÁLOGO DE PRODUCTOS
+       CATÁLOGOS EXTERNOS
 
-       Para añadir otro producto:
-       1. Copia un bloque completo.
-       2. Pégalo después del anterior.
-       3. Cambia nombre, imagen, categoría y ofertas.
-       4. Mantén la coma entre productos.
+       Los productos se cargan desde:
+       - catalog-base.js
+       - catalog-aliexpress-mx.js
 
-       Cada oferta puede tener:
-       - store: Amazon, AliExpress, Temu...
-       - country: ES, MX, GLOBAL, LATAM...
-       - price: precio visible
-       - url: tu enlace de afiliado
+       Cada archivo funciona de forma independiente.
+       Los productos incompletos o repetidos se ignoran.
     ====================================================== */
 
-    const CATALOG = [
-
-      {
-        id: "mochila-tactica",
-        name: "Mochila táctica impermeable 25L/50L",
-        description:
-          "Mochila resistente con múltiples compartimentos para viajes, actividades al aire libre y uso diario.",
-
-        category: "Aventura",
-
-        image:
-          "https://placehold.co/900x900/111821/d6ad52?text=Mochila+tactica",
-
-        featured: true,
-        createdAt: "2026-07-18",
-
-        offers: [
-          {
-            store: "AliExpress",
-            country: "GLOBAL",
-            price: "Desde 22,74 USD",
-            url: "PON_AQUI_TU_ENLACE_DE_ALIEXPRESS"
-          }
-        ]
-      },
-
-      {
-        id: "linterna-cob",
-        name: "Linterna LED COB recargable por USB",
-        description:
-          "Linterna portátil articulada con base magnética para coche, bricolaje, camping y emergencias.",
-
-        category: "Tecnología",
-
-        image:
-          "https://placehold.co/900x900/111821/d6ad52?text=Linterna+COB",
-
-        featured: true,
-        createdAt: "2026-07-18",
-
-        offers: [
-          {
-            store: "AliExpress",
-            country: "GLOBAL",
-            price: "Desde 2,53 USD",
-            url: "PON_AQUI_TU_ENLACE_DE_ALIEXPRESS"
-          }
-        ]
-      },
-
-      {
-        id: "mini-linterna",
-        name: "Minilinterna de llavero recargable",
-        description:
-          "Luz compacta de alta intensidad para llevar en las llaves, la mochila o el coche.",
-
-        category: "Tecnología",
-
-        image:
-          "https://placehold.co/900x900/111821/d6ad52?text=Mini+linterna",
-
-        featured: false,
-        createdAt: "2026-07-18",
-
-        offers: [
-          {
-            store: "AliExpress",
-            country: "GLOBAL",
-            price: "Desde 2,82 USD",
-            url: "PON_AQUI_TU_ENLACE_DE_ALIEXPRESS"
-          }
-        ]
-      },
-
-      {
-        id: "productos-amazon",
-        name: "Selección completa de Amazon",
-        description:
-          "Accede al escaparate de Atlas Secreto con productos recomendados disponibles en Amazon España.",
-
-        category: "Destacados",
-
-        image:
-          "https://placehold.co/900x900/232f3e/ff9900?text=Amazon",
-
-        featured: true,
-        createdAt: "2026-07-18",
-
-        offers: [
-          {
-            store: "Amazon",
-            country: "ES",
-            price: "Ver escaparate",
-            url: "https://www.amazon.es/shop/elatlasecreto"
-          }
-        ]
-      },
-
-      {
-        id: "ejemplo-temu",
-        name: "Selección de productos virales en Temu",
-        description:
-          "Productos económicos, prácticos y populares disponibles dentro del escaparate de Temu.",
-
-        category: "Virales",
-
-        image:
-          "https://placehold.co/900x900/ff5b22/ffffff?text=Temu",
-
-        featured: false,
-        createdAt: "2026-07-18",
-
-        offers: [
-          {
-            store: "Temu",
-            country: "GLOBAL",
-            price: "Ver productos",
-            url: "PON_AQUI_TU_ENLACE_DE_TEMU"
-          }
-        ]
-          },
-
-    {
-      id: "vdevintage-vlc",
-      name: "VDE Vintage VLC",
-      description:
-        "Ropa vintage, prendas únicas y artículos de segunda mano disponibles en Vinted España.",
-
-      category: "Moda vintage",
-
-      image:
-        "https://placehold.co/900x900/007782/ffffff?text=VDE+Vintage+VLC",
-
-      featured: true,
-      createdAt: "2026-07-18",
-
-      offers: [
-        {
-          store: "Vinted",
-          country: "ES",
-          price: "Ver armario",
-          url: "https://www.vinted.es/member/69369303-vdevintage-vlc"
-        }
-      ]
-    },
-
-    {
-      id: "freshvintage-vlc",
-      name: "Fresh Vintage VLC",
-      description:
-        "Selección de ropa vintage y prendas de segunda mano disponibles en Vinted España.",
-
-      category: "Moda vintage",
-
-      image:
-        "https://placehold.co/900x900/007782/ffffff?text=Fresh+Vintage+VLC",
-
-      featured: true,
-      createdAt: "2026-07-18",
-
-      offers: [
-        {
-          store: "Vinted",
-          country: "ES",
-          price: "Ver armario",
-          url: "https://www.vinted.es/member/120782920-freshvintagevlc"
-        }
-      ]
-    },
-    {
-      id: "aliexpress-1005007297859160",
-
-      name: "Selección de moda femenina",
-
-      description:
-        "Prenda de moda femenina seleccionada por su precio y potencial de compra impulsiva.",
-
-      categories: [
-        "Moda mujer",
-        "Menos de 10"
-      ],
-
-      image:
-        "https://placehold.co/900x900/191f29/d6ad52?text=Moda+mujer",
-
-      featured: false,
-
-      createdAt: "2026-07-18",
-
-      offers: [
-        {
-          store: "AliExpress",
-          country: "MX",
-          price: "Desde 9,08 USD",
-          url: "https://s.click.aliexpress.com/e/_c37JzRcX"
-        }
-      ]
-    },
-
-    {
-      id: "aliexpress-1005008494720248",
-
-      name: "Accesorio de moda para mujer",
-
-      description:
-        "Accesorio femenino económico y fácil de combinar, seleccionado para compras por impulso.",
-
-      categories: [
-        "Accesorios mujer",
-        "Menos de 10"
-      ],
-
-      image:
-        "https://placehold.co/900x900/2b1d29/d6ad52?text=Accesorios+mujer",
-
-      featured: false,
-
-      createdAt: "2026-07-18",
-
-      offers: [
-        {
-          store: "AliExpress",
-          country: "MX",
-          price: "Desde 0,99 USD",
-          url: "https://s.click.aliexpress.com/e/_c3VDjSu3"
-        }
-      ]
-    },
-
-    {
-      id: "aliexpress-1005006631009309",
-
-      name: "Accesorio de moda para hombre",
-
-      description:
-        "Accesorio masculino práctico y económico seleccionado dentro del catálogo de AliExpress.",
-
-      categories: [
-        "Accesorios hombre",
-        "Menos de 10"
-      ],
-
-      image:
-        "https://placehold.co/900x900/18232d/d6ad52?text=Accesorios+hombre",
-
-      featured: false,
-
-      createdAt: "2026-07-18",
-
-      offers: [
-        {
-          store: "AliExpress",
-          country: "MX",
-          price: "Desde 3,08 USD",
-          url: "https://s.click.aliexpress.com/e/_c3Pyyimr"
-        }
-      ]
-    },
-
-    {
-      id: "aliexpress-1005008124464069",
-
-      name: "Producto de moda femenina en oferta",
-
-      description:
-        "Artículo de moda femenina a precio reducido, seleccionado para renovar el armario gastando poco.",
-
-      categories: [
-        "Moda mujer",
-        "Menos de 10"
-      ],
-
-      image:
-        "https://placehold.co/900x900/2d1f28/d6ad52?text=Moda+femenina",
-
-      featured: false,
-
-      createdAt: "2026-07-18",
-
-      offers: [
-        {
-          store: "AliExpress",
-          country: "MX",
-          price: "Desde 1,27 USD",
-          url: "https://s.click.aliexpress.com/e/_c3JoP3WL"
-        }
-      ]
-    },
-
-    {
-      id: "aliexpress-1005005788179268",
-
-      name: "Accesorio práctico para el hogar",
-
-      description:
-        "Producto económico pensado para facilitar pequeñas tareas y mejorar la organización del hogar.",
-
-      categories: [
-        "Hogar",
-        "Menos de 10"
-      ],
-
-      image:
-        "https://placehold.co/900x900/253026/d6ad52?text=Hogar",
-
-      featured: false,
-
-      createdAt: "2026-07-18",
-
-      offers: [
-        {
-          store: "AliExpress",
-          country: "MX",
-          price: "Desde 2,46 USD",
-          url: "https://s.click.aliexpress.com/e/_c3F8Egg3"
-        }
-      ]
-    },
-
-    {
-      id: "aliexpress-1005007661508886",
-
-      name: "Gadget tecnológico seleccionado",
-
-      description:
-        "Accesorio tecnológico compacto, útil y económico para el uso diario.",
-
-      categories: [
-        "Tecnología",
-        "Menos de 10"
-      ],
-
-      image:
-        "https://placehold.co/900x900/152938/d6ad52?text=Tecnologia",
-
-      featured: false,
-
-      createdAt: "2026-07-18",
-
-      offers: [
-        {
-          store: "AliExpress",
-          country: "MX",
-          price: "Desde 5,28 USD",
-          url: "https://s.click.aliexpress.com/e/_c4cQ7FD1"
-        }
-      ]
-    },
-
-    {
-      id: "aliexpress-1005007914556601",
-
-      name: "Gadget multifunción para hogar y tecnología",
-
-      description:
-        "Producto económico con utilidad tanto para el hogar como para el uso tecnológico cotidiano.",
-
-      categories: [
-        "Hogar",
-        "Tecnología",
-        "Menos de 10"
-      ],
-
-      image:
-        "https://placehold.co/900x900/172a2d/d6ad52?text=Hogar+y+tecnologia",
-
-      featured: false,
-
-      createdAt: "2026-07-18",
-
-      offers: [
-        {
-          store: "AliExpress",
-          country: "MX",
-          price: "Desde 2,27 USD",
-          url: "https://s.click.aliexpress.com/e/_c3V0fy2n"
-        }
-      ]
-    },
-
-    {
-      id: "aliexpress-1005007901992686",
-
-      name: "Accesorio tecnológico económico",
-
-      description:
-        "Gadget tecnológico asequible y práctico, seleccionado por su potencial de compra impulsiva.",
-
-      categories: [
-        "Tecnología",
-        "Menos de 10"
-      ],
-
-      image:
-        "https://placehold.co/900x900/152432/d6ad52?text=Accesorio+tecnologico",
-
-      featured: false,
-
-      createdAt: "2026-07-18",
-
-      offers: [
-        {
-          store: "AliExpress",
-          country: "MX",
-          price: "Desde 3,12 USD",
-          url: "https://s.click.aliexpress.com/e/_c4kFoaCL"
-        }
-      ]
+    const DEFAULT_PRODUCT_IMAGE =
+      "https://placehold.co/900x900/111821/d6ad52?text=Atlas+Secreto";
+
+    function isValidOffer(offer) {
+      return Boolean(
+        offer &&
+        typeof offer.store === "string" &&
+        offer.store.trim() &&
+        typeof offer.country === "string" &&
+        offer.country.trim() &&
+        typeof offer.price === "string" &&
+        typeof offer.url === "string"
+      );
     }
-];
+
+    function normalizeProduct(product) {
+      if (
+        !product ||
+        typeof product.id !== "string" ||
+        !product.id.trim() ||
+        typeof product.name !== "string" ||
+        !product.name.trim() ||
+        !Array.isArray(product.offers)
+      ) {
+        return null;
+      }
+
+      const offers =
+        product.offers.filter(isValidOffer);
+
+      if (offers.length === 0) {
+        return null;
+      }
+
+      return {
+        ...product,
+        id: product.id.trim(),
+        name: product.name.trim(),
+        description:
+          typeof product.description === "string"
+            ? product.description
+            : "",
+        image:
+          typeof product.image === "string" &&
+          product.image.trim()
+            ? product.image
+            : DEFAULT_PRODUCT_IMAGE,
+        featured: Boolean(product.featured),
+        createdAt:
+          typeof product.createdAt === "string"
+            ? product.createdAt
+            : "1970-01-01",
+        offers
+      };
+    }
+
+    function buildCatalog(...sources) {
+      const products = [];
+      const seenIds = new Set();
+
+      sources.forEach((source) => {
+        if (!Array.isArray(source)) {
+          return;
+        }
+
+        source.forEach((product) => {
+          const normalized =
+            normalizeProduct(product);
+
+          if (!normalized) {
+            console.warn(
+              "Producto ignorado por datos incompletos:",
+              product
+            );
+            return;
+          }
+
+          if (seenIds.has(normalized.id)) {
+            console.warn(
+              "Producto duplicado ignorado:",
+              normalized.id
+            );
+            return;
+          }
+
+          seenIds.add(normalized.id);
+          products.push(normalized);
+        });
+      });
+
+      return products;
+    }
+
+    const CATALOG = buildCatalog(
+      window.CATALOG_BASE,
+      window.CATALOG_ALIEXPRESS_MX
+    );
+
 
     /* =====================================================
        FUNCIONAMIENTO DE LA WEB
@@ -2058,7 +1744,7 @@ const categoryMatches =
               onerror="
                 this.onerror = null;
                 this.src =
-                'https://placehold.co/900x900/111821/d6ad52?text=Atlas+Secreto';
+                '${DEFAULT_PRODUCT_IMAGE}';
               "
             >
 
