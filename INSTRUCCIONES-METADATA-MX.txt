@@ -1,0 +1,67 @@
+ATLAS SECRETO · METADATOS AUTOMÁTICOS DE MÉXICO
+
+RESULTADO DEL CSV
+- Filas recibidas: 100
+- Productos únicos: 60
+- Filas duplicadas eliminadas: 40
+
+El CSV de AliExpress solo contiene enlaces originales y enlaces de
+seguimiento. No contiene directamente el título, la descripción ni la
+URL de la imagen. Este paquete añade dos métodos automáticos para
+obtenerlos sin crear tarjetas duplicadas.
+
+MÉTODO RECOMENDADO · GITHUB ACTIONS
+
+Sube a GitHub todo el contenido de este paquete, incluidas las carpetas:
+
+- data
+- scripts
+- .github/workflows
+- tools
+
+Después entra en:
+
+Actions
+→ Completar catálogo AliExpress México
+→ Run workflow
+
+No hace falta crear ningún secreto.
+
+Cada ejecución procesa como máximo 20 productos. El flujo también se
+ejecuta una vez al día y guarda el progreso en:
+
+data/aliexpress-mx-metadata-cache.json
+
+Cuando obtiene información válida, sustituye automáticamente:
+
+- nombre provisional;
+- descripción provisional;
+- imagen provisional.
+
+Los productos que todavía no se hayan procesado siguen funcionando con
+los datos actuales. Los 60 productos se mantienen sin duplicar porque
+la clave utilizada es el ID numérico de AliExpress.
+
+MÉTODO MANUAL DESDE EL NAVEGADOR
+
+Abre:
+
+tools/extraer-metadata-mx.html
+
+Pulsa «Procesar siguiente lote». El progreso queda guardado en el
+navegador. Después pulsa «Descargar catálogo actualizado» y sustituye
+catalog-aliexpress-mx.js en GitHub.
+
+El endpoint gratuito utilizado tiene una cuota diaria. Por ello el lote
+se limita a 20 productos. Normalmente serán necesarias varias
+ejecuciones en días diferentes para completar los 60.
+
+ARCHIVOS PRINCIPALES
+
+- catalog-aliexpress-mx.js
+- data/aliexpress-mx-source.json
+- data/aliexpress-mx-source.csv
+- data/aliexpress-mx-metadata-cache.json
+- scripts/update_aliexpress_mx_metadata.py
+- .github/workflows/complete-aliexpress-mx-metadata.yml
+- tools/extraer-metadata-mx.html
