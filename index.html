@@ -985,6 +985,9 @@
         grid-template-columns: 1fr;
       }
     }
+.store-dot.vinted {
+  background: #007782;
+} 
   </style>
 </head>
 
@@ -1109,6 +1112,14 @@
       <span class="store-dot temu"></span>
       Temu
     </button>
+ <button
+  class="store-button"
+  data-store="Vinted"
+  type="button"
+>
+  <span class="store-dot vinted"></span>
+  Vinted
+</button> 
   </nav>
 
   <!-- =====================================================
@@ -1418,9 +1429,57 @@
             url: "PON_AQUI_TU_ENLACE_DE_TEMU"
           }
         ]
-      }
+          },
 
-    ];
+    {
+      id: "vdevintage-vlc",
+      name: "VDE Vintage VLC",
+      description:
+        "Ropa vintage, prendas únicas y artículos de segunda mano disponibles en Vinted España.",
+
+      category: "Moda vintage",
+
+      image:
+        "https://placehold.co/900x900/007782/ffffff?text=VDE+Vintage+VLC",
+
+      featured: true,
+      createdAt: "2026-07-18",
+
+      offers: [
+        {
+          store: "Vinted",
+          country: "ES",
+          price: "Ver armario",
+          url: "https://www.vinted.es/member/69369303-vdevintage-vlc"
+        }
+      ]
+    },
+
+    {
+      id: "freshvintage-vlc",
+      name: "Fresh Vintage VLC",
+      description:
+        "Selección de ropa vintage y prendas de segunda mano disponibles en Vinted España.",
+
+      category: "Moda vintage",
+
+      image:
+        "https://placehold.co/900x900/007782/ffffff?text=Fresh+Vintage+VLC",
+
+      featured: true,
+      createdAt: "2026-07-18",
+
+      offers: [
+        {
+          store: "Vinted",
+          country: "ES",
+          price: "Ver armario",
+          url: "https://www.vinted.es/member/120782920-freshvintagevlc"
+        }
+      ]
+    }
+
+];
 
     /* =====================================================
        FUNCIONAMIENTO DE LA WEB
