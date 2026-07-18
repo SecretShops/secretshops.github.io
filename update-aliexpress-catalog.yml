@@ -1,0 +1,44 @@
+name: Actualizar catálogo AliExpress MX
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 05 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: actualizar-catalogo-aliexpress-mx
+  cancel-in-progress: false
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Actualizar nombres, imágenes y precios
+        env:
+          ALIEXPRESS_APP_KEY: ${{ secrets.ALIEXPRESS_APP_KEY }}
+          ALIEXPRESS_APP_SECRET: ${{ secrets.ALIEXPRESS_APP_SECRET }}
+        run: python scripts/update_aliexpress_catalog.py
+
+      - name: Guardar cambios
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add catalog-aliexpress-mx.js data/aliexpress-mx-cache.json
+          if git diff --cached --quiet; then
+            echo "No hay cambios que publicar."
+          else
+            git commit -m "Actualizar catálogo AliExpress MX"
+            git push
+          fi
