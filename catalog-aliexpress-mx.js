@@ -3,14 +3,9 @@
 /*
   CATÁLOGO ALIEXPRESS · MÉXICO
 
-  Fuente: 100 filas del generador de enlaces.
-  Productos únicos publicados: 60.
-  Filas duplicadas fusionadas: 40.
-
-  Los nombres y las imágenes siguen siendo provisionales hasta que
-  AliExpress apruebe el acceso a la API. Los precios se confirman
-  directamente en la página del producto para evitar mostrar importes
-  desactualizados.
+  Productos únicos: 60.
+  Metadatos reales completados: 5/60.
+  Los productos pendientes conservan sus datos provisionales.
 */
 
 window.CATALOG_META_ALIEXPRESS_MX = {
@@ -18,6 +13,7 @@ window.CATALOG_META_ALIEXPRESS_MX = {
   uniqueProducts: 60,
   duplicatesMerged: 40,
   updatedAt: "2026-07-18",
+  metadataCompleted: 5,
   priceMode: "external"
 };
 
@@ -25,7 +21,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005007297859160",
     "name": "Selección de moda para mujer 01",
-    "description": "Artículo de moda femenina seleccionado por Atlas Secreto. Consulta tallas, colores, composición, envío y disponibilidad en AliExpress.",
+    "description": "Selección de moda para mujer 01. Artículo de moda femenina disponible en distintas variantes. Consulta tallas, colores, materiales y condiciones de envío.",
     "categories": [
       "Moda mujer",
       "Menos de 10"
@@ -46,7 +42,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005008494720248",
     "name": "Accesorio para mujer 01",
-    "description": "Accesorio femenino seleccionado por su utilidad y precio. Revisa variantes, materiales, medidas y disponibilidad antes de comprar.",
+    "description": "Accesorio para mujer 01. Accesorio femenino disponible en distintas variantes. Revisa materiales, medidas y colores antes de comprar.",
     "categories": [
       "Accesorios mujer",
       "Menos de 10"
@@ -67,7 +63,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005006631009309",
     "name": "Accesorio para hombre 01",
-    "description": "Accesorio masculino seleccionado por Atlas Secreto. Consulta materiales, medidas, variantes y condiciones de envío en AliExpress.",
+    "description": "Accesorio para hombre 01. Accesorio masculino disponible en distintas variantes. Revisa materiales, medidas y colores antes de comprar.",
     "categories": [
       "Accesorios hombre",
       "Menos de 10"
@@ -88,7 +84,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005008124464069",
     "name": "Selección de moda para mujer 02",
-    "description": "Artículo de moda femenina seleccionado por Atlas Secreto. Consulta tallas, colores, composición, envío y disponibilidad en AliExpress.",
+    "description": "Selección de moda para mujer 02. Artículo de moda femenina disponible en distintas variantes. Consulta tallas, colores, materiales y condiciones de envío.",
     "categories": [
       "Moda mujer",
       "Menos de 10"
@@ -109,7 +105,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005005788179268",
     "name": "Producto práctico para el hogar 01",
-    "description": "Producto práctico para el hogar seleccionado por Atlas Secreto. Revisa medidas, materiales, variantes y disponibilidad en AliExpress.",
+    "description": "Producto práctico para el hogar 01. Producto práctico para el hogar. Revisa medidas, materiales y variante antes de comprar.",
     "categories": [
       "Hogar",
       "Menos de 10"
@@ -130,7 +126,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005007661508886",
     "name": "Gadget tecnológico 01",
-    "description": "Gadget tecnológico seleccionado por Atlas Secreto. Comprueba especificaciones, compatibilidad, variantes y disponibilidad antes de comprar.",
+    "description": "Gadget tecnológico 01. Producto tecnológico seleccionado por Atlas Secreto. Comprueba especificaciones, compatibilidad y variante.",
     "categories": [
       "Tecnología",
       "Menos de 10"
@@ -151,7 +147,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005007914556601",
     "name": "Producto práctico para el hogar 02",
-    "description": "Producto práctico para el hogar seleccionado por Atlas Secreto. Revisa medidas, materiales, variantes y disponibilidad en AliExpress.",
+    "description": "Producto práctico para el hogar 02. Producto práctico para el hogar. Revisa medidas, materiales y variante antes de comprar.",
     "categories": [
       "Hogar",
       "Tecnología",
@@ -173,7 +169,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005007901992686",
     "name": "Gadget tecnológico 02",
-    "description": "Gadget tecnológico seleccionado por Atlas Secreto. Comprueba especificaciones, compatibilidad, variantes y disponibilidad antes de comprar.",
+    "description": "Gadget tecnológico 02. Producto tecnológico seleccionado por Atlas Secreto. Comprueba especificaciones, compatibilidad y variante.",
     "categories": [
       "Tecnología",
       "Menos de 10"
@@ -194,7 +190,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005007382183099",
     "name": "Gadget tecnológico 03",
-    "description": "Gadget tecnológico seleccionado por Atlas Secreto. Comprueba especificaciones, compatibilidad, variantes y disponibilidad antes de comprar.",
+    "description": "Gadget tecnológico 03. Producto tecnológico seleccionado por Atlas Secreto. Comprueba especificaciones, compatibilidad y variante.",
     "categories": [
       "Tecnología",
       "Aventura y viajes",
@@ -216,13 +212,13 @@ window.CATALOG_ALIEXPRESS_MX = [
   },
   {
     "id": "aliexpress-1005010447557053",
-    "name": "Gadget tecnológico 04",
-    "description": "Gadget tecnológico seleccionado por Atlas Secreto. Comprueba especificaciones, compatibilidad, variantes y disponibilidad antes de comprar.",
+    "name": "GameSir G7 Pro Xbox Licensed Game Controller, Wired Controller for Xbox, Wireless Gamepad for PC Android Mobile",
+    "description": "GameSir G7 Pro Xbox Licensed Game Controller, Wired Controller for Xbox, Wireless Gamepad for PC Android Mobile. Producto tecnológico seleccionado por Atlas Secreto. Comprueba especificaciones, compatibilidad y variante.",
     "categories": [
       "Tecnología",
       "Virales"
     ],
-    "image": "https://placehold.co/900x900/111821/d6ad52?text=Tecnolog%C3%ADa+04",
+    "image": "https://ae01.alicdn.com/kf/S4394f5d1f0b642dd988501431f62bdc0L.jpg",
     "featured": true,
     "createdAt": "2026-07-18",
     "offers": [
@@ -233,17 +229,19 @@ window.CATALOG_ALIEXPRESS_MX = [
         "url": "https://s.click.aliexpress.com/e/_c3BId7Nt",
         "priceSnapshot": "Desde 66,20 USD"
       }
-    ]
+    ],
+    "metadataUpdatedAt": "2026-07-18T19:17:37.458430+00:00",
+    "metadataSource": "Microlink"
   },
   {
     "id": "aliexpress-1005007296821194",
-    "name": "Selección de moda para mujer 03",
-    "description": "Artículo de moda femenina seleccionado por Atlas Secreto. Consulta tallas, colores, composición, envío y disponibilidad en AliExpress.",
+    "name": "10/15/20/30/40/Pairs Heart Print Socks, Valentine’s Day Candy Colored Ankle Socks, Women’s Stockings & Hosiery",
+    "description": "10/15/20/30/40/Pairs Heart Print Socks, Valentine’s Day Candy Colored Ankle Socks, Women’s Stockings & Hosiery. Artículo de moda femenina disponible en distintas variantes. Consulta tallas, colores, materiales y condiciones de envío.",
     "categories": [
       "Moda mujer",
       "Menos de 10"
     ],
-    "image": "https://placehold.co/900x900/111821/d6ad52?text=Moda+mujer+03",
+    "image": "https://ae01.alicdn.com/kf/S6d1fe224d41f4d0cb382f54998f94b08M.jpg",
     "featured": false,
     "createdAt": "2026-07-18",
     "offers": [
@@ -254,12 +252,14 @@ window.CATALOG_ALIEXPRESS_MX = [
         "url": "https://s.click.aliexpress.com/e/_c39oZE0T",
         "priceSnapshot": "Desde 3,07 USD"
       }
-    ]
+    ],
+    "metadataUpdatedAt": "2026-07-18T19:17:46.300748+00:00",
+    "metadataSource": "Microlink"
   },
   {
     "id": "aliexpress-1005008635835302",
     "name": "Producto viral seleccionado 01",
-    "description": "Producto popular seleccionado por Atlas Secreto. Consulta sus características, variantes, envío y precio vigente en AliExpress.",
+    "description": "Producto viral seleccionado 01. Producto popular seleccionado por Atlas Secreto. Consulta características, variantes y disponibilidad.",
     "categories": [
       "Virales",
       "Menos de 10"
@@ -280,7 +280,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005010154776229",
     "name": "Selección de moda para hombre 01",
-    "description": "Artículo de moda masculina seleccionado por Atlas Secreto. Consulta tallas, colores, materiales y disponibilidad en AliExpress.",
+    "description": "Selección de moda para hombre 01. Artículo de moda masculina disponible en distintas variantes. Consulta tallas, colores, materiales y condiciones de envío.",
     "categories": [
       "Moda hombre",
       "Menos de 10"
@@ -301,7 +301,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005007530634321",
     "name": "Selección de moda para mujer 04",
-    "description": "Artículo de moda femenina seleccionado por Atlas Secreto. Consulta tallas, colores, composición, envío y disponibilidad en AliExpress.",
+    "description": "Selección de moda para mujer 04. Artículo de moda femenina disponible en distintas variantes. Consulta tallas, colores, materiales y condiciones de envío.",
     "categories": [
       "Moda mujer"
     ],
@@ -321,7 +321,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005008438225768",
     "name": "Producto viral seleccionado 02",
-    "description": "Producto popular seleccionado por Atlas Secreto. Consulta sus características, variantes, envío y precio vigente en AliExpress.",
+    "description": "Producto viral seleccionado 02. Producto popular seleccionado por Atlas Secreto. Consulta características, variantes y disponibilidad.",
     "categories": [
       "Virales",
       "Menos de 10"
@@ -341,14 +341,14 @@ window.CATALOG_ALIEXPRESS_MX = [
   },
   {
     "id": "aliexpress-1005010128533688",
-    "name": "Producto viral seleccionado 03",
-    "description": "Producto popular seleccionado por Atlas Secreto. Consulta sus características, variantes, envío y precio vigente en AliExpress.",
+    "name": "RGB Led Strip Lights 1M-40M Led Room Light with APP Control Flexible Ribbon Luces Led Tape for Room Bedroom Decoration",
+    "description": "RGB Led Strip Lights 1M-40M Led Room Light with APP Control Flexible Ribbon Luces Led Tape for Room Bedroom Decoration. Producto popular seleccionado por Atlas Secreto. Consulta características, variantes y disponibilidad.",
     "categories": [
       "Virales",
       "Tecnología",
       "Menos de 10"
     ],
-    "image": "https://placehold.co/900x900/111821/d6ad52?text=Virales+03",
+    "image": "https://ae01.alicdn.com/kf/S2623d5e4ade6444aa9966f61ec578748f.jpg",
     "featured": true,
     "createdAt": "2026-07-18",
     "offers": [
@@ -359,12 +359,14 @@ window.CATALOG_ALIEXPRESS_MX = [
         "url": "https://s.click.aliexpress.com/e/_c3ugPPEj",
         "priceSnapshot": "Desde 1,83 USD"
       }
-    ]
+    ],
+    "metadataUpdatedAt": "2026-07-18T19:18:36.696509+00:00",
+    "metadataSource": "Microlink"
   },
   {
     "id": "aliexpress-1005007910321700",
     "name": "Producto de belleza y cuidado 01",
-    "description": "Producto de belleza y cuidado seleccionado por Atlas Secreto. Revisa ingredientes, modo de uso, variantes y advertencias del vendedor.",
+    "description": "Producto de belleza y cuidado 01. Producto de belleza y cuidado. Consulta composición, variante y modo de uso indicado por el vendedor.",
     "categories": [
       "Belleza y cuidado",
       "Menos de 10"
@@ -384,13 +386,13 @@ window.CATALOG_ALIEXPRESS_MX = [
   },
   {
     "id": "aliexpress-1005010347094641",
-    "name": "Producto de belleza y cuidado 02",
-    "description": "Producto de belleza y cuidado seleccionado por Atlas Secreto. Revisa ingredientes, modo de uso, variantes y advertencias del vendedor.",
+    "name": "LAKANAKU Spire Lashes Anime Feather Lightweight 12ROWS",
+    "description": "LAKANAKU narrow spire false eyelashes, handmade synthetic fans, 12 rows, 10–15mm length, lightweight manga style, perfect for anime & natural long look",
     "categories": [
       "Belleza y cuidado",
       "Menos de 10"
     ],
-    "image": "https://placehold.co/900x900/111821/d6ad52?text=Belleza+y+cuidado+02",
+    "image": "https://ae-pic-a1.aliexpress-media.com/kf/S54b69ef976dc421ba964fdb60af06ccbL.jpg?has_lang=1&ver=1_960x960q75.jpg_.avif",
     "featured": false,
     "createdAt": "2026-07-18",
     "offers": [
@@ -401,17 +403,19 @@ window.CATALOG_ALIEXPRESS_MX = [
         "url": "https://s.click.aliexpress.com/e/_c3N0ESOB",
         "priceSnapshot": "Desde 2,40 USD"
       }
-    ]
+    ],
+    "metadataUpdatedAt": "2026-07-18T19:18:56.428407+00:00",
+    "metadataSource": "Microlink"
   },
   {
     "id": "aliexpress-1005010661032861",
-    "name": "Gadget tecnológico 05",
-    "description": "Gadget tecnológico seleccionado por Atlas Secreto. Comprueba especificaciones, compatibilidad, variantes y disponibilidad antes de comprar.",
+    "name": "GameSir G7 Pro Zenless Zone Zero Edition, Wireless Xbox Controller for Xbox Series X | S, Xbox One X | S, Steam, PC, Android",
+    "description": "GameSir G7 Pro Zenless Zone Zero Edition, Wireless Xbox Controller for Xbox Series X | S, Xbox One X | S, Steam, PC, Android",
     "categories": [
       "Tecnología",
       "Virales"
     ],
-    "image": "https://placehold.co/900x900/111821/d6ad52?text=Tecnolog%C3%ADa+05",
+    "image": "https://ae-pic-a1.aliexpress-media.com/kf/S401284df568e40ce86620634f74c8aac0.png_960x960.png_.avif",
     "featured": true,
     "createdAt": "2026-07-18",
     "offers": [
@@ -422,12 +426,14 @@ window.CATALOG_ALIEXPRESS_MX = [
         "url": "https://s.click.aliexpress.com/e/_c3fAxi6B",
         "priceSnapshot": "Desde 107,63 USD"
       }
-    ]
+    ],
+    "metadataUpdatedAt": "2026-07-18T19:19:04.699666+00:00",
+    "metadataSource": "Microlink"
   },
   {
     "id": "aliexpress-1005006437076332",
     "name": "Selección de moda para hombre 02",
-    "description": "Artículo de moda masculina seleccionado por Atlas Secreto. Consulta tallas, colores, materiales y disponibilidad en AliExpress.",
+    "description": "Selección de moda para hombre 02. Artículo de moda masculina disponible en distintas variantes. Consulta tallas, colores, materiales y condiciones de envío.",
     "categories": [
       "Moda hombre"
     ],
@@ -447,7 +453,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005008830636767",
     "name": "Selección de moda para mujer 05",
-    "description": "Artículo de moda femenina seleccionado por Atlas Secreto. Consulta tallas, colores, composición, envío y disponibilidad en AliExpress.",
+    "description": "Selección de moda para mujer 05. Artículo de moda femenina disponible en distintas variantes. Consulta tallas, colores, materiales y condiciones de envío.",
     "categories": [
       "Moda mujer"
     ],
@@ -467,7 +473,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1903089759",
     "name": "Accesorio para mujer 02",
-    "description": "Accesorio femenino seleccionado por su utilidad y precio. Revisa variantes, materiales, medidas y disponibilidad antes de comprar.",
+    "description": "Accesorio para mujer 02. Accesorio femenino disponible en distintas variantes. Revisa materiales, medidas y colores antes de comprar.",
     "categories": [
       "Accesorios mujer",
       "Menos de 10"
@@ -488,7 +494,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005005909340324",
     "name": "Accesorio para coche o moto 01",
-    "description": "Accesorio seleccionado para coche o moto. Verifica la compatibilidad exacta con tu modelo antes de realizar la compra.",
+    "description": "Accesorio para coche o moto 01. Accesorio para coche o moto. Verifica la compatibilidad exacta con tu modelo.",
     "categories": [
       "Coche/Moto"
     ],
@@ -508,7 +514,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005006737907603",
     "name": "Accesorio para coche o moto 02",
-    "description": "Accesorio seleccionado para coche o moto. Verifica la compatibilidad exacta con tu modelo antes de realizar la compra.",
+    "description": "Accesorio para coche o moto 02. Accesorio para coche o moto. Verifica la compatibilidad exacta con tu modelo.",
     "categories": [
       "Coche/Moto"
     ],
@@ -528,7 +534,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005010567441252",
     "name": "Producto viral seleccionado 04",
-    "description": "Producto popular seleccionado por Atlas Secreto. Consulta sus características, variantes, envío y precio vigente en AliExpress.",
+    "description": "Producto viral seleccionado 04. Producto popular seleccionado por Atlas Secreto. Consulta características, variantes y disponibilidad.",
     "categories": [
       "Virales",
       "Tecnología",
@@ -550,7 +556,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005005507287645",
     "name": "Producto viral seleccionado 05",
-    "description": "Producto popular seleccionado por Atlas Secreto. Consulta sus características, variantes, envío y precio vigente en AliExpress.",
+    "description": "Producto viral seleccionado 05. Producto popular seleccionado por Atlas Secreto. Consulta características, variantes y disponibilidad.",
     "categories": [
       "Virales",
       "Menos de 10"
@@ -571,7 +577,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005009734420129",
     "name": "Accesorio para hombre 02",
-    "description": "Accesorio masculino seleccionado por Atlas Secreto. Consulta materiales, medidas, variantes y condiciones de envío en AliExpress.",
+    "description": "Accesorio para hombre 02. Accesorio masculino disponible en distintas variantes. Revisa materiales, medidas y colores antes de comprar.",
     "categories": [
       "Accesorios hombre",
       "Virales",
@@ -593,7 +599,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005009881248536",
     "name": "Producto viral seleccionado 06",
-    "description": "Producto popular seleccionado por Atlas Secreto. Consulta sus características, variantes, envío y precio vigente en AliExpress.",
+    "description": "Producto viral seleccionado 06. Producto popular seleccionado por Atlas Secreto. Consulta características, variantes y disponibilidad.",
     "categories": [
       "Virales",
       "Tecnología"
@@ -614,7 +620,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005005943671094",
     "name": "Producto viral seleccionado 07",
-    "description": "Producto popular seleccionado por Atlas Secreto. Consulta sus características, variantes, envío y precio vigente en AliExpress.",
+    "description": "Producto viral seleccionado 07. Producto popular seleccionado por Atlas Secreto. Consulta características, variantes y disponibilidad.",
     "categories": [
       "Virales",
       "Tecnología",
@@ -636,7 +642,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005005968706771",
     "name": "Producto viral seleccionado 08",
-    "description": "Producto popular seleccionado por Atlas Secreto. Consulta sus características, variantes, envío y precio vigente en AliExpress.",
+    "description": "Producto viral seleccionado 08. Producto popular seleccionado por Atlas Secreto. Consulta características, variantes y disponibilidad.",
     "categories": [
       "Virales",
       "Hogar",
@@ -658,7 +664,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005006894901387",
     "name": "Producto económico seleccionado 01",
-    "description": "Producto económico seleccionado por Atlas Secreto. El precio puede variar según la versión, los cupones y la dirección de entrega.",
+    "description": "Producto económico seleccionado 01. Producto económico seleccionado por Atlas Secreto. El precio final puede variar según variante, cupones y entrega.",
     "categories": [
       "Menos de 10",
       "Virales",
@@ -680,7 +686,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005007597439198",
     "name": "Producto viral seleccionado 09",
-    "description": "Producto popular seleccionado por Atlas Secreto. Consulta sus características, variantes, envío y precio vigente en AliExpress.",
+    "description": "Producto viral seleccionado 09. Producto popular seleccionado por Atlas Secreto. Consulta características, variantes y disponibilidad.",
     "categories": [
       "Virales",
       "Hogar",
@@ -702,7 +708,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005006428188946",
     "name": "Producto práctico para el hogar 03",
-    "description": "Producto práctico para el hogar seleccionado por Atlas Secreto. Revisa medidas, materiales, variantes y disponibilidad en AliExpress.",
+    "description": "Producto práctico para el hogar 03. Producto práctico para el hogar. Revisa medidas, materiales y variante antes de comprar.",
     "categories": [
       "Hogar",
       "Virales",
@@ -724,7 +730,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005008281134342",
     "name": "Producto de belleza y cuidado 03",
-    "description": "Producto de belleza y cuidado seleccionado por Atlas Secreto. Revisa ingredientes, modo de uso, variantes y advertencias del vendedor.",
+    "description": "Producto de belleza y cuidado 03. Producto de belleza y cuidado. Consulta composición, variante y modo de uso indicado por el vendedor.",
     "categories": [
       "Belleza y cuidado",
       "Menos de 10",
@@ -746,7 +752,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005006608356666",
     "name": "Accesorio para aventura y viajes 01",
-    "description": "Accesorio seleccionado para viajes y actividades al aire libre. Comprueba medidas, resistencia, variantes y condiciones de envío.",
+    "description": "Accesorio para aventura y viajes 01. Accesorio para viajes o actividades al aire libre. Comprueba medidas, materiales y resistencia.",
     "categories": [
       "Aventura y viajes",
       "Moda hombre"
@@ -767,7 +773,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005008060435016",
     "name": "Producto viral seleccionado 10",
-    "description": "Producto popular seleccionado por Atlas Secreto. Consulta sus características, variantes, envío y precio vigente en AliExpress.",
+    "description": "Producto viral seleccionado 10. Producto popular seleccionado por Atlas Secreto. Consulta características, variantes y disponibilidad.",
     "categories": [
       "Virales",
       "Menos de 10"
@@ -788,7 +794,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005007448914445",
     "name": "Producto de belleza y cuidado 04",
-    "description": "Producto de belleza y cuidado seleccionado por Atlas Secreto. Revisa ingredientes, modo de uso, variantes y advertencias del vendedor.",
+    "description": "Producto de belleza y cuidado 04. Producto de belleza y cuidado. Consulta composición, variante y modo de uso indicado por el vendedor.",
     "categories": [
       "Belleza y cuidado",
       "Menos de 10"
@@ -809,7 +815,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005006363108582",
     "name": "Producto viral seleccionado 11",
-    "description": "Producto popular seleccionado por Atlas Secreto. Consulta sus características, variantes, envío y precio vigente en AliExpress.",
+    "description": "Producto viral seleccionado 11. Producto popular seleccionado por Atlas Secreto. Consulta características, variantes y disponibilidad.",
     "categories": [
       "Virales",
       "Tecnología"
@@ -830,7 +836,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005006635539774",
     "name": "Accesorio para coche o moto 03",
-    "description": "Accesorio seleccionado para coche o moto. Verifica la compatibilidad exacta con tu modelo antes de realizar la compra.",
+    "description": "Accesorio para coche o moto 03. Accesorio para coche o moto. Verifica la compatibilidad exacta con tu modelo.",
     "categories": [
       "Coche/Moto",
       "Virales",
@@ -852,7 +858,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005010794463186",
     "name": "Gadget tecnológico 06",
-    "description": "Gadget tecnológico seleccionado por Atlas Secreto. Comprueba especificaciones, compatibilidad, variantes y disponibilidad antes de comprar.",
+    "description": "Gadget tecnológico 06. Producto tecnológico seleccionado por Atlas Secreto. Comprueba especificaciones, compatibilidad y variante.",
     "categories": [
       "Tecnología",
       "Aventura y viajes",
@@ -874,7 +880,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005010601624925",
     "name": "Selección de moda para mujer 06",
-    "description": "Artículo de moda femenina seleccionado por Atlas Secreto. Consulta tallas, colores, composición, envío y disponibilidad en AliExpress.",
+    "description": "Selección de moda para mujer 06. Artículo de moda femenina disponible en distintas variantes. Consulta tallas, colores, materiales y condiciones de envío.",
     "categories": [
       "Moda mujer"
     ],
@@ -894,7 +900,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005009014707202",
     "name": "Accesorio para coche o moto 04",
-    "description": "Accesorio seleccionado para coche o moto. Verifica la compatibilidad exacta con tu modelo antes de realizar la compra.",
+    "description": "Accesorio para coche o moto 04. Accesorio para coche o moto. Verifica la compatibilidad exacta con tu modelo.",
     "categories": [
       "Coche/Moto",
       "Virales"
@@ -915,7 +921,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005006513437185",
     "name": "Accesorio para coche o moto 05",
-    "description": "Accesorio seleccionado para coche o moto. Verifica la compatibilidad exacta con tu modelo antes de realizar la compra.",
+    "description": "Accesorio para coche o moto 05. Accesorio para coche o moto. Verifica la compatibilidad exacta con tu modelo.",
     "categories": [
       "Coche/Moto",
       "Menos de 10"
@@ -936,7 +942,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005008492202456",
     "name": "Gadget tecnológico 07",
-    "description": "Gadget tecnológico seleccionado por Atlas Secreto. Comprueba especificaciones, compatibilidad, variantes y disponibilidad antes de comprar.",
+    "description": "Gadget tecnológico 07. Producto tecnológico seleccionado por Atlas Secreto. Comprueba especificaciones, compatibilidad y variante.",
     "categories": [
       "Tecnología"
     ],
@@ -956,7 +962,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005007424613573",
     "name": "Producto económico seleccionado 02",
-    "description": "Producto económico seleccionado por Atlas Secreto. El precio puede variar según la versión, los cupones y la dirección de entrega.",
+    "description": "Producto económico seleccionado 02. Producto económico seleccionado por Atlas Secreto. El precio final puede variar según variante, cupones y entrega.",
     "categories": [
       "Menos de 10",
       "Virales",
@@ -978,7 +984,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005009631332605",
     "name": "Selección de moda para hombre 03",
-    "description": "Artículo de moda masculina seleccionado por Atlas Secreto. Consulta tallas, colores, materiales y disponibilidad en AliExpress.",
+    "description": "Selección de moda para hombre 03. Artículo de moda masculina disponible en distintas variantes. Consulta tallas, colores, materiales y condiciones de envío.",
     "categories": [
       "Moda hombre",
       "Accesorios hombre",
@@ -1000,7 +1006,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005007432048702",
     "name": "Producto de belleza y cuidado 05",
-    "description": "Producto de belleza y cuidado seleccionado por Atlas Secreto. Revisa ingredientes, modo de uso, variantes y advertencias del vendedor.",
+    "description": "Producto de belleza y cuidado 05. Producto de belleza y cuidado. Consulta composición, variante y modo de uso indicado por el vendedor.",
     "categories": [
       "Belleza y cuidado",
       "Menos de 10"
@@ -1021,7 +1027,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005006615364510",
     "name": "Accesorio para hombre 03",
-    "description": "Accesorio masculino seleccionado por Atlas Secreto. Consulta materiales, medidas, variantes y condiciones de envío en AliExpress.",
+    "description": "Accesorio para hombre 03. Accesorio masculino disponible en distintas variantes. Revisa materiales, medidas y colores antes de comprar.",
     "categories": [
       "Accesorios hombre",
       "Menos de 10"
@@ -1042,7 +1048,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005010725379714",
     "name": "Producto viral seleccionado 12",
-    "description": "Producto popular seleccionado por Atlas Secreto. Consulta sus características, variantes, envío y precio vigente en AliExpress.",
+    "description": "Producto viral seleccionado 12. Producto popular seleccionado por Atlas Secreto. Consulta características, variantes y disponibilidad.",
     "categories": [
       "Virales",
       "Menos de 10"
@@ -1063,7 +1069,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005009325887249",
     "name": "Producto económico seleccionado 03",
-    "description": "Producto económico seleccionado por Atlas Secreto. El precio puede variar según la versión, los cupones y la dirección de entrega.",
+    "description": "Producto económico seleccionado 03. Producto económico seleccionado por Atlas Secreto. El precio final puede variar según variante, cupones y entrega.",
     "categories": [
       "Menos de 10",
       "Virales"
@@ -1084,7 +1090,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005007518014453",
     "name": "Producto práctico para el hogar 04",
-    "description": "Producto práctico para el hogar seleccionado por Atlas Secreto. Revisa medidas, materiales, variantes y disponibilidad en AliExpress.",
+    "description": "Producto práctico para el hogar 04. Producto práctico para el hogar. Revisa medidas, materiales y variante antes de comprar.",
     "categories": [
       "Hogar",
       "Virales"
@@ -1105,7 +1111,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005007000212667",
     "name": "Producto viral seleccionado 13",
-    "description": "Producto popular seleccionado por Atlas Secreto. Consulta sus características, variantes, envío y precio vigente en AliExpress.",
+    "description": "Producto viral seleccionado 13. Producto popular seleccionado por Atlas Secreto. Consulta características, variantes y disponibilidad.",
     "categories": [
       "Virales",
       "Tecnología",
@@ -1127,7 +1133,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005006292239327",
     "name": "Accesorio para coche o moto 06",
-    "description": "Accesorio seleccionado para coche o moto. Verifica la compatibilidad exacta con tu modelo antes de realizar la compra.",
+    "description": "Accesorio para coche o moto 06. Accesorio para coche o moto. Verifica la compatibilidad exacta con tu modelo.",
     "categories": [
       "Coche/Moto"
     ],
@@ -1147,7 +1153,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005006915475056",
     "name": "Gadget tecnológico 08",
-    "description": "Gadget tecnológico seleccionado por Atlas Secreto. Comprueba especificaciones, compatibilidad, variantes y disponibilidad antes de comprar.",
+    "description": "Gadget tecnológico 08. Producto tecnológico seleccionado por Atlas Secreto. Comprueba especificaciones, compatibilidad y variante.",
     "categories": [
       "Tecnología"
     ],
@@ -1167,7 +1173,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005009850973839",
     "name": "Selección de moda para mujer 07",
-    "description": "Artículo de moda femenina seleccionado por Atlas Secreto. Consulta tallas, colores, composición, envío y disponibilidad en AliExpress.",
+    "description": "Selección de moda para mujer 07. Artículo de moda femenina disponible en distintas variantes. Consulta tallas, colores, materiales y condiciones de envío.",
     "categories": [
       "Moda mujer"
     ],
@@ -1187,7 +1193,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005007975336316",
     "name": "Selección de moda para mujer 08",
-    "description": "Artículo de moda femenina seleccionado por Atlas Secreto. Consulta tallas, colores, composición, envío y disponibilidad en AliExpress.",
+    "description": "Selección de moda para mujer 08. Artículo de moda femenina disponible en distintas variantes. Consulta tallas, colores, materiales y condiciones de envío.",
     "categories": [
       "Moda mujer"
     ],
@@ -1207,7 +1213,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005010078728375",
     "name": "Selección de moda para mujer 09",
-    "description": "Artículo de moda femenina seleccionado por Atlas Secreto. Consulta tallas, colores, composición, envío y disponibilidad en AliExpress.",
+    "description": "Selección de moda para mujer 09. Artículo de moda femenina disponible en distintas variantes. Consulta tallas, colores, materiales y condiciones de envío.",
     "categories": [
       "Moda mujer"
     ],
@@ -1227,7 +1233,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005008684997860",
     "name": "Selección de moda para mujer 10",
-    "description": "Artículo de moda femenina seleccionado por Atlas Secreto. Consulta tallas, colores, composición, envío y disponibilidad en AliExpress.",
+    "description": "Selección de moda para mujer 10. Artículo de moda femenina disponible en distintas variantes. Consulta tallas, colores, materiales y condiciones de envío.",
     "categories": [
       "Moda mujer"
     ],
@@ -1247,7 +1253,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005009522692761",
     "name": "Selección de moda para mujer 11",
-    "description": "Artículo de moda femenina seleccionado por Atlas Secreto. Consulta tallas, colores, composición, envío y disponibilidad en AliExpress.",
+    "description": "Selección de moda para mujer 11. Artículo de moda femenina disponible en distintas variantes. Consulta tallas, colores, materiales y condiciones de envío.",
     "categories": [
       "Moda mujer"
     ],
@@ -1267,7 +1273,7 @@ window.CATALOG_ALIEXPRESS_MX = [
   {
     "id": "aliexpress-1005009941377550",
     "name": "Selección de moda para mujer 12",
-    "description": "Artículo de moda femenina seleccionado por Atlas Secreto. Consulta tallas, colores, composición, envío y disponibilidad en AliExpress.",
+    "description": "Selección de moda para mujer 12. Artículo de moda femenina disponible en distintas variantes. Consulta tallas, colores, materiales y condiciones de envío.",
     "categories": [
       "Moda mujer"
     ],
