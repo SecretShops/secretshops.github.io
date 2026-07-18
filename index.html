@@ -1419,7 +1419,8 @@
   </footer>
 
   <script src="catalog-base.js?v=20260718-2"></script>
-  <script src="catalog-aliexpress-mx.js?v=20260718-2"></script>
+  <script src="catalog-aliexpress-mx.js?v=20260718-3"></script>
+  <script src="catalog-aliexpress-co.js?v=20260718-1"></script>
 
   <script>
     /* =====================================================
@@ -1449,6 +1450,7 @@
        Los productos se cargan desde:
        - catalog-base.js
        - catalog-aliexpress-mx.js
+       - catalog-aliexpress-co.js
 
        Cada archivo funciona de forma independiente.
        Los productos incompletos o repetidos se ignoran.
@@ -1510,9 +1512,74 @@
       };
     }
 
+    function getUniqueStrings(values) {
+      return [
+        ...new Set(
+          values.filter(
+            (value) =>
+              typeof value === "string" &&
+              value.trim()
+          )
+        )
+      ];
+    }
+
+    function getOfferKey(offer) {
+      return [
+        offer.store,
+        offer.country,
+        offer.url
+      ].join("|");
+    }
+
+    function mergeProducts(current, incoming) {
+      const offerMap =
+        new Map(
+          current.offers.map(
+            (offer) => [
+              getOfferKey(offer),
+              offer
+            ]
+          )
+        );
+
+      incoming.offers.forEach((offer) => {
+        offerMap.set(
+          getOfferKey(offer),
+          offer
+        );
+      });
+
+      const categories =
+        getUniqueStrings([
+          ...getProductCategories(current),
+          ...getProductCategories(incoming)
+        ]);
+
+      const gallery =
+        getUniqueStrings([
+          ...(Array.isArray(current.gallery)
+            ? current.gallery
+            : []),
+          ...(Array.isArray(incoming.gallery)
+            ? incoming.gallery
+            : [])
+        ]);
+
+      return {
+        ...current,
+        ...incoming,
+        categories,
+        gallery,
+        featured:
+          current.featured ||
+          incoming.featured,
+        offers: [...offerMap.values()]
+      };
+    }
+
     function buildCatalog(...sources) {
-      const products = [];
-      const seenIds = new Set();
+      const productMap = new Map();
 
       sources.forEach((source) => {
         if (!Array.isArray(source)) {
@@ -1531,25 +1598,34 @@
             return;
           }
 
-          if (seenIds.has(normalized.id)) {
-            console.warn(
-              "Producto duplicado ignorado:",
-              normalized.id
+          const current =
+            productMap.get(normalized.id);
+
+          if (current) {
+            productMap.set(
+              normalized.id,
+              mergeProducts(
+                current,
+                normalized
+              )
             );
             return;
           }
 
-          seenIds.add(normalized.id);
-          products.push(normalized);
+          productMap.set(
+            normalized.id,
+            normalized
+          );
         });
       });
 
-      return products;
+      return [...productMap.values()];
     }
 
     const CATALOG = buildCatalog(
       window.CATALOG_BASE,
-      window.CATALOG_ALIEXPRESS_MX
+      window.CATALOG_ALIEXPRESS_MX,
+      window.CATALOG_ALIEXPRESS_CO
     );
 
 
@@ -1847,7 +1923,8 @@ function getProductCategories(product) {
     function getLatestCatalogDate() {
       const dates = [
         window.CATALOG_META_BASE?.updatedAt,
-        window.CATALOG_META_ALIEXPRESS_MX?.updatedAt
+        window.CATALOG_META_ALIEXPRESS_MX?.updatedAt,
+        window.CATALOG_META_ALIEXPRESS_CO?.updatedAt
       ]
         .filter(Boolean)
         .map((value) => new Date(value))

@@ -1,0 +1,34 @@
+ATLAS SECRETO · CATÁLOGO COLOMBIA
+
+ARCHIVOS NUEVOS O MODIFICADOS
+- index.html
+- catalog-base.js
+- catalog-aliexpress-mx.js
+- catalog-aliexpress-co.js
+- images/products/co/...
+
+RESULTADO
+- Colombia muestra 4 productos.
+- El producto de la tira LED ya existía para México.
+- El nuevo index fusiona productos con el mismo ID y conserva las ofertas
+  de México y Colombia dentro de una única tarjeta.
+- Se han asociado 15 imágenes a 4 productos.
+- Las 3 imágenes del pasamontañas PHMAX no se incluyen porque no existe
+  un enlace correspondiente en el CSV ni una fila de producto en el catálogo.
+
+CÓMO SUBIRLO
+1. Descomprime el ZIP.
+2. Abre la página de carga del repositorio:
+   https://github.com/SecretoAtlas/atlas-secreto/upload/main
+3. Arrastra todos los archivos y la carpeta images.
+4. Confirma que catalog-aliexpress-co.js aparece como archivo nuevo.
+5. Confirma que index.html aparece como modificado.
+6. Pulsa Commit changes.
+7. Espera el despliegue de GitHub Pages y recarga con Ctrl + F5.
+
+COMPROBACIÓN
+- Selecciona Colombia.
+- Deben aparecer 4 productos de AliExpress.
+- Selecciona México.
+- La tira LED debe seguir apareciendo con su enlace de México.
+- En la vista Todos, la tira LED debe aparecer una sola vez.
