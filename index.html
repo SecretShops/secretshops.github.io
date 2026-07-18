@@ -10,7 +10,7 @@
 
   <meta
     name="description"
-    content="Productos útiles, virales y seleccionados por Atlas Secreto en Amazon, AliExpress, Temu y otras tiendas."
+    content="Productos seleccionados por Atlas Secreto en Amazon, AliExpress y Vinted, organizados por país y categoría."
   >
 
   <meta name="theme-color" content="#080b0f">
@@ -339,7 +339,7 @@
 
       display: grid;
       grid-template-columns:
-        repeat(4, minmax(0, 1fr));
+        repeat(auto-fit, minmax(150px, 1fr));
 
       gap: 12px;
     }
@@ -988,6 +988,126 @@
 .store-dot.vinted {
   background: #007782;
 } 
+
+    .store-button:disabled {
+      opacity: 0.42;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .catalog-status {
+      margin: 0 0 22px;
+      padding: 13px 16px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px 18px;
+
+      border: 1px solid var(--border);
+      border-radius: var(--radius-medium);
+
+      color: var(--text-secondary);
+      background: rgba(17, 24, 33, 0.58);
+
+      font-size: 0.78rem;
+      line-height: 1.55;
+    }
+
+    .catalog-status strong {
+      color: var(--text);
+    }
+
+    .catalog-status-note {
+      color: var(--gold-light);
+    }
+
+    .product-image-link {
+      display: block;
+      width: 100%;
+      height: 100%;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .offer-action {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 2px;
+    }
+
+    .offer-cta {
+      color: var(--text-secondary);
+      font-size: 0.65rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .offer-button:hover .offer-cta {
+      color: var(--text);
+    }
+
+    .pagination-controls {
+      margin-top: 28px;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .pagination-button {
+      min-height: 48px;
+      padding: 11px 20px;
+
+      border: 1px solid var(--border-gold);
+      border-radius: 999px;
+
+      color: #17120a;
+      background:
+        linear-gradient(
+          135deg,
+          var(--gold-light),
+          var(--gold)
+        );
+
+      font-weight: 850;
+
+      transition:
+        transform 0.18s ease,
+        filter 0.18s ease;
+    }
+
+    .pagination-button:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.04);
+    }
+
+    .pagination-button.secondary {
+      color: var(--text);
+      border-color: var(--border);
+      background: var(--surface);
+    }
+
+    @media (max-width: 620px) {
+      .catalog-status {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .pagination-controls {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .pagination-button {
+        width: 100%;
+      }
+    }
+
   </style>
 </head>
 
@@ -1048,8 +1168,8 @@
 
     <p class="hero-description">
       Una selección de productos útiles, curiosos y virales
-      disponibles en Amazon, AliExpress, Temu y otras tiendas.
-      Elige tu país y compara las opciones disponibles.
+      disponibles en Amazon, AliExpress y Vinted.
+      Elige tu país, filtra por categoría y accede a la tienda.
     </p>
 
     <div class="hero-benefits">
@@ -1135,6 +1255,12 @@
       compra, sin que el precio aumente para ti.
     </div>
 
+    <div
+      id="catalog-status"
+      class="catalog-status"
+      aria-live="polite"
+    ></div>
+
     <section class="controls">
 
       <div class="control-row">
@@ -1213,6 +1339,27 @@
     ></section>
 
     <div
+      id="pagination-controls"
+      class="pagination-controls hidden"
+    >
+      <button
+        id="load-more-button"
+        class="pagination-button"
+        type="button"
+      >
+        Cargar más
+      </button>
+
+      <button
+        id="show-all-button"
+        class="pagination-button secondary"
+        type="button"
+      >
+        Ver todos
+      </button>
+    </div>
+
+    <div
       id="empty-state"
       class="empty-state hidden"
     >
@@ -1259,8 +1406,8 @@
       </div>
 
       <p>
-        Los precios, la disponibilidad y las condiciones de
-        envío pueden cambiar en las plataformas externas.
+        Los precios, la disponibilidad, las variantes y las
+        condiciones de envío se confirman en cada tienda externa.
       </p>
 
       <p>
@@ -1271,8 +1418,8 @@
     </div>
   </footer>
 
-  <script src="catalog-base.js"></script>
-  <script src="catalog-aliexpress-mx.js"></script>
+  <script src="catalog-base.js?v=20260718-2"></script>
+  <script src="catalog-aliexpress-mx.js?v=20260718-2"></script>
 
   <script>
     /* =====================================================
@@ -1411,12 +1558,15 @@
        No necesitas modificar esta sección
     ====================================================== */
 
+    const PRODUCTS_PER_PAGE = 12;
+
     const state = {
       country: getInitialCountry(),
       store: "Todas",
       category: "Todas",
       query: "",
-      sort: "featured"
+      sort: "featured",
+      visibleCount: PRODUCTS_PER_PAGE
     };
 
     const countrySelector =
@@ -1442,6 +1592,18 @@
 
     const emptyState =
       document.getElementById("empty-state");
+
+    const catalogStatus =
+      document.getElementById("catalog-status");
+
+    const paginationControls =
+      document.getElementById("pagination-controls");
+
+    const loadMoreButton =
+      document.getElementById("load-more-button");
+
+    const showAllButton =
+      document.getElementById("show-all-button");
 
     document.getElementById("current-year").textContent =
       new Date().getFullYear();
@@ -1560,16 +1722,61 @@ function getProductCategories(product) {
     : [];
 }
 
-function getCategories() {
-  return [
-    "Todas",
-    ...new Set(
-      CATALOG.flatMap(
-        getProductCategories
-      )
-    )
-  ];
-}
+    const CATEGORY_ORDER = [
+      "Destacados",
+      "Virales",
+      "Menos de 10",
+      "Tecnología",
+      "Hogar",
+      "Moda mujer",
+      "Moda hombre",
+      "Accesorios mujer",
+      "Accesorios hombre",
+      "Belleza y cuidado",
+      "Aventura y viajes",
+      "Coche/Moto",
+      "Moda vintage"
+    ];
+
+    function getCategories() {
+      const categorySet =
+        new Set(
+          CATALOG
+            .filter(
+              (product) =>
+                getVisibleOffers(product).length > 0
+            )
+            .flatMap(getProductCategories)
+        );
+
+      const categories =
+        [...categorySet].sort((a, b) => {
+          const aIndex = CATEGORY_ORDER.indexOf(a);
+          const bIndex = CATEGORY_ORDER.indexOf(b);
+
+          if (aIndex !== -1 || bIndex !== -1) {
+            return (
+              (aIndex === -1 ? 999 : aIndex) -
+              (bIndex === -1 ? 999 : bIndex)
+            );
+          }
+
+          return a.localeCompare(b, "es");
+        });
+
+      return ["Todas", ...categories];
+    }
+
+    function ensureValidCategory() {
+      if (!getCategories().includes(state.category)) {
+        state.category = "Todas";
+      }
+    }
+
+    function resetVisibleCount() {
+      state.visibleCount = PRODUCTS_PER_PAGE;
+    }
+
     function renderCategories() {
       categoryList.innerHTML =
         getCategories()
@@ -1590,6 +1797,113 @@ function getCategories() {
             `;
           })
           .join("");
+    }
+
+    function updateStoreButtons() {
+      let selectedStoreIsAvailable = true;
+
+      document
+        .querySelectorAll(".store-button")
+        .forEach((button) => {
+          const store = button.dataset.store;
+
+          const available =
+            store === "Todas" ||
+            CATALOG.some((product) => {
+              return getCountryOffers(product).some(
+                (offer) => offer.store === store
+              );
+            });
+
+          button.classList.toggle(
+            "hidden",
+            !available
+          );
+
+          button.disabled = !available;
+
+          if (
+            store === state.store &&
+            !available
+          ) {
+            selectedStoreIsAvailable = false;
+          }
+        });
+
+      if (!selectedStoreIsAvailable) {
+        state.store = "Todas";
+      }
+
+      document
+        .querySelectorAll(".store-button")
+        .forEach((button) => {
+          button.classList.toggle(
+            "active",
+            button.dataset.store === state.store
+          );
+        });
+    }
+
+    function getLatestCatalogDate() {
+      const dates = [
+        window.CATALOG_META_BASE?.updatedAt,
+        window.CATALOG_META_ALIEXPRESS_MX?.updatedAt
+      ]
+        .filter(Boolean)
+        .map((value) => new Date(value))
+        .filter(
+          (value) => !Number.isNaN(value.getTime())
+        );
+
+      if (dates.length === 0) {
+        return "";
+      }
+
+      return new Date(
+        Math.max(...dates.map((value) => value.getTime()))
+      ).toLocaleDateString(
+        "es-ES",
+        {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric"
+        }
+      );
+    }
+
+    function renderCatalogStatus() {
+      const countryProducts =
+        CATALOG.filter(
+          (product) =>
+            getCountryOffers(product).length > 0
+        ).length;
+
+      const updateDate =
+        getLatestCatalogDate();
+
+      catalogStatus.innerHTML = `
+        <span>
+          <strong>${countryProducts}</strong>
+          ${
+            countryProducts === 1
+              ? "producto disponible"
+              : "productos disponibles"
+          }
+          para ${escapeHtml(
+            COUNTRY_NAMES[state.country]
+          )}.
+        </span>
+
+        <span class="catalog-status-note">
+          El precio y la disponibilidad se confirman
+          en la tienda
+          ${
+            updateDate
+              ? ` · Catálogo revisado: ${escapeHtml(updateDate)}`
+              : ""
+          }
+        </span>
+      `;
     }
 
     function filteredProducts() {
@@ -1699,8 +2013,14 @@ const categoryMatches =
             </span>
           </span>
 
-          <span class="offer-price">
-            ${escapeHtml(offer.price)}
+          <span class="offer-action">
+            <span class="offer-price">
+              ${escapeHtml(offer.price)}
+            </span>
+
+            <span class="offer-cta">
+              Ver producto →
+            </span>
           </span>
         </a>
       `;
@@ -1709,6 +2029,42 @@ const categoryMatches =
     function renderProduct(product) {
       const offers =
         getVisibleOffers(product);
+
+      const primaryOffer =
+        offers.find(
+          (offer) =>
+            validAffiliateUrl(offer.url)
+        );
+
+      const productImage = `
+        <img
+          class="product-image"
+          src="${escapeHtml(product.image)}"
+          alt="${escapeHtml(product.name)}"
+          loading="lazy"
+          decoding="async"
+          onerror="
+            this.onerror = null;
+            this.src =
+            '${DEFAULT_PRODUCT_IMAGE}';
+          "
+        >
+      `;
+
+      const linkedProductImage =
+        primaryOffer
+          ? `
+            <a
+              class="product-image-link"
+              href="${escapeHtml(primaryOffer.url)}"
+              target="_blank"
+              rel="nofollow sponsored noopener noreferrer"
+              aria-label="Ver ${escapeHtml(product.name)}"
+            >
+              ${productImage}
+            </a>
+          `
+          : productImage;
 
       const featuredLabel =
         product.featured
@@ -1732,21 +2088,14 @@ const categoryMatches =
           `;
 
       return `
-        <article class="product-card">
+        <article
+          class="product-card"
+          data-product-id="${escapeHtml(product.id)}"
+        >
 
           <div class="product-image-container">
 
-            <img
-              class="product-image"
-              src="${escapeHtml(product.image)}"
-              alt="${escapeHtml(product.name)}"
-              loading="lazy"
-              onerror="
-                this.onerror = null;
-                this.src =
-                '${DEFAULT_PRODUCT_IMAGE}';
-              "
-            >
+            ${linkedProductImage}
 
             ${featuredLabel}
 
@@ -1799,22 +2148,60 @@ const categoryMatches =
       const products =
         filteredProducts();
 
+      const visibleProducts =
+        products.slice(
+          0,
+          state.visibleCount
+        );
+
       productGrid.innerHTML =
-        products
+        visibleProducts
           .map(renderProduct)
           .join("");
 
-      resultCount.textContent =
-        `${products.length} ` +
-        (
-          products.length === 1
-            ? "producto"
-            : "productos"
-        );
+      if (
+        visibleProducts.length < products.length
+      ) {
+        resultCount.textContent =
+          `Mostrando ${visibleProducts.length} de ` +
+          `${products.length} productos`;
+      } else {
+        resultCount.textContent =
+          `${products.length} ` +
+          (
+            products.length === 1
+              ? "producto"
+              : "productos"
+          );
+      }
 
       emptyState.classList.toggle(
         "hidden",
         products.length !== 0
+      );
+
+      const remaining =
+        Math.max(
+          products.length - visibleProducts.length,
+          0
+        );
+
+      paginationControls.classList.toggle(
+        "hidden",
+        remaining === 0
+      );
+
+      loadMoreButton.textContent =
+        remaining > 0
+          ? `Cargar ${Math.min(
+              PRODUCTS_PER_PAGE,
+              remaining
+            )} más`
+          : "Cargar más";
+
+      showAllButton.classList.toggle(
+        "hidden",
+        remaining <= PRODUCTS_PER_PAGE
       );
     }
 
@@ -1829,6 +2216,11 @@ const categoryMatches =
           state.country
         );
 
+        updateStoreButtons();
+        ensureValidCategory();
+        resetVisibleCount();
+        renderCategories();
+        renderCatalogStatus();
         renderProducts();
       }
     );
@@ -1841,7 +2233,10 @@ const categoryMatches =
             "[data-store]"
           );
 
-        if (!button) {
+        if (
+          !button ||
+          button.disabled
+        ) {
           return;
         }
 
@@ -1859,6 +2254,9 @@ const categoryMatches =
             );
           });
 
+        ensureValidCategory();
+        resetVisibleCount();
+        renderCategories();
         renderProducts();
 
         document
@@ -1885,6 +2283,7 @@ const categoryMatches =
         state.category =
           button.dataset.category;
 
+        resetVisibleCount();
         renderCategories();
         renderProducts();
       }
@@ -1896,6 +2295,7 @@ const categoryMatches =
         state.query =
           searchInput.value;
 
+        resetVisibleCount();
         renderProducts();
       }
     );
@@ -1906,11 +2306,35 @@ const categoryMatches =
         state.sort =
           sortSelector.value;
 
+        resetVisibleCount();
         renderProducts();
       }
     );
 
+    loadMoreButton.addEventListener(
+      "click",
+      () => {
+        state.visibleCount +=
+          PRODUCTS_PER_PAGE;
+
+        renderProducts();
+      }
+    );
+
+    showAllButton.addEventListener(
+      "click",
+      () => {
+        state.visibleCount =
+          Number.MAX_SAFE_INTEGER;
+
+        renderProducts();
+      }
+    );
+
+    updateStoreButtons();
+    ensureValidCategory();
     renderCategories();
+    renderCatalogStatus();
     renderProducts();
   </script>
 

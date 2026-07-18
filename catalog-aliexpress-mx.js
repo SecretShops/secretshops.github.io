@@ -7,10 +7,19 @@
   Productos únicos publicados: 60.
   Filas duplicadas fusionadas: 40.
 
-  Este archivo funciona inmediatamente con datos fallback.
-  El flujo de GitHub Actions incluido puede sustituir automáticamente
-  los nombres, las imágenes y los precios mediante la API de AliExpress.
+  Los nombres y las imágenes siguen siendo provisionales hasta que
+  AliExpress apruebe el acceso a la API. Los precios se confirman
+  directamente en la página del producto para evitar mostrar importes
+  desactualizados.
 */
+
+window.CATALOG_META_ALIEXPRESS_MX = {
+  sourceRows: 100,
+  uniqueProducts: 60,
+  duplicatesMerged: 40,
+  updatedAt: "2026-07-18",
+  priceMode: "external"
+};
 
 window.CATALOG_ALIEXPRESS_MX = [
   {
@@ -28,8 +37,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 9,08 USD",
-        "url": "https://s.click.aliexpress.com/e/_c3iLL9bN"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3iLL9bN",
+        "priceSnapshot": "Desde 9,08 USD"
       }
     ]
   },
@@ -48,8 +58,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 0,99 USD",
-        "url": "https://s.click.aliexpress.com/e/_c3CEqUiB"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3CEqUiB",
+        "priceSnapshot": "Desde 0,99 USD"
       }
     ]
   },
@@ -68,8 +79,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 3,08 USD",
-        "url": "https://s.click.aliexpress.com/e/_c2RSvtKx"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c2RSvtKx",
+        "priceSnapshot": "Desde 3,08 USD"
       }
     ]
   },
@@ -88,8 +100,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 1,27 USD",
-        "url": "https://s.click.aliexpress.com/e/_c3J4TDSx"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3J4TDSx",
+        "priceSnapshot": "Desde 1,27 USD"
       }
     ]
   },
@@ -108,8 +121,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 2,46 USD",
-        "url": "https://s.click.aliexpress.com/e/_c30ApjoP"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c30ApjoP",
+        "priceSnapshot": "Desde 2,46 USD"
       }
     ]
   },
@@ -128,8 +142,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 5,28 USD",
-        "url": "https://s.click.aliexpress.com/e/_c45F8ZPl"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c45F8ZPl",
+        "priceSnapshot": "Desde 5,28 USD"
       }
     ]
   },
@@ -149,8 +164,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 2,27 USD",
-        "url": "https://s.click.aliexpress.com/e/_c2yKWzF5"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c2yKWzF5",
+        "priceSnapshot": "Desde 2,27 USD"
       }
     ]
   },
@@ -169,8 +185,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 3,12 USD",
-        "url": "https://s.click.aliexpress.com/e/_c3EwQ4Lt"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3EwQ4Lt",
+        "priceSnapshot": "Desde 3,12 USD"
       }
     ]
   },
@@ -191,8 +208,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 1,24 USD",
-        "url": "https://s.click.aliexpress.com/e/_c40eNY3h"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c40eNY3h",
+        "priceSnapshot": "Desde 1,24 USD"
       }
     ]
   },
@@ -211,8 +229,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 66,20 USD",
-        "url": "https://s.click.aliexpress.com/e/_c3BId7Nt"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3BId7Nt",
+        "priceSnapshot": "Desde 66,20 USD"
       }
     ]
   },
@@ -231,8 +250,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 3,07 USD",
-        "url": "https://s.click.aliexpress.com/e/_c39oZE0T"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c39oZE0T",
+        "priceSnapshot": "Desde 3,07 USD"
       }
     ]
   },
@@ -251,8 +271,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 9,39 USD",
-        "url": "https://s.click.aliexpress.com/e/_c3C0Xa99"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3C0Xa99",
+        "priceSnapshot": "Desde 9,39 USD"
       }
     ]
   },
@@ -271,8 +292,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 2,12 USD",
-        "url": "https://s.click.aliexpress.com/e/_c4kztppv"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c4kztppv",
+        "priceSnapshot": "Desde 2,12 USD"
       }
     ]
   },
@@ -290,8 +312,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 15,70 USD",
-        "url": "https://s.click.aliexpress.com/e/_c32gG6pz"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c32gG6pz",
+        "priceSnapshot": "Desde 15,70 USD"
       }
     ]
   },
@@ -310,8 +333,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 9,21 USD",
-        "url": "https://s.click.aliexpress.com/e/_c4ruEoeP"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c4ruEoeP",
+        "priceSnapshot": "Desde 9,21 USD"
       }
     ]
   },
@@ -331,8 +355,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 1,83 USD",
-        "url": "https://s.click.aliexpress.com/e/_c3ugPPEj"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3ugPPEj",
+        "priceSnapshot": "Desde 1,83 USD"
       }
     ]
   },
@@ -351,8 +376,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 0,84 USD",
-        "url": "https://s.click.aliexpress.com/e/_c4Sivmvd"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c4Sivmvd",
+        "priceSnapshot": "Desde 0,84 USD"
       }
     ]
   },
@@ -371,8 +397,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 2,40 USD",
-        "url": "https://s.click.aliexpress.com/e/_c3N0ESOB"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3N0ESOB",
+        "priceSnapshot": "Desde 2,40 USD"
       }
     ]
   },
@@ -391,8 +418,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 107,63 USD",
-        "url": "https://s.click.aliexpress.com/e/_c3fAxi6B"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3fAxi6B",
+        "priceSnapshot": "Desde 107,63 USD"
       }
     ]
   },
@@ -410,8 +438,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 10,40 USD",
-        "url": "https://s.click.aliexpress.com/e/_c3EPBWKB"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3EPBWKB",
+        "priceSnapshot": "Desde 10,40 USD"
       }
     ]
   },
@@ -429,8 +458,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 15,79 USD",
-        "url": "https://s.click.aliexpress.com/e/_c2zZg3oB"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c2zZg3oB",
+        "priceSnapshot": "Desde 15,79 USD"
       }
     ]
   },
@@ -449,8 +479,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 5,77 USD",
-        "url": "https://s.click.aliexpress.com/e/_c3iMB6Ph"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3iMB6Ph",
+        "priceSnapshot": "Desde 5,77 USD"
       }
     ]
   },
@@ -468,8 +499,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 21,26 USD",
-        "url": "https://s.click.aliexpress.com/e/_c3GQtJon"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3GQtJon",
+        "priceSnapshot": "Desde 21,26 USD"
       }
     ]
   },
@@ -487,8 +519,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 18,59 USD",
-        "url": "https://s.click.aliexpress.com/e/_c3zqIZ4r"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3zqIZ4r",
+        "priceSnapshot": "Desde 18,59 USD"
       }
     ]
   },
@@ -508,8 +541,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 1,40 USD",
-        "url": "https://s.click.aliexpress.com/e/_c3b2sOgF"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3b2sOgF",
+        "priceSnapshot": "Desde 1,40 USD"
       }
     ]
   },
@@ -528,8 +562,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 2,35 USD",
-        "url": "https://s.click.aliexpress.com/e/_c4EpXYCx"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c4EpXYCx",
+        "priceSnapshot": "Desde 2,35 USD"
       }
     ]
   },
@@ -549,8 +584,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 3,25 USD",
-        "url": "https://s.click.aliexpress.com/e/_c45ksWx1"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c45ksWx1",
+        "priceSnapshot": "Desde 3,25 USD"
       }
     ]
   },
@@ -569,8 +605,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 18,31 USD",
-        "url": "https://s.click.aliexpress.com/e/_c4aCepJz"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c4aCepJz",
+        "priceSnapshot": "Desde 18,31 USD"
       }
     ]
   },
@@ -590,8 +627,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 46,18 USD",
-        "url": "https://s.click.aliexpress.com/e/_c3jjs0cL"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3jjs0cL",
+        "priceSnapshot": "Desde 46,18 USD"
       }
     ]
   },
@@ -611,8 +649,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 2,15 USD",
-        "url": "https://s.click.aliexpress.com/e/_c4laHo8T"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c4laHo8T",
+        "priceSnapshot": "Desde 2,15 USD"
       }
     ]
   },
@@ -632,8 +671,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 1,13 USD",
-        "url": "https://s.click.aliexpress.com/e/_c3D4enm3"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3D4enm3",
+        "priceSnapshot": "Desde 1,13 USD"
       }
     ]
   },
@@ -653,8 +693,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 12,81 USD",
-        "url": "https://s.click.aliexpress.com/e/_c4qrOk2r"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c4qrOk2r",
+        "priceSnapshot": "Desde 12,81 USD"
       }
     ]
   },
@@ -674,8 +715,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 0,71 USD",
-        "url": "https://s.click.aliexpress.com/e/_c3Cg4O1l"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3Cg4O1l",
+        "priceSnapshot": "Desde 0,71 USD"
       }
     ]
   },
@@ -695,8 +737,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 4,32 USD",
-        "url": "https://s.click.aliexpress.com/e/_c337dN5h"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c337dN5h",
+        "priceSnapshot": "Desde 4,32 USD"
       }
     ]
   },
@@ -715,8 +758,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 21,45 USD",
-        "url": "https://s.click.aliexpress.com/e/_c3IED16L"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3IED16L",
+        "priceSnapshot": "Desde 21,45 USD"
       }
     ]
   },
@@ -735,8 +779,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 0,99 USD",
-        "url": "https://s.click.aliexpress.com/e/_c3b8n4KP"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3b8n4KP",
+        "priceSnapshot": "Desde 0,99 USD"
       }
     ]
   },
@@ -755,8 +800,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 3,02 USD",
-        "url": "https://s.click.aliexpress.com/e/_c4SIrm59"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c4SIrm59",
+        "priceSnapshot": "Desde 3,02 USD"
       }
     ]
   },
@@ -775,8 +821,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 13,69 USD",
-        "url": "https://s.click.aliexpress.com/e/_c3IThgJZ"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3IThgJZ",
+        "priceSnapshot": "Desde 13,69 USD"
       }
     ]
   },
@@ -796,8 +843,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 2,41 USD",
-        "url": "https://s.click.aliexpress.com/e/_c30Kbn7H"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c30Kbn7H",
+        "priceSnapshot": "Desde 2,41 USD"
       }
     ]
   },
@@ -817,8 +865,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 16,53 USD",
-        "url": "https://s.click.aliexpress.com/e/_c3mW45gf"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3mW45gf",
+        "priceSnapshot": "Desde 16,53 USD"
       }
     ]
   },
@@ -836,8 +885,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 17,06 USD",
-        "url": "https://s.click.aliexpress.com/e/_c3AxKKaP"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3AxKKaP",
+        "priceSnapshot": "Desde 17,06 USD"
       }
     ]
   },
@@ -856,8 +906,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 15,04 USD",
-        "url": "https://s.click.aliexpress.com/e/_c4o3Ixf5"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c4o3Ixf5",
+        "priceSnapshot": "Desde 15,04 USD"
       }
     ]
   },
@@ -876,8 +927,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 8,10 USD",
-        "url": "https://s.click.aliexpress.com/e/_c4d4Qabh"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c4d4Qabh",
+        "priceSnapshot": "Desde 8,10 USD"
       }
     ]
   },
@@ -895,8 +947,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 68,63 USD",
-        "url": "https://s.click.aliexpress.com/e/_c4oiRcgF"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c4oiRcgF",
+        "priceSnapshot": "Desde 68,63 USD"
       }
     ]
   },
@@ -916,8 +969,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 6,07 USD",
-        "url": "https://s.click.aliexpress.com/e/_c34EhN2x"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c34EhN2x",
+        "priceSnapshot": "Desde 6,07 USD"
       }
     ]
   },
@@ -937,8 +991,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 5,07 USD",
-        "url": "https://s.click.aliexpress.com/e/_c3S3k5I7"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3S3k5I7",
+        "priceSnapshot": "Desde 5,07 USD"
       }
     ]
   },
@@ -957,8 +1012,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 1,18 USD",
-        "url": "https://s.click.aliexpress.com/e/_c3s0jeTZ"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3s0jeTZ",
+        "priceSnapshot": "Desde 1,18 USD"
       }
     ]
   },
@@ -977,8 +1033,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 1,04 USD",
-        "url": "https://s.click.aliexpress.com/e/_c3N8pWSJ"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3N8pWSJ",
+        "priceSnapshot": "Desde 1,04 USD"
       }
     ]
   },
@@ -997,8 +1054,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 5,10 USD",
-        "url": "https://s.click.aliexpress.com/e/_c4onAQIr"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c4onAQIr",
+        "priceSnapshot": "Desde 5,10 USD"
       }
     ]
   },
@@ -1017,8 +1075,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 9,21 USD",
-        "url": "https://s.click.aliexpress.com/e/_c3GvctA7"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3GvctA7",
+        "priceSnapshot": "Desde 9,21 USD"
       }
     ]
   },
@@ -1037,8 +1096,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 10,14 USD",
-        "url": "https://s.click.aliexpress.com/e/_c3qvkACF"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3qvkACF",
+        "priceSnapshot": "Desde 10,14 USD"
       }
     ]
   },
@@ -1058,8 +1118,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 2,45 USD",
-        "url": "https://s.click.aliexpress.com/e/_c4BkBnHZ"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c4BkBnHZ",
+        "priceSnapshot": "Desde 2,45 USD"
       }
     ]
   },
@@ -1077,8 +1138,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 33,33 USD",
-        "url": "https://s.click.aliexpress.com/e/_c4sGq9sn"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c4sGq9sn",
+        "priceSnapshot": "Desde 33,33 USD"
       }
     ]
   },
@@ -1096,8 +1158,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 45,61 USD",
-        "url": "https://s.click.aliexpress.com/e/_c42eIm6n"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c42eIm6n",
+        "priceSnapshot": "Desde 45,61 USD"
       }
     ]
   },
@@ -1115,8 +1178,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 46,21 USD",
-        "url": "https://s.click.aliexpress.com/e/_c4LmXwTv"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c4LmXwTv",
+        "priceSnapshot": "Desde 46,21 USD"
       }
     ]
   },
@@ -1134,8 +1198,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 26,68 USD",
-        "url": "https://s.click.aliexpress.com/e/_c4bcu0OR"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c4bcu0OR",
+        "priceSnapshot": "Desde 26,68 USD"
       }
     ]
   },
@@ -1153,8 +1218,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 27,40 USD",
-        "url": "https://s.click.aliexpress.com/e/_c3aQnz91"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3aQnz91",
+        "priceSnapshot": "Desde 27,40 USD"
       }
     ]
   },
@@ -1172,8 +1238,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 28,25 USD",
-        "url": "https://s.click.aliexpress.com/e/_c4MRXlOj"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c4MRXlOj",
+        "priceSnapshot": "Desde 28,25 USD"
       }
     ]
   },
@@ -1191,8 +1258,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 15,93 USD",
-        "url": "https://s.click.aliexpress.com/e/_c374im0L"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c374im0L",
+        "priceSnapshot": "Desde 15,93 USD"
       }
     ]
   },
@@ -1210,8 +1278,9 @@ window.CATALOG_ALIEXPRESS_MX = [
       {
         "store": "AliExpress",
         "country": "MX",
-        "price": "Desde 32,20 USD",
-        "url": "https://s.click.aliexpress.com/e/_c4lzZP3V"
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c4lzZP3V",
+        "priceSnapshot": "Desde 32,20 USD"
       }
     ]
   }

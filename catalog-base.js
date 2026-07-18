@@ -8,6 +8,11 @@
   contiene un error, estas fichas podrán seguir mostrándose.
 */
 
+window.CATALOG_META_BASE = {
+  products: 3,
+  updatedAt: "2026-07-18"
+};
+
 window.CATALOG_BASE = [
   {
           id: "productos-amazon",
