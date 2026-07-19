@@ -1502,6 +1502,213 @@
       }
     }
 
+  
+    /* =====================================================
+       AJUSTES DE CATÁLOGO · 2026-07-19
+    ===================================================== */
+
+    .control-row {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .featured-label {
+      display: none !important;
+    }
+
+    .product-grid {
+      grid-template-columns:
+        repeat(6, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .product-card {
+      border-radius: 13px;
+    }
+
+    .product-content {
+      padding: 9px;
+    }
+
+    .product-meta {
+      margin-bottom: 5px;
+      font-size: 0.56rem;
+    }
+
+    .product-content h3 {
+      min-height: 2.45em;
+      font-size: 0.76rem;
+      line-height: 1.22;
+    }
+
+    .product-description {
+      min-height: 2.8em;
+      margin: 5px 0 8px;
+      -webkit-line-clamp: 2;
+      font-size: 0.63rem;
+      line-height: 1.35;
+    }
+
+    .offer-button {
+      min-height: 35px;
+      padding: 6px 7px;
+    }
+
+    .offer-store,
+    .offer-price {
+      font-size: 0.61rem;
+    }
+
+    .offer-country,
+    .offer-cta {
+      font-size: 0.52rem;
+    }
+
+    .grouped-catalog {
+      display: block;
+    }
+
+    .category-showcase {
+      margin: 0 0 34px;
+      padding: 0 0 28px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .category-showcase:last-child {
+      border-bottom: 0;
+    }
+
+    .category-showcase-heading {
+      margin: 0 0 12px;
+
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .category-showcase-heading h2 {
+      margin: 0;
+
+      font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+      font-size:
+        clamp(1.35rem, 3vw, 2rem);
+    }
+
+    .category-product-count {
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      white-space: nowrap;
+    }
+
+    .mobile-category-control select {
+      appearance: none;
+      -webkit-appearance: none;
+
+      padding: 0 46px 0 15px;
+
+      color: var(--text);
+      background-color: rgba(17, 24, 33, 0.98);
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23d6ad52' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      background-size: 18px;
+    }
+
+    @media (max-width: 1240px) {
+      .product-grid {
+        grid-template-columns:
+          repeat(5, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 960px) {
+      .product-grid {
+        grid-template-columns:
+          repeat(4, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 700px) {
+      .mobile-category-control {
+        margin-top: 10px;
+        padding: 10px 12px;
+
+        grid-template-columns: 1fr;
+        gap: 7px;
+
+        border: 1px solid var(--border);
+        border-radius: 14px;
+
+        background: rgba(17, 24, 33, 0.82);
+
+        color: var(--text);
+        font-size: 0.82rem;
+      }
+
+      .mobile-category-control select {
+        min-height: 50px;
+        border-color: var(--border-gold);
+        border-radius: 12px;
+        font-size: 0.9rem;
+        font-weight: 700;
+      }
+
+      .product-grid {
+        grid-template-columns:
+          repeat(3, minmax(0, 1fr));
+        gap: 7px;
+      }
+
+      .category-showcase {
+        margin-bottom: 26px;
+        padding-bottom: 22px;
+      }
+
+      .category-showcase-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .product-content {
+        padding: 7px;
+      }
+
+      .product-content h3 {
+        font-size: 0.7rem;
+      }
+
+      .product-description {
+        display: none;
+      }
+
+      .product-meta {
+        font-size: 0.5rem;
+      }
+
+      .offer-button {
+        min-height: 33px;
+        padding: 5px 6px;
+      }
+
+      .offer-store,
+      .offer-price {
+        font-size: 0.56rem;
+      }
+    }
+
+    @media (max-width: 389px) {
+      .product-grid {
+        grid-template-columns:
+          repeat(2, minmax(0, 1fr));
+      }
+    }
+
   </style>
 </head>
 
@@ -1569,7 +1776,7 @@
 
     <p class="hero-description">
       Una selección de productos útiles, curiosos y virales
-      disponibles en Amazon, AliExpress y Vinted.
+      disponibles en Amazon, AliExpress, Temu y Vinted.
       Elige tu país, filtra por categoría y accede a la tienda.
     </p>
 
@@ -1600,11 +1807,11 @@
   >
     <button
       class="store-button active"
-      data-store="Todas"
+      data-store="Todos"
       type="button"
     >
       <span class="store-dot"></span>
-      Todas
+      Todos
     </button>
 
     <button
@@ -1683,28 +1890,7 @@
             autocomplete="off"
           >
         </label>
-
-        <label>
-          <span class="screen-reader-only">
-            Ordenar productos
-          </span>
-
-          <select id="sort-selector">
-            <option value="featured">
-              Recomendados primero
-            </option>
-
-            <option value="name">
-              Orden alfabético
-            </option>
-
-            <option value="newest">
-              Más recientes
-            </option>
-          </select>
-        </label>
-
-      </div>
+</div>
 
       <div
         id="category-list"
@@ -1729,11 +1915,11 @@
 
       <div>
         <p class="section-label">
-          Recomendaciones
+          Catálogo
         </p>
 
         <h2>
-          Productos seleccionados
+          Productos
         </h2>
       </div>
 
@@ -1831,7 +2017,8 @@
   </footer>
 
   <script src="catalog-base.js?v=20260718-2"></script>
-  <script src="catalog-aliexpress-mx.js?v=20260718-4"></script>
+  <script src="catalog-aliexpress-mx.js?v=20260719-2"></script>
+  <script src="catalog-temu.js?v=20260719-1"></script>
   <script src="catalog-aliexpress-co.js?v=20260718-1"></script>
 
   <script>
@@ -1863,6 +2050,7 @@
        - catalog-base.js
        - catalog-aliexpress-mx.js
        - catalog-aliexpress-co.js
+       - catalog-temu.js
 
        Cada archivo funciona de forma independiente.
        Los productos incompletos se ignoran y los repetidos se fusionan.
@@ -1883,15 +2071,54 @@
       );
     }
 
-    function normalizeProduct(product) {
+    function isPlaceholderProductImage(url) {
+      if (typeof url !== "string" || !url.trim()) {
+        return true;
+      }
+
+      try {
+        const parsedUrl = new URL(url);
+        return (
+          parsedUrl.hostname.includes("placehold.co") ||
+          parsedUrl.hostname.includes("placeholder")
+        );
+      } catch {
+        return true;
+      }
+    }
+
+    function hasCompleteProductData(product) {
       if (
         !product ||
         typeof product.id !== "string" ||
         !product.id.trim() ||
         typeof product.name !== "string" ||
-        !product.name.trim() ||
+        product.name.trim().length < 4 ||
+        typeof product.description !== "string" ||
+        product.description.trim().length < 20 ||
+        typeof product.image !== "string" ||
+        !product.image.trim() ||
         !Array.isArray(product.offers)
       ) {
+        return false;
+      }
+
+      const isMarketplaceProduct =
+        product.id.startsWith("aliexpress-") ||
+        product.id.startsWith("temu-");
+
+      if (
+        isMarketplaceProduct &&
+        isPlaceholderProductImage(product.image)
+      ) {
+        return false;
+      }
+
+      return true;
+    }
+
+    function normalizeProduct(product) {
+      if (!hasCompleteProductData(product)) {
         return null;
       }
 
@@ -1906,16 +2133,9 @@
         ...product,
         id: product.id.trim(),
         name: product.name.trim(),
-        description:
-          typeof product.description === "string"
-            ? product.description
-            : "",
-        image:
-          typeof product.image === "string" &&
-          product.image.trim()
-            ? product.image
-            : DEFAULT_PRODUCT_IMAGE,
-        featured: Boolean(product.featured),
+        description: product.description.trim(),
+        image: product.image.trim(),
+        featured: false,
         createdAt:
           typeof product.createdAt === "string"
             ? product.createdAt
@@ -2037,7 +2257,8 @@
     const CATALOG = buildCatalog(
       window.CATALOG_BASE,
       window.CATALOG_ALIEXPRESS_MX,
-      window.CATALOG_ALIEXPRESS_CO
+      window.CATALOG_ALIEXPRESS_CO,
+      window.CATALOG_TEMU
     );
 
 
@@ -2046,15 +2267,34 @@
        No necesitas modificar esta sección
     ====================================================== */
 
-    const PRODUCTS_PER_PAGE = 12;
+    function getResponsivePageSize() {
+      const width = window.innerWidth;
+
+      if (width >= 1240) {
+        return 24;
+      }
+
+      if (width >= 960) {
+        return 20;
+      }
+
+      if (width >= 700) {
+        return 16;
+      }
+
+      if (width >= 390) {
+        return 15;
+      }
+
+      return 10;
+    }
 
     const state = {
       country: getInitialCountry(),
-      store: "Todas",
-      category: "Todas",
+      store: "Todos",
+      category: "Todos",
       query: "",
-      sort: "featured",
-      visibleCount: PRODUCTS_PER_PAGE
+      visibleCount: getResponsivePageSize()
     };
 
     const countrySelector =
@@ -2074,8 +2314,6 @@
     const searchInput =
       document.getElementById("search-input");
 
-    const sortSelector =
-      document.getElementById("sort-selector");
 
     const productGrid =
       document.getElementById("product-grid");
@@ -2193,7 +2431,7 @@
       let offers =
         getCountryOffers(product);
 
-      if (state.store !== "Todas") {
+      if (state.store !== "Todos") {
         offers = offers.filter(
           (offer) =>
             offer.store === state.store
@@ -2257,17 +2495,17 @@ function getProductCategories(product) {
           return a.localeCompare(b, "es");
         });
 
-      return ["Todas", ...categories];
+      return ["Todos", ...categories];
     }
 
     function ensureValidCategory() {
       if (!getCategories().includes(state.category)) {
-        state.category = "Todas";
+        state.category = "Todos";
       }
     }
 
     function resetVisibleCount() {
-      state.visibleCount = PRODUCTS_PER_PAGE;
+      state.visibleCount = getResponsivePageSize();
     }
 
     function renderCategories() {
@@ -2320,7 +2558,8 @@ function getProductCategories(product) {
           const store = button.dataset.store;
 
           const available =
-            store === "Todas" ||
+            store === "Todos" ||
+            store === "Temu" ||
             CATALOG.some((product) => {
               return getCountryOffers(product).some(
                 (offer) => offer.store === store
@@ -2343,7 +2582,7 @@ function getProductCategories(product) {
         });
 
       if (!selectedStoreIsAvailable) {
-        state.store = "Todas";
+        state.store = "Todos";
       }
 
       document
@@ -2360,7 +2599,8 @@ function getProductCategories(product) {
       const dates = [
         window.CATALOG_META_BASE?.updatedAt,
         window.CATALOG_META_ALIEXPRESS_MX?.updatedAt,
-        window.CATALOG_META_ALIEXPRESS_CO?.updatedAt
+        window.CATALOG_META_ALIEXPRESS_CO?.updatedAt,
+        window.CATALOG_META_TEMU?.updatedAt
       ]
         .filter(Boolean)
         .map((value) => new Date(value))
@@ -2434,7 +2674,7 @@ function getProductCategories(product) {
             return false;
           }
 const categoryMatches =
-  state.category === "Todas" ||
+  state.category === "Todos" ||
   getProductCategories(product).includes(
     state.category
   );
@@ -2461,23 +2701,17 @@ const categoryMatches =
         });
 
       return products.sort((a, b) => {
-        if (state.sort === "name") {
-          return a.name.localeCompare(
-            b.name,
-            "es"
-          );
+        const dateDifference =
+          new Date(b.createdAt) -
+          new Date(a.createdAt);
+
+        if (dateDifference !== 0) {
+          return dateDifference;
         }
 
-        if (state.sort === "newest") {
-          return (
-            new Date(b.createdAt) -
-            new Date(a.createdAt)
-          );
-        }
-
-        return (
-          Number(b.featured) -
-          Number(a.featured)
+        return a.name.localeCompare(
+          b.name,
+          "es"
         );
       });
     }
@@ -2579,14 +2813,7 @@ const categoryMatches =
           `
           : productImage;
 
-      const featuredLabel =
-        product.featured
-          ? `
-            <span class="featured-label">
-              Recomendado
-            </span>
-          `
-          : "";
+      const featuredLabel = "";
 
       const offersHtml =
         offers.length > 0
@@ -2657,9 +2884,118 @@ const categoryMatches =
       `;
     }
 
+    function renderGroupedProducts(products) {
+      const categories =
+        getCategories().filter(
+          (category) => category !== "Todos"
+        );
+
+      return categories
+        .map((category) => {
+          const categoryProducts =
+            products.filter((product) =>
+              getProductCategories(product).includes(
+                category
+              )
+            );
+
+          if (categoryProducts.length === 0) {
+            return "";
+          }
+
+          return `
+            <section class="category-showcase">
+              <div class="category-showcase-heading">
+                <div>
+                  <p class="section-label">
+                    Categoría
+                  </p>
+
+                  <h2>
+                    ${escapeHtml(category)}
+                  </h2>
+                </div>
+
+                <span class="category-product-count">
+                  ${categoryProducts.length}
+                  ${
+                    categoryProducts.length === 1
+                      ? "producto"
+                      : "productos"
+                  }
+                </span>
+              </div>
+
+              <div class="product-grid category-showcase-grid">
+                ${categoryProducts
+                  .map(renderProduct)
+                  .join("")}
+              </div>
+            </section>
+          `;
+        })
+        .join("");
+    }
+
     function renderProducts() {
       const products =
         filteredProducts();
+
+      const groupedView =
+        state.category === "Todos";
+
+      productGrid.classList.toggle(
+        "grouped-catalog",
+        groupedView
+      );
+
+      if (groupedView) {
+        productGrid.innerHTML =
+          renderGroupedProducts(products);
+
+        resultCount.textContent =
+          `${products.length} ${
+            products.length === 1
+              ? "producto"
+              : "productos"
+          } organizados por categoría`;
+
+        emptyState.classList.toggle(
+          "hidden",
+          products.length !== 0
+        );
+
+        paginationControls.classList.add(
+          "hidden"
+        );
+
+        if (
+          products.length === 0 &&
+          state.store === "Temu"
+        ) {
+          emptyState.innerHTML = `
+            <strong>
+              Temu estará disponible próximamente
+            </strong>
+
+            Todavía no hay productos de Temu cargados
+            para el país seleccionado.
+          `;
+        } else {
+          emptyState.innerHTML = `
+            <strong>
+              No hay productos disponibles
+            </strong>
+
+            Prueba otra búsqueda, categoría, tienda o país.
+          `;
+        }
+
+        return;
+      }
+
+      const pageSize =
+        getResponsivePageSize();
 
       const visibleProducts =
         products.slice(
@@ -2693,6 +3029,28 @@ const categoryMatches =
         products.length !== 0
       );
 
+      if (
+        products.length === 0 &&
+        state.store === "Temu"
+      ) {
+        emptyState.innerHTML = `
+          <strong>
+            Temu estará disponible próximamente
+          </strong>
+
+          Todavía no hay productos de Temu cargados
+          para el país seleccionado.
+        `;
+      } else {
+        emptyState.innerHTML = `
+          <strong>
+            No hay productos disponibles
+          </strong>
+
+          Prueba otra búsqueda, categoría, tienda o país.
+        `;
+      }
+
       const remaining =
         Math.max(
           products.length - visibleProducts.length,
@@ -2707,14 +3065,14 @@ const categoryMatches =
       loadMoreButton.textContent =
         remaining > 0
           ? `Cargar ${Math.min(
-              PRODUCTS_PER_PAGE,
+              pageSize,
               remaining
             )} más`
           : "Cargar más";
 
       showAllButton.classList.toggle(
         "hidden",
-        remaining <= PRODUCTS_PER_PAGE
+        remaining <= pageSize
       );
     }
 
@@ -2825,22 +3183,12 @@ const categoryMatches =
       }
     );
 
-    sortSelector.addEventListener(
-      "change",
-      () => {
-        state.sort =
-          sortSelector.value;
-
-        resetVisibleCount();
-        renderProducts();
-      }
-    );
 
     loadMoreButton.addEventListener(
       "click",
       () => {
         state.visibleCount +=
-          PRODUCTS_PER_PAGE;
+          getResponsivePageSize();
 
         renderProducts();
       }
@@ -2853,6 +3201,29 @@ const categoryMatches =
           Number.MAX_SAFE_INTEGER;
 
         renderProducts();
+      }
+    );
+
+    let resizeTimer;
+
+    window.addEventListener(
+      "resize",
+      () => {
+        window.clearTimeout(resizeTimer);
+
+        resizeTimer = window.setTimeout(
+          () => {
+            if (
+              state.visibleCount !==
+              Number.MAX_SAFE_INTEGER
+            ) {
+              resetVisibleCount();
+            }
+
+            renderProducts();
+          },
+          160
+        );
       }
     );
 

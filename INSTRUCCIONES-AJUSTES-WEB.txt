@@ -1,0 +1,39 @@
+ATLAS SECRETO · AJUSTES DE LA WEB
+
+ARCHIVOS QUE DEBES SUBIR O REEMPLAZAR EN LA RAÍZ DEL REPOSITORIO
+
+1. index.html
+   Reemplaza el index.html actual.
+
+2. catalog-aliexpress-mx.js
+   Reemplaza el catálogo mexicano actual.
+   Este archivo contiene los 89 registros de origen; la web muestra
+   únicamente los productos con nombre, descripción e imagen válidos.
+
+3. catalog-temu.js
+   Es un archivo nuevo. Súbelo a la raíz del repositorio.
+
+CAMBIOS APLICADOS
+
+- Tarjetas más pequeñas: 6 columnas en escritorio, 5/4 en tablet,
+  3 en móvil y 2 en pantallas muy estrechas.
+- “Todas” pasa a llamarse “Todos”.
+- En “Todos”, los productos se organizan por categorías.
+- Eliminado el selector “Recomendados / Orden alfabético / Más recientes”.
+- Selector móvil de categorías más grande y con flecha dorada visible.
+- Productos incompletos o con imagen provisional de marketplace
+  quedan excluidos automáticamente de la web.
+- Temu aparece como plataforma y queda preparado para futuros productos.
+- Eliminada la etiqueta “Recomendado” de todas las tarjetas.
+- Cantidad inicial adaptativa:
+  24 escritorio, 20/16 tablet, 15 móvil y 10 móvil estrecho.
+- En la pestaña “Todos” no hay paginación: se muestran los escaparates
+  agrupados por categoría.
+
+PUBLICACIÓN
+
+- Sube los tres archivos.
+- Commit message recomendado:
+  Aplicar nuevo diseño compacto y escaparates por categoría
+- Espera al deployment verde de GitHub Pages.
+- Abre la web con Ctrl + F5 o en una ventana privada.
