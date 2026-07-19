@@ -1,0 +1,24 @@
+CATÁLOGO ALIEXPRESS MÉXICO · ACTUALIZACIÓN 2026-07-19
+
+ARCHIVO PRINCIPAL
+- catalog-aliexpress-mx-actualizado-2026-07-19.js
+
+CÓMO AÑADIRLO A LA WEB
+1. En tu proyecto, localiza el archivo catalog-aliexpress-mx.js.
+2. Sustituye todo su contenido por el del archivo JS incluido.
+3. Guarda y publica los cambios.
+4. No pegues estos objetos dentro de index.html si tu web ya carga el catálogo externo.
+
+RESULTADO
+- 60 productos anteriores conservados.
+- 1 producto anterior actualizado con nombre, imagen y enlace reales.
+- 29 productos nuevos añadidos.
+- 89 productos únicos finales.
+- 30 enlaces de afiliado nuevos de AliExpress México.
+- Categorías múltiples y categoría Menos de 10 según el precio observado.
+
+COMPROBACIONES
+- Sin IDs duplicados.
+- Todos los nuevos productos tienen nombre, imagen y enlace de afiliado.
+- País de todas las ofertas nuevas: MX.
+- URLs de afiliado con dominio s.click.aliexpress.com.
