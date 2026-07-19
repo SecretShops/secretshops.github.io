@@ -466,6 +466,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "No hay cambios que publicar."
           else
-            git commit -m "Importar 79 productos reales de AliExpress México"
-            git push
+            git commit -m "Actualizar catálogo AliExpress México"
+            git pull --rebase origin main
+            git push origin main
           fi
