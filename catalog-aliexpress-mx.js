@@ -3,20 +3,29 @@
 /*
   CATÁLOGO ALIEXPRESS · MÉXICO
 
-  Archivo completo listo para reemplazar catalog-aliexpress-mx.js.
-  Conserva los 60 productos anteriores, actualiza 1 coincidencia y
-  añade 29 productos nuevos con imágenes reales y enlaces de afiliado.
+  Productos anteriores conservados: 89.
+  Enlaces válidos recibidos: 79.
+  Productos nuevos añadidos: 79.
+  Enlaces rechazados y excluidos: 11.
+  Total final: 168 productos únicos.
 
-  Total final: 89 productos únicos.
+  Los productos nuevos permanecen ocultos en la web mientras
+  conserven la imagen provisional. GitHub Actions completará
+  progresivamente sus nombres, descripciones e imágenes reales.
 */
 
 window.CATALOG_META_ALIEXPRESS_MX = {
-  "sourceRows": 130,
-  "uniqueProducts": 89,
-  "duplicatesMerged": 41,
+  "sourceRows": 220,
+  "uniqueProducts": 168,
+  "duplicatesMerged": 0,
   "updatedAt": "2026-07-19",
   "priceMode": "external",
-  "newAffiliateProducts": 30
+  "previousProducts": 89,
+  "validAffiliateRowsReceived": 79,
+  "newAffiliateProducts": 79,
+  "affiliateLinksUpdated": 0,
+  "rejectedAffiliateRows": 11,
+  "productsWithRealImage": 30
 };
 
 window.CATALOG_ALIEXPRESS_MX = [
@@ -200,7 +209,7 @@ window.CATALOG_ALIEXPRESS_MX = [
       "Menos de 10"
     ],
     "image": "https://placehold.co/900x900/111821/d6ad52?text=Tecnolog%C3%ADa+03",
-    "featured": true,
+    "featured": false,
     "createdAt": "2026-07-18",
     "offers": [
       {
@@ -221,7 +230,7 @@ window.CATALOG_ALIEXPRESS_MX = [
       "Virales"
     ],
     "image": "https://ae-pic-a1.aliexpress-media.com/kf/S4d20c1366d9f4eb9a293dc418a8dd18ei.jpg_480x480q75.jpg_.avif",
-    "featured": true,
+    "featured": false,
     "createdAt": "2026-07-19",
     "offers": [
       {
@@ -263,7 +272,7 @@ window.CATALOG_ALIEXPRESS_MX = [
       "Menos de 10"
     ],
     "image": "https://placehold.co/900x900/111821/d6ad52?text=Virales+01",
-    "featured": true,
+    "featured": false,
     "createdAt": "2026-07-18",
     "offers": [
       {
@@ -325,7 +334,7 @@ window.CATALOG_ALIEXPRESS_MX = [
       "Menos de 10"
     ],
     "image": "https://placehold.co/900x900/111821/d6ad52?text=Virales+02",
-    "featured": true,
+    "featured": false,
     "createdAt": "2026-07-18",
     "offers": [
       {
@@ -347,7 +356,7 @@ window.CATALOG_ALIEXPRESS_MX = [
       "Menos de 10"
     ],
     "image": "https://placehold.co/900x900/111821/d6ad52?text=Virales+03",
-    "featured": true,
+    "featured": false,
     "createdAt": "2026-07-18",
     "offers": [
       {
@@ -410,7 +419,7 @@ window.CATALOG_ALIEXPRESS_MX = [
       "Virales"
     ],
     "image": "https://placehold.co/900x900/111821/d6ad52?text=Tecnolog%C3%ADa+05",
-    "featured": true,
+    "featured": false,
     "createdAt": "2026-07-18",
     "offers": [
       {
@@ -533,7 +542,7 @@ window.CATALOG_ALIEXPRESS_MX = [
       "Menos de 10"
     ],
     "image": "https://placehold.co/900x900/111821/d6ad52?text=Virales+04",
-    "featured": true,
+    "featured": false,
     "createdAt": "2026-07-18",
     "offers": [
       {
@@ -554,7 +563,7 @@ window.CATALOG_ALIEXPRESS_MX = [
       "Menos de 10"
     ],
     "image": "https://placehold.co/900x900/111821/d6ad52?text=Virales+05",
-    "featured": true,
+    "featured": false,
     "createdAt": "2026-07-18",
     "offers": [
       {
@@ -576,7 +585,7 @@ window.CATALOG_ALIEXPRESS_MX = [
       "Menos de 10"
     ],
     "image": "https://placehold.co/900x900/111821/d6ad52?text=Accesorios+hombre+02",
-    "featured": true,
+    "featured": false,
     "createdAt": "2026-07-18",
     "offers": [
       {
@@ -597,7 +606,7 @@ window.CATALOG_ALIEXPRESS_MX = [
       "Tecnología"
     ],
     "image": "https://placehold.co/900x900/111821/d6ad52?text=Virales+06",
-    "featured": true,
+    "featured": false,
     "createdAt": "2026-07-18",
     "offers": [
       {
@@ -619,7 +628,7 @@ window.CATALOG_ALIEXPRESS_MX = [
       "Hogar"
     ],
     "image": "https://placehold.co/900x900/111821/d6ad52?text=Virales+07",
-    "featured": true,
+    "featured": false,
     "createdAt": "2026-07-18",
     "offers": [
       {
@@ -641,7 +650,7 @@ window.CATALOG_ALIEXPRESS_MX = [
       "Menos de 10"
     ],
     "image": "https://placehold.co/900x900/111821/d6ad52?text=Virales+08",
-    "featured": true,
+    "featured": false,
     "createdAt": "2026-07-18",
     "offers": [
       {
@@ -663,7 +672,7 @@ window.CATALOG_ALIEXPRESS_MX = [
       "Tecnología"
     ],
     "image": "https://placehold.co/900x900/111821/d6ad52?text=Menos+de+10+01",
-    "featured": true,
+    "featured": false,
     "createdAt": "2026-07-18",
     "offers": [
       {
@@ -685,7 +694,7 @@ window.CATALOG_ALIEXPRESS_MX = [
       "Aventura y viajes"
     ],
     "image": "https://placehold.co/900x900/111821/d6ad52?text=Virales+09",
-    "featured": true,
+    "featured": false,
     "createdAt": "2026-07-18",
     "offers": [
       {
@@ -707,7 +716,7 @@ window.CATALOG_ALIEXPRESS_MX = [
       "Menos de 10"
     ],
     "image": "https://placehold.co/900x900/111821/d6ad52?text=Hogar+03",
-    "featured": true,
+    "featured": false,
     "createdAt": "2026-07-18",
     "offers": [
       {
@@ -729,7 +738,7 @@ window.CATALOG_ALIEXPRESS_MX = [
       "Virales"
     ],
     "image": "https://placehold.co/900x900/111821/d6ad52?text=Belleza+y+cuidado+03",
-    "featured": true,
+    "featured": false,
     "createdAt": "2026-07-18",
     "offers": [
       {
@@ -771,7 +780,7 @@ window.CATALOG_ALIEXPRESS_MX = [
       "Menos de 10"
     ],
     "image": "https://placehold.co/900x900/111821/d6ad52?text=Virales+10",
-    "featured": true,
+    "featured": false,
     "createdAt": "2026-07-18",
     "offers": [
       {
@@ -813,7 +822,7 @@ window.CATALOG_ALIEXPRESS_MX = [
       "Tecnología"
     ],
     "image": "https://placehold.co/900x900/111821/d6ad52?text=Virales+11",
-    "featured": true,
+    "featured": false,
     "createdAt": "2026-07-18",
     "offers": [
       {
@@ -835,7 +844,7 @@ window.CATALOG_ALIEXPRESS_MX = [
       "Menos de 10"
     ],
     "image": "https://placehold.co/900x900/111821/d6ad52?text=Coche%2FMoto+03",
-    "featured": true,
+    "featured": false,
     "createdAt": "2026-07-18",
     "offers": [
       {
@@ -857,7 +866,7 @@ window.CATALOG_ALIEXPRESS_MX = [
       "Virales"
     ],
     "image": "https://placehold.co/900x900/111821/d6ad52?text=Tecnolog%C3%ADa+06",
-    "featured": true,
+    "featured": false,
     "createdAt": "2026-07-18",
     "offers": [
       {
@@ -898,7 +907,7 @@ window.CATALOG_ALIEXPRESS_MX = [
       "Virales"
     ],
     "image": "https://placehold.co/900x900/111821/d6ad52?text=Coche%2FMoto+04",
-    "featured": true,
+    "featured": false,
     "createdAt": "2026-07-18",
     "offers": [
       {
@@ -961,7 +970,7 @@ window.CATALOG_ALIEXPRESS_MX = [
       "Tecnología"
     ],
     "image": "https://placehold.co/900x900/111821/d6ad52?text=Menos+de+10+02",
-    "featured": true,
+    "featured": false,
     "createdAt": "2026-07-18",
     "offers": [
       {
@@ -1046,7 +1055,7 @@ window.CATALOG_ALIEXPRESS_MX = [
       "Menos de 10"
     ],
     "image": "https://placehold.co/900x900/111821/d6ad52?text=Virales+12",
-    "featured": true,
+    "featured": false,
     "createdAt": "2026-07-18",
     "offers": [
       {
@@ -1067,7 +1076,7 @@ window.CATALOG_ALIEXPRESS_MX = [
       "Virales"
     ],
     "image": "https://placehold.co/900x900/111821/d6ad52?text=Menos+de+10+03",
-    "featured": true,
+    "featured": false,
     "createdAt": "2026-07-18",
     "offers": [
       {
@@ -1088,7 +1097,7 @@ window.CATALOG_ALIEXPRESS_MX = [
       "Virales"
     ],
     "image": "https://placehold.co/900x900/111821/d6ad52?text=Hogar+04",
-    "featured": true,
+    "featured": false,
     "createdAt": "2026-07-18",
     "offers": [
       {
@@ -1110,7 +1119,7 @@ window.CATALOG_ALIEXPRESS_MX = [
       "Menos de 10"
     ],
     "image": "https://placehold.co/900x900/111821/d6ad52?text=Virales+13",
-    "featured": true,
+    "featured": false,
     "createdAt": "2026-07-18",
     "offers": [
       {
@@ -1292,7 +1301,7 @@ window.CATALOG_ALIEXPRESS_MX = [
       "Menos de 10"
     ],
     "image": "https://ae-pic-a1.aliexpress-media.com/kf/S973f88c831ea4b6e9d066a831be991ccC.jpg_480x480q75.jpg_.avif",
-    "featured": true,
+    "featured": false,
     "createdAt": "2026-07-19",
     "offers": [
       {
@@ -1315,7 +1324,7 @@ window.CATALOG_ALIEXPRESS_MX = [
       "Menos de 10"
     ],
     "image": "https://ae-pic-a1.aliexpress-media.com/kf/Sec71bddda64246f1a326f7bfcbdfdb2bp.png_480x480.png_.avif",
-    "featured": true,
+    "featured": false,
     "createdAt": "2026-07-19",
     "offers": [
       {
@@ -1494,7 +1503,7 @@ window.CATALOG_ALIEXPRESS_MX = [
       "Menos de 10"
     ],
     "image": "https://ae-pic-a1.aliexpress-media.com/kf/Sd42bceb859cc43e1935c6b76288303aa8.jpg_480x480q75.jpg_.avif",
-    "featured": true,
+    "featured": false,
     "createdAt": "2026-07-19",
     "offers": [
       {
@@ -1582,7 +1591,7 @@ window.CATALOG_ALIEXPRESS_MX = [
       "Virales"
     ],
     "image": "https://ae-pic-a1.aliexpress-media.com/kf/S14db77e3e6d646669182351b47c4e0b8i.png_480x480.png_.avif",
-    "featured": true,
+    "featured": false,
     "createdAt": "2026-07-19",
     "offers": [
       {
@@ -1603,7 +1612,7 @@ window.CATALOG_ALIEXPRESS_MX = [
       "Virales"
     ],
     "image": "https://ae-pic-a1.aliexpress-media.com/kf/S407c76fa50cc4e90b99b67ad556a47c2x.jpg_480x480q75.jpg_.avif",
-    "featured": true,
+    "featured": false,
     "createdAt": "2026-07-19",
     "offers": [
       {
@@ -1624,7 +1633,7 @@ window.CATALOG_ALIEXPRESS_MX = [
       "Menos de 10"
     ],
     "image": "https://ae-pic-a1.aliexpress-media.com/kf/S9d801e9c9c064fe7b23fdfe03986da7ci.jpg_480x480q75.jpg_.avif",
-    "featured": true,
+    "featured": false,
     "createdAt": "2026-07-19",
     "offers": [
       {
@@ -1645,7 +1654,7 @@ window.CATALOG_ALIEXPRESS_MX = [
       "Menos de 10"
     ],
     "image": "https://ae-pic-a1.aliexpress-media.com/kf/S7a85e42505624f1f859d1e4f73cfb25bK/166x64.png",
-    "featured": true,
+    "featured": false,
     "createdAt": "2026-07-19",
     "offers": [
       {
@@ -1666,7 +1675,7 @@ window.CATALOG_ALIEXPRESS_MX = [
       "Virales"
     ],
     "image": "https://ae-pic-a1.aliexpress-media.com/kf/S25e08acd163c408ba42f34bd415f29d1E.jpg_480x480q75.jpg_.avif",
-    "featured": true,
+    "featured": false,
     "createdAt": "2026-07-19",
     "offers": [
       {
@@ -1732,7 +1741,7 @@ window.CATALOG_ALIEXPRESS_MX = [
       "Virales"
     ],
     "image": "https://ae-pic-a1.aliexpress-media.com/kf/S7193e74e8ea74269980193acdfed2b33Z.jpg_480x480q75.jpg_.avif",
-    "featured": true,
+    "featured": false,
     "createdAt": "2026-07-19",
     "offers": [
       {
@@ -1753,7 +1762,7 @@ window.CATALOG_ALIEXPRESS_MX = [
       "Otros"
     ],
     "image": "https://ae-pic-a1.aliexpress-media.com/kf/Sa1b08095e51542ed9b760b0a2bf7302dI.jpg_480x480q75.jpg_.avif",
-    "featured": true,
+    "featured": false,
     "createdAt": "2026-07-19",
     "offers": [
       {
@@ -1907,7 +1916,7 @@ window.CATALOG_ALIEXPRESS_MX = [
       "Menos de 10"
     ],
     "image": "https://ae-pic-a1.aliexpress-media.com/kf/S0f63acb2cb3446938e5111dde665f15cH.jpg_480x480q75.jpg_.avif",
-    "featured": true,
+    "featured": false,
     "createdAt": "2026-07-19",
     "offers": [
       {
@@ -1916,6 +1925,1507 @@ window.CATALOG_ALIEXPRESS_MX = [
         "price": "Ver precio actual",
         "url": "https://s.click.aliexpress.com/e/_c4VrM6ob",
         "priceSnapshot": "Desde 9,34 USD"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005006012781837",
+    "name": "Producto AliExpress 1005006012781837",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005006012781837",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3tU5gJp"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005006036563565",
+    "name": "Producto AliExpress 1005006036563565",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005006036563565",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3ELWOCj"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005008172728192",
+    "name": "Producto AliExpress 1005008172728192",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005008172728192",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3NbO1Qj"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005010151336476",
+    "name": "Producto AliExpress 1005010151336476",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005010151336476",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3ouwEaB"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-4001297281637",
+    "name": "Producto AliExpress 4001297281637",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+4001297281637",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3UPef7H"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005005737742955",
+    "name": "Producto AliExpress 1005005737742955",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005005737742955",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3ftHA0L"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005005956163255",
+    "name": "Producto AliExpress 1005005956163255",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005005956163255",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c4k4AURv"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005003727030683",
+    "name": "Producto AliExpress 1005003727030683",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005003727030683",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c41CYt8f"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005001620967213",
+    "name": "Producto AliExpress 1005001620967213",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005001620967213",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3HzkHrV"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005011624777735",
+    "name": "Producto AliExpress 1005011624777735",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005011624777735",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c2RFBPLz"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005011986090974",
+    "name": "Producto AliExpress 1005011986090974",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005011986090974",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c30zHwc3"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005003338096182",
+    "name": "Producto AliExpress 1005003338096182",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005003338096182",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c2xzPObh"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005010768830892",
+    "name": "Producto AliExpress 1005010768830892",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005010768830892",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c2Qia7fz"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005008170738453",
+    "name": "Producto AliExpress 1005008170738453",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005008170738453",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c4Bf8vgB"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005008596859041",
+    "name": "Producto AliExpress 1005008596859041",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005008596859041",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3WAMBZp"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005004922876166",
+    "name": "Producto AliExpress 1005004922876166",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005004922876166",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3oeFmfv"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005005759723525",
+    "name": "Producto AliExpress 1005005759723525",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005005759723525",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c4VKW2n1"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005007387509167",
+    "name": "Producto AliExpress 1005007387509167",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005007387509167",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3apNqUT"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005009484298757",
+    "name": "Producto AliExpress 1005009484298757",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005009484298757",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3lkm5tD"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005006099598522",
+    "name": "Producto AliExpress 1005006099598522",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005006099598522",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3Vv7ktd"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-4000933550120",
+    "name": "Producto AliExpress 4000933550120",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+4000933550120",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c436cFEb"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005006624312209",
+    "name": "Producto AliExpress 1005006624312209",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005006624312209",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3sez4l9"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005006345368259",
+    "name": "Producto AliExpress 1005006345368259",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005006345368259",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c4LRHtgf"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005003049012312",
+    "name": "Producto AliExpress 1005003049012312",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005003049012312",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c4Bnr8DV"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005009595198163",
+    "name": "Producto AliExpress 1005009595198163",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005009595198163",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c42EC6yF"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005006955187109",
+    "name": "Producto AliExpress 1005006955187109",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005006955187109",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3SRA3a3"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005008878618165",
+    "name": "Producto AliExpress 1005008878618165",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005008878618165",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c4OUjDyX"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005006943108856",
+    "name": "Producto AliExpress 1005006943108856",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005006943108856",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c4cZZs5N"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005008517377656",
+    "name": "Producto AliExpress 1005008517377656",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005008517377656",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c2vL6m3Z"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005008205688527",
+    "name": "Producto AliExpress 1005008205688527",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005008205688527",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c426NuU7"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005005567682818",
+    "name": "Producto AliExpress 1005005567682818",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005005567682818",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3qXSZtD"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005007729760231",
+    "name": "Producto AliExpress 1005007729760231",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005007729760231",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c31S3Yl9"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005006150257209",
+    "name": "Producto AliExpress 1005006150257209",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005006150257209",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c4SEoSZd"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005006373451365",
+    "name": "Producto AliExpress 1005006373451365",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005006373451365",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c2RJaXzv"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005001265801355",
+    "name": "Producto AliExpress 1005001265801355",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005001265801355",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c4sQsgnt"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005009952532117",
+    "name": "Producto AliExpress 1005009952532117",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005009952532117",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c2R5oJ2j"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005008626130737",
+    "name": "Producto AliExpress 1005008626130737",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005008626130737",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3khhWiP"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005005458241595",
+    "name": "Producto AliExpress 1005005458241595",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005005458241595",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c4TvDfbz"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005006589678350",
+    "name": "Producto AliExpress 1005006589678350",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005006589678350",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c2yRBWQB"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005006204456238",
+    "name": "Producto AliExpress 1005006204456238",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005006204456238",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c44tOavV"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005008247579935",
+    "name": "Producto AliExpress 1005008247579935",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005008247579935",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c4BtMJHt"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005008466263332",
+    "name": "Producto AliExpress 1005008466263332",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005008466263332",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c2QfQjsR"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005006914061582",
+    "name": "Producto AliExpress 1005006914061582",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005006914061582",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c4lVvhNZ"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005006984954856",
+    "name": "Producto AliExpress 1005006984954856",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005006984954856",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c424lIZz"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005009133010801",
+    "name": "Producto AliExpress 1005009133010801",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005009133010801",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3xflEan"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005005441545741",
+    "name": "Producto AliExpress 1005005441545741",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005005441545741",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3YYxCAf"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005005635600963",
+    "name": "Producto AliExpress 1005005635600963",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005005635600963",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c35qrMxt"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005009973090391",
+    "name": "Producto AliExpress 1005009973090391",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005009973090391",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3knRIBt"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005005362531460",
+    "name": "Producto AliExpress 1005005362531460",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005005362531460",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c4NVmJtp"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005008832038596",
+    "name": "Producto AliExpress 1005008832038596",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005008832038596",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3Xe8DTz"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005006837537615",
+    "name": "Producto AliExpress 1005006837537615",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005006837537615",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c4c2UUZN"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005007611962439",
+    "name": "Producto AliExpress 1005007611962439",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005007611962439",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3cGP8wr"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005006725821346",
+    "name": "Producto AliExpress 1005006725821346",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005006725821346",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c4TnwM55"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005006155297410",
+    "name": "Producto AliExpress 1005006155297410",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005006155297410",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3rEgGvz"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005008258662643",
+    "name": "Producto AliExpress 1005008258662643",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005008258662643",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c33iRL6x"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005009768376683",
+    "name": "Producto AliExpress 1005009768376683",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005009768376683",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c4Vtw4hl"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005005736220332",
+    "name": "Producto AliExpress 1005005736220332",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005005736220332",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c4nl5TOb"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005007100961752",
+    "name": "Producto AliExpress 1005007100961752",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005007100961752",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c40SaKu3"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005007548354153",
+    "name": "Producto AliExpress 1005007548354153",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005007548354153",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c30pCLfz"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005009782515104",
+    "name": "Producto AliExpress 1005009782515104",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005009782515104",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3XGBR51"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005012258919495",
+    "name": "Producto AliExpress 1005012258919495",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005012258919495",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c4CZyCGj"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005011695374640",
+    "name": "Producto AliExpress 1005011695374640",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005011695374640",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3iAIQEB"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005009251118470",
+    "name": "Producto AliExpress 1005009251118470",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005009251118470",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3zZXyy7"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005009014240386",
+    "name": "Producto AliExpress 1005009014240386",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005009014240386",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c35w3O31"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005010588014395",
+    "name": "Producto AliExpress 1005010588014395",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005010588014395",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3nfo7Ax"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005010408710831",
+    "name": "Producto AliExpress 1005010408710831",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005010408710831",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c2QPdGyx"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005005891273646",
+    "name": "Producto AliExpress 1005005891273646",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005005891273646",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3UYPzx5"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005005458105667",
+    "name": "Producto AliExpress 1005005458105667",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005005458105667",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c30HcNCB"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005005480076722",
+    "name": "Producto AliExpress 1005005480076722",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005005480076722",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c4KCeS2X"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005001381724177",
+    "name": "Producto AliExpress 1005001381724177",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005001381724177",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3KZR6T1"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005010159886702",
+    "name": "Producto AliExpress 1005010159886702",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005010159886702",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3ywmBlD"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005009296847612",
+    "name": "Producto AliExpress 1005009296847612",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005009296847612",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c4r3T4UL"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005006339647483",
+    "name": "Producto AliExpress 1005006339647483",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005006339647483",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c39ScTon"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005012160210362",
+    "name": "Producto AliExpress 1005012160210362",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005012160210362",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3KGeIp5"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005008650939340",
+    "name": "Producto AliExpress 1005008650939340",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005008650939340",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3pFHCMF"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-4001326088295",
+    "name": "Producto AliExpress 4001326088295",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+4001326088295",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c4o25P7z"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005010454835972",
+    "name": "Producto AliExpress 1005010454835972",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005010454835972",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3qBihcR"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005008375193732",
+    "name": "Producto AliExpress 1005008375193732",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005008375193732",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3VAHHdv"
+      }
+    ]
+  },
+  {
+    "id": "aliexpress-1005007161989400",
+    "name": "Producto AliExpress 1005007161989400",
+    "description": "Producto nuevo pendiente de completar automáticamente con su nombre, descripción e imagen reales. Consulta variantes, precio final, envío y disponibilidad en AliExpress.",
+    "categories": [
+      "Virales"
+    ],
+    "image": "https://placehold.co/900x900/111821/d6ad52?text=Pendiente+1005007161989400",
+    "featured": false,
+    "createdAt": "2026-07-19",
+    "offers": [
+      {
+        "store": "AliExpress",
+        "country": "MX",
+        "price": "Ver precio actual",
+        "url": "https://s.click.aliexpress.com/e/_c3fToyfv"
       }
     ]
   }

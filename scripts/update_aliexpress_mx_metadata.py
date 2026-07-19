@@ -394,11 +394,23 @@ def build_product(
         or source["fallback_image"]
     )
 
-    description = build_description(
-        name,
-        metadata.get("description"),
-        list(source.get("categories") or []),
-    )
+    raw_description = metadata.get("description")
+    fallback_description = source.get("fallback_description")
+
+    if valid_description(raw_description):
+        description = build_description(
+            name,
+            raw_description,
+            list(source.get("categories") or []),
+        )
+    elif valid_description(fallback_description):
+        description = normalize_text(fallback_description)
+    else:
+        description = build_description(
+            name,
+            raw_description,
+            list(source.get("categories") or []),
+        )
 
     offer = {
         "store": "AliExpress",
@@ -659,9 +671,9 @@ def main() -> int:
         "sus datos provisionales.\n"
         "*/\n\n"
         "window.CATALOG_META_ALIEXPRESS_MX = {\n"
-        "  sourceRows: 100,\n"
+        f"  sourceRows: {len(sources)},\n"
         f"  uniqueProducts: {len(products)},\n"
-        "  duplicatesMerged: 40,\n"
+        "  duplicatesMerged: 0,\n"
         f'  updatedAt: "{today}",\n'
         f"  metadataCompleted: {completed},\n"
         f"  metadataNeverAttempted: "
