@@ -4,7 +4,7 @@
   CATÁLOGO ALIEXPRESS · MÉXICO
 
   Productos únicos: 60.
-  Metadatos reales completados: 7/60.
+  Metadatos reales completados: 8/60.
   Los productos pendientes conservan sus datos provisionales.
 */
 
@@ -12,8 +12,10 @@ window.CATALOG_META_ALIEXPRESS_MX = {
   sourceRows: 100,
   uniqueProducts: 60,
   duplicatesMerged: 40,
-  updatedAt: "2026-07-18",
-  metadataCompleted: 7,
+  updatedAt: "2026-07-19",
+  metadataCompleted: 8,
+  metadataNeverAttempted: 19,
+  metadataDeferred: 33,
   priceMode: "external"
 };
 
@@ -818,13 +820,13 @@ window.CATALOG_ALIEXPRESS_MX = [
   },
   {
     "id": "aliexpress-1005006363108582",
-    "name": "Producto viral seleccionado 11",
-    "description": "Producto viral seleccionado 11. Producto popular seleccionado por Atlas Secreto. Consulta características, variantes y disponibilidad.",
+    "name": "5- 100pcs XT27A VVDI Super Chip Transponder XT27A01 Super Chip For ID46/40/43/4D/8C/8A/T3/47 for VVDI Mini Key Tool",
+    "description": "5- 100pcs XT27A VVDI Super Chip Transponder XT27A01 Super Chip For ID46/40/43/4D/8C/8A/T3/47 for VVDI Mini Key Tool. Producto popular seleccionado por Atlas Secreto. Consulta características, variantes y disponibilidad.",
     "categories": [
       "Virales",
       "Tecnología"
     ],
-    "image": "https://placehold.co/900x900/111821/d6ad52?text=Virales+11",
+    "image": "https://ae01.alicdn.com/kf/Sfbd4431b46e14b399499c47e2f736ef8R.jpg",
     "featured": true,
     "createdAt": "2026-07-18",
     "offers": [
@@ -835,7 +837,9 @@ window.CATALOG_ALIEXPRESS_MX = [
         "url": "https://s.click.aliexpress.com/e/_c3IThgJZ",
         "priceSnapshot": "Desde 13,69 USD"
       }
-    ]
+    ],
+    "metadataUpdatedAt": "2026-07-19T10:47:14.613666+00:00",
+    "metadataSource": "Microlink"
   },
   {
     "id": "aliexpress-1005006635539774",

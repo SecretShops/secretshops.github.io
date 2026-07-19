@@ -103,5 +103,145 @@
     "last_attempt_at": "2026-07-18T18:50:00+00:00",
     "last_error": "No se obtuvo un título o una imagen válidos",
     "retry_after": "2026-07-25T18:50:00+00:00"
+  },
+  "1005006437076332": {
+    "status": "failed",
+    "attempts": 1,
+    "last_attempt_at": "2026-07-19T10:44:48.253534+00:00",
+    "last_error": "No se obtuvo un título o una imagen válidos",
+    "retry_after": "2026-07-26T10:44:48.253534+00:00"
+  },
+  "1005008830636767": {
+    "status": "failed",
+    "attempts": 1,
+    "last_attempt_at": "2026-07-19T10:44:49.562616+00:00",
+    "last_error": "No se obtuvo un título o una imagen válidos",
+    "retry_after": "2026-07-26T10:44:49.562616+00:00"
+  },
+  "1903089759": {
+    "status": "failed",
+    "attempts": 1,
+    "last_attempt_at": "2026-07-19T10:44:50.807328+00:00",
+    "last_error": "No se obtuvo un título o una imagen válidos",
+    "retry_after": "2026-07-26T10:44:50.807328+00:00"
+  },
+  "1005005909340324": {
+    "status": "failed",
+    "attempts": 1,
+    "last_attempt_at": "2026-07-19T10:44:52.049995+00:00",
+    "last_error": "No se obtuvo un título o una imagen válidos",
+    "retry_after": "2026-07-26T10:44:52.049995+00:00"
+  },
+  "1005005507287645": {
+    "status": "failed",
+    "attempts": 1,
+    "last_attempt_at": "2026-07-19T10:44:53.282782+00:00",
+    "last_error": "No se obtuvo un título o una imagen válidos",
+    "retry_after": "2026-07-26T10:44:53.282782+00:00"
+  },
+  "1005009734420129": {
+    "status": "failed",
+    "attempts": 1,
+    "last_attempt_at": "2026-07-19T10:45:05.735397+00:00",
+    "last_error": "No se obtuvo un título o una imagen válidos",
+    "retry_after": "2026-07-26T10:45:05.735397+00:00"
+  },
+  "1005009881248536": {
+    "status": "failed",
+    "attempts": 1,
+    "last_attempt_at": "2026-07-19T10:45:14.523753+00:00",
+    "last_error": "No se obtuvo un título o una imagen válidos",
+    "retry_after": "2026-07-26T10:45:14.523753+00:00"
+  },
+  "1005005943671094": {
+    "status": "failed",
+    "attempts": 1,
+    "last_attempt_at": "2026-07-19T10:45:23.814010+00:00",
+    "last_error": "No se obtuvo un título o una imagen válidos",
+    "retry_after": "2026-07-26T10:45:23.814010+00:00"
+  },
+  "1005005968706771": {
+    "status": "failed",
+    "attempts": 1,
+    "last_attempt_at": "2026-07-19T10:45:35.403071+00:00",
+    "last_error": "HTTP Error 408: Request Timeout",
+    "retry_after": "2026-07-26T10:45:35.403071+00:00"
+  },
+  "1005006894901387": {
+    "status": "failed",
+    "attempts": 1,
+    "last_attempt_at": "2026-07-19T10:46:04.952180+00:00",
+    "last_error": "No se obtuvo un título o una imagen válidos",
+    "retry_after": "2026-07-26T10:46:04.952180+00:00"
+  },
+  "1005007597439198": {
+    "status": "failed",
+    "attempts": 1,
+    "last_attempt_at": "2026-07-19T10:46:15.900099+00:00",
+    "last_error": "No se obtuvo un título o una imagen válidos",
+    "retry_after": "2026-07-26T10:46:15.900099+00:00"
+  },
+  "1005006428188946": {
+    "status": "failed",
+    "attempts": 1,
+    "last_attempt_at": "2026-07-19T10:46:27.235571+00:00",
+    "last_error": "No se obtuvo un título o una imagen válidos",
+    "retry_after": "2026-07-26T10:46:27.235571+00:00"
+  },
+  "1005008281134342": {
+    "status": "failed",
+    "attempts": 1,
+    "last_attempt_at": "2026-07-19T10:46:38.304725+00:00",
+    "last_error": "HTTP Error 400: Bad Request",
+    "retry_after": "2026-07-26T10:46:38.304725+00:00"
+  },
+  "1005006608356666": {
+    "status": "failed",
+    "attempts": 1,
+    "last_attempt_at": "2026-07-19T10:46:45.581240+00:00",
+    "last_error": "No se obtuvo un título o una imagen válidos",
+    "retry_after": "2026-07-26T10:46:45.581240+00:00"
+  },
+  "1005008060435016": {
+    "status": "failed",
+    "attempts": 1,
+    "last_attempt_at": "2026-07-19T10:46:55.698606+00:00",
+    "last_error": "No se obtuvo un título o una imagen válidos",
+    "retry_after": "2026-07-26T10:46:55.698606+00:00"
+  },
+  "1005007448914445": {
+    "status": "failed",
+    "attempts": 1,
+    "last_attempt_at": "2026-07-19T10:47:05.433306+00:00",
+    "last_error": "No se obtuvo un título o una imagen válidos",
+    "retry_after": "2026-07-26T10:47:05.433306+00:00"
+  },
+  "1005006363108582": {
+    "status": "success",
+    "attempts": 1,
+    "last_attempt_at": "2026-07-19T10:47:14.613666+00:00",
+    "last_error": "",
+    "retry_after": null
+  },
+  "1005006635539774": {
+    "status": "failed",
+    "attempts": 1,
+    "last_attempt_at": "2026-07-19T10:47:23.876708+00:00",
+    "last_error": "HTTP Error 408: Request Timeout",
+    "retry_after": "2026-07-26T10:47:23.876708+00:00"
+  },
+  "1005010794463186": {
+    "status": "failed",
+    "attempts": 1,
+    "last_attempt_at": "2026-07-19T10:47:53.489507+00:00",
+    "last_error": "HTTP Error 408: Request Timeout",
+    "retry_after": "2026-07-26T10:47:53.489507+00:00"
+  },
+  "1005010601624925": {
+    "status": "failed",
+    "attempts": 1,
+    "last_attempt_at": "2026-07-19T10:48:23.010080+00:00",
+    "last_error": "No se obtuvo un título o una imagen válidos",
+    "retry_after": "2026-07-26T10:48:23.010080+00:00"
   }
 }
