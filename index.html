@@ -10,12 +10,12 @@
 
   <meta
     name="description"
-    content="Productos seleccionados por Secret Shop en Amazon, AliExpress, Temu y Vinted, organizados por país y categoría."
+    content="Busca productos con el nombre usado en tu país, comprueba su disponibilidad y compara ofertas verificables entre Amazon, AliExpress, Temu y Vinted."
   >
 
   <meta name="theme-color" content="#080b0f">
 
-  <title>Secret Shop | Productos seleccionados</title>
+  <title>Secret Shop | Busca y compara por país</title>
 
   <link
     rel="icon"
@@ -2489,6 +2489,255 @@
       }
     }
 
+    /* =====================================================
+       CONFIANZA, PROCESO Y ENLACES DIRECTOS
+    ===================================================== */
+
+    .hero h1 {
+      max-width: 820px;
+      font-size: clamp(2.45rem, 5.2vw, 4.45rem);
+      line-height: 1;
+    }
+
+    .hero-actions {
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .hero-primary-action {
+      min-height: 44px;
+      padding: 10px 17px;
+
+      border: 1px solid transparent;
+      border-radius: 999px;
+
+      color: #17120a;
+      background:
+        linear-gradient(
+          135deg,
+          var(--gold-light),
+          var(--gold)
+        );
+
+      font-weight: 900;
+      box-shadow: 0 12px 30px rgba(214, 173, 82, 0.16);
+    }
+
+    .hero-primary-action:hover {
+      filter: brightness(1.06);
+      transform: translateY(-1px);
+    }
+
+    .hero-benefits {
+      max-width: 760px;
+      margin: 16px 0 0;
+      justify-content: flex-start;
+      gap: 7px;
+    }
+
+    .hero-benefit {
+      padding: 7px 10px;
+      border: 1px solid var(--border);
+      background: rgba(8, 11, 15, 0.48);
+      font-size: 0.7rem;
+    }
+
+    .trust-section {
+      width: min(calc(100% - 32px), var(--maximum-width));
+      margin: 0 auto 34px;
+      scroll-margin-top: 230px;
+    }
+
+    .trust-section-header {
+      max-width: 760px;
+      margin-bottom: 17px;
+    }
+
+    .trust-section-header h2 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.65rem, 4vw, 2.45rem);
+      line-height: 1.15;
+    }
+
+    .trust-section-description {
+      margin: 9px 0 0;
+      color: var(--text-secondary);
+      font-size: 0.88rem;
+      line-height: 1.65;
+    }
+
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .process-card,
+    .methodology-panel {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-medium);
+      background:
+        linear-gradient(
+          145deg,
+          rgba(23, 33, 44, 0.94),
+          rgba(13, 18, 25, 0.94)
+        );
+    }
+
+    .process-card {
+      padding: 18px;
+    }
+
+    .process-step {
+      width: 31px;
+      height: 31px;
+      display: grid;
+      place-items: center;
+
+      border: 1px solid var(--border-gold);
+      border-radius: 50%;
+
+      color: var(--gold-light);
+      background: rgba(214, 173, 82, 0.08);
+      font-size: 0.72rem;
+      font-weight: 900;
+    }
+
+    .process-card h3 {
+      margin: 13px 0 5px;
+      font-size: 0.93rem;
+    }
+
+    .process-card p {
+      margin: 0;
+      color: var(--text-secondary);
+      font-size: 0.78rem;
+      line-height: 1.55;
+    }
+
+    .methodology-section {
+      margin-top: 10px;
+      margin-bottom: 62px;
+    }
+
+    .methodology-panel {
+      padding: 24px;
+      display: grid;
+      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+      gap: 25px;
+      border-color: var(--border-gold);
+    }
+
+    .methodology-principle {
+      margin: 0;
+      color: var(--text);
+      font-size: 0.92rem;
+      line-height: 1.7;
+    }
+
+    .methodology-principle strong {
+      color: var(--gold-light);
+    }
+
+    .methodology-list {
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 9px;
+      list-style: none;
+    }
+
+    .methodology-list li {
+      position: relative;
+      padding-left: 23px;
+      color: var(--text-secondary);
+      font-size: 0.79rem;
+      line-height: 1.55;
+    }
+
+    .methodology-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--success);
+      font-weight: 900;
+    }
+
+    .results-heading-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .copy-search-link {
+      min-height: 34px;
+      padding: 6px 11px;
+
+      border: 1px solid var(--border-gold);
+      border-radius: 999px;
+
+      color: var(--gold-light);
+      background: rgba(17, 24, 33, 0.72);
+      font-size: 0.68rem;
+      font-weight: 800;
+    }
+
+    .copy-search-link:hover {
+      color: #17120a;
+      background: var(--gold-light);
+    }
+
+    .report-product-error {
+      margin: 10px 0 0;
+      align-self: flex-start;
+
+      color: var(--text-secondary);
+      font-size: 0.65rem;
+      text-decoration: underline;
+      text-decoration-color: rgba(170, 179, 192, 0.42);
+      text-underline-offset: 3px;
+    }
+
+    .report-product-error:hover {
+      color: var(--gold-light);
+      text-decoration-color: currentColor;
+    }
+
+    @media (max-width: 700px) {
+      .hero h1 {
+        font-size: clamp(2.15rem, 11vw, 3.2rem);
+      }
+
+      .hero-actions {
+        margin-top: 16px;
+      }
+
+      .hero-benefits {
+        display: none;
+      }
+
+      .process-grid,
+      .methodology-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .methodology-panel {
+        padding: 19px;
+        gap: 18px;
+      }
+
+      .results-heading-actions {
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+
   </style>
 </head>
 
@@ -2526,7 +2775,7 @@
 
           <span class="brand-text">
             <strong>Secret Shop</strong>
-            <span>Selección de productos</span>
+            <span>Busca y compara por país</span>
           </span>
         </button>
 
@@ -2655,7 +2904,7 @@
 
         <div>
           <strong>Secret Shop</strong>
-          <span>Explora el catálogo</span>
+          <span>Busca y compara</span>
         </div>
       </div>
 
@@ -2678,6 +2927,22 @@
         type="button"
       >
         Inicio
+      </button>
+
+      <button
+        class="drawer-link"
+        data-menu-action="how"
+        type="button"
+      >
+        Cómo funciona
+      </button>
+
+      <button
+        class="drawer-link"
+        data-menu-action="methodology"
+        type="button"
+      >
+        Cómo verificamos
       </button>
 
       <button
@@ -2763,18 +3028,35 @@
 
     <div class="hero-copy">
       <p class="hero-label">
-        Productos seleccionados
+        Comparador de productos por país
       </p>
 
       <h1>
-        Secret Shop
+        Encuentra dónde comprarlo mejor
       </h1>
 
       <p class="hero-description">
-        Productos útiles, curiosos y virales seleccionados para ti.
-        Elige tu país, busca lo que necesitas y accede directamente
-        a Amazon, AliExpress, Temu o Vinted.
+        Busca como lo llamarías en tu país. Secret Shop reúne
+        ofertas disponibles para tu ubicación y, cuando los datos
+        permiten una comparación exacta, te muestra la alternativa
+        con mejor precio total.
       </p>
+
+      <div class="hero-actions">
+        <button
+          class="hero-primary-action"
+          data-action="focus-search"
+          type="button"
+        >
+          Buscar y comparar
+        </button>
+      </div>
+
+      <div class="hero-benefits" aria-label="Criterios principales">
+        <span class="hero-benefit">Mismo modelo y misma variante</span>
+        <span class="hero-benefit">Disponible para tu país</span>
+        <span class="hero-benefit">Precio y fecha de comprobación visibles</span>
+      </div>
     </div>
 
     <div class="hero-medallion" aria-hidden="true">
@@ -2786,6 +3068,50 @@
       >
     </div>
 
+  </section>
+
+  <section
+    id="como-funciona"
+    class="trust-section"
+    aria-labelledby="como-funciona-titulo"
+  >
+    <div class="trust-section-header">
+      <p class="section-label">Cómo funciona</p>
+      <h2 id="como-funciona-titulo">De la búsqueda a una decisión mejor informada</h2>
+      <p class="trust-section-description">
+        La herramienta organiza la información para ayudarte a localizar,
+        contrastar y elegir. La decisión final siempre es tuya.
+      </p>
+    </div>
+
+    <div class="process-grid">
+      <article class="process-card">
+        <span class="process-step">1</span>
+        <h3>Busca en tus palabras</h3>
+        <p>
+          Entendemos nombres habituales de España, Latinoamérica y
+          Estados Unidos para evitar que un sinónimo oculte resultados.
+        </p>
+      </article>
+
+      <article class="process-card">
+        <span class="process-step">2</span>
+        <h3>Comprobamos disponibilidad</h3>
+        <p>
+          Solo enseñamos las ofertas declaradas como disponibles para
+          el país elegido, incluidas las que realizan envíos allí.
+        </p>
+      </article>
+
+      <article class="process-card">
+        <span class="process-step">3</span>
+        <h3>Compara antes de comprar</h3>
+        <p>
+          Si coinciden producto, variante, moneda y envío conocido,
+          ordenamos las alternativas por precio total comprobado.
+        </p>
+      </article>
+    </div>
   </section>
 
   <!-- =====================================================
@@ -2816,10 +3142,20 @@
         <h2 id="section-title"></h2>
       </div>
 
-      <span
-        id="result-count"
-        class="result-count"
-      ></span>
+      <div class="results-heading-actions">
+        <span
+          id="result-count"
+          class="result-count"
+        ></span>
+
+        <button
+          id="copy-search-link"
+          class="copy-search-link hidden"
+          type="button"
+        >
+          Copiar enlace de esta búsqueda
+        </button>
+      </div>
 
     </div>
 
@@ -2862,6 +3198,40 @@
     </div>
 
   </main>
+
+  <section
+    id="metodologia"
+    class="trust-section methodology-section"
+    aria-labelledby="metodologia-titulo"
+  >
+    <div class="trust-section-header">
+      <p class="section-label">Cómo verificamos</p>
+      <h2 id="metodologia-titulo">Criterios claros, sin fingir experiencia personal</h2>
+      <p class="trust-section-description">
+        Diferenciamos entre organizar información y haber probado un producto.
+        Así puedes saber qué respalda cada comparación.
+      </p>
+    </div>
+
+    <div class="methodology-panel">
+      <p class="methodology-principle">
+        <strong>Qué hacemos:</strong> organizamos datos, comprobamos
+        coincidencias y facilitamos que compares por país.
+        <br><br>
+        <strong>Qué no hacemos:</strong> no publicamos reseñas personales
+        de productos que no hemos probado ni presentamos como certeza un
+        precio que la tienda puede cambiar.
+      </p>
+
+      <ul class="methodology-list">
+        <li>Solo unimos ofertas cuando el modelo y la variante están confirmados.</li>
+        <li>No mezclamos colores, capacidades, tallas o versiones distintas.</li>
+        <li>Comparamos la misma moneda y exigimos un coste de envío conocido.</li>
+        <li>Un precio con más de siete días no genera una recomendación automática.</li>
+        <li>Mostramos la fecha comprobada y pedimos confirmar el total en la tienda.</li>
+      </ul>
+    </div>
+  </section>
 
   <!-- =====================================================
        PIE DE PÁGINA
@@ -3439,8 +3809,9 @@
       country: getInitialCountry(),
       store: "Todos",
       category: "Todos",
-      query: "",
-      visibleCount: getResponsivePageSize()
+      query: getInitialQuery(),
+      visibleCount: getResponsivePageSize(),
+      lastResultCount: 0
     };
 
     const countrySelector =
@@ -3482,6 +3853,9 @@
     const resultCount =
       document.getElementById("result-count");
 
+    const copySearchLink =
+      document.getElementById("copy-search-link");
+
     const emptyState =
       document.getElementById("empty-state");
 
@@ -3501,8 +3875,30 @@
       new Date().getFullYear();
 
     countrySelector.value = state.country;
+    searchInput.value = state.query;
 
     function getInitialCountry() {
+      try {
+        const urlCountry =
+          new URL(window.location.href)
+            .searchParams
+            .get("country")
+            ?.trim()
+            .toUpperCase();
+
+        if (
+          urlCountry &&
+          Object.prototype.hasOwnProperty.call(
+            COUNTRY_NAMES,
+            urlCountry
+          )
+        ) {
+          return urlCountry;
+        }
+      } catch {
+        // La selección guardada sigue funcionando sin una URL válida.
+      }
+
       const savedCountry =
         localStorage.getItem("atlas-country");
 
@@ -3535,6 +3931,136 @@
       }
 
       return "GLOBAL";
+    }
+
+    function getInitialQuery() {
+      try {
+        return (
+          new URL(window.location.href)
+            .searchParams
+            .get("q") || ""
+        )
+          .trim()
+          .slice(0, 120);
+      } catch {
+        return "";
+      }
+    }
+
+    function syncUrlState() {
+      try {
+        const url = new URL(window.location.href);
+        const query = state.query.trim();
+
+        if (query) {
+          url.searchParams.set("q", query);
+        } else {
+          url.searchParams.delete("q");
+        }
+
+        if (state.country === "GLOBAL") {
+          url.searchParams.delete("country");
+        } else {
+          url.searchParams.set(
+            "country",
+            state.country
+          );
+        }
+
+        window.history.replaceState(
+          null,
+          "",
+          `${url.pathname}${url.search}${url.hash}`
+        );
+      } catch {
+        // La búsqueda continúa aunque el navegador bloquee History API.
+      }
+    }
+
+    /*
+      Capa de métricas independiente del proveedor.
+      No carga rastreadores ni envía datos por sí sola:
+      deja eventos en dataLayer y emite secretshop:analytics
+      para conectarlos posteriormente a la herramienta elegida.
+    */
+    function trackEvent(eventName, details = {}) {
+      const payload = {
+        event: eventName,
+        ...details
+      };
+
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push(payload);
+
+      window.dispatchEvent(
+        new CustomEvent(
+          "secretshop:analytics",
+          { detail: payload }
+        )
+      );
+    }
+
+    let searchTrackingTimer;
+    let lastTrackedSearchKey = "";
+    let lastTrackedNoResultsKey = "";
+
+    function trackCurrentSearch(
+      source,
+      force = false
+    ) {
+      const query = state.query.trim();
+
+      if (!query) {
+        return;
+      }
+
+      const eventKey = [
+        normalizeSearchText(query),
+        state.country,
+        state.lastResultCount
+      ].join("|");
+
+      if (
+        !force &&
+        eventKey === lastTrackedSearchKey
+      ) {
+        return;
+      }
+
+      lastTrackedSearchKey = eventKey;
+
+      trackEvent("search_performed", {
+        search_term: query.slice(0, 120),
+        country: state.country,
+        result_count: state.lastResultCount,
+        search_source: source
+      });
+
+      if (
+        state.lastResultCount === 0 &&
+        eventKey !== lastTrackedNoResultsKey
+      ) {
+        lastTrackedNoResultsKey = eventKey;
+
+        trackEvent("search_no_results", {
+          search_term: query.slice(0, 120),
+          country: state.country,
+          search_source: source
+        });
+      }
+    }
+
+    function scheduleSearchTracking() {
+      window.clearTimeout(searchTrackingTimer);
+
+      if (!state.query.trim()) {
+        return;
+      }
+
+      searchTrackingTimer = window.setTimeout(
+        () => trackCurrentSearch("typing"),
+        800
+      );
     }
 
     function escapeHtml(value) {
@@ -4571,7 +5097,7 @@ function getProductCategories(product) {
       if (!isValid) {
         return `
           <div class="unavailable">
-            Añade el enlace de afiliado de
+            Enlace pendiente de configurar para
             ${escapeHtml(offer.store)}
           </div>
         `;
@@ -4583,6 +5109,8 @@ function getProductCategories(product) {
           href="${escapeHtml(offer.url)}"
           target="_blank"
           rel="nofollow sponsored noopener noreferrer"
+          data-outbound-store="${escapeHtml(offer.store)}"
+          data-outbound-recommended="${options.isBest ? "true" : "false"}"
         >
           <span class="offer-store">
             <span
@@ -4626,6 +5154,31 @@ function getProductCategories(product) {
           </span>
         </a>
       `;
+    }
+
+    function buildProductReportUrl(product) {
+      const subject =
+        `Corrección de producto · ${product.name}`;
+
+      const pageUrl =
+        window.location.href;
+
+      const body = [
+        "Hola, quiero informar de un posible error:",
+        "",
+        `Producto: ${product.name}`,
+        `ID: ${product.id}`,
+        `País seleccionado: ${COUNTRY_NAMES[state.country] || state.country}`,
+        `Página: ${pageUrl}`,
+        "",
+        "El error que he encontrado es:"
+      ].join("\n");
+
+      return (
+        "mailto:secretoatlas@gmail.com" +
+        `?subject=${encodeURIComponent(subject)}` +
+        `&body=${encodeURIComponent(body)}`
+      );
     }
 
     function renderProduct(product) {
@@ -4685,6 +5238,8 @@ function getProductCategories(product) {
               target="_blank"
               rel="nofollow sponsored noopener noreferrer"
               aria-label="Ver ${escapeHtml(product.name)}"
+              data-outbound-store="${escapeHtml(primaryOffer.store)}"
+              data-outbound-recommended="${recommendation?.best.offer === primaryOffer ? "true" : "false"}"
             >
               ${productImage}
             </a>
@@ -4789,6 +5344,14 @@ function getProductCategories(product) {
             <div class="product-offers">
               ${offersHtml}
             </div>
+
+            <a
+              class="report-product-error"
+              href="${escapeHtml(buildProductReportUrl(product))}"
+              data-report-product="${escapeHtml(product.id)}"
+            >
+              Informar de un error
+            </a>
 
           </div>
 
@@ -4900,6 +5463,13 @@ function getProductCategories(product) {
     function renderProducts() {
       const products =
         filteredProducts();
+
+      state.lastResultCount = products.length;
+
+      copySearchLink.classList.toggle(
+        "hidden",
+        !state.query.trim()
+      );
 
       const groupedView =
         state.category === "Todos" &&
@@ -5065,7 +5635,12 @@ function getProductCategories(product) {
 
     function updateSearchFromInput() {
       state.query =
-        searchInput.value;
+        searchInput.value
+          .slice(0, 120);
+
+      if (searchInput.value !== state.query) {
+        searchInput.value = state.query;
+      }
 
       if (
         state.query.trim() &&
@@ -5081,6 +5656,7 @@ function getProductCategories(product) {
       }
 
       resetVisibleCount();
+      syncUrlState();
       renderProducts();
     }
 
@@ -5184,13 +5760,20 @@ function getProductCategories(product) {
 
         closeMenu();
 
-        if (
-          action === "home" ||
-          action === "about"
-        ) {
+        const targetByAction = {
+          home: "inicio",
+          how: "como-funciona",
+          methodology: "metodologia",
+          about: "metodologia"
+        };
+
+        const targetId =
+          targetByAction[action];
+
+        if (targetId) {
           document
-            .getElementById("inicio")
-            .scrollIntoView({
+            .getElementById(targetId)
+            ?.scrollIntoView({
               behavior: "smooth",
               block: "start"
             });
@@ -5216,6 +5799,14 @@ function getProductCategories(product) {
         renderCategories();
         renderCatalogStatus();
         renderProducts();
+        syncUrlState();
+
+        if (state.query.trim()) {
+          trackCurrentSearch(
+            "country_change",
+            true
+          );
+        }
       }
     );
 
@@ -5262,24 +5853,69 @@ function getProductCategories(product) {
     productGrid.addEventListener(
       "click",
       (event) => {
-        const button =
+        const showcaseButton =
           event.target.closest(
             "[data-showcase-category]"
           );
 
-        if (!button) {
+        if (showcaseButton) {
+          applyCategory(
+            showcaseButton.dataset.showcaseCategory
+          );
           return;
         }
 
-        applyCategory(
-          button.dataset.showcaseCategory
-        );
+        const card =
+          event.target.closest(".product-card");
+
+        const reportLink =
+          event.target.closest(
+            "[data-report-product]"
+          );
+
+        if (reportLink) {
+          trackEvent("product_error_report", {
+            product_id:
+              reportLink.dataset.reportProduct,
+            country: state.country,
+            comparison_id:
+              card?.dataset.comparisonId || ""
+          });
+          return;
+        }
+
+        const outboundLink =
+          event.target.closest(
+            "[data-outbound-store]"
+          );
+
+        if (!outboundLink) {
+          return;
+        }
+
+        trackEvent("outbound_product_click", {
+          product_id:
+            card?.dataset.productId || "",
+          comparison_id:
+            card?.dataset.comparisonId || "",
+          variant_key:
+            card?.dataset.variantKey || "",
+          store:
+            outboundLink.dataset.outboundStore,
+          country: state.country,
+          recommended:
+            outboundLink.dataset.outboundRecommended ===
+            "true"
+        });
       }
     );
 
     searchInput.addEventListener(
       "input",
-      updateSearchFromInput
+      () => {
+        updateSearchFromInput();
+        scheduleSearchTracking();
+      }
     );
 
     searchInput.addEventListener(
@@ -5291,10 +5927,94 @@ function getProductCategories(product) {
 
         event.preventDefault();
 
+        window.clearTimeout(
+          searchTrackingTimer
+        );
+
         updateSearchFromInput();
+        trackCurrentSearch("enter", true);
 
         window.requestAnimationFrame(
           scrollToResults
+        );
+      }
+    );
+
+    document
+      .querySelectorAll(
+        '[data-action="focus-search"]'
+      )
+      .forEach((button) => {
+        button.addEventListener(
+          "click",
+          () => {
+            searchInput.focus();
+            searchInput.select();
+
+            trackEvent("search_cta_click", {
+              country: state.country
+            });
+          }
+        );
+      });
+
+    copySearchLink.addEventListener(
+      "click",
+      async () => {
+        syncUrlState();
+
+        let copied = false;
+
+        try {
+          if (navigator.clipboard) {
+            await navigator.clipboard.writeText(
+              window.location.href
+            );
+            copied = true;
+          }
+        } catch {
+          copied = false;
+        }
+
+        if (!copied) {
+          const helper =
+            document.createElement("textarea");
+
+          helper.value = window.location.href;
+          helper.setAttribute("readonly", "");
+          helper.style.position = "fixed";
+          helper.style.opacity = "0";
+          document.body.appendChild(helper);
+          helper.select();
+
+          try {
+            copied = Boolean(
+              document.execCommand?.("copy")
+            );
+          } catch {
+            copied = false;
+          }
+
+          helper.remove();
+        }
+
+        copySearchLink.textContent = copied
+          ? "Enlace copiado"
+          : "Copia la URL del navegador";
+
+        trackEvent("search_link_copy", {
+          search_term:
+            state.query.trim().slice(0, 120),
+          country: state.country,
+          copied
+        });
+
+        window.setTimeout(
+          () => {
+            copySearchLink.textContent =
+              "Copiar enlace de esta búsqueda";
+          },
+          1800
         );
       }
     );
@@ -5348,6 +6068,14 @@ function getProductCategories(product) {
     renderCategories();
     renderCatalogStatus();
     renderProducts();
+
+    if (state.query.trim()) {
+      trackCurrentSearch("deep_link");
+
+      window.requestAnimationFrame(
+        scrollToResults
+      );
+    }
   </script>
 
 </body>
