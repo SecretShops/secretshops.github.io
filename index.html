@@ -3334,6 +3334,19 @@
       LATAM: "Latinoamérica"
     };
 
+    const INVENTORY_COUNTRIES = [
+      ["ES", "España"],
+      ["MX", "México"],
+      ["CO", "Colombia"],
+      ["CL", "Chile"],
+      ["AR", "Argentina"],
+      ["PE", "Perú"],
+      ["EC", "Ecuador"],
+      ["UY", "Uruguay"],
+      ["US", "Estados Unidos"],
+      ["LATAM", "Otros países de LATAM"]
+    ];
+
     /* =====================================================
        CATÁLOGOS EXTERNOS
 
@@ -4120,8 +4133,11 @@
       }
     }
 
-    function getCountryOffers(product) {
-      if (state.country === "GLOBAL") {
+    function getOffersForCountry(
+      product,
+      country
+    ) {
+      if (country === "GLOBAL") {
         return product.offers;
       }
 
@@ -4139,25 +4155,32 @@
             : [];
 
         const destinationMatches =
-          destinations.includes(state.country) ||
+          destinations.includes(country) ||
           destinations.includes("GLOBAL") ||
           (
             destinations.includes("LATAM") &&
-            state.country !== "ES" &&
-            state.country !== "US"
+            country !== "ES" &&
+            country !== "US"
           );
 
         return (
           destinationMatches ||
-          offer.country === state.country ||
+          offer.country === country ||
           offer.country === "GLOBAL" ||
           (
             offer.country === "LATAM" &&
-            state.country !== "ES" &&
-            state.country !== "US"
+            country !== "ES" &&
+            country !== "US"
           )
         );
       });
+    }
+
+    function getCountryOffers(product) {
+      return getOffersForCountry(
+        product,
+        state.country
+      );
     }
 
     function getVisibleOffers(product) {
@@ -4382,28 +4405,54 @@ function getProductCategories(product) {
         return null;
       }
 
-      const availableForCountry =
-        CATALOG.filter(
-          (product) =>
-            getCountryOffers(product).length > 0
-        ).length;
+      const countries =
+        INVENTORY_COUNTRIES.map(
+          ([code, label]) => ({
+            code,
+            label,
+            count:
+              CATALOG.filter(
+                (product) =>
+                  getOffersForCountry(
+                    product,
+                    code
+                  ).length > 0
+              ).length
+          })
+        );
 
       const summary = {
         total: CATALOG.length,
-        availableForCountry,
-        country:
-          COUNTRY_NAMES[state.country] ||
-          state.country
+        countries
       };
+
+      const countryLines = [];
+
+      for (
+        let index = 0;
+        index < countries.length;
+        index += 2
+      ) {
+        const first = countries[index];
+        const second = countries[index + 1];
+
+        countryLines.push(
+          second
+            ? `${first.label}: ${first.count} · ${second.label}: ${second.count}`
+            : `${first.label}: ${first.count}`
+        );
+      }
 
       window.alert(
         [
           "Inventario de Secret Shop",
           "",
           `Productos únicos en la web: ${summary.total}`,
-          `Disponibles para ${summary.country}: ${summary.availableForCountry}`,
           "",
-          "La cifra se calcula después de fusionar duplicados y descartar registros incompletos."
+          "Disponibles por destino:",
+          ...countryLines,
+          "",
+          "Un mismo producto puede estar disponible y contarse en varios países."
         ].join("\n")
       );
 
