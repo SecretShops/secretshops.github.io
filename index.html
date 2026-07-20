@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="catalog-pending">
 <head>
   <meta charset="UTF-8">
 
@@ -2738,7 +2738,199 @@
       }
     }
 
+    /* =====================================================
+       CABECERA COMPACTA Y ESTABILIDAD VISUAL · 2026-07-20
+    ===================================================== */
+
+    html.catalog-pending #results-heading {
+      min-height: 62px;
+      visibility: hidden;
+    }
+
+    html.catalog-pending #product-grid {
+      min-height: max(100vh, 760px);
+      visibility: hidden;
+    }
+
+    @media (min-width: 1025px) {
+      html {
+        scroll-padding-top: 94px;
+      }
+
+      .header-shell {
+        padding: 5px 0 6px;
+      }
+
+      .header-primary {
+        grid-template-columns:
+          minmax(180px, auto)
+          minmax(260px, 1fr)
+          auto;
+        gap: 10px;
+      }
+
+      .menu-icon {
+        width: 18px;
+        height: 14px;
+      }
+
+      .brand-logo {
+        width: 34px;
+        height: 34px;
+      }
+
+      .brand-text strong {
+        font-size: 0.82rem;
+      }
+
+      .brand-text span {
+        display: none;
+      }
+
+      .header-search input {
+        min-height: 36px;
+        padding-left: 40px;
+        font-size: 0.78rem;
+      }
+
+      .header-country {
+        gap: 6px;
+      }
+
+      .header-country label {
+        font-size: 0.66rem;
+      }
+
+      .header-country select {
+        min-height: 36px;
+        max-width: 160px;
+        font-size: 0.72rem;
+      }
+
+      .top-category-list {
+        display: none;
+      }
+
+      .compact-store-navigation {
+        margin-top: 4px;
+        gap: 4px;
+      }
+
+      .compact-store-navigation .store-button {
+        min-height: 28px;
+        padding: 4px 9px;
+        font-size: 0.64rem;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .top-category-list {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+      }
+
+      html.catalog-pending .top-category-list {
+        min-height: 34px;
+        visibility: hidden;
+      }
+    }
+
+    .hero {
+      min-height: 150px;
+      margin: 12px auto 14px;
+      padding: 18px 26px;
+      grid-template-columns:
+        minmax(0, 1fr)
+        124px;
+      gap: 22px;
+      border-radius: 20px;
+    }
+
+    .hero-label {
+      margin-bottom: 5px;
+      font-size: 0.64rem;
+    }
+
+    .hero h1 {
+      max-width: 760px;
+      font-size: clamp(2rem, 3.5vw, 3.15rem);
+      line-height: 0.98;
+    }
+
+    .hero-description {
+      max-width: 790px;
+      margin-top: 9px;
+      font-size: clamp(0.8rem, 0.95vw, 0.9rem);
+      line-height: 1.45;
+    }
+
+    .hero-medallion {
+      width: 120px;
+    }
+
+    @media (max-width: 900px) {
+      html {
+        scroll-padding-top: 205px;
+      }
+
+      .hero {
+        min-height: 160px;
+        padding: 18px 22px;
+        grid-template-columns:
+          minmax(0, 1fr)
+          110px;
+        gap: 18px;
+      }
+
+      .hero h1 {
+        font-size: clamp(2.15rem, 7vw, 3.15rem);
+      }
+
+      .hero-medallion {
+        width: 106px;
+      }
+    }
+
+    @media (max-width: 700px) {
+      html {
+        scroll-padding-top: 215px;
+      }
+
+      .hero {
+        min-height: 155px;
+        margin-top: 10px;
+        padding: 18px;
+        grid-template-columns: 1fr;
+      }
+
+      .hero-copy {
+        max-width: calc(100% - 36px);
+      }
+
+      .hero h1 {
+        font-size: clamp(2rem, 10.5vw, 2.9rem);
+      }
+
+      .hero-description {
+        margin-top: 8px;
+        font-size: 0.8rem;
+        line-height: 1.42;
+      }
+
+      .hero-medallion {
+        right: -18px;
+        width: 96px;
+      }
+    }
+
   </style>
+
+  <script>
+    window.setTimeout(() => {
+      document.documentElement.classList.remove("catalog-pending");
+    }, 8000);
+  </script>
 </head>
 
 <body>
@@ -2931,22 +3123,6 @@
 
       <button
         class="drawer-link"
-        data-menu-action="how"
-        type="button"
-      >
-        Cómo funciona
-      </button>
-
-      <button
-        class="drawer-link"
-        data-menu-action="methodology"
-        type="button"
-      >
-        Cómo verificamos
-      </button>
-
-      <button
-        class="drawer-link"
         data-category="Todos"
         type="button"
       >
@@ -2984,15 +3160,7 @@
         class="menu-category-list"
       ></div>
 
-      <p class="site-menu-section-title">Secret Shop</p>
-
-      <button
-        class="drawer-link"
-        data-menu-action="about"
-        type="button"
-      >
-        Sobre Secret Shop
-      </button>
+      <p class="site-menu-section-title">Contacto y redes</p>
 
       <a
         class="drawer-link"
@@ -3036,27 +3204,10 @@
       </h1>
 
       <p class="hero-description">
-        Busca como lo llamarías en tu país. Secret Shop reúne
-        ofertas disponibles para tu ubicación y, cuando los datos
-        permiten una comparación exacta, te muestra la alternativa
-        con mejor precio total.
+        Secret Shop reúne ofertas disponibles para tu ubicación y,
+        cuando los datos permiten una comparación exacta, te muestra
+        la alternativa con mejor precio total.
       </p>
-
-      <div class="hero-actions">
-        <button
-          class="hero-primary-action"
-          data-action="focus-search"
-          type="button"
-        >
-          Buscar y comparar
-        </button>
-      </div>
-
-      <div class="hero-benefits" aria-label="Criterios principales">
-        <span class="hero-benefit">Mismo modelo y misma variante</span>
-        <span class="hero-benefit">Disponible para tu país</span>
-        <span class="hero-benefit">Precio y fecha de comprobación visibles</span>
-      </div>
     </div>
 
     <div class="hero-medallion" aria-hidden="true">
@@ -3068,50 +3219,6 @@
       >
     </div>
 
-  </section>
-
-  <section
-    id="como-funciona"
-    class="trust-section"
-    aria-labelledby="como-funciona-titulo"
-  >
-    <div class="trust-section-header">
-      <p class="section-label">Cómo funciona</p>
-      <h2 id="como-funciona-titulo">De la búsqueda a una decisión mejor informada</h2>
-      <p class="trust-section-description">
-        La herramienta organiza la información para ayudarte a localizar,
-        contrastar y elegir. La decisión final siempre es tuya.
-      </p>
-    </div>
-
-    <div class="process-grid">
-      <article class="process-card">
-        <span class="process-step">1</span>
-        <h3>Busca en tus palabras</h3>
-        <p>
-          Entendemos nombres habituales de España, Latinoamérica y
-          Estados Unidos para evitar que un sinónimo oculte resultados.
-        </p>
-      </article>
-
-      <article class="process-card">
-        <span class="process-step">2</span>
-        <h3>Comprobamos disponibilidad</h3>
-        <p>
-          Solo enseñamos las ofertas declaradas como disponibles para
-          el país elegido, incluidas las que realizan envíos allí.
-        </p>
-      </article>
-
-      <article class="process-card">
-        <span class="process-step">3</span>
-        <h3>Compara antes de comprar</h3>
-        <p>
-          Si coinciden producto, variante, moneda y envío conocido,
-          ordenamos las alternativas por precio total comprobado.
-        </p>
-      </article>
-    </div>
   </section>
 
   <!-- =====================================================
@@ -3198,40 +3305,6 @@
     </div>
 
   </main>
-
-  <section
-    id="metodologia"
-    class="trust-section methodology-section"
-    aria-labelledby="metodologia-titulo"
-  >
-    <div class="trust-section-header">
-      <p class="section-label">Cómo verificamos</p>
-      <h2 id="metodologia-titulo">Criterios claros, sin fingir experiencia personal</h2>
-      <p class="trust-section-description">
-        Diferenciamos entre organizar información y haber probado un producto.
-        Así puedes saber qué respalda cada comparación.
-      </p>
-    </div>
-
-    <div class="methodology-panel">
-      <p class="methodology-principle">
-        <strong>Qué hacemos:</strong> organizamos datos, comprobamos
-        coincidencias y facilitamos que compares por país.
-        <br><br>
-        <strong>Qué no hacemos:</strong> no publicamos reseñas personales
-        de productos que no hemos probado ni presentamos como certeza un
-        precio que la tienda puede cambiar.
-      </p>
-
-      <ul class="methodology-list">
-        <li>Solo unimos ofertas cuando el modelo y la variante están confirmados.</li>
-        <li>No mezclamos colores, capacidades, tallas o versiones distintas.</li>
-        <li>Comparamos la misma moneda y exigimos un coste de envío conocido.</li>
-        <li>Un precio con más de siete días no genera una recomendación automática.</li>
-        <li>Mostramos la fecha comprobada y pedimos confirmar el total en la tienda.</li>
-      </ul>
-    </div>
-  </section>
 
   <!-- =====================================================
        PIE DE PÁGINA
@@ -5761,10 +5834,7 @@ function getProductCategories(product) {
         closeMenu();
 
         const targetByAction = {
-          home: "inicio",
-          how: "como-funciona",
-          methodology: "metodologia",
-          about: "metodologia"
+          home: "inicio"
         };
 
         const targetId =
@@ -5940,24 +6010,6 @@ function getProductCategories(product) {
       }
     );
 
-    document
-      .querySelectorAll(
-        '[data-action="focus-search"]'
-      )
-      .forEach((button) => {
-        button.addEventListener(
-          "click",
-          () => {
-            searchInput.focus();
-            searchInput.select();
-
-            trackEvent("search_cta_click", {
-              country: state.country
-            });
-          }
-        );
-      });
-
     copySearchLink.addEventListener(
       "click",
       async () => {
@@ -6068,6 +6120,12 @@ function getProductCategories(product) {
     renderCategories();
     renderCatalogStatus();
     renderProducts();
+
+    window.requestAnimationFrame(() => {
+      document.documentElement.classList.remove(
+        "catalog-pending"
+      );
+    });
 
     if (state.query.trim()) {
       trackCurrentSearch("deep_link");
