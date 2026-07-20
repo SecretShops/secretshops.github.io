@@ -598,12 +598,6 @@
         clamp(1.8rem, 4.5vw, 2.8rem);
     }
 
-    .result-count {
-      color: var(--text-secondary);
-      font-size: 0.84rem;
-      white-space: nowrap;
-    }
-
     /* =====================================================
        CUADRÍCULA DE PRODUCTOS
     ===================================================== */
@@ -1051,34 +1045,6 @@
       transform: none;
     }
 
-    .catalog-status {
-      margin: 0 0 22px;
-      padding: 13px 16px;
-
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 8px 18px;
-
-      border: 1px solid var(--border);
-      border-radius: var(--radius-medium);
-
-      color: var(--text-secondary);
-      background: rgba(17, 24, 33, 0.58);
-
-      font-size: 0.78rem;
-      line-height: 1.55;
-    }
-
-    .catalog-status strong {
-      color: var(--text);
-    }
-
-    .catalog-status-note {
-      color: var(--gold-light);
-    }
-
     .product-image-link {
       display: block;
       width: 100%;
@@ -1149,11 +1115,6 @@
     }
 
     @media (max-width: 620px) {
-      .catalog-status {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
       .pagination-controls {
         align-items: stretch;
         flex-direction: column;
@@ -3234,11 +3195,9 @@
   <main id="productos">
 
     <div
-      id="catalog-status"
-      class="catalog-status"
-      aria-live="polite"
-    ></div>
-    <div id="results-heading" class="section-heading">
+      id="results-heading"
+      class="section-heading hidden"
+    >
 
       <div>
         <p
@@ -3250,11 +3209,6 @@
       </div>
 
       <div class="results-heading-actions">
-        <span
-          id="result-count"
-          class="result-count"
-        ></span>
-
         <button
           id="copy-search-link"
           class="copy-search-link hidden"
@@ -3920,20 +3874,17 @@
     const sectionTitle =
       document.getElementById("section-title");
 
+    const resultsHeading =
+      document.getElementById("results-heading");
+
     const productGrid =
       document.getElementById("product-grid");
-
-    const resultCount =
-      document.getElementById("result-count");
 
     const copySearchLink =
       document.getElementById("copy-search-link");
 
     const emptyState =
       document.getElementById("empty-state");
-
-    const catalogStatus =
-      document.getElementById("catalog-status");
 
     const paginationControls =
       document.getElementById("pagination-controls");
@@ -4414,69 +4365,53 @@ function getProductCategories(product) {
         });
     }
 
-    function getLatestCatalogDate() {
-      const dates = [
-        window.CATALOG_META_BASE?.updatedAt,
-        window.CATALOG_META_ALIEXPRESS_MX?.updatedAt,
-        window.CATALOG_META_ALIEXPRESS_CO?.updatedAt,
-        window.CATALOG_META_TEMU?.updatedAt
-      ]
-        .filter(Boolean)
-        .map((value) => new Date(value))
-        .filter(
-          (value) => !Number.isNaN(value.getTime())
+    function inventoryModeEnabled() {
+      try {
+        return (
+          new URL(window.location.href)
+            .searchParams
+            .get("inventario") === "1"
         );
-
-      if (dates.length === 0) {
-        return "";
+      } catch {
+        return false;
       }
-
-      return new Date(
-        Math.max(...dates.map((value) => value.getTime()))
-      ).toLocaleDateString(
-        "es-ES",
-        {
-          day: "2-digit",
-          month: "2-digit",
-          year: "numeric"
-        }
-      );
     }
 
-    function renderCatalogStatus() {
-      const countryProducts =
+    function showInventorySummary(force = false) {
+      if (!force && !inventoryModeEnabled()) {
+        return null;
+      }
+
+      const availableForCountry =
         CATALOG.filter(
           (product) =>
             getCountryOffers(product).length > 0
         ).length;
 
-      const updateDate =
-        getLatestCatalogDate();
+      const summary = {
+        total: CATALOG.length,
+        availableForCountry,
+        country:
+          COUNTRY_NAMES[state.country] ||
+          state.country
+      };
 
-      catalogStatus.innerHTML = `
-        <span>
-          <strong>${countryProducts}</strong>
-          ${
-            countryProducts === 1
-              ? "producto disponible"
-              : "productos disponibles"
-          }
-          para ${escapeHtml(
-            COUNTRY_NAMES[state.country]
-          )}.
-        </span>
+      window.alert(
+        [
+          "Inventario de Secret Shop",
+          "",
+          `Productos únicos en la web: ${summary.total}`,
+          `Disponibles para ${summary.country}: ${summary.availableForCountry}`,
+          "",
+          "La cifra se calcula después de fusionar duplicados y descartar registros incompletos."
+        ].join("\n")
+      );
 
-        <span class="catalog-status-note">
-          El precio y la disponibilidad se confirman
-          en la tienda
-          ${
-            updateDate
-              ? ` · Catálogo revisado: ${escapeHtml(updateDate)}`
-              : ""
-          }
-        </span>
-      `;
+      return summary;
     }
+
+    window.consultarInventario = () =>
+      showInventorySummary(true);
 
     function normalizeSearchText(value) {
       return String(value || "")
@@ -5553,7 +5488,7 @@ function getProductCategories(product) {
         groupedView
       );
 
-      sectionLabel.parentElement.classList.toggle(
+      resultsHeading.classList.toggle(
         "hidden",
         groupedView
       );
@@ -5574,13 +5509,6 @@ function getProductCategories(product) {
       if (groupedView) {
         productGrid.innerHTML =
           renderGroupedProducts(products);
-
-        resultCount.textContent =
-          `${products.length} ${
-            products.length === 1
-              ? "producto"
-              : "productos"
-          } organizados por categoría`;
 
         emptyState.classList.toggle(
           "hidden",
@@ -5615,22 +5543,6 @@ function getProductCategories(product) {
         visibleProducts
           .map(renderProduct)
           .join("");
-
-      if (
-        visibleProducts.length < products.length
-      ) {
-        resultCount.textContent =
-          `Mostrando ${visibleProducts.length} de ` +
-          `${products.length} productos`;
-      } else {
-        resultCount.textContent =
-          `${products.length} ` +
-          (
-            products.length === 1
-              ? "producto"
-              : "productos"
-          );
-      }
 
       emptyState.classList.toggle(
         "hidden",
@@ -5867,8 +5779,8 @@ function getProductCategories(product) {
         ensureValidCategory();
         resetVisibleCount();
         renderCategories();
-        renderCatalogStatus();
         renderProducts();
+        showInventorySummary();
         syncUrlState();
 
         if (state.query.trim()) {
@@ -6118,8 +6030,8 @@ function getProductCategories(product) {
     updateStoreButtons();
     ensureValidCategory();
     renderCategories();
-    renderCatalogStatus();
     renderProducts();
+    showInventorySummary();
 
     window.requestAnimationFrame(() => {
       document.documentElement.classList.remove(
