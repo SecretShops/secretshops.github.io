@@ -764,6 +764,65 @@
       background: var(--surface-hover);
     }
 
+    .best-offer-recommendation {
+      margin-bottom: 7px;
+      padding: 10px;
+
+      display: grid;
+      gap: 4px;
+
+      border: 1px solid var(--border-gold);
+      border-radius: 12px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(214, 173, 82, 0.17),
+          rgba(17, 24, 33, 0.9)
+        );
+    }
+
+    .best-offer-label {
+      color: var(--gold-light);
+      font-size: 0.64rem;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .best-offer-summary {
+      color: var(--text);
+      font-size: 0.77rem;
+      font-weight: 850;
+      line-height: 1.35;
+    }
+
+    .best-offer-saving {
+      color: #9fe3b1;
+      font-size: 0.68rem;
+      font-weight: 800;
+    }
+
+    .best-offer-note {
+      color: var(--text-secondary);
+      font-size: 0.58rem;
+      line-height: 1.35;
+    }
+
+    .offer-button.best-offer {
+      border-color: var(--gold);
+      background: rgba(214, 173, 82, 0.11);
+    }
+
+    .offer-best-badge {
+      display: block;
+      margin-top: 2px;
+
+      color: #9fe3b1;
+      font-size: 0.56rem;
+      font-weight: 800;
+    }
+
     .offer-store {
       display: flex;
       align-items: center;
@@ -2854,6 +2913,7 @@
   <script src="catalog-aliexpress-mx.js?v=20260719-2"></script>
   <script src="catalog-temu.js?v=20260719-1"></script>
   <script src="catalog-aliexpress-co.js?v=20260719-1"></script>
+  <script src="catalog-comparisons.js"></script>
 
   <script>
     /* =====================================================
@@ -2885,6 +2945,7 @@
        - catalog-aliexpress-mx.js
        - catalog-aliexpress-co.js
        - catalog-temu.js
+       - catalog-comparisons.js
 
        Cada archivo funciona de forma independiente.
        Los productos incompletos se ignoran y los repetidos se fusionan.
@@ -2892,6 +2953,151 @@
 
     const DEFAULT_PRODUCT_IMAGE =
       "https://placehold.co/900x900/111821/d6ad52?text=Secret+Shop";
+
+    const COMPARISON_GROUPS =
+      Array.isArray(window.CATALOG_COMPARISONS)
+        ? window.CATALOG_COMPARISONS
+        : [];
+
+    function buildComparisonSourceMap(groups) {
+      const sourceMap = new Map();
+
+      groups.forEach((group) => {
+        if (
+          !group ||
+          typeof group.comparisonId !== "string" ||
+          !group.comparisonId.trim() ||
+          !Array.isArray(group.sources)
+        ) {
+          return;
+        }
+
+        group.sources.forEach((source) => {
+          if (
+            !source ||
+            typeof source.productId !== "string" ||
+            !source.productId.trim()
+          ) {
+            return;
+          }
+
+          sourceMap.set(source.productId.trim(), {
+            group,
+            source
+          });
+        });
+      });
+
+      return sourceMap;
+    }
+
+    const COMPARISON_SOURCE_MAP =
+      buildComparisonSourceMap(
+        COMPARISON_GROUPS
+      );
+
+    function offerMatchesComparisonSource(
+      offer,
+      source,
+      offerCount
+    ) {
+      const hasSelector = Boolean(
+        source.store ||
+        source.country ||
+        source.url
+      );
+
+      if (!hasSelector) {
+        return offerCount === 1;
+      }
+
+      return (
+        (!source.store || offer.store === source.store) &&
+        (!source.country || offer.country === source.country) &&
+        (!source.url || offer.url === source.url)
+      );
+    }
+
+    function applyComparisonMetadata(product) {
+      if (
+        !product ||
+        typeof product.id !== "string"
+      ) {
+        return product;
+      }
+
+      const configuration =
+        COMPARISON_SOURCE_MAP.get(product.id.trim());
+
+      if (!configuration) {
+        return product;
+      }
+
+      const { group, source } = configuration;
+      const offerFields = [
+        "shipsTo",
+        "amount",
+        "shippingAmount",
+        "totalAmount",
+        "currency",
+        "priceCheckedAt",
+        "freeShipping",
+        "shippingIncluded"
+      ];
+
+      const offers =
+        Array.isArray(product.offers)
+          ? product.offers.map((offer) => {
+              if (
+                !offerMatchesComparisonSource(
+                  offer,
+                  source,
+                  product.offers.length
+                )
+              ) {
+                return offer;
+              }
+
+              const overrides = {};
+
+              offerFields.forEach((field) => {
+                if (
+                  Object.prototype.hasOwnProperty.call(
+                    source,
+                    field
+                  )
+                ) {
+                  overrides[field] = source[field];
+                }
+              });
+
+              return {
+                ...offer,
+                ...overrides
+              };
+            })
+          : product.offers;
+
+      return {
+        ...product,
+        comparisonId: group.comparisonId.trim(),
+        variantKey:
+          typeof group.variantKey === "string" &&
+          group.variantKey.trim()
+            ? group.variantKey.trim()
+            : "default",
+        comparisonConfirmed:
+          group.confirmed === true,
+        comparisonName:
+          group.name || product.comparisonName,
+        comparisonDescription:
+          group.description ||
+          product.comparisonDescription,
+        comparisonImage:
+          group.image || product.comparisonImage,
+        offers
+      };
+    }
 
     function isValidOffer(offer) {
       return Boolean(
@@ -3062,6 +3268,90 @@
       };
     }
 
+    function isConfirmedComparison(product) {
+      return Boolean(
+        product &&
+        typeof product.comparisonId === "string" &&
+        product.comparisonId.trim() &&
+        (
+          product.comparisonConfirmed === true ||
+          product.comparisonStatus === "confirmed"
+        )
+      );
+    }
+
+    function getComparisonKey(product) {
+      if (!isConfirmedComparison(product)) {
+        return `product:${product.id}`;
+      }
+
+      const variantKey =
+        typeof product.variantKey === "string" &&
+        product.variantKey.trim()
+          ? product.variantKey.trim()
+          : "default";
+
+      return [
+        "comparison",
+        product.comparisonId.trim(),
+        variantKey
+      ].join(":");
+    }
+
+    function mergeConfirmedComparisons(products) {
+      const comparisonMap = new Map();
+
+      products.forEach((product) => {
+        const key = getComparisonKey(product);
+        const current = comparisonMap.get(key);
+
+        if (!current) {
+          comparisonMap.set(key, {
+            ...product,
+            sourceProductIds: getUniqueStrings([
+              product.id,
+              ...(Array.isArray(product.sourceProductIds)
+                ? product.sourceProductIds
+                : [])
+            ])
+          });
+          return;
+        }
+
+        const merged = mergeProducts(
+          current,
+          product
+        );
+
+        comparisonMap.set(key, {
+          ...merged,
+          id: current.id,
+          name:
+            current.comparisonName ||
+            product.comparisonName ||
+            current.name,
+          description:
+            current.comparisonDescription ||
+            product.comparisonDescription ||
+            current.description,
+          image:
+            current.comparisonImage ||
+            product.comparisonImage ||
+            current.image,
+          sourceProductIds: getUniqueStrings([
+            ...(Array.isArray(current.sourceProductIds)
+              ? current.sourceProductIds
+              : [current.id]),
+            ...(Array.isArray(product.sourceProductIds)
+              ? product.sourceProductIds
+              : [product.id])
+          ])
+        });
+      });
+
+      return [...comparisonMap.values()];
+    }
+
     function buildCatalog(...sources) {
       const productMap = new Map();
 
@@ -3072,7 +3362,9 @@
 
         source.forEach((product) => {
           const normalized =
-            normalizeProduct(product);
+            normalizeProduct(
+              applyComparisonMetadata(product)
+            );
 
           if (!normalized) {
             console.warn(
@@ -3103,7 +3395,9 @@
         });
       });
 
-      return [...productMap.values()];
+      return mergeConfirmedComparisons(
+        [...productMap.values()]
+      );
     }
 
     const CATALOG = buildCatalog(
@@ -3949,10 +4243,327 @@ function getProductCategories(product) {
         .replaceAll(" ", "-");
     }
 
-    function renderOffer(offer) {
+    const MAX_COMPARISON_PRICE_AGE_DAYS = 7;
+    const MIN_COMPARISON_SAVINGS_PERCENT = 5;
+
+    const COUNTRY_LOCALES = {
+      ES: "es-ES",
+      MX: "es-MX",
+      CO: "es-CO",
+      CL: "es-CL",
+      AR: "es-AR",
+      PE: "es-PE",
+      EC: "es-EC",
+      UY: "es-UY",
+      US: "en-US",
+      LATAM: "es-419",
+      GLOBAL: "es-ES"
+    };
+
+    function getNonNegativeNumber(value) {
+      return (
+        typeof value === "number" &&
+        Number.isFinite(value) &&
+        value >= 0
+      )
+        ? value
+        : null;
+    }
+
+    function getOfferPriceData(offer, product) {
+      const currency =
+        typeof offer.currency === "string"
+          ? offer.currency.trim().toUpperCase()
+          : "";
+
+      if (!/^[A-Z]{3}$/.test(currency)) {
+        return null;
+      }
+
+      const explicitTotal =
+        getNonNegativeNumber(offer.totalAmount);
+
+      const amount =
+        getNonNegativeNumber(offer.amount);
+
+      let shippingAmount =
+        getNonNegativeNumber(offer.shippingAmount);
+
+      if (
+        shippingAmount === null &&
+        (
+          offer.freeShipping === true ||
+          offer.shippingIncluded === true
+        )
+      ) {
+        shippingAmount = 0;
+      }
+
+      const totalAmount =
+        explicitTotal !== null
+          ? explicitTotal
+          : (
+              amount !== null &&
+              shippingAmount !== null
+                ? amount + shippingAmount
+                : null
+            );
+
+      if (totalAmount === null) {
+        return null;
+      }
+
+      const checkedAtValue =
+        offer.priceCheckedAt ||
+        offer.checkedAt ||
+        product.priceCheckedAt ||
+        product.metadataUpdatedAt;
+
+      const checkedAt =
+        new Date(checkedAtValue);
+
+      if (Number.isNaN(checkedAt.getTime())) {
+        return null;
+      }
+
+      const ageMilliseconds =
+        Date.now() - checkedAt.getTime();
+
+      const maximumAge =
+        MAX_COMPARISON_PRICE_AGE_DAYS *
+        24 * 60 * 60 * 1000;
+
+      if (
+        ageMilliseconds < -24 * 60 * 60 * 1000 ||
+        ageMilliseconds > maximumAge
+      ) {
+        return null;
+      }
+
+      return {
+        amount,
+        shippingAmount,
+        totalAmount,
+        currency,
+        checkedAt
+      };
+    }
+
+    function formatOfferMoney(amount, currency) {
+      try {
+        return new Intl.NumberFormat(
+          COUNTRY_LOCALES[state.country] || "es-ES",
+          {
+            style: "currency",
+            currency,
+            maximumFractionDigits: 2
+          }
+        ).format(amount);
+      } catch {
+        return `${amount.toFixed(2)} ${currency}`;
+      }
+    }
+
+    function getBestOfferRecommendation(
+      product,
+      offers
+    ) {
+      if (state.country === "GLOBAL") {
+        return null;
+      }
+
+      const candidates = offers
+        .filter((offer) =>
+          validAffiliateUrl(offer.url)
+        )
+        .map((offer) => ({
+          offer,
+          priceData:
+            getOfferPriceData(offer, product)
+        }))
+        .filter((candidate) =>
+          candidate.priceData
+        );
+
+      const currencyGroups = new Map();
+
+      candidates.forEach((candidate) => {
+        const currency =
+          candidate.priceData.currency;
+
+        if (!currencyGroups.has(currency)) {
+          currencyGroups.set(currency, []);
+        }
+
+        currencyGroups.get(currency)
+          .push(candidate);
+      });
+
+      const recommendations = [];
+
+      currencyGroups.forEach((currencyOffers) => {
+        const bestByStore = new Map();
+
+        currencyOffers.forEach((candidate) => {
+          const current =
+            bestByStore.get(candidate.offer.store);
+
+          if (
+            !current ||
+            candidate.priceData.totalAmount <
+              current.priceData.totalAmount
+          ) {
+            bestByStore.set(
+              candidate.offer.store,
+              candidate
+            );
+          }
+        });
+
+        const ranked =
+          [...bestByStore.values()]
+            .sort((a, b) =>
+              a.priceData.totalAmount -
+              b.priceData.totalAmount
+            );
+
+        if (ranked.length < 2) {
+          return;
+        }
+
+        const best = ranked[0];
+        const nextBest = ranked[1];
+        const savings =
+          nextBest.priceData.totalAmount -
+          best.priceData.totalAmount;
+
+        const savingsPercent =
+          nextBest.priceData.totalAmount > 0
+            ? (
+                savings /
+                nextBest.priceData.totalAmount
+              ) * 100
+            : 0;
+
+        if (
+          savings <= 0 ||
+          savingsPercent <
+            MIN_COMPARISON_SAVINGS_PERCENT
+        ) {
+          return;
+        }
+
+        recommendations.push({
+          best,
+          nextBest,
+          savings,
+          savingsPercent,
+          ranked
+        });
+      });
+
+      return recommendations
+        .sort((a, b) =>
+          b.savingsPercent -
+          a.savingsPercent
+        )[0] || null;
+    }
+
+    function getOfferCountryLabel(offer) {
       const countryName =
         COUNTRY_NAMES[offer.country] ||
         offer.country;
+
+      const shipsToSelectedCountry =
+        state.country !== "GLOBAL" &&
+        offer.country !== state.country &&
+        Array.isArray(offer.shipsTo) &&
+        offer.shipsTo.includes(state.country);
+
+      return shipsToSelectedCountry
+        ? `Envío a ${COUNTRY_NAMES[state.country]}`
+        : countryName;
+    }
+
+    function getOfferRenderKey(offer) {
+      return [
+        offer.store,
+        offer.country,
+        offer.url
+      ].join("|");
+    }
+
+    function getUniqueOffers(offers) {
+      const offerMap = new Map();
+
+      offers.forEach((offer) => {
+        offerMap.set(
+          getOfferRenderKey(offer),
+          offer
+        );
+      });
+
+      return [...offerMap.values()];
+    }
+
+    function renderBestOfferRecommendation(
+      recommendation
+    ) {
+      if (!recommendation) {
+        return "";
+      }
+
+      const { best, nextBest } = recommendation;
+      const priceData = best.priceData;
+      const countryName =
+        COUNTRY_NAMES[state.country] ||
+        state.country;
+
+      return `
+        <div class="best-offer-recommendation">
+          <span class="best-offer-label">
+            Mejor precio para ${escapeHtml(countryName)}
+          </span>
+
+          <span class="best-offer-summary">
+            ${escapeHtml(best.offer.store)} ·
+            ${escapeHtml(
+              formatOfferMoney(
+                priceData.totalAmount,
+                priceData.currency
+              )
+            )}
+          </span>
+
+          <span class="best-offer-saving">
+            Ahorras
+            ${escapeHtml(
+              formatOfferMoney(
+                recommendation.savings,
+                priceData.currency
+              )
+            )}
+            (${Math.round(recommendation.savingsPercent)} %)
+            frente a ${escapeHtml(nextBest.offer.store)}
+          </span>
+
+          <small class="best-offer-note">
+            Total estimado con envío · Comprobado
+            ${escapeHtml(
+              priceData.checkedAt.toLocaleDateString("es-ES")
+            )}
+            · Confirma el precio final en la tienda.
+          </small>
+        </div>
+      `;
+    }
+
+    function renderOffer(
+      offer,
+      options = {}
+    ) {
+      const countryName =
+        getOfferCountryLabel(offer);
 
       const isValid =
         validAffiliateUrl(offer.url);
@@ -3968,7 +4579,7 @@ function getProductCategories(product) {
 
       return `
         <a
-          class="offer-button"
+          class="offer-button${options.isBest ? " best-offer" : ""}"
           href="${escapeHtml(offer.url)}"
           target="_blank"
           rel="nofollow sponsored noopener noreferrer"
@@ -3984,12 +4595,29 @@ function getProductCategories(product) {
               <small class="offer-country">
                 ${escapeHtml(countryName)}
               </small>
+
+              ${
+                options.isBest
+                  ? `
+                    <small class="offer-best-badge">
+                      Recomendado
+                    </small>
+                  `
+                  : ""
+              }
             </span>
           </span>
 
           <span class="offer-action">
             <span class="offer-price">
-              ${escapeHtml(offer.price)}
+              ${escapeHtml(
+                options.priceData
+                  ? formatOfferMoney(
+                      options.priceData.totalAmount,
+                      options.priceData.currency
+                    )
+                  : offer.price
+              )}
             </span>
 
             <span class="offer-cta">
@@ -4001,10 +4629,33 @@ function getProductCategories(product) {
     }
 
     function renderProduct(product) {
-      const offers =
+      const filteredOffers =
         getVisibleOffers(product);
 
+      const countryOffers =
+        getCountryOffers(product);
+
+      const recommendation =
+        getBestOfferRecommendation(
+          product,
+          countryOffers
+        );
+
+      const offers = recommendation
+        ? getUniqueOffers([
+            recommendation.best.offer,
+            ...countryOffers
+          ])
+        : filteredOffers;
+
+      const bestOfferKey = recommendation
+        ? getOfferRenderKey(
+            recommendation.best.offer
+          )
+        : "";
+
       const primaryOffer =
+        recommendation?.best.offer ||
         offers.find(
           (offer) =>
             validAffiliateUrl(offer.url)
@@ -4045,7 +4696,25 @@ function getProductCategories(product) {
       const offersHtml =
         offers.length > 0
           ? offers
-              .map(renderOffer)
+              .map((offer) => {
+                const offerKey =
+                  getOfferRenderKey(offer);
+
+                const rankedOffer =
+                  recommendation?.ranked.find(
+                    (candidate) =>
+                      getOfferRenderKey(
+                        candidate.offer
+                      ) === offerKey
+                  );
+
+                return renderOffer(offer, {
+                  isBest:
+                    offerKey === bestOfferKey,
+                  priceData:
+                    rankedOffer?.priceData || null
+                });
+              })
               .join("")
           : `
             <div class="unavailable">
@@ -4056,8 +4725,18 @@ function getProductCategories(product) {
 
       return `
         <article
-          class="product-card"
+          class="product-card${recommendation ? " has-best-offer" : ""}"
           data-product-id="${escapeHtml(product.id)}"
+          ${
+            product.comparisonId
+              ? `data-comparison-id="${escapeHtml(product.comparisonId)}"`
+              : ""
+          }
+          ${
+            product.variantKey
+              ? `data-variant-key="${escapeHtml(product.variantKey)}"`
+              : ""
+          }
         >
 
           <div class="product-image-container">
@@ -4102,6 +4781,10 @@ function getProductCategories(product) {
                 product.description
               )}
             </p>
+
+            ${renderBestOfferRecommendation(
+              recommendation
+            )}
 
             <div class="product-offers">
               ${offersHtml}
