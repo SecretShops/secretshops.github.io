@@ -3282,7 +3282,29 @@
       }
 
       return product.offers.filter((offer) => {
+        const destinations =
+          Array.isArray(offer.shipsTo)
+            ? offer.shipsTo
+                .filter(
+                  (country) =>
+                    typeof country === "string"
+                )
+                .map((country) =>
+                  country.trim().toUpperCase()
+                )
+            : [];
+
+        const destinationMatches =
+          destinations.includes(state.country) ||
+          destinations.includes("GLOBAL") ||
+          (
+            destinations.includes("LATAM") &&
+            state.country !== "ES" &&
+            state.country !== "US"
+          );
+
         return (
+          destinationMatches ||
           offer.country === state.country ||
           offer.country === "GLOBAL" ||
           (
@@ -3568,8 +3590,243 @@ function getProductCategories(product) {
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "")
         .toLowerCase()
+        .replace(/[^a-z0-9]+/g, " ")
         .replace(/\s+/g, " ")
         .trim();
+    }
+
+    /* =====================================================
+       BÚSQUEDA MULTIRREGIONAL
+
+       Cada grupo representa un mismo concepto con nombres
+       habituales de España, Latinoamérica y Estados Unidos.
+       Añadir una nueva variante aquí la activa para todo el
+       catálogo, sin duplicar ni modificar los productos.
+    ====================================================== */
+
+    const SEARCH_CONCEPTS = [
+      ["pendiente", "pendientes", "arete", "aretes", "zarcillo", "zarcillos", "earring", "earrings"],
+      ["movil", "telefono movil", "celular", "telefono celular", "smartphone", "phone", "mobile phone"],
+      ["ordenador", "computadora", "computador", "pc", "computer"],
+      ["portatil", "ordenador portatil", "computadora portatil", "laptop", "notebook"],
+      ["auricular", "auriculares", "audifono", "audifonos", "headphone", "headphones", "earbud", "earbuds"],
+      ["altavoz", "altavoces", "bocina", "bocinas", "parlante", "parlantes", "speaker", "speakers"],
+      ["reloj inteligente", "smartwatch", "smart watch"],
+      ["cargador", "cargadores", "charger", "chargers"],
+      ["funda de movil", "carcasa de celular", "protector de celular", "phone case", "mobile case"],
+      ["zapatilla", "zapatillas", "tenis", "calzado deportivo", "sneaker", "sneakers"],
+      ["camiseta", "camisetas", "playera", "playeras", "remera", "remeras", "polera", "poleras", "franela", "franelas", "t shirt", "t shirts", "tee shirt"],
+      ["sudadera", "sudaderas", "buzo", "buzos", "poleron", "polerones", "hoodie", "hoodies", "sweatshirt"],
+      ["chaqueta", "chaquetas", "chamarra", "chamarras", "campera", "camperas", "casaca", "casacas", "jacket", "jackets"],
+      ["pantalon", "pantalones", "pants", "trousers"],
+      ["vaquero", "vaqueros", "pantalon de mezclilla", "pantalones de mezclilla", "jean", "jeans"],
+      ["banador", "banadores", "traje de bano", "trajes de bano", "vestido de bano", "malla de bano", "swimsuit", "swimwear"],
+      ["ropa interior", "lenceria", "underwear", "lingerie"],
+      ["calcetin", "calcetines", "media", "medias", "sock", "socks"],
+      ["vestido", "vestidos", "dress", "dresses"],
+      ["falda", "faldas", "pollera", "polleras", "skirt", "skirts"],
+      ["bolso", "bolsos", "bolsa de mano", "cartera de mujer", "handbag", "handbags"],
+      ["billetera", "billeteras", "monedero", "monederos", "cartera de bolsillo", "wallet", "wallets"],
+      ["mochila", "mochilas", "morral", "morrales", "backpack", "backpacks"],
+      ["cochecito de bebe", "carrito de bebe", "carriola", "coche de bebe", "stroller", "baby stroller"],
+      ["biberon", "biberones", "mamadera", "mamaderas", "tetero", "teteros", "baby bottle", "baby bottles"],
+      ["chupete", "chupetes", "chupon", "chupones", "pacificador", "pacifier", "pacifiers"],
+      ["panal", "panales", "diaper", "diapers", "nappy", "nappies"],
+      ["coche", "coches", "carro", "carros", "auto", "autos", "automovil", "automoviles", "car", "cars"],
+      ["motocicleta", "motocicletas", "moto", "motos", "motorbike", "motorcycle", "motorcycles"],
+      ["maletero", "baul del coche", "cajuela", "trunk"],
+      ["capo", "cofre del coche", "hood"],
+      ["parabrisas", "parabrisa", "windshield", "windscreen"],
+      ["neumatico", "neumaticos", "llanta", "llantas", "cubierta", "cubiertas", "tire", "tires", "tyre", "tyres"],
+      ["gasolina", "nafta", "bencina", "petrol", "gas"],
+      ["batidora", "licuadora", "mezcladora", "blender"],
+      ["frigorifico", "nevera", "refrigerador", "refrigeradora", "heladera", "refrigerator", "fridge"],
+      ["fogon", "fogones", "estufa de cocina", "cocina de gas", "stove", "cooktop"],
+      ["hervidor", "hervidora", "tetera electrica", "pava electrica", "kettle"],
+      ["bombilla", "bombillas", "foco", "focos", "ampolleta", "ampolletas", "light bulb", "light bulbs"],
+      ["enchufe", "enchufes", "tomacorriente", "tomacorrientes", "clavija", "clavijas", "plug", "plugs", "power outlet"],
+      ["grifo", "grifos", "llave de agua", "llaves de agua", "canilla", "canillas", "faucet", "faucets", "tap", "taps"],
+      ["fregadero", "fregaderos", "tarja", "tarjas", "pileta de cocina", "kitchen sink"],
+      ["cubo de basura", "cesto de basura", "bote de basura", "basurero", "papelera", "tacho de basura", "trash can", "garbage bin", "wastebasket"],
+      ["pintalabios", "lapiz labial", "labial", "barra de labios", "lipstick"],
+      ["esmalte de unas", "pintura de unas", "barniz de unas", "nail polish"],
+      ["secador de pelo", "secadora de cabello", "secador de cabello", "hair dryer"],
+      ["plancha de pelo", "plancha para cabello", "alisadora", "hair straightener", "flat iron"],
+      ["correa para perro", "correa para mascota", "trailla", "dog leash", "pet leash"],
+      ["destornillador", "destornilladores", "desarmador", "desarmadores", "screwdriver", "screwdrivers"],
+      ["plata", "plateado", "plateada", "silver"],
+      ["oro", "dorado", "dorada", "gold", "golden"],
+      ["negro", "negra", "black"],
+      ["blanco", "blanca", "white"],
+      ["rojo", "roja", "red"],
+      ["azul", "blue"],
+      ["verde", "green"]
+    ];
+
+    const NORMALIZED_SEARCH_CONCEPTS =
+      SEARCH_CONCEPTS.map((concept) =>
+        concept
+          .map(normalizeSearchText)
+          .sort((a, b) => b.length - a.length)
+      );
+
+    const SEARCH_STOP_WORDS =
+      new Set([
+        "de", "del", "el", "la", "los", "las",
+        "un", "una", "unos", "unas", "para", "con",
+        "y", "en", "por", "of", "the", "for", "with",
+        "and", "in", "to", "a", "an"
+      ]);
+
+    function hasNormalizedSearchPhrase(
+      normalizedText,
+      normalizedPhrase
+    ) {
+      return (
+        ` ${normalizedText} `
+          .includes(` ${normalizedPhrase} `)
+      );
+    }
+
+    function removeNormalizedSearchPhrase(
+      normalizedText,
+      normalizedPhrase
+    ) {
+      return (` ${normalizedText} `)
+        .split(` ${normalizedPhrase} `)
+        .join(" ")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function getSearchTokenVariants(token) {
+      const variants = new Set([token]);
+
+      if (token.length > 4 && token.endsWith("es")) {
+        variants.add(token.slice(0, -2));
+      }
+
+      if (token.length > 3 && token.endsWith("s")) {
+        variants.add(token.slice(0, -1));
+      }
+
+      if (token.length > 2 && !token.endsWith("s")) {
+        variants.add(`${token}s`);
+        variants.add(`${token}es`);
+      }
+
+      return [...variants];
+    }
+
+    function searchTokenMatches(words, token) {
+      return getSearchTokenVariants(token)
+        .some((variant) => words.has(variant));
+    }
+
+    function matchesRegionalSearch(
+      searchableValue,
+      queryValue
+    ) {
+      const searchableText =
+        normalizeSearchText(searchableValue);
+
+      const normalizedQuery =
+        normalizeSearchText(queryValue);
+
+      if (!normalizedQuery) {
+        return true;
+      }
+
+      if (searchableText.includes(normalizedQuery)) {
+        return true;
+      }
+
+      let remainingQuery = normalizedQuery;
+      const requiredConcepts = [];
+
+      NORMALIZED_SEARCH_CONCEPTS
+        .forEach((aliases) => {
+        const conceptMatches =
+          aliases.some((alias) =>
+            hasNormalizedSearchPhrase(
+              normalizedQuery,
+              alias
+            )
+          );
+
+        if (!conceptMatches) {
+          return;
+        }
+
+        requiredConcepts.push(aliases);
+
+        aliases.forEach((alias) => {
+          remainingQuery =
+            removeNormalizedSearchPhrase(
+              remainingQuery,
+              alias
+            );
+        });
+      });
+
+      const conceptsMatch =
+        requiredConcepts.every((aliases) =>
+          aliases.some((alias) =>
+            hasNormalizedSearchPhrase(
+              searchableText,
+              alias
+            )
+          )
+        );
+
+      if (!conceptsMatch) {
+        return false;
+      }
+
+      const searchableWords =
+        new Set(searchableText.split(" "));
+
+      const remainingTokens =
+        remainingQuery
+          .split(" ")
+          .filter(Boolean)
+          .filter(
+            (token) =>
+              !SEARCH_STOP_WORDS.has(token)
+          );
+
+      return remainingTokens.every((token) =>
+        searchTokenMatches(
+          searchableWords,
+          token
+        )
+      );
+    }
+
+    function getProductSearchAliases(product) {
+      const aliases = [];
+
+      if (Array.isArray(product.searchAliases)) {
+        aliases.push(...product.searchAliases);
+      }
+
+      if (
+        product.regionalNames &&
+        typeof product.regionalNames === "object"
+      ) {
+        Object.values(product.regionalNames)
+          .forEach((value) => {
+            if (Array.isArray(value)) {
+              aliases.push(...value);
+            } else {
+              aliases.push(value);
+            }
+          });
+      }
+
+      return aliases.filter(
+        (value) => typeof value === "string"
+      );
     }
 
     function getStoreSearchText(store) {
@@ -3639,6 +3896,7 @@ function getProductCategories(product) {
             normalizeSearchText([
               product.name,
               product.description,
+              ...getProductSearchAliases(product),
               ...getProductCategories(product),
               ...getProductCategories(product).map(
                 getCategoryDisplayName
@@ -3652,7 +3910,10 @@ function getProductCategories(product) {
 
           const queryMatches =
             !hasQuery ||
-            searchableText.includes(normalizedQuery);
+            matchesRegionalSearch(
+              searchableText,
+              normalizedQuery
+            );
 
           return (
             categoryMatches &&
