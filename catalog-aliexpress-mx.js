@@ -12,7 +12,7 @@ window.CATALOG_META_ALIEXPRESS_MX = {
   sourceRows: 299,
   uniqueProducts: 299,
   duplicatesMerged: 0,
-  updatedAt: "2026-07-20",
+  updatedAt: "2026-07-21",
   metadataCompleted: 241,
   metadataNeverAttempted: 0,
   metadataDeferred: 55,
