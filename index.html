@@ -2786,19 +2786,16 @@
         font-size: 0.64rem;
       }
     }
-
-    @media (max-width: 1024px) {
-      .top-category-list {
-        display: flex;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-      }
-
-      html.catalog-pending .top-category-list {
-        min-height: 34px;
-        visibility: hidden;
-      }
+    /* Las categorías se muestran únicamente dentro del menú desplegable. */
+    .top-category-list {
+      display: none !important;
     }
+
+    html.catalog-pending .top-category-list {
+      min-height: 0;
+      visibility: hidden;
+    }
+
 
     .hero {
       min-height: 150px;
