@@ -13,6 +13,28 @@ function assert(condition, message) {
   if (!condition) throw new Error(message);
 }
 
+function validateRuntime(payload) {
+  assert(payload.schemaVersion === 1, "catalog-runtime.json: schemaVersion inválido");
+  assert(typeof payload.enabled === "boolean", "catalog-runtime.json: enabled debe ser boolean");
+  assert(typeof payload.autoStart === "boolean", "catalog-runtime.json: autoStart debe ser boolean");
+  assert(/^[A-Z]{2}$/.test(payload.country), "catalog-runtime.json: country inválido");
+  assert(typeof payload.dataBasePath === "string" && payload.dataBasePath, "catalog-runtime.json: dataBasePath obligatorio");
+}
+
+function validateConfig(payload) {
+  assert(payload.schemaVersion === 1, "catalog-config.json: schemaVersion inválido");
+  assert(Array.isArray(payload.supportedCountries), "catalog-config.json: supportedCountries debe ser un array");
+  const codes = new Set();
+  for (const country of payload.supportedCountries) {
+    assert(/^[A-Z]{2}$/.test(country.code), `Código de país inválido: ${country.code}`);
+    assert(!codes.has(country.code), `País duplicado: ${country.code}`);
+    codes.add(country.code);
+    assert(/^[A-Z]{3}$/.test(country.currency), `${country.code}: moneda inválida`);
+    assert(typeof country.enabled === "boolean", `${country.code}: enabled debe ser boolean`);
+  }
+  return codes;
+}
+
 function validateMerchants(payload) {
   assert(payload.schemaVersion === 1, "merchants.json: schemaVersion inválido");
   assert(Array.isArray(payload.merchants), "merchants.json: merchants debe ser un array");
@@ -62,12 +84,17 @@ function validateOffers(payload, productIds, merchantIds) {
   }
 }
 
+const runtime = await readJson("catalog-runtime.json");
+const config = await readJson("catalog-config.json");
 const merchants = await readJson("merchants.json");
 const products = await readJson("products.json");
 const offers = await readJson("offers.json");
 
+validateRuntime(runtime);
+const countryCodes = validateConfig(config);
+assert(countryCodes.has(runtime.country), `catalog-runtime.json: país no configurado: ${runtime.country}`);
 const merchantIds = validateMerchants(merchants);
 const productIds = validateProducts(products);
 validateOffers(offers, productIds, merchantIds);
 
-console.log(`Catálogo válido: ${merchantIds.size} merchants, ${productIds.size} productos y ${offers.offers.length} ofertas.`);
+console.log(`Catálogo válido: ${merchantIds.size} merchants, ${productIds.size} productos y ${offers.offers.length} ofertas. Loader enabled=${runtime.enabled}.`);

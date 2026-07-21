@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "enabled": false,
+  "autoStart": true,
+  "publishToWindow": true,
+  "eventPrefix": "secretshop:awin-catalog",
+  "country": "ES",
+  "dataBasePath": "./data/catalog",
+  "allowPendingMerchants": false,
+  "includeStaleOffers": true,
+  "debug": false
+}
