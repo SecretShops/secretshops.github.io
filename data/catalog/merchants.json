@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-07-21",
+  "updatedAt": "2026-07-22",
   "merchants": [
     { "id": "rebuy-es", "name": "reBuy ES", "country": "ES", "status": "pending", "feedExpected": true, "catalogMode": "refurbished_and_trade_in" },
     { "id": "kiko-es", "name": "Kiko ES", "country": "ES", "status": "pending", "feedExpected": true, "catalogMode": "retail" },
@@ -15,12 +15,12 @@
     { "id": "hawkers-row", "name": "Hawkers ROW", "country": "ES", "status": "pending", "feedExpected": true, "catalogMode": "retail" },
     { "id": "la-redoute-es", "name": "La Redoute ES", "country": "ES", "status": "pending", "feedExpected": true, "catalogMode": "retail" },
     { "id": "banak-es", "name": "Banak ES", "country": "ES", "status": "pending", "feedExpected": true, "catalogMode": "retail" },
-    { "id": "muebles-style-spain", "name": "Muebles Style Spain", "country": "ES", "status": "pending", "feedExpected": true, "catalogMode": "new_and_second_chance" },
+    { "id": "muebles-style-spain", "name": "Muebles Style Spain", "country": "ES", "status": "approved", "feedExpected": true, "catalogMode": "new_and_second_chance" },
     { "id": "pccomponentes-es", "name": "PcComponentes ES", "country": "ES", "status": "pending", "feedExpected": true, "catalogMode": "retail" },
     { "id": "sephora-es", "name": "Sephora ES", "country": "ES", "status": "pending", "feedExpected": true, "catalogMode": "retail", "excludeBrands": ["Chanel", "Dior"] },
     { "id": "pixmania-es", "name": "Pixmania ES", "country": "ES", "status": "pending", "feedExpected": true, "catalogMode": "retail" },
-    { "id": "cosori-es", "name": "Cosori ES", "country": "ES", "status": "pending", "feedExpected": true, "catalogMode": "retail" },
+    { "id": "cosori-es", "name": "Cosori ES", "country": "ES", "status": "rejected", "feedExpected": false, "catalogMode": "retail" },
     { "id": "msi-spain", "name": "MSI SPAIN", "country": "ES", "status": "pending", "feedExpected": true, "catalogMode": "retail" },
-    { "id": "naturitas-es", "name": "Naturitas ES", "country": "ES", "status": "pending", "feedExpected": true, "catalogMode": "retail", "medicalClaimsBlocked": true }
+    { "id": "naturitas-es", "name": "Naturitas ES", "country": "ES", "status": "rejected", "feedExpected": false, "catalogMode": "retail", "medicalClaimsBlocked": true }
   ]
 }
