@@ -4122,11 +4122,15 @@
       );
     }
 
-    const CATALOG = buildCatalog(
+    const STATIC_CATALOG_SOURCES = [
       window.CATALOG_BASE,
       window.CATALOG_ALIEXPRESS_MX,
       window.CATALOG_ALIEXPRESS_CO,
       window.CATALOG_TEMU
+    ];
+
+    let CATALOG = buildCatalog(
+      ...STATIC_CATALOG_SOURCES
     );
 
 
@@ -4540,6 +4544,17 @@ function getProductCategories(product) {
       "Menos de 10",
       "Tecnología",
       "Hogar",
+      "Sofás",
+      "Sillas y sillones",
+      "Bancos, pufs y reposapiés",
+      "Camas y colchones",
+      "Mesas y escritorios",
+      "Almacenaje",
+      "Iluminación",
+      "Textiles y cojines",
+      "Jardín y terraza",
+      "Cocina y comedor",
+      "Decoración y accesorios",
       "Moda mujer",
       "Moda hombre",
       "Accesorios mujer",
@@ -4549,6 +4564,27 @@ function getProductCategories(product) {
       "Coche/Moto",
       "Moda vintage"
     ];
+
+    const CATEGORY_PARENTS = {
+      "Sofás": "Hogar",
+      "Sillas y sillones": "Hogar",
+      "Bancos, pufs y reposapiés": "Hogar",
+      "Camas y colchones": "Hogar",
+      "Mesas y escritorios": "Hogar",
+      "Almacenaje": "Hogar",
+      "Iluminación": "Hogar",
+      "Textiles y cojines": "Hogar",
+      "Jardín y terraza": "Hogar",
+      "Cocina y comedor": "Hogar",
+      "Decoración y accesorios": "Hogar"
+    };
+
+    function getCategoryMenuDisplayName(category) {
+      const parent = CATEGORY_PARENTS[category];
+      return parent
+        ? `${parent} › ${getCategoryDisplayName(category)}`
+        : getCategoryDisplayName(category);
+    }
 
     function getCategories() {
       const categorySet =
@@ -4633,7 +4669,7 @@ function getProductCategories(product) {
                 data-category="${escapeHtml(category)}"
               >
                 ${escapeHtml(
-                  getCategoryDisplayName(category)
+                  getCategoryMenuDisplayName(category)
                 )}
               </button>
             `;
@@ -5751,7 +5787,9 @@ function getProductCategories(product) {
     function renderGroupedProducts(products) {
       const categories =
         getCategories().filter(
-          (category) => category !== "Todos"
+          (category) =>
+            category !== "Todos" &&
+            !CATEGORY_PARENTS[category]
         );
 
       const showcaseLimit =
@@ -6393,11 +6431,42 @@ function getProductCategories(product) {
       }
     );
 
-    updateStoreButtons();
-    ensureValidCategory();
-    renderCategories();
-    renderProducts();
-    showInventorySummary();
+    function refreshCatalogInterface() {
+      updateStoreButtons();
+      ensureValidCategory();
+      resetVisibleCount();
+      renderCategories();
+      renderProducts();
+      showInventorySummary();
+    }
+
+    function applyAwinCatalogProducts(products) {
+      if (!Array.isArray(products)) {
+        return;
+      }
+
+      CATALOG = buildCatalog(
+        ...STATIC_CATALOG_SOURCES,
+        products
+      );
+
+      refreshCatalogInterface();
+    }
+
+    document.addEventListener(
+      "secretshop:awin-catalog-ready",
+      (event) => {
+        applyAwinCatalogProducts(
+          event.detail?.uiProducts || []
+        );
+      }
+    );
+
+    if (Array.isArray(window.CATALOG_AWIN)) {
+      applyAwinCatalogProducts(window.CATALOG_AWIN);
+    } else {
+      refreshCatalogInterface();
+    }
 
     window.requestAnimationFrame(() => {
       document.documentElement.classList.remove(
@@ -6413,6 +6482,8 @@ function getProductCategories(product) {
       );
     }
   </script>
+
+  <script type="module" src="./scripts/catalog-bootstrap.js?v=20260722-1"></script>
 
   <!-- Cloudflare Web Analytics -->
   <script
