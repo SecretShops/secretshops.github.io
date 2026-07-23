@@ -4,10 +4,12 @@ import {
   bestOffer,
   categoryGroup,
   discountPercent,
+  displayOfferPrice,
   filterAndSortFamilies,
   getSuggestions,
   mergeCatalogPayloads,
   normalizeText,
+  offerTotal,
   smartSearchScore
 } from "../assets/js/catalog-core.js";
 
@@ -144,6 +146,21 @@ test("ordena precios y calcula descuentos sobre la mejor oferta", () => {
     filterAndSortFamilies(families, { sort: "price-asc" })[0].id,
     "phone"
   );
+});
+
+test("no convierte precios ausentes en 0,00 €", () => {
+  const offer = {
+    country: "ES",
+    currency: "EUR",
+    price: null,
+    shippingCost: null,
+    totalPrice: null,
+    displayPrice: "Consultar precio en Amazon"
+  };
+
+  assert.equal(offerTotal(offer), null);
+  assert.equal(displayOfferPrice(offer), "Consultar precio en Amazon");
+  assert.equal(offerTotal({ price: "", totalPrice: "" }), null);
 });
 
 test("genera sugerencias de producto y categoría", () => {

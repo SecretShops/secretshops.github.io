@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Asistente privado para asociar imágenes oficiales de SiteStripe al catálogo de Amazon España de SecretShop.">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Asistente SiteStripe · SecretShop</title>
+  <link rel="stylesheet" href="./assets/css/sitestripe-assistant.css">
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <h1>Asistente SiteStripe</h1>
+      <p>Recopila imágenes oficiales sin automatizar ni extraer contenido de Amazon.</p>
+    </div>
+    <div class="progress">
+      <p><strong id="completed-count">0</strong> de <strong id="total-count">0</strong> productos completados</p>
+      <progress id="progress-bar" value="0" max="1">0%</progress>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside class="sidebar" aria-label="Productos de Amazon">
+      <div class="source-actions">
+        <button id="reload-source" type="button">Recargar desde GitHub</button>
+        <label class="button file-button">
+          Elegir CSV
+          <input id="csv-file" type="file" accept=".csv,text/csv">
+        </label>
+      </div>
+      <div class="filters">
+        <input id="product-search" type="search" placeholder="Buscar ASIN, producto o marca" aria-label="Buscar productos">
+        <select id="product-filter" aria-label="Filtrar productos">
+          <option value="all">Todos</option>
+          <option value="pending">Pendientes</option>
+          <option value="completed">Completados</option>
+          <option value="skipped">Revisar después</option>
+        </select>
+      </div>
+      <div id="product-list" class="product-list"></div>
+    </aside>
+
+    <section class="workspace">
+      <article class="capture-panel">
+        <div class="current-heading">
+          <div>
+            <h2 id="current-title">Cargando catálogo…</h2>
+            <p id="current-meta"></p>
+          </div>
+          <span id="current-status"></span>
+        </div>
+
+        <ol class="instructions">
+          <li>Abre la ficha con el botón inferior e inicia sesión en tu cuenta de Afiliados.</li>
+          <li>En SiteStripe pulsa <strong>Imagen</strong> y copia el código completo.</li>
+          <li>Vuelve aquí, pégalo y pulsa <strong>Validar y guardar</strong>.</li>
+        </ol>
+
+        <div class="capture-grid">
+          <div>
+            <label for="sitestripe-code">Código de Imagen de SiteStripe</label>
+            <textarea
+              id="sitestripe-code"
+              spellcheck="false"
+              placeholder="Pega aquí el código HTML generado por SiteStripe…"
+              disabled
+            ></textarea>
+            <div class="button-row">
+              <a id="amazon-link" class="button" href="#" target="_blank" rel="noopener noreferrer" aria-disabled="true">
+                Abrir producto en Amazon
+              </a>
+              <button id="save-code" class="primary" type="button" disabled>Validar y guardar</button>
+              <button id="skip-product" type="button" disabled>Revisar después</button>
+              <button id="remove-image" type="button" disabled>Eliminar captura</button>
+            </div>
+          </div>
+          <div class="preview-card">
+            <img id="image-preview" alt="" hidden>
+            <p id="preview-empty">La imagen validada aparecerá aquí.</p>
+          </div>
+        </div>
+      </article>
+
+      <p id="message" class="message" role="status" aria-live="polite" hidden></p>
+    </section>
+  </main>
+
+  <footer class="footer-actions">
+    <button id="export-csv" class="primary" type="button" disabled>Descargar CSV actualizado</button>
+    <button id="export-backup" type="button">Guardar copia del progreso</button>
+    <button id="import-backup" type="button">Recuperar progreso</button>
+    <input id="backup-file" type="file" accept=".json,application/json">
+  </footer>
+
+  <script type="module" src="./assets/js/sitestripe-assistant.js"></script>
+</body>
+</html>

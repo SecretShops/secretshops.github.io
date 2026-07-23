@@ -198,6 +198,7 @@ export function countryLabel(code) {
 }
 
 export function formatMoney(amount, currency = "EUR", country = "ES") {
+  if (amount === null || amount === undefined || amount === "") return null;
   if (!Number.isFinite(Number(amount))) return null;
   try {
     return new Intl.NumberFormat(COUNTRY_LOCALES[country] || "es-ES", {
@@ -210,15 +211,21 @@ export function formatMoney(amount, currency = "EUR", country = "ES") {
   }
 }
 
+function numericValueOrNull(value) {
+  if (value === null || value === undefined || value === "") return null;
+  const numericValue = Number(value);
+  return Number.isFinite(numericValue) ? numericValue : null;
+}
+
 export function offerTotal(offer) {
-  if (Number.isFinite(Number(offer?.totalPrice))) {
-    return Number(offer.totalPrice);
-  }
-  if (!Number.isFinite(Number(offer?.price))) return null;
-  const shipping = Number.isFinite(Number(offer?.shippingCost))
-    ? Number(offer.shippingCost)
-    : 0;
-  return Number(offer.price) + shipping;
+  const totalPrice = numericValueOrNull(offer?.totalPrice);
+  if (totalPrice !== null) return totalPrice;
+
+  const price = numericValueOrNull(offer?.price);
+  if (price === null) return null;
+
+  const shippingCost = numericValueOrNull(offer?.shippingCost);
+  return price + (shippingCost ?? 0);
 }
 
 export function displayOfferPrice(offer) {
@@ -268,9 +275,10 @@ function normalizeOffer(rawOffer, defaults = {}) {
     defaults.currency ||
     ""
   ).toUpperCase();
-  const price = Number(rawOffer.price);
-  const shippingCost = Number(rawOffer.shippingCost);
-  const totalPrice = Number(rawOffer.totalPrice);
+  const price = numericValueOrNull(rawOffer.price);
+  const previousPrice = numericValueOrNull(rawOffer.previousPrice);
+  const shippingCost = numericValueOrNull(rawOffer.shippingCost);
+  const totalPrice = numericValueOrNull(rawOffer.totalPrice);
 
   return {
     id,
@@ -287,15 +295,13 @@ function normalizeOffer(rawOffer, defaults = {}) {
     ),
     country,
     currency,
-    price: Number.isFinite(price) ? price : null,
-    previousPrice: Number.isFinite(Number(rawOffer.previousPrice))
-      ? Number(rawOffer.previousPrice)
-      : null,
-    shippingCost: Number.isFinite(shippingCost) ? shippingCost : null,
-    totalPrice: Number.isFinite(totalPrice)
+    price,
+    previousPrice,
+    shippingCost,
+    totalPrice: totalPrice !== null
       ? totalPrice
-      : Number.isFinite(price)
-        ? price + (Number.isFinite(shippingCost) ? shippingCost : 0)
+      : price !== null
+        ? price + (shippingCost ?? 0)
         : null,
     displayPrice: rawOffer.displayPrice || rawOffer.priceLabel || rawOffer.priceSnapshot || null,
     availability: rawOffer.availability || "unknown",
