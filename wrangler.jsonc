@@ -1,4 +1,5 @@
-{
+{  
+// Activar despliegue de Cloudflare
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "secret-shop",
   "compatibility_date": "2026-07-23",
