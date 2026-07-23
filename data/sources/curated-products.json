@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "products": [
+    {
+      "productId": "1005007914556601",
+      "country": "CO",
+      "title": "Tira LED RGB de 5 a 30 m con app y mando",
+      "brand": "Selección",
+      "description": "Tira de iluminación LED RGB disponible en distintas longitudes y configuraciones. Comprueba la medida, el tipo de alimentación, el control incluido y la compatibilidad directamente en la tienda.",
+      "categories": [
+        "Tecnología",
+        "Hogar y cocina"
+      ],
+      "images": [
+        "./images/products/co/led-rgb-5-30m/main.webp",
+        "./images/products/co/led-rgb-5-30m/app-control.webp",
+        "./images/products/co/led-rgb-5-30m/conexion-usb.webp"
+      ],
+      "affiliateUrl": "https://s.click.aliexpress.com/e/_c407VyHd",
+      "featured": true
+    },
+    {
+      "productId": "1005006674240344",
+      "country": "CO",
+      "title": "Cierre frontal de encaje Phashion de cabello humano",
+      "brand": "Phashion",
+      "description": "Cierre frontal de encaje disponible en varias longitudes y características. Revisa el tamaño de la base, el acabado, el color y las condiciones de cuidado en la ficha de la tienda.",
+      "categories": [
+        "Belleza y cuidado",
+        "Accesorios y complementos"
+      ],
+      "images": [
+        "./images/products/co/phashion-lace-frontal/main.webp",
+        "./images/products/co/phashion-lace-frontal/encaje-transparente.webp",
+        "./images/products/co/phashion-lace-frontal/cabello-liso.webp",
+        "./images/products/co/phashion-lace-frontal/base-encaje.webp",
+        "./images/products/co/phashion-lace-frontal/acabado-largo.webp"
+      ],
+      "affiliateUrl": "https://s.click.aliexpress.com/e/_c3oWdKh5",
+      "featured": true
+    },
+    {
+      "productId": "1005006505041416",
+      "country": "CO",
+      "title": "Cable UGREEN USB-C a USB-C de 100 W con E-Marker",
+      "brand": "UGREEN",
+      "description": "Cable USB-C a USB-C anunciado con potencia de hasta 100 W y chip E-Marker. Confirma la longitud, la potencia admitida por tus dispositivos y la compatibilidad de carga en la tienda.",
+      "categories": [
+        "Tecnología"
+      ],
+      "images": [
+        "./images/products/co/ugreen-usb-c-100w/main.webp",
+        "./images/products/co/ugreen-usb-c-100w/chip-e-marker.webp",
+        "./images/products/co/ugreen-usb-c-100w/carga-portatil.webp",
+        "./images/products/co/ugreen-usb-c-100w/carga-camara.webp"
+      ],
+      "affiliateUrl": "https://s.click.aliexpress.com/e/_c3EStQBp",
+      "featured": true
+    },
+    {
+      "productId": "1005006941249932",
+      "country": "CO",
+      "title": "Intercomunicador Bluetooth Y12 Pro para casco de moto",
+      "brand": "Y12 Pro",
+      "description": "Intercomunicador Bluetooth para casco de moto con funciones que pueden variar según la versión. Comprueba el número de unidades, la autonomía, el montaje y la compatibilidad antes de comprar.",
+      "categories": [
+        "Tecnología",
+        "Coche/Moto"
+      ],
+      "images": [
+        "./images/products/co/y12-pro-intercom/main.webp",
+        "./images/products/co/y12-pro-intercom/musica-compartida.webp",
+        "./images/products/co/y12-pro-intercom/bluetooth-54.webp"
+      ],
+      "affiliateUrl": "https://s.click.aliexpress.com/e/_c4sEziwB",
+      "featured": true
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # Importación completa de Muebles Style Spain
 
-## Resultado
+## Resultado validado
 
 - Filas del feed: **3.111**
 - Productos aceptados: **3.110**
@@ -8,18 +8,10 @@
 - Ofertas publicadas: **3.110**
 - Conflictos de identificadores: **0**
 - Moneda: **EUR**
-- Merchant Awin: **122118**
-- Feed Awin: **112474**
 
-La única fila omitida es:
+La fila omitida no contiene GTIN, EAN, UPC ni otro identificador exacto admitido por el perfil.
 
-```text
-KA110497 — Alfombrilla universal «Billete de 100 DÓLARES» 28 x 20 cm
-```
-
-Motivo: no contiene GTIN/EAN/UPC ni otro identificador exacto admitido por el perfil de Muebles Style.
-
-## Distribución por categorías
+## Distribución
 
 | Categoría | Productos |
 |---|---:|
@@ -35,13 +27,15 @@ Motivo: no contiene GTIN/EAN/UPC ni otro identificador exacto admitido por el pe
 | Cocina y comedor | 5 |
 | **Total** | **3.110** |
 
-Todos estos productos pertenecen además al departamento general `Hogar`.
+Los 3.110 productos se agrupan en **413 familias** públicas y conservan sus **3.110 variantes**.
 
-## Informes técnicos
+## Informes
 
 - `data/catalog/import-reports/muebles-style-last.json`
 - `data/catalog/import-reports/muebles-style-universal-dry-run.json`
+- `data/catalog/family-grouping-report.json`
 
 ## Publicación
 
-La entrega incluye `catalog-runtime.json` con el catálogo activado. Una vez desplegados todos los archivos, los productos se incorporarán a la interfaz pública de SecretShop.
+`scripts/build-product-families.py` genera `data/catalog/families.json`. La interfaz carga ese archivo directamente junto con los catálogos de marketplace.
+

@@ -1,11 +1,12 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "report": {
-    "generatedAt": "2026-07-22T20:16:13.585417+00:00",
+    "generatedAt": "2026-07-23T14:59:33.108178+00:00",
     "sourceProducts": 3110,
     "sourceOffers": 3110,
     "families": 413,
     "variants": 3110,
+    "publicOffers": 3110,
     "hidden": 0,
     "sofaProducts": 1620,
     "sofaFamilies": 107,
@@ -111,7 +112,7 @@
         "variants": 40
       }
     ],
-    "policy": "B como base con selección C moderada; agrupación conservadora por marca, categoría, modelo y tipo."
+    "policy": "Agrupación conservadora por marca, categoría, modelo y tipo; las ofertas permanecen asociadas a una variante exacta."
   },
   "hiddenProducts": []
 }

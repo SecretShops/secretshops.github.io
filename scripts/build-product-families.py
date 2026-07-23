@@ -1,80 +1,356 @@
-import json,re,unicodedata,hashlib,os,datetime,shutil
-root=os.path.abspath(os.path.join(os.path.dirname(__file__),'..'))
-cat=f'{root}/data/catalog'
-P=json.load(open(f'{cat}/products.json',encoding='utf-8'))['products']
-O=json.load(open(f'{cat}/offers.json',encoding='utf-8'))['offers']
-offers_by={o['productId']:o for o in O}
-COLORS=['beige','gris','antracita','negro','negra','blanco','blanca','crema','marrón','marron','verde','azul','rojo','rosa','amarillo','naranja','taupe','cognac','plateado','plata','dorado']
-ORIENT=['izquierda','derecha','izquierdo','derecho']
+#!/usr/bin/env python3
+"""Construye el catálogo público familias → variantes → ofertas.
 
-def norm(s):
- s=unicodedata.normalize('NFKD',s or '').encode('ascii','ignore').decode().lower()
- s=re.sub(r'\b\d+(?:[.,]\d+)?\s*(?:cm|mm|m|plazas?|piezas?)\b',' ',s)
- s=re.sub(r'\b(?:'+('|'.join(map(re.escape,COLORS+ORIENT)))+r')\b',' ',s)
- s=re.sub(r'[^a-z0-9]+',' ',s)
- return ' '.join(s.split())
+Los archivos products.json y offers.json siguen siendo la fuente canónica.
+El archivo público no incluye enlaces de afiliación: solo conserva el ID de
+oferta que resuelve go.html mediante affiliate-links.json.
+"""
 
-def attr(title, words):
- t=title.lower()
- return next((w for w in words if re.search(r'\b'+re.escape(w)+r'\b',t)),None)
+from __future__ import annotations
 
-groups={}; hidden=[]
-for p in P:
- o=offers_by.get(p['id'])
- reason=None
- if not o: reason='sin_oferta'
- elif not p.get('images'): reason='sin_imagen'
- elif not o.get('affiliateUrl'): reason='sin_enlace_afiliado'
- elif not isinstance(o.get('price'),(int,float)) or o.get('price',0)<=0: reason='precio_invalido'
- if reason:
-  hidden.append({'productId':p['id'],'reason':reason}); continue
- model=(p.get('model') or '').strip()
- key='|'.join([norm(p.get('brand') or 'sin marca'),norm(p.get('category') or ''),norm(model) if model else norm(p['title'])])
- groups.setdefault(key,[]).append((p,o))
+import datetime as dt
+import hashlib
+import json
+import re
+import unicodedata
+from collections import defaultdict
+from pathlib import Path
+from typing import Any
 
-families=[]
-for key,items in groups.items():
- # conservative split if same model but wildly different product types
- bytype={}
- for p,o in items:
-  typ=norm((p.get('attributes') or {}).get('productType') or p.get('category') or '')
-  bytype.setdefault(typ,[]).append((p,o))
- for typ,subs in bytype.items():
-  ps=[x[0] for x in subs]; os_=[x[1] for x in subs]
-  rep=sorted(subs,key=lambda x:(x[1].get('availability')!='in_stock', -len(x[0].get('images') or []), x[1].get('price',10**9)))[0][0]
-  fid='fam-'+hashlib.sha1((key+'|'+typ).encode()).hexdigest()[:12]
-  variants=[]
-  for p,o in sorted(subs,key=lambda x:x[1].get('price',10**9)):
-   title=p['title']; a=p.get('attributes') or {}; v=p.get('variant') or {}
-   variants.append({
-    'id':p['id'],'title':title,'color':v.get('color') or attr(title,COLORS),
-    'orientation':v.get('orientation') or attr(title,ORIENT),
-    'dimensions':a.get('dimensions'),'material':a.get('specifications'),
-    'images':p.get('images',[])[:5], 'offerId':o['id'],'price':o['price'],
-    'previousPrice':o.get('previousPrice'),'shippingCost':o.get('shippingCost'),
-    'availability':o.get('availability'),'affiliateUrl':o['affiliateUrl'],'landingUrl':o.get('landingUrl')
-   })
-  prices=[v['price'] for v in variants]
-  score=min(9.8,6.5+(1 if all(v['availability']=='in_stock' for v in variants) else .3)+min(1,len(rep.get('images',[]))*.15)+(.6 if len(variants)>1 else .2))
-  families.append({
-   'id':fid,'slug':re.sub(r'[^a-z0-9]+','-',norm(f"{rep.get('brand','')} {rep.get('model') or rep['title']}" )).strip('-')[:90],
-   'title': f"{rep.get('brand','')} {rep.get('model','')}".strip() if rep.get('model') else rep['title'],
-   'brand':rep.get('brand'),'model':rep.get('model'),'category':rep.get('category'),'categories':rep.get('categories',[]),
-   'description':rep.get('description'),'image':(rep.get('images') or [None])[0],
-   'images':rep.get('images',[])[:5],'minPrice':min(prices),'maxPrice':max(prices),
-   'variantCount':len(variants),'secretScore':round(score,1),'variants':variants
-  })
+ROOT = Path(__file__).resolve().parents[1]
+CATALOG_DIR = ROOT / "data" / "catalog"
+PRODUCTS_PATH = CATALOG_DIR / "products.json"
+OFFERS_PATH = CATALOG_DIR / "offers.json"
+MERCHANTS_PATH = CATALOG_DIR / "merchants.json"
+FAMILIES_PATH = CATALOG_DIR / "families.json"
+REPORT_PATH = CATALOG_DIR / "family-grouping-report.json"
 
-families.sort(key=lambda x:(x['category'] or '',x['title']))
-report={
- 'generatedAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),
- 'sourceProducts':len(P),'sourceOffers':len(O),'families':len(families),
- 'variants':sum(f['variantCount'] for f in families),'hidden':len(hidden),
- 'sofaProducts':sum(1 for p in P if p.get('category')=='Sofás'),
- 'sofaFamilies':sum(1 for f in families if f.get('category')=='Sofás'),
- 'largestFamilies':sorted([{'id':f['id'],'title':f['title'],'variants':f['variantCount']} for f in families],key=lambda x:-x['variants'])[:20],
- 'policy':'B como base con selección C moderada; agrupación conservadora por marca, categoría, modelo y tipo.'
-}
-json.dump({'schemaVersion':2,'generatedAt':report['generatedAt'],'families':families},open(f'{cat}/families.json','w',encoding='utf-8'),ensure_ascii=False,separators=(',',':'))
-json.dump({'schemaVersion':2,'report':report,'hiddenProducts':hidden},open(f'{cat}/family-grouping-report.json','w',encoding='utf-8'),ensure_ascii=False,indent=2)
-print(json.dumps(report,ensure_ascii=False,indent=2))
+COLORS = (
+    "beige",
+    "gris",
+    "antracita",
+    "negro",
+    "negra",
+    "blanco",
+    "blanca",
+    "crema",
+    "marrón",
+    "marron",
+    "verde",
+    "azul",
+    "rojo",
+    "rosa",
+    "amarillo",
+    "naranja",
+    "taupe",
+    "cognac",
+    "plateado",
+    "plata",
+    "dorado",
+)
+ORIENTATIONS = ("izquierda", "derecha", "izquierdo", "derecho")
+HIDDEN_AVAILABILITY = {"out_of_stock", "unavailable", "discontinued"}
+
+
+def read_json(path: Path) -> dict[str, Any]:
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def write_json_atomic(path: Path, payload: Any, *, pretty: bool = False) -> None:
+    temporary = path.with_suffix(path.suffix + ".tmp")
+    options: dict[str, Any] = {
+        "ensure_ascii": False,
+    }
+    if pretty:
+        options["indent"] = 2
+    else:
+        options["separators"] = (",", ":")
+    temporary.write_text(json.dumps(payload, **options) + "\n", encoding="utf-8")
+    temporary.replace(path)
+
+
+def normalize(value: Any) -> str:
+    text = unicodedata.normalize("NFKD", str(value or ""))
+    text = text.encode("ascii", "ignore").decode().lower()
+    text = re.sub(r"\b\d+(?:[.,]\d+)?\s*(?:cm|mm|m|plazas?|piezas?)\b", " ", text)
+    removable = "|".join(map(re.escape, (*COLORS, *ORIENTATIONS)))
+    text = re.sub(rf"\b(?:{removable})\b", " ", text)
+    text = re.sub(r"[^a-z0-9]+", " ", text)
+    return " ".join(text.split())
+
+
+def slugify(value: Any) -> str:
+    return re.sub(r"[^a-z0-9]+", "-", normalize(value)).strip("-")[:90]
+
+
+def first_attribute(title: str, values: tuple[str, ...]) -> str | None:
+    lowered = title.lower()
+    return next(
+        (value for value in values if re.search(rf"\b{re.escape(value)}\b", lowered)),
+        None,
+    )
+
+
+def offer_total(offer: dict[str, Any]) -> float:
+    if isinstance(offer.get("totalPrice"), (int, float)):
+        return float(offer["totalPrice"])
+    price = float(offer["price"])
+    shipping = offer.get("shippingCost")
+    return price + (float(shipping) if isinstance(shipping, (int, float)) else 0)
+
+
+def public_offer(
+    offer: dict[str, Any],
+    merchant_names: dict[str, str],
+) -> dict[str, Any]:
+    return {
+        "id": offer["id"],
+        "merchantId": offer["merchantId"],
+        "merchantName": merchant_names.get(offer["merchantId"], offer["merchantId"]),
+        "country": offer["country"],
+        "currency": offer["currency"],
+        "price": offer["price"],
+        "previousPrice": offer.get("previousPrice"),
+        "shippingCost": offer.get("shippingCost"),
+        "totalPrice": offer_total(offer),
+        "availability": offer.get("availability", "unknown"),
+        "condition": offer.get("condition", "new"),
+        "deliveryTime": offer.get("deliveryTime"),
+        "updatedAt": offer.get("lastUpdatedAt"),
+    }
+
+
+def variant_label(
+    product: dict[str, Any],
+    color: str | None,
+    orientation: str | None,
+    dimensions: str | None,
+    material: str | None,
+) -> str:
+    variant = product.get("variant") or {}
+    values = [
+        variant.get("size"),
+        color,
+        orientation,
+        dimensions,
+        variant.get("capacity"),
+        material,
+    ]
+    labels: list[str] = []
+    for value in values:
+        cleaned = str(value or "").strip()
+        if cleaned and cleaned not in labels:
+            labels.append(cleaned)
+    return " · ".join(labels[:3]) or "Modelo disponible"
+
+
+def main() -> int:
+    product_payload = read_json(PRODUCTS_PATH)
+    offer_payload = read_json(OFFERS_PATH)
+    merchant_payload = read_json(MERCHANTS_PATH)
+    products = product_payload["products"]
+    offers = offer_payload["offers"]
+    merchant_names = {
+        merchant["id"]: merchant["name"]
+        for merchant in merchant_payload["merchants"]
+    }
+
+    offers_by_product: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for offer in offers:
+        if (
+            isinstance(offer.get("price"), (int, float))
+            and offer["price"] > 0
+            and isinstance(offer.get("affiliateUrl"), str)
+            and offer["affiliateUrl"].startswith("https://")
+            and offer.get("availability") not in HIDDEN_AVAILABILITY
+        ):
+            offers_by_product[offer["productId"]].append(offer)
+
+    groups: dict[str, list[tuple[dict[str, Any], list[dict[str, Any]]]]] = defaultdict(list)
+    hidden: list[dict[str, str]] = []
+
+    for product in products:
+        product_offers = offers_by_product.get(product["id"], [])
+        reason = None
+        if not product_offers:
+            reason = "sin_oferta_publicable"
+        elif not product.get("images"):
+            reason = "sin_imagen"
+
+        if reason:
+            hidden.append({"productId": product["id"], "reason": reason})
+            continue
+
+        model = str(product.get("model") or "").strip()
+        family_key = "|".join(
+            [
+                normalize(product.get("brand") or "sin marca"),
+                normalize(product.get("category") or ""),
+                normalize(model) if model else normalize(product["title"]),
+            ]
+        )
+        product_type = normalize(
+            (product.get("attributes") or {}).get("productType")
+            or product.get("category")
+            or ""
+        )
+        groups[f"{family_key}|{product_type}"].append((product, product_offers))
+
+    families: list[dict[str, Any]] = []
+    for group_key, items in groups.items():
+        representative, _ = sorted(
+            items,
+            key=lambda item: (
+                not any(offer.get("availability") == "in_stock" for offer in item[1]),
+                -len(item[0].get("images") or []),
+                min(offer_total(offer) for offer in item[1]),
+            ),
+        )[0]
+
+        variants: list[dict[str, Any]] = []
+        all_totals: list[float] = []
+        all_offers: list[dict[str, Any]] = []
+
+        for product, product_offers in sorted(
+            items,
+            key=lambda item: min(offer_total(offer) for offer in item[1]),
+        ):
+            title = product["title"]
+            attributes = product.get("attributes") or {}
+            variant = product.get("variant") or {}
+            color = variant.get("color") or first_attribute(title, COLORS)
+            orientation = variant.get("orientation") or first_attribute(
+                title,
+                ORIENTATIONS,
+            )
+            dimensions = attributes.get("dimensions")
+            material = attributes.get("specifications")
+            normalized_offers = sorted(
+                (
+                    public_offer(offer, merchant_names)
+                    for offer in product_offers
+                ),
+                key=lambda offer: offer["totalPrice"],
+            )
+            all_offers.extend(normalized_offers)
+            all_totals.extend(offer["totalPrice"] for offer in normalized_offers)
+            variants.append(
+                {
+                    "id": product["id"],
+                    "title": title,
+                    "label": variant_label(
+                        product,
+                        color,
+                        orientation,
+                        dimensions,
+                        material,
+                    ),
+                    "color": color,
+                    "size": variant.get("size"),
+                    "orientation": orientation,
+                    "dimensions": dimensions,
+                    "material": material,
+                    "capacity": variant.get("capacity"),
+                    "configuration": variant.get("configuration"),
+                    "images": (product.get("images") or [])[:5],
+                    "offers": normalized_offers,
+                }
+            )
+
+        family_id = "fam-" + hashlib.sha1(group_key.encode()).hexdigest()[:12]
+        image_count = len(representative.get("images") or [])
+        all_in_stock = all(
+            offer["availability"] == "in_stock"
+            for offer in all_offers
+        )
+        score = min(
+            9.8,
+            6.5
+            + (1 if all_in_stock else 0.3)
+            + min(1, image_count * 0.15)
+            + (0.6 if len(variants) > 1 else 0.2),
+        )
+        brand = representative.get("brand") or "Selección"
+        model = representative.get("model")
+        family_title = f"{brand} {model}".strip() if model else representative["title"]
+        families.append(
+            {
+                "id": family_id,
+                "slug": slugify(family_title),
+                "title": family_title,
+                "brand": brand,
+                "model": model,
+                "category": representative.get("category"),
+                "categories": representative.get("categories", []),
+                "description": representative.get("description") or "",
+                "image": (representative.get("images") or [None])[0],
+                "images": (representative.get("images") or [])[:5],
+                "minPrice": min(all_totals),
+                "maxPrice": max(all_totals),
+                "variantCount": len(variants),
+                "secretScore": round(score, 1),
+                "source": "feed",
+                "variants": variants,
+            }
+        )
+
+    families.sort(key=lambda family: (family.get("category") or "", family["title"]))
+    generated_at = dt.datetime.now(dt.timezone.utc).isoformat()
+    report = {
+        "generatedAt": generated_at,
+        "sourceProducts": len(products),
+        "sourceOffers": len(offers),
+        "families": len(families),
+        "variants": sum(family["variantCount"] for family in families),
+        "publicOffers": sum(
+            len(variant["offers"])
+            for family in families
+            for variant in family["variants"]
+        ),
+        "hidden": len(hidden),
+        "sofaProducts": sum(
+            1 for product in products if product.get("category") == "Sofás"
+        ),
+        "sofaFamilies": sum(
+            1 for family in families if family.get("category") == "Sofás"
+        ),
+        "largestFamilies": sorted(
+            (
+                {
+                    "id": family["id"],
+                    "title": family["title"],
+                    "variants": family["variantCount"],
+                }
+                for family in families
+            ),
+            key=lambda item: -item["variants"],
+        )[:20],
+        "policy": (
+            "Agrupación conservadora por marca, categoría, modelo y tipo; "
+            "las ofertas permanecen asociadas a una variante exacta."
+        ),
+    }
+
+    write_json_atomic(
+        FAMILIES_PATH,
+        {
+            "schemaVersion": 3,
+            "generatedAt": generated_at,
+            "families": families,
+        },
+    )
+    write_json_atomic(
+        REPORT_PATH,
+        {
+            "schemaVersion": 3,
+            "report": report,
+            "hiddenProducts": hidden,
+        },
+        pretty=True,
+    )
+    print(json.dumps(report, ensure_ascii=False, indent=2))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

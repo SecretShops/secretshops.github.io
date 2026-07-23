@@ -26,7 +26,6 @@ ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "data" / "aliexpress-mx-source.json"
 CACHE = ROOT / "data" / "aliexpress-mx-metadata-cache.json"
 ATTEMPTS = ROOT / "data" / "aliexpress-mx-attempts.json"
-OUTPUT = ROOT / "catalog-aliexpress-mx.js"
 
 MICROLINK_ENDPOINT = "https://api.microlink.io/"
 
@@ -49,43 +48,6 @@ GENERIC_TITLES = {
     "access denied",
     "page not found",
 }
-
-CATEGORY_DESCRIPTION = {
-    "Moda mujer":
-        "Artículo de moda femenina disponible en distintas variantes. "
-        "Consulta tallas, colores, materiales y condiciones de envío.",
-    "Moda hombre":
-        "Artículo de moda masculina disponible en distintas variantes. "
-        "Consulta tallas, colores, materiales y condiciones de envío.",
-    "Accesorios mujer":
-        "Accesorio femenino disponible en distintas variantes. "
-        "Revisa materiales, medidas y colores antes de comprar.",
-    "Accesorios hombre":
-        "Accesorio masculino disponible en distintas variantes. "
-        "Revisa materiales, medidas y colores antes de comprar.",
-    "Tecnología":
-        "Producto tecnológico seleccionado por Atlas Secreto. "
-        "Comprueba especificaciones, compatibilidad y variante.",
-    "Hogar":
-        "Producto práctico para el hogar. "
-        "Revisa medidas, materiales y variante antes de comprar.",
-    "Belleza y cuidado":
-        "Producto de belleza y cuidado. "
-        "Consulta composición, variante y modo de uso indicado por el vendedor.",
-    "Aventura y viajes":
-        "Accesorio para viajes o actividades al aire libre. "
-        "Comprueba medidas, materiales y resistencia.",
-    "Coche/Moto":
-        "Accesorio para coche o moto. "
-        "Verifica la compatibilidad exacta con tu modelo.",
-    "Virales":
-        "Producto popular seleccionado por Atlas Secreto. "
-        "Consulta características, variantes y disponibilidad.",
-    "Menos de 10":
-        "Producto económico seleccionado por Atlas Secreto. "
-        "El precio final puede variar según variante, cupones y entrega.",
-}
-
 
 def load_json(path: Path, default: Any) -> Any:
     if not path.exists():
@@ -153,50 +115,6 @@ def clean_title(value: Any, product_id: str) -> str:
     return title
 
 
-def valid_description(value: Any) -> bool:
-    description = normalize_text(value)
-
-    if len(description) < 20:
-        return False
-
-    lowered = description.lower()
-    blocked = (
-        "aliexpress offers",
-        "smarter shopping",
-        "access denied",
-        "page not found",
-        "cookie",
-        "javascript",
-    )
-    return not any(item in lowered for item in blocked)
-
-
-def build_description(
-    title: str,
-    raw_description: Any,
-    categories: list[str],
-) -> str:
-    description = normalize_text(raw_description)
-
-    if valid_description(description):
-        if len(description) > 250:
-            description = (
-                description[:250]
-                .rsplit(" ", 1)[0]
-                .rstrip(" ,.-")
-                + "…"
-            )
-        return description
-
-    primary = categories[0] if categories else "Virales"
-    fallback = CATEGORY_DESCRIPTION.get(
-        primary,
-        "Producto seleccionado por Atlas Secreto. "
-        "Consulta características, variantes y disponibilidad.",
-    )
-    return f"{title}. {fallback}"
-
-
 def get_image(metadata: dict[str, Any]) -> str:
     image = metadata.get("image")
 
@@ -251,7 +169,7 @@ def request_metadata(url: str) -> dict[str, Any]:
         request_url,
         headers={
             "Accept": "application/json",
-            "User-Agent": "Atlas-Secreto-Catalog-Updater/2.0",
+            "User-Agent": "SecretShop-Catalog-Updater/3.0",
         },
     )
 
@@ -373,81 +291,6 @@ def select_products(
     )[:MAX_PER_RUN]
 
     return selected, never_attempted, retryable
-
-
-def build_product(
-    source: dict[str, Any],
-    metadata: dict[str, Any] | None,
-) -> dict[str, Any]:
-    product_id = source["product_id"]
-    metadata = metadata or {}
-
-    title_candidate = metadata.get("title")
-    name = (
-        clean_title(title_candidate, product_id)
-        if valid_title(title_candidate)
-        else source["fallback_name"]
-    )
-
-    image = (
-        get_image(metadata)
-        or source["fallback_image"]
-    )
-
-    raw_description = metadata.get("description")
-    fallback_description = source.get("fallback_description")
-
-    if valid_description(raw_description):
-        description = build_description(
-            name,
-            raw_description,
-            list(source.get("categories") or []),
-        )
-    elif valid_description(fallback_description):
-        description = normalize_text(fallback_description)
-    else:
-        description = build_description(
-            name,
-            raw_description,
-            list(source.get("categories") or []),
-        )
-
-    offer = {
-        "store": "AliExpress",
-        "country": "MX",
-        "price":
-            source.get("price")
-            or "Ver precio actual",
-        "url": source["tracking_url"],
-    }
-
-    if source.get("priceSnapshot"):
-        offer["priceSnapshot"] = (
-            source["priceSnapshot"]
-        )
-
-    product = {
-        "id": f"aliexpress-{product_id}",
-        "name": name,
-        "description": description,
-        "categories":
-            source.get("categories") or [],
-        "image": image,
-        "featured":
-            bool(source.get("featured")),
-        "createdAt":
-            source.get("createdAt")
-            or "2026-07-18",
-        "offers": [offer],
-    }
-
-    if is_completed(metadata):
-        product["metadataUpdatedAt"] = (
-            metadata.get("_updated_at")
-        )
-        product["metadataSource"] = "Microlink"
-
-    return product
 
 
 def main() -> int:
@@ -594,14 +437,6 @@ def main() -> int:
 
         time.sleep(1.2)
 
-    products = [
-        build_product(
-            source,
-            cache.get(source["product_id"]),
-        )
-        for source in sources
-    ]
-
     completed = sum(
         1
         for source in sources
@@ -656,57 +491,13 @@ def main() -> int:
         )
     )
 
-    today = datetime.now(
-        timezone.utc
-    ).date().isoformat()
-
-    header = (
-        '"use strict";\n\n'
-        "/*\n"
-        "  CATÁLOGO ALIEXPRESS · MÉXICO\n\n"
-        f"  Productos únicos: {len(products)}.\n"
-        "  Metadatos reales completados: "
-        f"{completed}/{len(products)}.\n"
-        "  Los productos pendientes conservan "
-        "sus datos provisionales.\n"
-        "*/\n\n"
-        "window.CATALOG_META_ALIEXPRESS_MX = {\n"
-        f"  sourceRows: {len(sources)},\n"
-        f"  uniqueProducts: {len(products)},\n"
-        "  duplicatesMerged: 0,\n"
-        f'  updatedAt: "{today}",\n'
-        f"  metadataCompleted: {completed},\n"
-        f"  metadataNeverAttempted: "
-        f"{never_attempted_after},\n"
-        f"  metadataDeferred: "
-        f"{deferred_failures},\n"
-        '  priceMode: "external"\n'
-        "};\n\n"
-        "window.CATALOG_ALIEXPRESS_MX = "
-    )
-
-    temporary = OUTPUT.with_suffix(
-        ".js.tmp"
-    )
-    temporary.write_text(
-        header
-        + json.dumps(
-            products,
-            ensure_ascii=False,
-            indent=2,
-        )
-        + ";\n",
-        encoding="utf-8",
-    )
-    temporary.replace(OUTPUT)
-
     save_json(CACHE, cache)
     save_json(ATTEMPTS, attempts)
 
     print()
     print(
         "Metadatos completados: "
-        f"{completed}/{len(products)}"
+        f"{completed}/{len(sources)}"
     )
     print(
         "Correctos en esta ejecución: "
@@ -730,7 +521,7 @@ def main() -> int:
     )
     print(
         "Pendientes totales: "
-        f"{len(products) - completed}"
+        f"{len(sources) - completed}"
     )
 
     # Los fallos individuales no rompen el workflow:

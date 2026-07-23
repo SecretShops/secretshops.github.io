@@ -1,20 +1,15 @@
 {
-  "schemaVersion": 1,
-  "generatedAt": "2026-07-22T20:02:14.129Z",
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-23T14:59:34.537Z",
   "summary": {
-    "totalOffers": 3110,
-    "validAwinTrackingLinks": 3110,
-    "invalidAffiliateLinks": 0,
-    "allOffersCommissionTracked": true,
-    "affiliateIds": [
-      "2996453"
-    ],
-    "advertiserIds": [
-      "122118"
-    ],
-    "hosts": {
-      "www.awin1.com": 3110
-    }
+    "canonicalAwinOffers": 3110,
+    "validCanonicalAwinLinks": 3110,
+    "publishedOffers": 3556,
+    "publishedLinks": 3556,
+    "awinPublishedLinks": 3110,
+    "aliexpressPublishedLinks": 446,
+    "findings": 0,
+    "allPublishedOffersTracked": true
   },
   "findings": []
 }

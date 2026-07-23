@@ -126,12 +126,9 @@ Hogar → Mesas y escritorios
 ## Verificación
 
 ```bash
-node --test \
-  scripts/catalog-loader.test.mjs \
-  scripts/catalog-ui-adapter.test.mjs \
-  scripts/import-awin.test.mjs
-
-node scripts/validate-catalog.mjs
+npm run build:catalog
+node --test scripts/import-awin.test.mjs tests/data-integrity.test.mjs
+npm run validate:catalog
 ```
 
 ## Protección de enlaces de afiliado

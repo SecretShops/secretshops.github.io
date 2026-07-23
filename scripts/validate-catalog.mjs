@@ -17,14 +17,6 @@ function isIsoDate(value) {
   return typeof value === "string" && Number.isFinite(Date.parse(value));
 }
 
-function validateRuntime(payload) {
-  assert(payload.schemaVersion === 1, "catalog-runtime.json: schemaVersion inválido");
-  assert(typeof payload.enabled === "boolean", "catalog-runtime.json: enabled debe ser boolean");
-  assert(typeof payload.autoStart === "boolean", "catalog-runtime.json: autoStart debe ser boolean");
-  assert(/^[A-Z]{2}$/.test(payload.country), "catalog-runtime.json: country inválido");
-  assert(typeof payload.dataBasePath === "string" && payload.dataBasePath, "catalog-runtime.json: dataBasePath obligatorio");
-}
-
 function validateConfig(payload) {
   assert(payload.schemaVersion === 1, "catalog-config.json: schemaVersion inválido");
   assert(Array.isArray(payload.supportedCountries), "catalog-config.json: supportedCountries debe ser un array");
@@ -166,7 +158,6 @@ function validateOffers(payload, productIds, merchantData, countryCodes) {
   }
 }
 
-const runtime = await readJson("catalog-runtime.json");
 const config = await readJson("catalog-config.json");
 const merchants = await readJson("merchants.json");
 const taxonomy = await readJson("category-taxonomy.json");
@@ -174,9 +165,7 @@ const profiles = await readJson("awin-import-profiles.json");
 const products = await readJson("products.json");
 const offers = await readJson("offers.json");
 
-validateRuntime(runtime);
 const countryCodes = validateConfig(config);
-assert(countryCodes.has(runtime.country), `catalog-runtime.json: país no configurado: ${runtime.country}`);
 const merchantData = validateMerchants(merchants);
 const categoryLabels = validateTaxonomy(taxonomy);
 validateProfiles(profiles, merchantData.ids, categoryLabels);
@@ -184,5 +173,5 @@ const productIds = validateProducts(products, categoryLabels);
 validateOffers(offers, productIds, merchantData, countryCodes);
 
 console.log(
-  `Catálogo válido: ${merchantData.ids.size} merchants, ${productIds.size} productos, ${offers.offers.length} ofertas y ${categoryLabels.size} categorías. Loader enabled=${runtime.enabled}.`
+  `Catálogo válido: ${merchantData.ids.size} merchants, ${productIds.size} productos, ${offers.offers.length} ofertas y ${categoryLabels.size} categorías.`
 );
