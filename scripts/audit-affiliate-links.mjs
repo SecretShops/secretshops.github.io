@@ -3,6 +3,7 @@
 import { readFile, rename, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { validateAmazonAffiliateUrl } from "./lib/amazon-associates-core.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const catalogDir = resolve(root, "data/catalog");
@@ -22,14 +23,32 @@ function publicOfferIds(payload) {
   );
 }
 
-const [
-  offersPayload,
-  merchantsPayload,
-  linksPayload,
-  families,
-  mexico,
-  colombia
-] = await Promise.all([
+function validateAwin(value, expectedAdvertiserId) {
+  try {
+    const url = new URL(value);
+    return (
+      url.protocol === "https:" &&
+      /(^|\.)awin1\.com$/i.test(url.hostname) &&
+      ["/pclick.php", "/cread.php"].includes(url.pathname) &&
+      Boolean(url.searchParams.get("a")) &&
+      Boolean(url.searchParams.get("p")) &&
+      url.searchParams.get("m") === String(expectedAdvertiserId || "")
+    );
+  } catch {
+    return false;
+  }
+}
+
+function validateAliExpress(value) {
+  try {
+    const url = new URL(value);
+    return url.protocol === "https:" && /^s\.click\.aliexpress\.com$/i.test(url.hostname);
+  } catch {
+    return false;
+  }
+}
+
+const [offersPayload, merchantsPayload, linksPayload, families, mexico, colombia] = await Promise.all([
   readJson("offers.json"),
   readJson("merchants.json"),
   readJson("affiliate-links.json"),
@@ -42,28 +61,23 @@ const merchants = new Map(
   merchantsPayload.merchants.map((merchant) => [merchant.id, merchant])
 );
 const findings = [];
-let validCanonicalAwin = 0;
+const canonicalCounts = { awin: 0, amazon: 0 };
+const validCanonicalCounts = { awin: 0, amazon: 0 };
 
 for (const offer of offersPayload.offers) {
   const merchant = merchants.get(offer.merchantId);
-  try {
-    const url = new URL(offer.affiliateUrl);
-    const expectedAdvertiserId = String(
-      offer.source?.awinMerchantId ||
-      merchant?.awinAdvertiserId ||
-      ""
-    );
-    const valid =
-      url.protocol === "https:" &&
-      /(^|\.)awin1\.com$/i.test(url.hostname) &&
-      ["/pclick.php", "/cread.php"].includes(url.pathname) &&
-      Boolean(url.searchParams.get("a")) &&
-      Boolean(url.searchParams.get("p")) &&
-      url.searchParams.get("m") === expectedAdvertiserId;
-    if (valid) validCanonicalAwin += 1;
+  const network = merchant?.network || (offer.source?.awinMerchantId || merchant?.awinAdvertiserId ? "awin" : null);
+  if (network === "awin") {
+    canonicalCounts.awin += 1;
+    const expectedAdvertiserId = offer.source?.awinMerchantId || merchant?.awinAdvertiserId;
+    if (validateAwin(offer.affiliateUrl, expectedAdvertiserId)) validCanonicalCounts.awin += 1;
     else findings.push({ offerId: offer.id, reason: "invalid_canonical_awin_link" });
-  } catch {
-    findings.push({ offerId: offer.id, reason: "malformed_canonical_link" });
+  } else if (network === "amazon-associates") {
+    canonicalCounts.amazon += 1;
+    if (validateAmazonAffiliateUrl(offer.affiliateUrl, merchant?.associateTag)) validCanonicalCounts.amazon += 1;
+    else findings.push({ offerId: offer.id, reason: "invalid_canonical_amazon_link" });
+  } else {
+    findings.push({ offerId: offer.id, reason: "unknown_canonical_network" });
   }
 }
 
@@ -85,31 +99,33 @@ for (const [offerId, entry] of linkEntries) {
     findings.push({ offerId, reason: "orphan_public_link" });
     continue;
   }
-  try {
-    const url = new URL(entry.url);
-    const awin =
-      /(^|\.)awin1\.com$/i.test(url.hostname) &&
-      ["/pclick.php", "/cread.php"].includes(url.pathname) &&
-      ["a", "p", "m"].every((key) => url.searchParams.get(key));
-    const aliexpress = /^s\.click\.aliexpress\.com$/i.test(url.hostname);
-    if (url.protocol !== "https:" || (!awin && !aliexpress)) {
-      findings.push({ offerId, reason: "invalid_public_destination" });
-    }
-  } catch {
-    findings.push({ offerId, reason: "malformed_public_destination" });
-  }
+  const merchant = merchants.get(entry.merchantId);
+  const valid = merchant?.network === "amazon-associates"
+    ? Boolean(validateAmazonAffiliateUrl(entry.url, merchant.associateTag))
+    : validateAwin(entry.url, merchant?.awinAdvertiserId) || validateAliExpress(entry.url);
+  if (!valid) findings.push({ offerId, reason: "invalid_public_destination" });
 }
 
+const hostCount = (hostnamePattern) => linkEntries.filter(([, entry]) => {
+  try {
+    return hostnamePattern.test(new URL(entry.url).hostname);
+  } catch {
+    return false;
+  }
+}).length;
+
 const report = {
-  schemaVersion: 2,
+  schemaVersion: 3,
   generatedAt: new Date().toISOString(),
   summary: {
-    canonicalAwinOffers: offersPayload.offers.length,
-    validCanonicalAwinLinks: validCanonicalAwin,
+    canonicalOffers: offersPayload.offers.length,
+    canonicalByNetwork: canonicalCounts,
+    validCanonicalByNetwork: validCanonicalCounts,
     publishedOffers: publishedIds.size,
     publishedLinks: linkEntries.length,
-    awinPublishedLinks: linkEntries.filter(([, entry]) => entry.url.includes("awin1.com")).length,
-    aliexpressPublishedLinks: linkEntries.filter(([, entry]) => entry.url.includes("aliexpress.com")).length,
+    awinPublishedLinks: hostCount(/(^|\.)awin1\.com$/i),
+    aliexpressPublishedLinks: hostCount(/^s\.click\.aliexpress\.com$/i),
+    amazonPublishedLinks: hostCount(/(^|\.)amazon\.es$/i),
     findings: findings.length,
     allPublishedOffersTracked:
       findings.length === 0 &&

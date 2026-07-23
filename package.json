@@ -11,7 +11,10 @@
     "validate:catalog": "node scripts/validate-catalog.mjs && node scripts/audit-affiliate-links.mjs",
     "validate:site": "node scripts/check-site.mjs",
     "quality": "npm run build:catalog && npm test && npm run validate:catalog && npm run validate:site",
-    "quality:full": "npm run quality && npm run test:browser"
+    "quality:full": "npm run quality && npm run test:browser",
+    "amazon:links": "node scripts/build-amazon-links.mjs",
+    "amazon:import:dry": "node scripts/import-amazon-products.mjs --dry-run",
+    "amazon:import": "node scripts/import-amazon-products.mjs && npm run quality"
   },
   "engines": {
     "node": "^20.19.0 || >=22.12.0",

@@ -91,12 +91,19 @@ def first_attribute(title: str, values: tuple[str, ...]) -> str | None:
     )
 
 
-def offer_total(offer: dict[str, Any]) -> float:
+def offer_total(offer: dict[str, Any]) -> float | None:
     if isinstance(offer.get("totalPrice"), (int, float)):
         return float(offer["totalPrice"])
+    if not isinstance(offer.get("price"), (int, float)):
+        return None
     price = float(offer["price"])
     shipping = offer.get("shippingCost")
     return price + (float(shipping) if isinstance(shipping, (int, float)) else 0)
+
+
+def offer_sort_key(offer: dict[str, Any]) -> tuple[bool, float]:
+    total = offer_total(offer)
+    return (total is None, total if total is not None else float("inf"))
 
 
 def public_offer(
@@ -109,10 +116,11 @@ def public_offer(
         "merchantName": merchant_names.get(offer["merchantId"], offer["merchantId"]),
         "country": offer["country"],
         "currency": offer["currency"],
-        "price": offer["price"],
+        "price": offer.get("price"),
         "previousPrice": offer.get("previousPrice"),
         "shippingCost": offer.get("shippingCost"),
         "totalPrice": offer_total(offer),
+        "displayPrice": offer.get("displayPrice"),
         "availability": offer.get("availability", "unknown"),
         "condition": offer.get("condition", "new"),
         "deliveryTime": offer.get("deliveryTime"),
@@ -158,8 +166,10 @@ def main() -> int:
     offers_by_product: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for offer in offers:
         if (
-            isinstance(offer.get("price"), (int, float))
-            and offer["price"] > 0
+            (
+                (isinstance(offer.get("price"), (int, float)) and offer["price"] > 0)
+                or bool(str(offer.get("displayPrice") or "").strip())
+            )
             and isinstance(offer.get("affiliateUrl"), str)
             and offer["affiliateUrl"].startswith("https://")
             and offer.get("availability") not in HIDDEN_AVAILABILITY
@@ -203,7 +213,7 @@ def main() -> int:
             key=lambda item: (
                 not any(offer.get("availability") == "in_stock" for offer in item[1]),
                 -len(item[0].get("images") or []),
-                min(offer_total(offer) for offer in item[1]),
+                min(offer_sort_key(offer) for offer in item[1]),
             ),
         )[0]
 
@@ -213,7 +223,7 @@ def main() -> int:
 
         for product, product_offers in sorted(
             items,
-            key=lambda item: min(offer_total(offer) for offer in item[1]),
+            key=lambda item: min(offer_sort_key(offer) for offer in item[1]),
         ):
             title = product["title"]
             attributes = product.get("attributes") or {}
@@ -230,10 +240,14 @@ def main() -> int:
                     public_offer(offer, merchant_names)
                     for offer in product_offers
                 ),
-                key=lambda offer: offer["totalPrice"],
+                key=offer_sort_key,
             )
             all_offers.extend(normalized_offers)
-            all_totals.extend(offer["totalPrice"] for offer in normalized_offers)
+            all_totals.extend(
+                offer["totalPrice"]
+                for offer in normalized_offers
+                if isinstance(offer.get("totalPrice"), (int, float))
+            )
             variants.append(
                 {
                     "id": product["id"],
@@ -285,8 +299,8 @@ def main() -> int:
                 "description": representative.get("description") or "",
                 "image": (representative.get("images") or [None])[0],
                 "images": (representative.get("images") or [])[:5],
-                "minPrice": min(all_totals),
-                "maxPrice": max(all_totals),
+                "minPrice": min(all_totals) if all_totals else None,
+                "maxPrice": max(all_totals) if all_totals else None,
                 "variantCount": len(variants),
                 "secretScore": round(score, 1),
                 "source": "feed",

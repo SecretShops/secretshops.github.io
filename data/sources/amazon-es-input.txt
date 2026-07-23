@@ -1,0 +1,2 @@
+# Pega aquí ASIN o URLs completas de productos de Amazon.es, uno por línea.
+# Las líneas de comentario serán rechazadas; elimínalas antes de ejecutar el conversor.

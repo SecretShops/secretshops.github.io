@@ -1,5 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
+import { validateAmazonAffiliateUrl } from "./lib/amazon-associates-core.mjs";
 
 const root = resolve(process.cwd(), "data/catalog");
 
@@ -45,7 +46,16 @@ function validateMerchants(payload) {
     assert(/^[A-Z]{2}$/.test(merchant.country), `${merchant.id}: country inválido`);
     assert(["pending", "approved", "rejected", "paused"].includes(merchant.status), `${merchant.id}: status inválido`);
     if (merchant.status === "approved") {
-      assert(String(merchant.awinAdvertiserId || "").trim(), `${merchant.id}: awinAdvertiserId obligatorio al estar aprobado`);
+      const network = merchant.network || (merchant.awinAdvertiserId ? "awin" : null);
+      assert(network, `${merchant.id}: network obligatorio al estar aprobado`);
+      if (network === "awin") {
+        assert(String(merchant.awinAdvertiserId || "").trim(), `${merchant.id}: awinAdvertiserId obligatorio`);
+      } else if (network === "amazon-associates") {
+        assert(/^[a-z0-9][a-z0-9-]{1,60}$/i.test(String(merchant.associateTag || "")), `${merchant.id}: associateTag inválido`);
+        assert(String(merchant.marketplaceDomain || "").toLowerCase() === "www.amazon.es", `${merchant.id}: marketplaceDomain debe ser www.amazon.es`);
+      } else {
+        throw new Error(`${merchant.id}: network aprobado no soportado: ${network}`);
+      }
     }
   }
   return { ids, byId };
@@ -112,7 +122,7 @@ function validateProducts(payload, categoryLabels) {
       assert(categoryLabels.has(product.department), `${product.id}: department desconocido: ${product.department}`);
     }
     const identifiers = product.identifiers ?? {};
-    const hasExactId = [identifiers.gtin, identifiers.ean, identifiers.upc, identifiers.mpn].some(Boolean);
+    const hasExactId = [identifiers.asin, identifiers.gtin, identifiers.ean, identifiers.upc, identifiers.mpn].some(Boolean);
     const hasModelVariant = Boolean(
       product.brand &&
       product.model &&
@@ -138,12 +148,22 @@ function validateOffers(payload, productIds, merchantData, countryCodes) {
     assert(merchantData.ids.has(offer.merchantId), `${offer.id}: merchantId inexistente`);
     assert(merchantData.byId.get(offer.merchantId)?.status === "approved", `${offer.id}: merchant no aprobado`);
     assert(countryCodes.has(offer.country), `${offer.id}: country no configurado`);
-    assert(Number.isFinite(offer.price) && offer.price >= 0, `${offer.id}: price inválido`);
-    assert(Number.isFinite(offer.totalPrice) && offer.totalPrice >= offer.price, `${offer.id}: totalPrice inválido`);
     assert(/^[A-Z]{3}$/.test(offer.currency), `${offer.id}: currency inválida`);
     assert(/^https:\/\//.test(offer.affiliateUrl), `${offer.id}: affiliateUrl debe usar HTTPS`);
+
     const merchant = merchantData.byId.get(offer.merchantId);
-    if (offer.source?.awinMerchantId || merchant?.awinAdvertiserId) {
+    const network = merchant?.network || (offer.source?.awinMerchantId || merchant?.awinAdvertiserId ? "awin" : null);
+    const hasNumericPrice = Number.isFinite(offer.price) && offer.price >= 0;
+    if (hasNumericPrice) {
+      assert(Number.isFinite(offer.totalPrice) && offer.totalPrice >= offer.price, `${offer.id}: totalPrice inválido`);
+    } else {
+      assert(network === "amazon-associates", `${offer.id}: price obligatorio fuera de Amazon`);
+      assert(offer.price === null, `${offer.id}: price sin valor debe ser null`);
+      assert(offer.totalPrice === null, `${offer.id}: totalPrice sin valor debe ser null`);
+      assert(typeof offer.displayPrice === "string" && offer.displayPrice.trim(), `${offer.id}: displayPrice obligatorio sin precio numérico`);
+    }
+
+    if (network === "awin") {
       const url = new URL(offer.affiliateUrl);
       assert(/(^|\.)awin1\.com$/i.test(url.hostname), `${offer.id}: affiliateUrl no pertenece a Awin`);
       assert(["/pclick.php", "/cread.php"].includes(url.pathname), `${offer.id}: ruta de tracking Awin no reconocida`);
@@ -151,7 +171,18 @@ function validateOffers(payload, productIds, merchantData, countryCodes) {
       assert(Boolean(url.searchParams.get("p")), `${offer.id}: falta product ID de Awin`);
       const expectedAdvertiserId = String(offer.source?.awinMerchantId || merchant?.awinAdvertiserId || "");
       assert(url.searchParams.get("m") === expectedAdvertiserId, `${offer.id}: advertiser ID de Awin no coincide`);
+    } else if (network === "amazon-associates") {
+      assert(
+        validateAmazonAffiliateUrl(offer.affiliateUrl, merchant.associateTag),
+        `${offer.id}: enlace de Amazon inválido o tag incorrecto`
+      );
+      const expectedAsin = String(offer.source?.asin || offer.merchantProductId || "").toUpperCase();
+      const urlAsin = new URL(offer.affiliateUrl).pathname.split("/").filter(Boolean)[1]?.toUpperCase();
+      assert(expectedAsin && urlAsin === expectedAsin, `${offer.id}: el ASIN del enlace no coincide`);
+    } else {
+      throw new Error(`${offer.id}: network no soportado`);
     }
+
     assert(["new", "refurbished", "used", "second_chance"].includes(offer.condition), `${offer.id}: condition inválida`);
     assert(["in_stock", "out_of_stock", "preorder", "unknown", "unavailable", "discontinued"].includes(offer.availability), `${offer.id}: availability inválida`);
     assert(isIsoDate(offer.lastUpdatedAt), `${offer.id}: lastUpdatedAt inválido`);

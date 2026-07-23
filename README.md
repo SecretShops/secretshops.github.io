@@ -74,3 +74,15 @@ Favoritos, vistos recientemente, búsquedas, comparador y tema se guardan solo e
 
 El responsable del sitio debe completar en `aviso-legal.html` los datos identificativos exigibles para su caso antes de una explotación comercial. No se incluyen datos ficticios en esta entrega.
 
+
+## Amazon España sin API
+
+El flujo de Amazon está documentado en `docs/amazon-mass-import.md`.
+
+```bash
+npm run amazon:links       # convierte ASIN/URLs en enlaces con christian0ddd-21
+npm run amazon:import:dry  # valida el CSV editorial sin modificar el catálogo
+npm run amazon:import      # importa, reconstruye y ejecuta quality
+```
+
+La automatización no consulta ni extrae páginas de Amazon. Los productos se identifican por ASIN y los precios pueden omitirse; en ese caso la interfaz muestra que deben consultarse en Amazon.

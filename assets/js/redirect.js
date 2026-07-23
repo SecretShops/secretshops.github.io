@@ -1,3 +1,5 @@
+const AMAZON_ASSOCIATE_TAG = "christian0ddd-21";
+
 function fail(text) {
   const title = document.querySelector("[data-redirect-title]");
   const message = document.querySelector("[data-redirect-message]");
@@ -18,7 +20,11 @@ export function allowedDestination(value) {
       ["/pclick.php", "/cread.php"].includes(url.pathname) &&
       ["a", "p", "m"].every((key) => url.searchParams.get(key));
     const aliexpress = /^s\.click\.aliexpress\.com$/i.test(url.hostname);
-    return awin || aliexpress ? url.href : null;
+    const amazon =
+      /^(?:www\.)?amazon\.es$/i.test(url.hostname) &&
+      /^\/dp\/[A-Z0-9]{10}\/ref=nosim\/?$/i.test(url.pathname) &&
+      url.searchParams.get("tag") === AMAZON_ASSOCIATE_TAG;
+    return awin || aliexpress || amazon ? url.href : null;
   } catch {
     return null;
   }

@@ -2,19 +2,123 @@
   "schemaVersion": 1,
   "updatedAt": "2026-07-22",
   "merchants": [
-    { "id": "rebuy-es", "name": "reBuy ES", "country": "ES", "status": "pending", "feedExpected": true, "catalogMode": "refurbished_and_trade_in" },
-    { "id": "kiko-es", "name": "Kiko ES", "country": "ES", "status": "pending", "feedExpected": true, "catalogMode": "retail" },
-    { "id": "clarins-es", "name": "Clarins ES", "country": "ES", "status": "pending", "feedExpected": true, "catalogMode": "retail" },
-    { "id": "kitchenaid-es", "name": "KitchenAid ES", "country": "ES", "status": "pending", "feedExpected": true, "catalogMode": "retail" },
-    { "id": "lefties-es", "name": "Lefties ES", "country": "ES", "status": "pending", "feedExpected": true, "catalogMode": "retail" },
-    { "id": "shein-es", "name": "SHEIN ES", "country": "ES", "status": "pending", "feedExpected": true, "catalogMode": "retail" },
-    { "id": "size-official-es", "name": "size?Official ES", "country": "ES", "status": "pending", "feedExpected": true, "catalogMode": "retail" },
-    { "id": "alternate-es", "name": "alternate ES", "country": "ES", "status": "pending", "feedExpected": true, "catalogMode": "retail" },
-    { "id": "forum-sport-es", "name": "Forum Sport ES", "country": "ES", "status": "pending", "feedExpected": true, "catalogMode": "retail" },
-    { "id": "decathlon-es", "name": "Decathlon ES", "country": "ES", "status": "pending", "feedExpected": true, "catalogMode": "retail", "excludeNonCommissionable": true },
-    { "id": "hawkers-row", "name": "Hawkers ROW", "country": "ES", "status": "pending", "feedExpected": true, "catalogMode": "retail" },
-    { "id": "la-redoute-es", "name": "La Redoute ES", "country": "ES", "status": "pending", "feedExpected": true, "catalogMode": "retail" },
-    { "id": "banak-es", "name": "Banak ES", "country": "ES", "status": "pending", "feedExpected": true, "catalogMode": "retail" },
+    {
+      "id": "amazon-es",
+      "name": "Amazon ES",
+      "country": "ES",
+      "status": "approved",
+      "network": "amazon-associates",
+      "associateTag": "christian0ddd-21",
+      "marketplaceDomain": "www.amazon.es",
+      "feedExpected": false,
+      "catalogMode": "editorial_without_api",
+      "statusUpdatedAt": "2026-07-23"
+    },
+    {
+      "id": "rebuy-es",
+      "name": "reBuy ES",
+      "country": "ES",
+      "status": "pending",
+      "feedExpected": true,
+      "catalogMode": "refurbished_and_trade_in"
+    },
+    {
+      "id": "kiko-es",
+      "name": "Kiko ES",
+      "country": "ES",
+      "status": "pending",
+      "feedExpected": true,
+      "catalogMode": "retail"
+    },
+    {
+      "id": "clarins-es",
+      "name": "Clarins ES",
+      "country": "ES",
+      "status": "pending",
+      "feedExpected": true,
+      "catalogMode": "retail"
+    },
+    {
+      "id": "kitchenaid-es",
+      "name": "KitchenAid ES",
+      "country": "ES",
+      "status": "pending",
+      "feedExpected": true,
+      "catalogMode": "retail"
+    },
+    {
+      "id": "lefties-es",
+      "name": "Lefties ES",
+      "country": "ES",
+      "status": "pending",
+      "feedExpected": true,
+      "catalogMode": "retail"
+    },
+    {
+      "id": "shein-es",
+      "name": "SHEIN ES",
+      "country": "ES",
+      "status": "pending",
+      "feedExpected": true,
+      "catalogMode": "retail"
+    },
+    {
+      "id": "size-official-es",
+      "name": "size?Official ES",
+      "country": "ES",
+      "status": "pending",
+      "feedExpected": true,
+      "catalogMode": "retail"
+    },
+    {
+      "id": "alternate-es",
+      "name": "alternate ES",
+      "country": "ES",
+      "status": "pending",
+      "feedExpected": true,
+      "catalogMode": "retail"
+    },
+    {
+      "id": "forum-sport-es",
+      "name": "Forum Sport ES",
+      "country": "ES",
+      "status": "pending",
+      "feedExpected": true,
+      "catalogMode": "retail"
+    },
+    {
+      "id": "decathlon-es",
+      "name": "Decathlon ES",
+      "country": "ES",
+      "status": "pending",
+      "feedExpected": true,
+      "catalogMode": "retail",
+      "excludeNonCommissionable": true
+    },
+    {
+      "id": "hawkers-row",
+      "name": "Hawkers ROW",
+      "country": "ES",
+      "status": "pending",
+      "feedExpected": true,
+      "catalogMode": "retail"
+    },
+    {
+      "id": "la-redoute-es",
+      "name": "La Redoute ES",
+      "country": "ES",
+      "status": "pending",
+      "feedExpected": true,
+      "catalogMode": "retail"
+    },
+    {
+      "id": "banak-es",
+      "name": "Banak ES",
+      "country": "ES",
+      "status": "pending",
+      "feedExpected": true,
+      "catalogMode": "retail"
+    },
     {
       "id": "muebles-style-spain",
       "name": "Muebles Style Spain",
@@ -26,9 +130,34 @@
       "catalogMode": "new_and_second_chance",
       "statusUpdatedAt": "2026-07-22"
     },
-    { "id": "pccomponentes-es", "name": "PcComponentes ES", "country": "ES", "status": "pending", "feedExpected": true, "catalogMode": "retail" },
-    { "id": "sephora-es", "name": "Sephora ES", "country": "ES", "status": "pending", "feedExpected": true, "catalogMode": "retail", "excludeBrands": ["Chanel", "Dior"] },
-    { "id": "pixmania-es", "name": "Pixmania ES", "country": "ES", "status": "pending", "feedExpected": true, "catalogMode": "retail" },
+    {
+      "id": "pccomponentes-es",
+      "name": "PcComponentes ES",
+      "country": "ES",
+      "status": "pending",
+      "feedExpected": true,
+      "catalogMode": "retail"
+    },
+    {
+      "id": "sephora-es",
+      "name": "Sephora ES",
+      "country": "ES",
+      "status": "pending",
+      "feedExpected": true,
+      "catalogMode": "retail",
+      "excludeBrands": [
+        "Chanel",
+        "Dior"
+      ]
+    },
+    {
+      "id": "pixmania-es",
+      "name": "Pixmania ES",
+      "country": "ES",
+      "status": "pending",
+      "feedExpected": true,
+      "catalogMode": "retail"
+    },
     {
       "id": "cosori-es",
       "name": "Cosori ES",
@@ -42,7 +171,14 @@
       "retryable": true,
       "statusUpdatedAt": "2026-07-22"
     },
-    { "id": "msi-spain", "name": "MSI SPAIN", "country": "ES", "status": "pending", "feedExpected": true, "catalogMode": "retail" },
+    {
+      "id": "msi-spain",
+      "name": "MSI SPAIN",
+      "country": "ES",
+      "status": "pending",
+      "feedExpected": true,
+      "catalogMode": "retail"
+    },
     {
       "id": "naturitas-es",
       "name": "Naturitas ES",

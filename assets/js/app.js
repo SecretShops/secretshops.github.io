@@ -646,6 +646,15 @@ function shippingLabel(offer) {
   return "Consultar";
 }
 
+function shippingDetailLabel(offer) {
+  const label = shippingLabel(offer);
+  return label === "Consultar" ? "Envío a confirmar" : `${label} de envío`;
+}
+
+function bestPriceNote(offer, index) {
+  return index === 0 && offerTotal(offer) !== null ? "Mejor precio detectado" : "";
+}
+
 function variantAttributes(variant) {
   return [
     ["Color", variant.color],
@@ -661,7 +670,7 @@ function variantAttributes(variant) {
 function offerRowMarkup(offer, index) {
   return `
     <tr class="${index === 0 ? "best-row" : ""}">
-      <td><strong>${escapeHtml(offer.merchantName)}</strong>${index === 0 ? '<br><small>Mejor precio detectado</small>' : ""}</td>
+      <td><strong>${escapeHtml(offer.merchantName)}</strong>${bestPriceNote(offer, index) ? `<br><small>${bestPriceNote(offer, index)}</small>` : ""}</td>
       <td>${escapeHtml(displayOfferPrice(offer))}</td>
       <td>${escapeHtml(shippingLabel(offer))}</td>
       <td>${escapeHtml(availabilityLabel(offer.availability))}</td>
@@ -674,7 +683,7 @@ function offerCardMarkup(offer, index) {
     <article class="offer-card ${index === 0 ? "is-best" : ""}">
       <div>
         <strong>${escapeHtml(offer.merchantName)}</strong>
-        <small>${escapeHtml(countryLabel(offer.country))}${index === 0 ? " · Mejor precio detectado" : ""}</small>
+        <small>${escapeHtml(countryLabel(offer.country))}${bestPriceNote(offer, index) ? ` · ${bestPriceNote(offer, index)}` : ""}</small>
       </div>
       <div>
         <strong>${escapeHtml(displayOfferPrice(offer))}</strong>
@@ -767,7 +776,7 @@ function renderProductDialog(familyId, preferredVariantId = null) {
               <div>
                 <p>${escapeHtml(best.merchantName)} · ${escapeHtml(countryLabel(best.country))}</p>
                 <strong class="offer-main-price">${escapeHtml(displayOfferPrice(best))}</strong>
-                <small>${escapeHtml(shippingLabel(best))} de envío · ${escapeHtml(availabilityLabel(best.availability))}</small>
+                <small>${escapeHtml(shippingDetailLabel(best))} · ${escapeHtml(availabilityLabel(best.availability))}</small>
               </div>
               <a class="offer-link" href="./go.html?offer=${encodeURIComponent(best.id)}" target="_blank" rel="nofollow sponsored noopener" data-outbound-offer="${escapeHtml(best.id)}">Ver oferta</a>
             </div>` : `

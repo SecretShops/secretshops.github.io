@@ -3,6 +3,7 @@
 import { readFile, rename, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { validateAmazonAffiliateUrl } from "./lib/amazon-associates-core.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -27,11 +28,19 @@ function collectOfferIds(payload) {
   );
 }
 
-function validateUrl(value, offerId) {
+function validateUrl(value, offerId, merchant) {
   const url = new URL(value);
   if (url.protocol !== "https:") {
     throw new Error(`${offerId}: el enlace no usa HTTPS`);
   }
+
+  const network = merchant?.network || (merchant?.awinAdvertiserId ? "awin" : null);
+  if (network === "amazon-associates") {
+    const valid = validateAmazonAffiliateUrl(url.href, merchant.associateTag);
+    if (!valid) throw new Error(`${offerId}: enlace de Amazon o tag inválido`);
+    return valid;
+  }
+
   const awin =
     /(^|\.)awin1\.com$/i.test(url.hostname) &&
     ["/pclick.php", "/cread.php"].includes(url.pathname);
@@ -52,7 +61,8 @@ const [
   offersPayload,
   mexicoSource,
   colombiaSource,
-  curatedPayload
+  curatedPayload,
+  merchantsPayload
 ] = await Promise.all([
   readJson("data/catalog/families.json"),
   readJson("data/catalog/aliexpress-mx.json"),
@@ -60,9 +70,13 @@ const [
   readJson("data/catalog/offers.json"),
   readJson("data/aliexpress-mx-source.json"),
   readJson("data/aliexpress-co-source.json"),
-  readJson("data/sources/curated-products.json")
+  readJson("data/sources/curated-products.json"),
+  readJson("data/catalog/merchants.json")
 ]);
 
+const merchants = new Map(
+  merchantsPayload.merchants.map((merchant) => [merchant.id, merchant])
+);
 const referencedOfferIds = new Set([
   ...collectOfferIds(families),
   ...collectOfferIds(mexicoCatalog),
@@ -114,7 +128,7 @@ for (const offerId of [...referencedOfferIds].sort()) {
     continue;
   }
   links[offerId] = {
-    url: validateUrl(candidate.url, offerId),
+    url: validateUrl(candidate.url, offerId, merchants.get(candidate.merchantId)),
     merchantId: candidate.merchantId,
     country: candidate.country
   };
@@ -126,6 +140,7 @@ if (missing.length) {
   );
 }
 
+const entries = Object.values(links);
 await writeJsonAtomic("data/catalog/affiliate-links.json", {
   schemaVersion: 1,
   generatedAt: new Date().toISOString(),
@@ -136,8 +151,9 @@ console.log(
   JSON.stringify(
     {
       publishedOfferLinks: Object.keys(links).length,
-      awin: Object.values(links).filter((entry) => entry.url.includes("awin1.com")).length,
-      aliexpress: Object.values(links).filter((entry) => entry.url.includes("aliexpress.com")).length
+      awin: entries.filter((entry) => entry.url.includes("awin1.com")).length,
+      aliexpress: entries.filter((entry) => entry.url.includes("aliexpress.com")).length,
+      amazon: entries.filter((entry) => /(^|\.)amazon\.es$/i.test(new URL(entry.url).hostname)).length
     },
     null,
     2

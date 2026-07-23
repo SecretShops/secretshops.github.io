@@ -1,13 +1,21 @@
 {
-  "schemaVersion": 2,
-  "generatedAt": "2026-07-23T14:59:34.537Z",
+  "schemaVersion": 3,
+  "generatedAt": "2026-07-23T15:59:01.980Z",
   "summary": {
-    "canonicalAwinOffers": 3110,
-    "validCanonicalAwinLinks": 3110,
+    "canonicalOffers": 3110,
+    "canonicalByNetwork": {
+      "awin": 3110,
+      "amazon": 0
+    },
+    "validCanonicalByNetwork": {
+      "awin": 3110,
+      "amazon": 0
+    },
     "publishedOffers": 3556,
     "publishedLinks": 3556,
     "awinPublishedLinks": 3110,
     "aliexpressPublishedLinks": 446,
+    "amazonPublishedLinks": 0,
     "findings": 0,
     "allPublishedOffersTracked": true
   },

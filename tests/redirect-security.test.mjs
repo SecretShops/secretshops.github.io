@@ -11,6 +11,10 @@ test("acepta únicamente los destinos afiliados previstos", () => {
     allowedDestination("https://s.click.aliexpress.com/e/_ejemplo"),
     "https://s.click.aliexpress.com/e/_ejemplo"
   );
+  assert.equal(
+    allowedDestination("https://www.amazon.es/dp/B0ABC12345/ref=nosim?tag=christian0ddd-21"),
+    "https://www.amazon.es/dp/B0ABC12345/ref=nosim?tag=christian0ddd-21"
+  );
 });
 
 test("rechaza protocolos, hosts, rutas y parámetros inseguros", () => {
@@ -20,6 +24,9 @@ test("rechaza protocolos, hosts, rutas y parámetros inseguros", () => {
     "https://www.awin1.com/otra-ruta?p=1&a=2&m=3",
     "https://www.awin1.com/pclick.php?p=1&a=2",
     "https://s.click.aliexpress.com.ejemplo.test/e/_ejemplo",
+    "https://www.amazon.es/dp/B0ABC12345/ref=nosim?tag=otro-tag-21",
+    "https://www.amazon.es/gp/product/B0ABC12345?tag=christian0ddd-21",
+    "https://amazon.es.ejemplo.test/dp/B0ABC12345?tag=christian0ddd-21",
     "https://example.com/producto",
     "javascript:alert(1)",
     ""
