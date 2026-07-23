@@ -3583,9 +3583,72 @@
       document.documentElement.classList.remove("catalog-pending");
     }, 8000);
   </script>
+  <link rel="stylesheet" href="./styles-v2.css?v=20260723-1">
 </head>
 
 <body>
+
+  <div id="v2-app">
+    <header class="v2-header">
+      <div class="v2-shell v2-header-row">
+        <a class="v2-brand" href="#"><span class="v2-brand-mark">S</span><span>SecretShop</span></a>
+        <label class="v2-header-search"><span>⌕</span><input data-search-input type="search" placeholder="Busca productos, marcas o categorías" aria-label="Buscar productos"></label>
+        <div class="v2-header-actions"><button class="v2-outline-btn" data-scroll-catalog type="button">Explorar</button><button id="v2-menu-toggle" class="v2-icon-btn v2-menu-btn" type="button" aria-label="Abrir menú">☰</button></div>
+      </div>
+      <nav id="v2-mobile-nav" class="v2-mobile-nav"><a href="#v2-categories">Categorías</a><a href="#v2-featured">Destacados</a><a href="#v2-catalog">Catálogo</a><a href="#v2-guides">Guías</a></nav>
+    </header>
+
+    <main>
+      <section class="v2-hero">
+        <div class="v2-shell v2-hero-grid">
+          <div class="v2-hero-copy">
+            <p class="v2-kicker">Comparador independiente</p>
+            <h1>Compara antes de comprar. Decide mejor.</h1>
+            <p>Miles de productos, cientos de marcas y una forma más sencilla de encontrar la opción adecuada para ti.</p>
+            <label class="v2-hero-search"><input data-search-input type="search" placeholder="Busca productos, marcas o categorías" aria-label="Buscar productos"><button class="v2-primary-btn" data-scroll-catalog type="button">Buscar</button></label>
+            <div class="v2-hero-actions"><button class="v2-primary-btn" data-scroll-catalog type="button">Explorar productos</button><button class="v2-secondary-btn" data-scroll-categories type="button">Ver categorías</button></div>
+            <div class="v2-trust"><span><strong id="v2-total-products">0</strong> familias</span><span>Precios de distintas tiendas</span><span>Sin coste adicional</span></div>
+          </div>
+          <div id="v2-hero-mosaic" class="v2-mosaic" aria-label="Selección de productos"></div>
+        </div>
+      </section>
+      <aside class="v2-disclosure">Podemos recibir una comisión por algunas compras, sin coste adicional para ti.</aside>
+
+      <section id="v2-categories" class="v2-section">
+        <div class="v2-shell"><div class="v2-section-head"><div><p class="v2-kicker">Explora</p><h2>Categorías para cada necesidad</h2><p>Todos los tipos de producto tienen la misma importancia.</p></div><button class="v2-text-btn" data-scroll-catalog type="button">Ver catálogo completo →</button></div><div id="v2-category-strip" class="v2-category-strip"></div></div>
+      </section>
+
+      <section id="v2-featured" class="v2-section alt">
+        <div class="v2-shell"><div class="v2-section-head"><div><p class="v2-kicker">Selección</p><h2>Productos destacados</h2><p>Opciones relevantes de distintas categorías y vendedores.</p></div></div><div id="v2-featured-grid" class="v2-product-grid"></div></div>
+      </section>
+
+      <section class="v2-section">
+        <div class="v2-shell"><div class="v2-section-head"><div><p class="v2-kicker">Ahorro</p><h2>Mejores oportunidades</h2><p>Productos con precios detectables, ordenados para facilitar la comparación.</p></div></div><div id="v2-deals-grid" class="v2-product-grid"></div></div>
+      </section>
+
+      <section id="v2-catalog" class="v2-section alt">
+        <div class="v2-shell"><div class="v2-section-head"><div><p class="v2-kicker">Catálogo</p><h2>Encuentra tu próxima compra</h2><p>Familias, variantes y ofertas organizadas en una sola vista.</p></div></div>
+          <div id="v2-mobile-filters" class="v2-mobile-filters"><div class="v2-filter-group"><label>Categoría</label><select data-category-select></select></div><div class="v2-filter-group"><label>Tienda</label><select data-store-select></select></div></div>
+          <div class="v2-catalog-layout">
+            <aside class="v2-filters"><div class="v2-filter-group"><label for="v2-category-select">Categoría</label><select id="v2-category-select" data-category-select></select></div><div class="v2-filter-group"><label for="v2-store-select">Tienda</label><select id="v2-store-select" data-store-select></select></div><div class="v2-filter-group"><label>Disponibilidad</label><select><option>Disponible para comparar</option></select></div></aside>
+            <div><div class="v2-catalog-toolbar"><p id="v2-results-count">0 familias de producto</p><div><button id="v2-mobile-filter-toggle" class="v2-outline-btn v2-mobile-filter-toggle" type="button">Filtros</button> <select id="v2-sort" aria-label="Ordenar productos"><option value="relevance">Relevancia</option><option value="price-asc">Precio más bajo</option><option value="stores">Más tiendas</option><option value="newest">Más recientes</option></select></div></div><div id="v2-grid" class="v2-product-grid"></div><div class="v2-load-wrap"><button id="v2-load-more" class="v2-load-more" type="button">Ver más productos</button></div></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="v2-guides" class="v2-section">
+        <div class="v2-shell"><div class="v2-section-head"><div><p class="v2-kicker">Decide con criterio</p><h2>Guías de compra</h2><p>Claves para comparar características, variantes y condiciones.</p></div></div><div class="v2-guides"><article class="v2-guide"><span>Guía práctica</span><h3>Cómo comparar variantes sin equivocarte</h3><p>Comprueba modelo, capacidad, talla, color y versión antes de valorar el precio.</p></article><article class="v2-guide"><span>Precio real</span><h3>Qué revisar antes de abrir una oferta</h3><p>El envío, los impuestos y la disponibilidad pueden modificar el coste final.</p></article><article class="v2-guide"><span>Compra informada</span><h3>Cuándo dos productos son realmente comparables</h3><p>SecretShop solo agrupa coincidencias exactas o relaciones confirmadas.</p></article></div></div>
+      </section>
+
+      <section class="v2-section alt">
+        <div class="v2-shell"><div class="v2-section-head"><div><p class="v2-kicker">Transparencia</p><h2>Cómo funciona SecretShop</h2></div></div><div class="v2-how-grid"><article class="v2-how-card"><b>1</b><h3>Busca</h3><p>Encuentra productos, marcas o categorías desde un único buscador.</p></article><article class="v2-how-card"><b>2</b><h3>Elige variante</h3><p>Selecciona el modelo exacto antes de comparar vendedores.</p></article><article class="v2-how-card"><b>3</b><h3>Compara ofertas</h3><p>Revisa las tiendas disponibles y confirma el precio final en el comercio.</p></article></div></div>
+      </section>
+    </main>
+
+    <footer class="v2-footer"><div class="v2-shell v2-footer-row"><strong>SecretShop</strong><span>Comparación neutral de productos y ofertas externas.</span><span><a href="mailto:secretoatlas@gmail.com">Contacto</a> · Privacidad · Afiliación</span></div></footer>
+    <dialog id="v2-product-dialog" class="v2-dialog"><div id="v2-product-dialog-content"></div></dialog>
+  </div>
+
 
   <!-- =====================================================
        CABECERA
@@ -7024,6 +7087,8 @@ function getProductCategories(product) {
   </script>
 
   <script type="module" src="./scripts/catalog-bootstrap.js?v=20260722-1"></script>
+
+  <script src="./scripts/secretshop-v2.js?v=20260723-1"></script>
 
   <!-- Cloudflare Web Analytics -->
   <script
