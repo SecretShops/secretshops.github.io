@@ -62,6 +62,9 @@ const STORAGE_KEYS = {
 
 const PAGE_SIZE = 24;
 const MAX_COMPARE = 4;
+const MAIN_CATEGORIES = ["Tecnología", "Moda", "Hogar", "Belleza y cuidado"];
+const HERO_ROTATION_MS = 12_000;
+const DEALS_ROTATION_MS = 18_000;
 const formatter = new Intl.NumberFormat("es-ES");
 
 const $ = (selector, root = document) => root.querySelector(selector);
@@ -115,6 +118,9 @@ let families = [];
 let familyById = new Map();
 let catalogWarnings = [];
 let inputTimer = null;
+let heroRotationTimer = null;
+let dealsRotationTimer = null;
+let heroRotationOffset = 0;
 
 function currentFilters(overrides = {}) {
   return {
@@ -206,7 +212,7 @@ async function loadCatalog() {
   persistPersonalState();
 
   if (families.length === 0) {
-    throw new Error("No se pudo cargar ninguna familia válida");
+    throw new Error("No se pudo cargar ningún producto válido");
   }
 
   return merged.stats;
@@ -243,8 +249,8 @@ function renderCatalogStatus(stats) {
   status.classList.toggle("is-warning", catalogWarnings.length > 0);
   status.classList.toggle("is-ready", catalogWarnings.length === 0);
   status.textContent = catalogWarnings.length
-    ? `${formatter.format(stats.families)} familias · catálogo parcial`
-    : `${formatter.format(stats.families)} familias disponibles`;
+    ? `${formatter.format(stats.families)} productos · catálogo parcial`
+    : `${formatter.format(stats.families)} productos disponibles`;
 }
 
 function renderMetrics(stats) {
@@ -277,7 +283,12 @@ function productCardMarkup(family, options = {}) {
   const compared = state.compare.includes(family.id);
   const discount = discountPercent(offer);
   const marketLabel = family.countries.map(countryLabel).join(" · ");
-  const storeText = `${family.stores.length} ${family.stores.length === 1 ? "tienda" : "tiendas"}`;
+  const optionText = family.variantCount === 1
+    ? "1 opción"
+    : `${formatter.format(family.variantCount)} opciones`;
+  const storeText = family.stores.length === 1
+    ? "Oferta en 1 tienda"
+    : `Ofertas en ${formatter.format(family.stores.length)} tiendas`;
   const loading = options.eager ? "eager" : "lazy";
 
   return `
@@ -307,13 +318,13 @@ function productCardMarkup(family, options = {}) {
         <h3>${escapeHtml(family.title)}</h3>
         <div class="card-score-row">
           <span class="score" title="Puntuación orientativa de calidad de la ficha">SecretScore ${family.secretScore.toFixed(1)}</span>
-          <span class="variant-count">${family.variantCount === 1 ? "1 variante" : `${formatter.format(family.variantCount)} variantes`}</span>
+          <span class="variant-count">${escapeHtml(optionText)}</span>
         </div>
         ${familyPriceMarkup(family, offer)}
-        <p class="store-line"><span class="availability-dot"></span>${escapeHtml(storeText)} · ${family.offerCount} ${family.offerCount === 1 ? "oferta" : "ofertas"}</p>
+        <p class="store-line"><span class="availability-dot"></span>${escapeHtml(storeText)}</p>
         <div class="product-actions">
           <button class="product-open" type="button" data-open-family="${escapeHtml(family.id)}">
-            ${family.offerCount > 1 ? "Comparar precios" : "Ver producto"}
+            ${family.offerCount > 1 ? "Comparar precios" : "Ver oferta"}
           </button>
           <button
             class="compare-toggle ${compared ? "is-active" : ""}"
@@ -327,41 +338,96 @@ function productCardMarkup(family, options = {}) {
     </article>`;
 }
 
-function renderHero() {
-  const mosaic = selectDiverseFamilies(families, 3);
-  $("[data-hero-mosaic]").innerHTML = mosaic.map((family) => {
-    const offer = bestOffer(family);
+function hasPresentationImage(family) {
+  return Boolean(family?.image) && !family.image.includes("amazon-placeholder");
+}
+
+function heroSelection() {
+  const candidates = families.filter(hasPresentationImage);
+  const source = candidates.length >= 3 ? candidates : families;
+  const pool = selectDiverseFamilies(source, Math.min(18, source.length));
+  if (pool.length <= 3) return pool;
+  const rotated = [...pool.slice(heroRotationOffset), ...pool.slice(0, heroRotationOffset)];
+  return rotated.slice(0, 3);
+}
+
+function renderHero({ animate = false } = {}) {
+  const container = $("[data-hero-mosaic]");
+  const draw = () => {
+    const mosaic = heroSelection();
+    container.innerHTML = mosaic.map((family) => {
+      const offer = bestOffer(family);
+      const optionLabel = family.variantCount === 1
+        ? "1 opción"
+        : `${formatter.format(family.variantCount)} opciones`;
+      return `
+        <button class="mosaic-card" type="button" data-open-family="${escapeHtml(family.id)}">
+          <img src="${escapeHtml(family.image)}" alt="${escapeHtml(family.title)}" width="500" height="500" loading="eager">
+          <span class="mosaic-label">
+            <strong>${escapeHtml(family.title)}</strong>
+            <span>${escapeHtml(displayOfferPrice(offer))} · ${escapeHtml(optionLabel)}</span>
+          </span>
+        </button>`;
+    }).join("");
+    container.classList.remove("is-changing");
+  };
+  if (!animate) {
+    draw();
+    return;
+  }
+  container.classList.add("is-changing");
+  window.setTimeout(draw, 180);
+}
+
+function categoryImage(categoryName) {
+  const candidates = [...families]
+    .filter((family) => family.groups.includes(categoryName) && hasPresentationImage(family))
+    .sort((left, right) => right.secretScore - left.secretScore);
+  const fallback = [...families]
+    .filter((family) => family.groups.includes(categoryName) && family.image)
+    .sort((left, right) => right.secretScore - left.secretScore);
+  return candidates[0]?.image || fallback[0]?.image || "";
+}
+
+function renderCategories() {
+  const allStats = new Map(categoryStats(families).map((category) => [category.name, category]));
+  const categories = MAIN_CATEGORIES
+    .map((name) => allStats.get(name))
+    .filter(Boolean);
+  $("[data-category-grid]").innerHTML = categories.map((category) => {
+    const image = categoryImage(category.name);
     return `
-      <button class="mosaic-card" type="button" data-open-family="${escapeHtml(family.id)}">
-        <img src="${escapeHtml(family.image)}" alt="${escapeHtml(family.title)}" width="500" height="500" loading="eager">
-        <span class="mosaic-label">
-          <strong>${escapeHtml(family.title)}</strong>
-          <span>${escapeHtml(displayOfferPrice(offer))} · ${family.variantCount} ${family.variantCount === 1 ? "variante" : "variantes"}</span>
+      <button class="category-card" type="button" data-set-category="${escapeHtml(category.name)}">
+        <span class="category-visual" aria-hidden="true">
+          ${image ? `<img src="${escapeHtml(image)}" alt="" loading="lazy">` : `<span class="category-icon">${escapeHtml(category.icon)}</span>`}
         </span>
+        <span class="category-copy">
+          <strong>${escapeHtml(category.name)}</strong>
+          <small>${formatter.format(category.count)} productos</small>
+        </span>
+        <span class="category-arrow" aria-hidden="true">→</span>
       </button>`;
   }).join("");
 }
 
-function renderCategories() {
-  const categories = categoryStats(families).slice(0, 12);
-  $("[data-category-grid]").innerHTML = categories.map((category) => `
-    <button class="category-card" type="button" data-set-category="${escapeHtml(category.name)}">
-      <span class="category-icon" aria-hidden="true">${escapeHtml(category.icon)}</span>
-      <span>
-        <strong>${escapeHtml(category.name)}</strong>
-        <small>${formatter.format(category.count)} familias</small>
-      </span>
-      <span class="category-arrow" aria-hidden="true">→</span>
-    </button>`).join("");
-}
-
 function renderHighlights() {
-  const deals = topDeals(families, 14);
-  const dealFamilies = deals.length ? deals : topScored(families, 10);
+  const visualFamilies = families.filter(hasPresentationImage);
+  const source = visualFamilies.length >= 16 ? visualFamilies : families;
+  const dealCandidates = topDeals(source, 48);
+  const fallbackCandidates = topScored(source, 28);
+  const dealFamilies = selectDiverseFamilies(
+    dealCandidates.length ? dealCandidates : fallbackCandidates,
+    12
+  );
+  const used = new Set(dealFamilies.map((family) => family.id));
+  const featuredFamilies = selectDiverseFamilies(
+    topScored(source.filter((family) => !used.has(family.id)), 32),
+    4
+  );
   $("[data-deals-carousel]").innerHTML = dealFamilies
     .map((family) => productCardMarkup(family))
     .join("");
-  $("[data-featured-grid]").innerHTML = topScored(families, 8)
+  $("[data-featured-grid]").innerHTML = featuredFamilies
     .map((family) => productCardMarkup(family))
     .join("");
 }
@@ -370,25 +436,23 @@ function renderStores() {
   const entries = new Map();
   for (const family of families) {
     for (const store of family.stores) {
-      const current = entries.get(store) || { families: new Set(), countries: new Set() };
-      current.families.add(family.id);
-      family.offers
-        .filter((offer) => offer.merchantName === store)
-        .forEach((offer) => current.countries.add(offer.country));
+      const current = entries.get(store) || { products: new Set() };
+      current.products.add(family.id);
       entries.set(store, current);
     }
   }
 
   $("[data-store-grid]").innerHTML = [...entries.entries()]
-    .sort((left, right) => right[1].families.size - left[1].families.size)
+    .sort((left, right) => right[1].products.size - left[1].products.size)
     .map(([store, data]) => `
-      <article class="store-card">
+      <button class="store-card" type="button" data-set-store="${escapeHtml(store)}">
         <span class="store-mark" aria-hidden="true">${escapeHtml(store.slice(0, 2).toUpperCase())}</span>
-        <div>
+        <span class="store-copy">
           <strong>${escapeHtml(store)}</strong>
-          <span>${formatter.format(data.families.size)} familias · ${[...data.countries].map(countryLabel).join(", ")}</span>
-        </div>
-      </article>`).join("");
+          <span>${formatter.format(data.products.size)} productos</span>
+        </span>
+        <span class="store-arrow" aria-hidden="true">→</span>
+      </button>`).join("");
 }
 
 function renderFilterOptions() {
@@ -442,7 +506,7 @@ function activeFilterEntries() {
     Number.isFinite(state.minimumPrice) ? { key: "minimumPrice", label: `Desde ${state.minimumPrice}` } : null,
     Number.isFinite(state.maximumPrice) ? { key: "maximumPrice", label: `Hasta ${state.maximumPrice}` } : null,
     state.discountOnly ? { key: "discountOnly", label: "Con descuento" } : null,
-    state.multipleVariants ? { key: "multipleVariants", label: "Varias variantes" } : null
+    state.multipleVariants ? { key: "multipleVariants", label: "Varias opciones" } : null
   ].filter(Boolean);
 }
 
@@ -501,7 +565,7 @@ function renderCatalog({ updateHistory = true } = {}) {
 
   const summary = $("[data-results-summary]");
   const market = state.country === "all" ? "" : ` en ${countryLabel(state.country)}`;
-  summary.textContent = `${formatter.format(results.length)} ${results.length === 1 ? "familia" : "familias"}${market}`;
+  summary.textContent = `${formatter.format(results.length)} ${results.length === 1 ? "producto" : "productos"}${market}`;
 
   const loadMore = $("[data-load-more]");
   loadMore.hidden = visible.length >= results.length;
@@ -559,10 +623,45 @@ function saveSearch(query) {
 }
 
 function setCategory(category, scroll = true) {
+  state.query = "";
   state.category = category || "all";
+  state.country = "all";
+  state.store = "all";
+  state.minimumPrice = null;
+  state.maximumPrice = null;
+  state.discountOnly = false;
+  state.multipleVariants = false;
   state.visible = PAGE_SIZE;
+  syncSearchInputs();
   renderCatalog();
   if (scroll) $("#catalogo").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function setStore(store, scroll = true) {
+  state.query = "";
+  state.category = "all";
+  state.country = "all";
+  state.store = store || "all";
+  state.minimumPrice = null;
+  state.maximumPrice = null;
+  state.discountOnly = false;
+  state.multipleVariants = false;
+  state.visible = PAGE_SIZE;
+  syncSearchInputs();
+  renderCatalog();
+  if (scroll) $("#catalogo").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function setCollection(collection) {
+  if (collection === "deals") {
+    clearFilters();
+    state.discountOnly = true;
+    renderCatalog();
+    $("#catalogo").scrollIntoView({ behavior: "smooth", block: "start" });
+    return;
+  }
+  if (collection === "viral") setCategory("Virales");
+  if (collection === "under-10") setCategory("Menos de 10");
 }
 
 function clearFilters() {
@@ -750,7 +849,7 @@ function renderProductDialog(familyId, preferredVariantId = null) {
         <h2 id="product-title">${escapeHtml(family.title)}</h2>
         <div class="detail-summary">
           <span class="score">SecretScore ${family.secretScore.toFixed(1)}</span>
-          <span>${formatter.format(family.variantCount)} ${family.variantCount === 1 ? "variante" : "variantes"}</span>
+          <span>${formatter.format(family.variantCount)} ${family.variantCount === 1 ? "opción" : "opciones"}</span>
           <span>${family.countries.map(countryLabel).join(" · ")}</span>
         </div>
         ${variant.title !== family.title ? `<p class="detail-variant-title">${escapeHtml(variant.title)}</p>` : ""}
@@ -758,8 +857,8 @@ function renderProductDialog(familyId, preferredVariantId = null) {
 
         <section class="detail-section" aria-labelledby="variants-title">
           <div class="detail-section-head">
-            <h3 id="variants-title">Elige la variante exacta</h3>
-            <span>${formatter.format(family.variantCount)} disponibles</span>
+            <h3 id="variants-title">Elige la opción exacta</h3>
+            <span>${formatter.format(family.variantCount)} ${family.variantCount === 1 ? "disponible" : "disponibles"}</span>
           </div>
           <div class="variant-list">
             ${family.variants.map((item, index) => `
@@ -799,7 +898,7 @@ function renderProductDialog(familyId, preferredVariantId = null) {
 
         ${attributes.length ? `
           <section class="detail-section" aria-labelledby="attributes-title">
-            <div class="detail-section-head"><h3 id="attributes-title">Características de esta variante</h3></div>
+            <div class="detail-section-head"><h3 id="attributes-title">Características de esta opción</h3></div>
             <dl class="attribute-grid">
               ${attributes.map(([label, value]) => `<div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`).join("")}
             </dl>
@@ -897,7 +996,7 @@ function renderComparison() {
           <tr><th>Categoría</th>${cells((family) => escapeHtml(family.primaryGroup))}</tr>
           <tr><th>SecretScore</th>${cells((family) => `<span class="score">${family.secretScore.toFixed(1)}</span>`)}</tr>
           <tr><th>Precio</th>${cells((family) => escapeHtml(displayOfferPrice(bestOffer(family, state.country))))}</tr>
-          <tr><th>Variantes</th>${cells((family) => formatter.format(family.variantCount))}</tr>
+          <tr><th>Opciones</th>${cells((family) => formatter.format(family.variantCount))}</tr>
           <tr><th>Tiendas</th>${cells((family) => escapeHtml(family.stores.join(", ")))}</tr>
           <tr><th>Mercados</th>${cells((family) => escapeHtml(family.countries.map(countryLabel).join(", ")))}</tr>
           <tr><th>Ver detalle</th>${cells((family) => `<button class="button secondary" type="button" data-open-family="${escapeHtml(family.id)}">Abrir</button>`)}</tr>
@@ -917,7 +1016,7 @@ function renderComparison() {
           <dl>
             <div><dt>Categoría</dt><dd>${escapeHtml(family.primaryGroup)}</dd></div>
             <div><dt>Precio</dt><dd>${escapeHtml(displayOfferPrice(bestOffer(family, state.country)))}</dd></div>
-            <div><dt>Variantes</dt><dd>${formatter.format(family.variantCount)}</dd></div>
+            <div><dt>Opciones</dt><dd>${formatter.format(family.variantCount)}</dd></div>
             <div><dt>Tiendas</dt><dd>${escapeHtml(family.stores.join(", "))}</dd></div>
             <div><dt>Mercados</dt><dd>${escapeHtml(family.countries.map(countryLabel).join(", "))}</dd></div>
           </dl>
@@ -962,7 +1061,10 @@ function renderSavedContent() {
             <strong>${escapeHtml(family.title)}</strong>
             <small>${escapeHtml(family.primaryGroup)} · ${escapeHtml(displayOfferPrice(bestOffer(family)))}</small>
           </div>
-          <button type="button" data-open-family="${escapeHtml(family.id)}" aria-label="Abrir ${escapeHtml(family.title)}">→</button>
+          <div class="saved-item-actions">
+            <button type="button" data-open-family="${escapeHtml(family.id)}" aria-label="Abrir ${escapeHtml(family.title)}">→</button>
+            ${state.savedTab === "favorites" ? `<button class="saved-remove" type="button" data-remove-favorite="${escapeHtml(family.id)}" aria-label="Eliminar ${escapeHtml(family.title)} de favoritos">×</button>` : ""}
+          </div>
         </article>`).join("")}</div>`
     : `<div class="saved-empty"><div><h3>${state.savedTab === "favorites" ? "No has guardado favoritos" : "Aún no hay productos recientes"}</h3><p>Explora el catálogo y vuelve aquí cuando quieras.</p></div></div>`;
 }
@@ -1189,6 +1291,24 @@ function wireEvents() {
       return;
     }
 
+    const collection = event.target.closest("[data-set-collection]");
+    if (collection) {
+      setCollection(collection.dataset.setCollection);
+      return;
+    }
+
+    const store = event.target.closest("[data-set-store]");
+    if (store) {
+      setStore(store.dataset.setStore);
+      return;
+    }
+
+    const removeFavorite = event.target.closest("[data-remove-favorite]");
+    if (removeFavorite) {
+      toggleFavorite(removeFavorite.dataset.removeFavorite);
+      return;
+    }
+
     const footerCategory = event.target.closest("[data-footer-category]");
     if (footerCategory) {
       event.preventDefault();
@@ -1360,6 +1480,65 @@ function wireEvents() {
   window.addEventListener("popstate", handleProductRoute);
 }
 
+function motionAllowed() {
+  return !window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+}
+
+function stopHeroRotation() {
+  window.clearInterval(heroRotationTimer);
+  heroRotationTimer = null;
+}
+
+function startHeroRotation() {
+  stopHeroRotation();
+  if (!motionAllowed() || families.length <= 3) return;
+  heroRotationTimer = window.setInterval(() => {
+    heroRotationOffset = (heroRotationOffset + 3) % Math.max(3, Math.min(18, families.length));
+    renderHero({ animate: true });
+  }, HERO_ROTATION_MS);
+}
+
+function stopDealsRotation() {
+  window.clearInterval(dealsRotationTimer);
+  dealsRotationTimer = null;
+}
+
+function startDealsRotation() {
+  stopDealsRotation();
+  const carousel = $("[data-deals-carousel]");
+  if (!carousel || !motionAllowed()) return;
+  dealsRotationTimer = window.setInterval(() => {
+    const nearEnd = carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 20;
+    carousel.scrollTo({
+      left: nearEnd ? 0 : carousel.scrollLeft + Math.max(260, carousel.clientWidth * 0.75),
+      behavior: "smooth"
+    });
+  }, DEALS_ROTATION_MS);
+}
+
+function wireControlledRotations() {
+  const hero = $("[data-hero-mosaic]");
+  const deals = $("[data-deals-carousel]");
+  if (hero) {
+    hero.addEventListener("pointerenter", stopHeroRotation);
+    hero.addEventListener("pointerleave", startHeroRotation);
+    hero.addEventListener("focusin", stopHeroRotation);
+    hero.addEventListener("focusout", (event) => {
+      if (!hero.contains(event.relatedTarget)) startHeroRotation();
+    });
+  }
+  if (deals) {
+    deals.addEventListener("pointerenter", stopDealsRotation);
+    deals.addEventListener("pointerleave", startDealsRotation);
+    deals.addEventListener("focusin", stopDealsRotation);
+    deals.addEventListener("focusout", (event) => {
+      if (!deals.contains(event.relatedTarget)) startDealsRotation();
+    });
+  }
+  startHeroRotation();
+  startDealsRotation();
+}
+
 function renderInitial(stats) {
   renderMetrics(stats);
   renderCatalogStatus(stats);
@@ -1373,6 +1552,7 @@ function renderInitial(stats) {
   renderThemeControls();
   renderCatalog({ updateHistory: false });
   handleProductRoute();
+  wireControlledRotations();
 }
 
 async function start() {

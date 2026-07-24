@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://secretshops.github.io/sitemap.xml
+Sitemap: https://getsecretshop.com/sitemap.xml

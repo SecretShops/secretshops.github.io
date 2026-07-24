@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { access, readFile } from "node:fs/promises";
 import { resolve } from "node:path";
+import { filterAndSortFamilies, mergeCatalogPayloads, normalizeText } from "../assets/js/catalog-core.js";
 
 const root = resolve(import.meta.dirname, "..");
 
@@ -104,4 +105,28 @@ test("todas las imágenes locales publicadas existen", async () => {
     await access(resolve(root, image.replace(/^\.\//, "")));
   }
   assert.ok(localImages.size >= 15);
+});
+
+
+test("la búsqueda de televisores no devuelve muebles por menciones descriptivas", () => {
+  const merged = mergeCatalogPayloads(
+    catalogs.map((payload, index) => ({ id: `catalog-${index}`, payload }))
+  ).families;
+  const results = filterAndSortFamilies(merged, { query: "televisor" });
+
+  assert.ok(results.length >= 1);
+  assert.equal(results.some((family) => /^KAWOLA/i.test(family.title)), false);
+  assert.ok(
+    results.every((family) => {
+      const strongText = normalizeText([
+        family.title,
+        family.brand,
+        family.model,
+        ...family.categories,
+        ...family.groups,
+        ...family.variants.flatMap((variant) => [variant.title, variant.label])
+      ].filter(Boolean).join(" "));
+      return strongText.includes("televisor");
+    })
+  );
 });

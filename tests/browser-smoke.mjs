@@ -63,11 +63,28 @@ async function inspectPage(page, label) {
   });
 }
 
+async function isolateExternalImages(page) {
+  const localOrigin = new URL(baseUrl).origin;
+  await page.route("**/*", async (route) => {
+    const request = route.request();
+    const url = new URL(request.url());
+    if (request.resourceType() === "image" && url.origin !== localOrigin) {
+      await route.fulfill({
+        status: 200,
+        contentType: "image/svg+xml",
+        body: '<svg xmlns="http://www.w3.org/2000/svg" width="1" height="1"/>'
+      });
+      return;
+    }
+    await route.continue();
+  });
+}
+
 try {
   const desktop = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   await inspectPage(desktop, "desktop");
+  await isolateExternalImages(desktop);
   await desktop.goto(baseUrl, { waitUntil: "domcontentloaded" });
-  await desktop.locator("[data-catalog-status].is-ready, [data-catalog-status].is-warning").waitFor();
   await desktop.locator("[data-catalog-grid] .product-card").first().waitFor();
 
   const initialCards = await desktop.locator("[data-catalog-grid] .product-card").count();
@@ -75,7 +92,7 @@ try {
 
   await desktop.locator("#header-search").fill("UGREEN");
   await desktop.locator(".header-search").press("Enter");
-  await desktop.locator("[data-results-summary]").filter({ hasText: "familia" }).waitFor();
+  await desktop.locator("[data-results-summary]").filter({ hasText: "producto" }).waitFor();
   const searchedCards = await desktop.locator("[data-catalog-grid] .product-card").count();
   if (searchedCards < 1 || searchedCards > 5) {
     failures.push(`desktop: búsqueda UGREEN devolvió ${searchedCards} tarjetas`);
@@ -134,6 +151,7 @@ try {
 
   const mobile = await browser.newPage({ viewport: { width: 390, height: 844 }, isMobile: true });
   await inspectPage(mobile, "mobile");
+  await isolateExternalImages(mobile);
   await mobile.goto(baseUrl, { waitUntil: "domcontentloaded" });
   await mobile.evaluate(() => localStorage.clear());
   await mobile.reload({ waitUntil: "domcontentloaded" });

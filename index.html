@@ -5,20 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta
     name="description"
-    content="Compara productos, variantes y ofertas por país con información clara antes de visitar la tienda."
+    content="Compara productos, opciones y ofertas por país con información clara antes de visitar la tienda."
   >
-  <meta name="theme-color" content="#f7f2e8">
+  <meta name="theme-color" content="#1f1f1f">
   <meta name="color-scheme" content="light dark">
   <meta property="og:type" content="website">
   <meta property="og:title" content="SecretShop | Compara antes de comprar">
-  <meta property="og:url" content="https://secretshops.github.io/">
+  <meta property="og:url" content="https://getsecretshop.com/">
+  <meta property="og:image" content="https://getsecretshop.com/assets/brand/secretshop-logo-original.png">
+  <meta property="og:image:width" content="1254">
+  <meta property="og:image:height" content="1254">
+  <meta property="og:image:alt" content="Logotipo de SecretShop">
   <meta
     property="og:description"
-    content="Encuentra productos y revisa precios, variantes y disponibilidad con una comparación transparente."
+    content="Encuentra productos y revisa precios, opciones y disponibilidad con una comparación transparente."
   >
   <title>SecretShop | Compara antes de comprar</title>
-  <link rel="canonical" href="https://secretshops.github.io/">
-  <link rel="icon" href="./assets/brand/secretshop-mark.svg" type="image/svg+xml">
+  <link rel="canonical" href="https://getsecretshop.com/">
+  <link rel="icon" href="./assets/brand/secretshop-logo-compact.png" type="image/png">
+  <link rel="apple-touch-icon" href="./assets/brand/secretshop-logo-compact.png">
   <link rel="stylesheet" href="./assets/css/app.css">
   <script>
     (() => {
@@ -36,7 +41,7 @@
   <header class="site-header" data-site-header>
     <div class="header-primary shell">
       <a class="brand" href="./" aria-label="SecretShop, inicio">
-        <img src="./assets/brand/secretshop-mark.svg" alt="" width="42" height="42">
+        <img src="./assets/brand/secretshop-logo-compact.png" alt="" width="42" height="42">
         <span>SecretShop</span>
       </a>
 
@@ -65,6 +70,13 @@
         ></div>
       </form>
 
+      <nav class="primary-nav" aria-label="Navegación principal">
+        <a class="nav-catalog" href="#catalogo">Catálogo</a>
+        <a href="#ofertas">Ofertas</a>
+        <a href="#tiendas">Tiendas</a>
+        <a href="#guias">Guías</a>
+      </nav>
+
       <div class="header-actions">
         <button class="icon-action saved-action" type="button" data-open-saved aria-label="Abrir favoritos e historial">
           <span aria-hidden="true">♡</span>
@@ -81,18 +93,6 @@
         </button>
       </div>
     </div>
-
-    <nav class="header-secondary" aria-label="Navegación principal">
-      <div class="shell nav-row">
-        <a href="#categorias">Categorías</a>
-        <a href="#ofertas">Ofertas</a>
-        <a href="#catalogo">Catálogo</a>
-        <a href="#tiendas">Tiendas</a>
-        <a href="#guias">Guías</a>
-        <a href="#como-funciona">Cómo funciona</a>
-        <span class="nav-status" data-catalog-status aria-live="polite">Preparando catálogo…</span>
-      </div>
-    </nav>
   </header>
 
   <main id="contenido">
@@ -102,8 +102,8 @@
           <p class="eyebrow">Comparación clara y útil</p>
           <h1>Compara antes de comprar. <span>Decide mejor.</span></h1>
           <p class="hero-lead">
-            Busca en un catálogo organizado por familias, elige la variante exacta
-            y comprueba las ofertas disponibles para cada mercado.
+            Encuentra el producto adecuado, revisa sus opciones y compara las tiendas
+            disponibles antes de completar la compra.
           </p>
 
           <form class="hero-search search-box" data-search-form role="search">
@@ -128,11 +128,11 @@
           <dl class="hero-metrics" aria-label="Resumen del catálogo">
             <div>
               <dt data-family-total>—</dt>
-              <dd>familias</dd>
+              <dd>productos</dd>
             </div>
             <div>
               <dt data-variant-total>—</dt>
-              <dd>variantes</dd>
+              <dd>opciones</dd>
             </div>
             <div>
               <dt data-market-total>—</dt>
@@ -162,8 +162,8 @@
         <div class="section-heading">
           <div>
             <p class="eyebrow">Explora</p>
-            <h2>Categorías para cada necesidad</h2>
-            <p>Accede a los grupos principales y sigue afinando desde el catálogo.</p>
+            <h2>Cuatro formas de empezar</h2>
+            <p>Entra por una categoría principal o abre el catálogo completo para ver todas las secciones.</p>
           </div>
           <a class="text-link" href="#catalogo">Ver catálogo completo <span aria-hidden="true">→</span></a>
         </div>
@@ -172,6 +172,12 @@
           <div class="card-skeleton"></div>
           <div class="card-skeleton"></div>
           <div class="card-skeleton"></div>
+        </div>
+        <div class="collection-strip" aria-label="Colecciones destacadas">
+          <span>Colecciones</span>
+          <button type="button" data-set-collection="deals">Ofertas</button>
+          <button type="button" data-set-collection="viral">Virales</button>
+          <button type="button" data-set-collection="under-10">Menos de 10</button>
         </div>
       </div>
     </section>
@@ -184,12 +190,12 @@
             <h2>Ofertas destacadas</h2>
             <p>Precios anteriores y descuentos solo cuando el catálogo aporta ambos datos.</p>
           </div>
-          <div class="carousel-controls" aria-label="Controles de ofertas">
-            <button type="button" data-carousel-prev="deals" aria-label="Ofertas anteriores">←</button>
-            <button type="button" data-carousel-next="deals" aria-label="Ofertas siguientes">→</button>
-          </div>
         </div>
-        <div class="product-carousel" data-deals-carousel tabindex="0"></div>
+        <div class="carousel-frame">
+          <button class="carousel-arrow carousel-arrow-prev" type="button" data-carousel-prev="deals" aria-label="Ofertas anteriores">←</button>
+          <div class="product-carousel" data-deals-carousel tabindex="0"></div>
+          <button class="carousel-arrow carousel-arrow-next" type="button" data-carousel-next="deals" aria-label="Ofertas siguientes">→</button>
+        </div>
       </div>
     </section>
 
@@ -247,7 +253,7 @@
               <option value="score-desc">Mejor SecretScore</option>
               <option value="price-asc">Precio más bajo</option>
               <option value="discount-desc">Mayor descuento</option>
-              <option value="variants-desc">Más variantes</option>
+              <option value="variants-desc">Más opciones</option>
             </select>
           </label>
           <button class="clear-filters" type="button" data-clear-filters hidden>Limpiar</button>
@@ -285,7 +291,7 @@
           <a class="guide-card guide-featured" href="./guias/comparar-precios.html">
             <span class="guide-label">Guía esencial</span>
             <h3>Cómo comparar el precio real de una compra online</h3>
-            <p>Producto, envío, variante, disponibilidad y condiciones: qué revisar antes de salir a la tienda.</p>
+            <p>Producto, envío, opción, disponibilidad y condiciones: qué revisar antes de salir a la tienda.</p>
             <span class="guide-action">Leer guía →</span>
           </a>
           <a class="guide-card" href="./guias/elegir-sofa.html">
@@ -316,11 +322,11 @@
           <li>
             <span>1</span>
             <h3>Busca y filtra</h3>
-            <p>Encuentra familias de producto por nombre, marca, categoría, tienda o mercado.</p>
+            <p>Encuentra productos por nombre, marca, categoría, tienda o mercado.</p>
           </li>
           <li>
             <span>2</span>
-            <h3>Elige la variante</h3>
+            <h3>Elige la opción</h3>
             <p>Comprueba modelo, medidas, color y demás atributos antes de comparar ofertas.</p>
           </li>
           <li>
@@ -340,8 +346,8 @@
         </div>
         <div class="trust-copy">
           <p>
-            Separamos cada familia, sus variantes y las ofertas asociadas. No fusionamos
-            productos solo porque se parecen y no mostramos una comparación cuando faltan
+            Separamos cada producto, sus opciones y las ofertas asociadas. No fusionamos
+            artículos solo porque se parecen y no mostramos una comparación cuando faltan
             datos suficientes.
           </p>
           <a class="button secondary" href="./metodologia.html">Conocer la metodología</a>
@@ -367,10 +373,10 @@
     <div class="shell footer-grid">
       <div class="footer-brand">
         <a class="brand brand-footer" href="./">
-          <img src="./assets/brand/secretshop-mark.svg" alt="" width="42" height="42">
+          <img src="./assets/brand/secretshop-logo-compact.png" alt="" width="42" height="42">
           <span>SecretShop</span>
         </a>
-        <p>Una forma más clara de organizar productos, variantes y ofertas antes de comprar.</p>
+        <p>Una forma más clara de organizar productos, opciones y ofertas antes de comprar.</p>
         <p class="footer-disclosure">Algunos enlaces son de afiliación y pueden generar una comisión sin coste adicional.</p>
       </div>
       <div>
@@ -473,7 +479,7 @@
       </label>
       <label class="check-row">
         <input type="checkbox" data-multiple-variants>
-        <span>Solo familias con varias variantes</span>
+        <span>Solo productos con varias opciones</span>
       </label>
       <div class="modal-actions">
         <button class="button ghost" type="button" data-reset-advanced>Restablecer</button>
@@ -505,7 +511,7 @@
   <dialog id="menu-dialog" class="mobile-menu" aria-label="Menú principal">
     <div class="mobile-menu-head">
       <a class="brand" href="./">
-        <img src="./assets/brand/secretshop-mark.svg" alt="" width="38" height="38">
+        <img src="./assets/brand/secretshop-logo-compact.png" alt="" width="38" height="38">
         <span>SecretShop</span>
       </a>
       <button class="modal-close" type="button" data-close-dialog aria-label="Cerrar">×</button>

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-07-23T18:13:23.787Z",
+  "generatedAt": "2026-07-24T20:30:08.609Z",
   "summary": {
     "canonicalOffers": 3301,
     "canonicalByNetwork": {
@@ -11,10 +11,10 @@
       "awin": 3110,
       "amazon": 191
     },
-    "publishedOffers": 3747,
-    "publishedLinks": 3747,
+    "publishedOffers": 4158,
+    "publishedLinks": 4158,
     "awinPublishedLinks": 3110,
-    "aliexpressPublishedLinks": 446,
+    "aliexpressPublishedLinks": 857,
     "amazonPublishedLinks": 191,
     "findings": 0,
     "allPublishedOffersTracked": true

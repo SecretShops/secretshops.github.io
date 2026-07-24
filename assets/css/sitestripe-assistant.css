@@ -1,12 +1,12 @@
 :root {
   color-scheme: dark;
   font-family: "Plus Jakarta Sans Variable", system-ui, sans-serif;
-  background: #071f23;
-  color: #f2f7f7;
-  --panel: #0d2a2f;
-  --panel-light: #12363c;
-  --border: #2c5359;
-  --accent: #22c0c9;
+  background: #1f1f1f;
+  color: #f5f3e8;
+  --panel: #292929;
+  --panel-light: #353535;
+  --border: #5a5541;
+  --accent: #fee97d;
   --success: #75e5b7;
   --warning: #ffc85a;
   --danger: #ff8b8b;
@@ -52,8 +52,9 @@ button:disabled,
 }
 
 .primary {
-  background: #0c7f87;
-  border-color: #20aeb7;
+  background: var(--accent);
+  border-color: #fff2a1;
+  color: #1f1f1f;
   font-weight: 750;
 }
 
@@ -64,7 +65,7 @@ button:disabled,
   align-items: flex-start;
   padding: 1.5rem clamp(1rem, 4vw, 3rem);
   border-bottom: 1px solid var(--border);
-  background: #09252a;
+  background: #1f1f1f;
 }
 
 .app-header h1,
@@ -74,7 +75,7 @@ button:disabled,
 
 .app-header p,
 .capture-panel p {
-  color: #a9c2c5;
+  color: #cbc5a4;
 }
 
 .progress {
@@ -128,7 +129,7 @@ progress {
 textarea {
   border: 1px solid var(--border);
   border-radius: 0.75rem;
-  background: #061b1f;
+  background: #181818;
   color: inherit;
 }
 
@@ -166,7 +167,7 @@ textarea {
 .product-item small {
   display: block;
   margin-top: 0.3rem;
-  color: #a9c2c5;
+  color: #cbc5a4;
 }
 
 .product-state {
@@ -174,7 +175,7 @@ textarea {
   height: 0.65rem;
   margin-top: 0.25rem;
   border-radius: 999px;
-  background: #6d8588;
+  background: #7a7666;
 }
 
 .product-item[data-state="completed"] .product-state {
@@ -186,7 +187,7 @@ textarea {
 }
 
 .empty-list {
-  color: #a9c2c5;
+  color: #cbc5a4;
   text-align: center;
 }
 
@@ -214,8 +215,8 @@ textarea {
   flex: 0 0 auto;
   border-radius: 999px;
   padding: 0.35rem 0.7rem;
-  background: #29474c;
-  color: #d4e2e4;
+  background: #494532;
+  color: #fff5bd;
   font-size: 0.85rem;
 }
 
@@ -233,8 +234,8 @@ textarea {
   margin: 1.5rem 0;
   padding: 1rem 1rem 1rem 2.4rem;
   border-radius: 0.75rem;
-  background: #092126;
-  color: #c9d8da;
+  background: #242424;
+  color: #ded9bf;
 }
 
 .capture-grid {
@@ -289,7 +290,7 @@ textarea {
   padding: 0.9rem 1rem;
   border: 1px solid var(--border);
   border-radius: 0.75rem;
-  background: #12363c;
+  background: #353535;
 }
 
 .message[data-type="success"] {
@@ -309,7 +310,7 @@ textarea {
   flex-wrap: wrap;
   padding: 1rem;
   border-top: 1px solid var(--border);
-  background: #09252a;
+  background: #1f1f1f;
 }
 
 @media (max-width: 850px) {
@@ -336,4 +337,3 @@ textarea {
     max-height: 22rem;
   }
 }
-

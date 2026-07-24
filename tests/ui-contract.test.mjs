@@ -14,8 +14,10 @@ test("conserva la dirección visual y el texto aprobados", () => {
   assert.ok(html.includes("Compara antes de comprar. <span>Decide mejor.</span>"));
   assert.ok(html.includes("Busca productos, marcas o categorías"));
   assert.ok(html.includes("Podemos recibir una comisión por algunas compras, sin coste adicional para ti."));
-  assert.ok(css.includes("--primary: #0b6d75"));
-  assert.ok(css.includes("--sand: #efe2c8"));
+  assert.ok(css.includes("--brand-primary: #1f1f1f"));
+  assert.ok(css.includes("--brand-secondary: #fee97d"));
+  assert.ok(html.includes("secretshop-logo-compact.png"));
+  assert.ok(html.includes("secretshop-logo-original.png"));
 });
 
 test("incluye la estructura funcional definitiva", () => {
@@ -41,7 +43,8 @@ test("incluye la estructura funcional definitiva", () => {
 
 test("incluye modo oscuro, foco, reducción de movimiento y diseño adaptable", () => {
   assert.ok(css.includes(':root[data-theme="dark"]'));
-  assert.ok(css.includes("--action-bg: #0b6d75"));
+  assert.ok(css.includes("--action-bg: var(--brand-primary)"));
+  assert.ok(css.includes("--action-bg: var(--brand-secondary)"));
   assert.ok(css.includes(":focus-visible"));
   assert.ok(css.includes("@media (prefers-reduced-motion: reduce)"));
   assert.ok(css.includes("@media (max-width: 560px)"));
@@ -63,6 +66,24 @@ test("no conserva la aplicación antigua ni menciones públicas indebidas", () =
   ]) {
     assert.equal(html.includes(value), false, value);
   }
+});
+
+
+
+test("aplica la actualización de diseño y dominio", () => {
+  assert.ok(html.includes('<link rel="canonical" href="https://getsecretshop.com/">'));
+  assert.ok(html.includes('class="primary-nav"'));
+  assert.ok(html.includes('class="nav-catalog"'));
+  assert.ok(html.includes('data-set-collection="deals"'));
+  assert.ok(html.includes('data-category-grid'));
+  assert.ok(css.includes('.category-visual'));
+  assert.ok(css.includes('.carousel-arrow-prev'));
+  assert.ok(app.includes('const MAIN_CATEGORIES = ["Tecnología", "Moda", "Hogar", "Belleza y cuidado"]'));
+  assert.ok(app.includes('data-set-store'));
+  assert.ok(app.includes('data-remove-favorite'));
+  assert.ok(app.includes('HERO_ROTATION_MS'));
+  assert.ok(app.includes('DEALS_ROTATION_MS'));
+  assert.equal(html.includes('secretshops.github.io'), false);
 });
 
 test("todos los diálogos tienen nombre accesible", () => {

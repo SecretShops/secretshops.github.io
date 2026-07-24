@@ -4,7 +4,7 @@
 
 Después de publicar los archivos, abre:
 
-`https://secret-shop.secretoatlas.workers.dev/sitestripe-assistant.html`
+`https://getsecretshop.com/sitestripe-assistant.html`
 
 La página tiene `noindex` y no está enlazada desde la tienda.
 

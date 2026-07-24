@@ -129,6 +129,37 @@ test("la búsqueda inteligente entiende sinónimos y pequeños errores", () => {
   assert.equal(smartSearchScore(phone, "sofá modular"), -1);
 });
 
+
+test("la búsqueda no incluye coincidencias presentes solo en descripciones", () => {
+  const furniture = {
+    id: "tv-furniture",
+    title: "Aparador Gala",
+    brand: "Casa",
+    model: "Gala",
+    categories: ["Almacenaje", "Hogar"],
+    groups: ["Hogar"],
+    description: "Mueble bajo con espacio ideal para colocar un televisor.",
+    variants: [
+      {
+        title: "Aparador Gala de cuatro puertas",
+        label: "Madera · 180 cm",
+        material: "Madera"
+      }
+    ],
+    secretScore: 7,
+    variantCount: 1
+  };
+  const vehiclePart = {
+    ...furniture,
+    id: "utv-part",
+    title: "Embrague UTV 250",
+    description: "Recambio para vehículo todoterreno."
+  };
+
+  assert.equal(smartSearchScore(furniture, "televisor"), -1);
+  assert.equal(smartSearchScore(vehiclePart, "tv"), -1);
+});
+
 test("filtra por categoría, mercado, tienda y variantes", () => {
   assert.deepEqual(
     filterAndSortFamilies(families, { category: "Hogar" }).map((family) => family.id),
@@ -166,7 +197,7 @@ test("no convierte precios ausentes en 0,00 €", () => {
 
 test("permite solo la ficha provisional oficial de Amazon", () => {
   assert.equal(
-    isRealImage("https://secretshops.github.io/assets/brand/amazon-placeholder.svg"),
+    isRealImage("https://getsecretshop.com/assets/brand/amazon-placeholder.svg"),
     true
   );
   assert.equal(isRealImage("https://example.com/placeholder.svg"), false);

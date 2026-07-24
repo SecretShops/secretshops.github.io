@@ -586,6 +586,52 @@ function withinOneEdit(left, right) {
   return true;
 }
 
+function buildStrongSearchFields(family) {
+  const title = normalizeText(family.title);
+  const brand = normalizeText(family.brand);
+  const model = normalizeText(family.model);
+  const categories = normalizeText([
+    ...asArray(family.categories),
+    ...asArray(family.groups)
+  ].join(" "));
+  const variants = normalizeText(
+    asArray(family.variants)
+      .flatMap((variant) => [
+        variant.title,
+        variant.label,
+        variant.color,
+        variant.size,
+        variant.dimensions,
+        variant.material,
+        variant.capacity,
+        variant.configuration
+      ])
+      .filter(Boolean)
+      .join(" ")
+  );
+  const strong = normalizeText([title, brand, model, categories, variants].filter(Boolean).join(" "));
+
+  return {
+    title,
+    titleWords: title.split(/\s+/).filter(Boolean),
+    brand,
+    brandWords: brand.split(/\s+/).filter(Boolean),
+    model,
+    modelWords: model.split(/\s+/).filter(Boolean),
+    categories,
+    categoryWords: categories.split(/\s+/).filter(Boolean),
+    strong,
+    strongWords: strong.split(/\s+/).filter(Boolean)
+  };
+}
+
+function fieldContainsTerm(field, words, term) {
+  if (!term) return false;
+  if (term.includes(" ")) return field.includes(term);
+  if (words.includes(term)) return true;
+  return term.length >= 4 && field.includes(term);
+}
+
 export function smartSearchScore(family, query) {
   const normalizedQuery = normalizeText(query);
   if (!normalizedQuery) return 0;
@@ -593,32 +639,53 @@ export function smartSearchScore(family, query) {
   const tokens = tokenizeQuery(query);
   if (tokens.length === 0) return 0;
 
-  const title = normalizeText(family.title);
-  const brand = normalizeText(family.brand);
-  const categories = normalizeText([...family.categories, ...family.groups].join(" "));
-  const haystack = family.searchIndex || buildSearchIndex(family);
-  const words = haystack.split(/\s+/);
-  let score = title.includes(normalizedQuery) ? 80 : 0;
+  const fields = buildStrongSearchFields(family);
+  let score = fieldContainsTerm(fields.title, fields.titleWords, normalizedQuery)
+    ? 80
+    : fieldContainsTerm(fields.strong, fields.strongWords, normalizedQuery)
+      ? 42
+      : 0;
 
   for (const token of tokens) {
     const alternatives = [token, ...(SEARCH_SYNONYMS[token] || [])];
     let best = -1;
+
     for (const alternative of alternatives) {
-      if (title.split(" ").includes(alternative)) best = Math.max(best, 28);
-      else if (title.includes(alternative)) best = Math.max(best, 22);
-      if (brand.includes(alternative)) best = Math.max(best, 18);
-      if (categories.includes(alternative)) best = Math.max(best, 15);
-      if (haystack.includes(alternative)) best = Math.max(best, 9);
+      if (fields.titleWords.includes(alternative)) best = Math.max(best, 28);
+      else if (fieldContainsTerm(fields.title, fields.titleWords, alternative)) {
+        best = Math.max(best, 22);
+      }
+      if (fieldContainsTerm(fields.brand, fields.brandWords, alternative)) {
+        best = Math.max(best, 18);
+      }
+      if (fieldContainsTerm(fields.model, fields.modelWords, alternative)) {
+        best = Math.max(best, 17);
+      }
+      if (fieldContainsTerm(fields.categories, fields.categoryWords, alternative)) {
+        best = Math.max(best, 15);
+      }
+      if (fieldContainsTerm(fields.strong, fields.strongWords, alternative)) {
+        best = Math.max(best, 10);
+      }
       if (
         alternative.length >= 4 &&
-        words.some((word) => word.length >= 4 && withinOneEdit(alternative, word))
+        fields.strongWords.some(
+          (word) => word.length >= 4 && withinOneEdit(alternative, word)
+        )
       ) {
         best = Math.max(best, 5);
       }
     }
+
+    // Las descripciones ayudan a ordenar, pero nunca bastan para incluir un producto.
+    // Esto evita que una búsqueda como "televisor" devuelva muebles que solo lo
+    // mencionan en el texto descriptivo.
     if (best < 0) return -1;
     score += best;
   }
+
+  const description = normalizeText(family.description);
+  if (description && tokens.every((token) => description.includes(token))) score += 1;
 
   score += family.secretScore * 0.25;
   score += Math.min(family.variantCount, 8) * 0.08;
@@ -769,7 +836,7 @@ export function getSuggestions(families, query, limit = 7) {
       type: "category",
       value: entry.name,
       label: entry.name,
-      meta: `${entry.count.toLocaleString("es-ES")} familias`,
+      meta: `${entry.count.toLocaleString("es-ES")} productos`,
       image: null
     }));
   suggestions.push(...categoryMatches);
@@ -861,7 +928,7 @@ export function categoryGuide(category) {
     },
     Tecnología: {
       title: "Antes de elegir tecnología",
-      intro: "La compatibilidad y la variante exacta importan tanto como el precio anunciado.",
+      intro: "La compatibilidad y la opción exacta importan tanto como el precio anunciado.",
       points: ["Confirma modelo y conectividad", "Compara capacidad y versión", "Revisa garantía y vendedor"]
     },
     Moda: {
@@ -872,12 +939,12 @@ export function categoryGuide(category) {
     "Belleza y cuidado": {
       title: "Antes de comprar belleza y cuidado",
       intro: "Revisa composición, formato, cantidad y modo de uso directamente en la ficha de la tienda.",
-      points: ["Comprueba cantidad y variante", "Lee ingredientes y advertencias", "Evita atribuir efectos no demostrados"]
+      points: ["Comprueba cantidad y opción", "Lee ingredientes y advertencias", "Evita atribuir efectos no demostrados"]
     }
   };
   return guides[group] || {
     title: `Antes de comprar en ${group}`,
-    intro: "Compara la variante exacta, el precio total, la disponibilidad y las condiciones de la tienda.",
+    intro: "Compara la opción exacta, el precio total, la disponibilidad y las condiciones de la tienda.",
     points: ["Confirma el modelo correcto", "Revisa envío y devolución", "Comprueba el precio final"]
   };
 }

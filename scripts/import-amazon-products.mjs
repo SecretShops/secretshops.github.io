@@ -24,7 +24,7 @@ const dryRun = hasFlag("--dry-run");
 const replaceAmazon = hasFlag("--replace-amazon");
 const allowPartial = hasFlag("--allow-partial");
 const amazonPlaceholderImage =
-  "https://secretshops.github.io/assets/brand/amazon-placeholder.svg";
+  "https://getsecretshop.com/assets/brand/amazon-placeholder.svg";
 
 async function readJson(path) {
   return JSON.parse(await readFile(resolve(root, path), "utf8"));

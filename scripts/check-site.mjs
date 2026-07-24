@@ -69,7 +69,7 @@ for (const path of htmlFiles) {
   if (!/<title>[^<]+<\/title>/i.test(html)) errors.push(`${name}: falta title`);
   if (/data:image\/|;base64,/i.test(html)) errors.push(`${name}: contiene recursos base64 embebidos`);
   const noindex = /<meta\b[^>]*name="robots"[^>]*content="[^"]*noindex/i.test(html);
-  if (!noindex && !/<link\b[^>]*rel="canonical"[^>]*href="https:\/\/secretshops\.github\.io\//i.test(html)) {
+  if (!noindex && !/<link\b[^>]*rel="canonical"[^>]*href="https:\/\/getsecretshop\.com\//i.test(html)) {
     errors.push(`${name}: falta canonical absoluto`);
   }
 
