@@ -23,6 +23,8 @@ const reportPath = resolve(root, option("--report", "data/catalog/import-reports
 const dryRun = hasFlag("--dry-run");
 const replaceAmazon = hasFlag("--replace-amazon");
 const allowPartial = hasFlag("--allow-partial");
+const amazonPlaceholderImage =
+  "https://secretshops.github.io/assets/brand/amazon-placeholder.svg";
 
 async function readJson(path) {
   return JSON.parse(await readFile(resolve(root, path), "utf8"));
@@ -84,7 +86,9 @@ function normalizeRecord(record, context) {
   const category = text(record, "category", "categoria");
   const description = text(record, "description", "descripcion");
   const model = text(record, "model", "modelo") || null;
-  const images = splitList(text(record, "image_urls", "images", "imagenes", "image_url", "imagen"));
+  // Hasta disponer de Creators API, todos los productos Amazon usan una
+  // ficha de marca común en lugar de imágenes de producto no autorizadas.
+  const images = [amazonPlaceholderImage];
   const extraCategories = splitList(text(record, "categories", "categorias"));
   const explicitDepartment = text(record, "department", "departamento");
   const price = optionalNumber(text(record, "price_snapshot", "price", "precio"));
@@ -95,7 +99,6 @@ function normalizeRecord(record, context) {
   if (!brand) problems.push("brand/marca obligatorio");
   if (!category) problems.push("category/categoria obligatoria");
   if (description.length < 20) problems.push("description/descripcion debe tener al menos 20 caracteres");
-  if (!images.length) problems.push("image_urls/imagenes obligatorio");
   if (images.some((url) => !/^https:\/\//i.test(url))) problems.push("todas las imágenes deben usar HTTPS");
   if (category && !context.categoryLabels.has(category)) problems.push(`categoría desconocida: ${category}`);
   for (const item of extraCategories) {

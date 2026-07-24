@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-23T18:03:45.432Z",
-  "input": "E:\\google\\web atlas\\atlas-secreto\\data\\sources\\amazon-es-products.csv",
+  "generatedAt": "2026-07-24T08:53:33.023Z",
+  "input": "/workspace/scratch/638a53904bb3/secretshop-repo/data/sources/amazon-es-products.csv",
   "dryRun": false,
-  "replaceAmazon": false,
+  "replaceAmazon": true,
   "rows": 191,
   "accepted": 191,
   "rejected": 0,
