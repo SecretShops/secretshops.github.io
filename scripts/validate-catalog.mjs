@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { validateAmazonAffiliateUrl } from "./lib/amazon-associates-core.mjs";
+import { parseImpactAffiliateUrl } from "./lib/impact-affiliate-core.mjs";
 
 const root = resolve(process.cwd(), "data/catalog");
 
@@ -64,6 +65,16 @@ function validateMerchants(payload) {
       } else if (network === "amazon-associates") {
         assert(/^[a-z0-9][a-z0-9-]{1,60}$/i.test(String(merchant.associateTag || "")), `${merchant.id}: associateTag inválido`);
         assert(String(merchant.marketplaceDomain || "").toLowerCase() === "www.amazon.es", `${merchant.id}: marketplaceDomain debe ser www.amazon.es`);
+      } else if (network === "impact") {
+        assert(/^[a-z0-9.-]+$/i.test(String(merchant.impactTrackingHost || "")), `${merchant.id}: impactTrackingHost inválido`);
+        assert(/^\d+$/.test(String(merchant.impactPublisherId || "")), `${merchant.id}: impactPublisherId inválido`);
+        assert(/^\d+$/.test(String(merchant.impactCampaignId || "")), `${merchant.id}: impactCampaignId inválido`);
+        assert(/^\d+$/.test(String(merchant.impactCreativeId || "")), `${merchant.id}: impactCreativeId inválido`);
+        assert(/^CATF_\d+$/i.test(String(merchant.impactCatalogSource || "")), `${merchant.id}: impactCatalogSource inválido`);
+        assert(
+          Array.isArray(merchant.landingDomains) && merchant.landingDomains.length > 0,
+          `${merchant.id}: landingDomains obligatorio`
+        );
       } else {
         throw new Error(`${merchant.id}: network aprobado no soportado: ${network}`);
       }
@@ -190,6 +201,18 @@ function validateOffers(payload, productIds, merchantData, countryCodes) {
       const expectedAsin = String(offer.source?.asin || offer.merchantProductId || "").toUpperCase();
       const urlAsin = new URL(offer.affiliateUrl).pathname.split("/").filter(Boolean)[1]?.toUpperCase();
       assert(expectedAsin && urlAsin === expectedAsin, `${offer.id}: el ASIN del enlace no coincide`);
+    } else if (network === "impact") {
+      const tracking = parseImpactAffiliateUrl(offer.affiliateUrl, {
+        trackingHost: merchant.impactTrackingHost,
+        publisherId: merchant.impactPublisherId,
+        campaignId: merchant.impactCampaignId,
+        creativeId: merchant.impactCreativeId,
+        catalogSource: merchant.impactCatalogSource,
+        productSku: offer.merchantProductId,
+        landingDomains: merchant.landingDomains
+      });
+      assert(tracking, `${offer.id}: enlace de Impact inválido`);
+      assert(tracking.landingUrl === offer.landingUrl, `${offer.id}: landingUrl no coincide con Impact`);
     } else {
       throw new Error(`${offer.id}: network no soportado`);
     }

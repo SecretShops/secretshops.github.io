@@ -18,6 +18,8 @@ const [
   links,
   products,
   offers,
+  merchants,
+  shokzImport,
   curated,
   regions
 ] = await Promise.all([
@@ -28,6 +30,8 @@ const [
   readJson("data/catalog/affiliate-links.json"),
   readJson("data/catalog/products.json"),
   readJson("data/catalog/offers.json"),
+  readJson("data/catalog/merchants.json"),
+  readJson("data/catalog/import-reports/shokz-es-last.json"),
   readJson("data/sources/curated-products.json"),
   readJson("data/config/regions.json")
 ]);
@@ -87,10 +91,44 @@ test("cada oferta publicada tiene exactamente un enlace seguro", () => {
     assert.ok(
       /(^|\.)awin1\.com$/i.test(url.hostname) ||
       /^s\.click\.aliexpress\.com$/i.test(url.hostname) ||
-      /(^|\.)amazon\.es$/i.test(url.hostname),
+      /(^|\.)amazon\.es$/i.test(url.hostname) ||
+      /^shokzes\.pxf\.io$/i.test(url.hostname),
       offerId
     );
   }
+});
+
+test("SHOKZ ES conserva únicamente las variantes depuradas y su tracking de Impact", () => {
+  const merchant = merchants.merchants.find((item) => item.id === "shokz-es");
+  const shokzProducts = products.products.filter((product) =>
+    product.sourceMerchants?.includes("shokz-es")
+  );
+  const shokzOffers = offers.offers.filter((offer) => offer.merchantId === "shokz-es");
+  const shokzFamilies = spain.families.filter((family) => family.brand === "Shokz");
+  const shokzVariants = shokzFamilies.flatMap((family) => family.variants);
+
+  assert.equal(merchant?.status, "approved");
+  assert.equal(merchant?.network, "impact");
+  assert.equal(shokzProducts.length, shokzImport.totals.acceptedRows);
+  assert.equal(shokzOffers.length, shokzImport.totals.acceptedRows);
+  assert.equal(shokzVariants.length, shokzImport.totals.acceptedRows);
+  assert.equal(shokzFamilies.length, shokzImport.totals.expectedFamilies);
+  assert.ok(
+    shokzOffers.every((offer) => {
+      const url = new URL(offer.affiliateUrl);
+      return (
+        offer.country === "ES" &&
+        offer.currency === "EUR" &&
+        offer.availability === "in_stock" &&
+        url.hostname === "shokzes.pxf.io" &&
+        url.searchParams.get("prodsku") === offer.merchantProductId
+      );
+    })
+  );
+  assert.equal(
+    shokzProducts.some((product) => /chasingstrava|after[- ]?sales/i.test(product.title)),
+    false
+  );
 });
 
 test("los cuatro productos curados de Colombia permanecen preparados en su catálogo draft", () => {

@@ -4,6 +4,8 @@ import {
 } from "./region-core.js";
 
 const AMAZON_ASSOCIATE_TAG = "christian0ddd-21";
+const SHOKZ_IMPACT_PATH = "/c/7518894/3800995/48345";
+const SHOKZ_IMPACT_SOURCE = "CATF_31438";
 const REGIONS_URL = "/data/config/regions.json";
 
 function fail(text) {
@@ -30,7 +32,23 @@ export function allowedDestination(value) {
       /^(?:www\.)?amazon\.es$/i.test(url.hostname) &&
       /^\/dp\/[A-Z0-9]{10}\/ref=nosim\/?$/i.test(url.pathname) &&
       url.searchParams.get("tag") === AMAZON_ASSOCIATE_TAG;
-    return awin || aliexpress || amazon ? url.href : null;
+    let impact = false;
+    if (
+      /^shokzes\.pxf\.io$/i.test(url.hostname) &&
+      url.pathname === SHOKZ_IMPACT_PATH &&
+      Boolean(url.searchParams.get("prodsku")) &&
+      url.searchParams.get("intsrc") === SHOKZ_IMPACT_SOURCE
+    ) {
+      try {
+        const landing = new URL(url.searchParams.get("u"));
+        impact =
+          landing.protocol === "https:" &&
+          /(^|\.)es\.shokz\.com$/i.test(landing.hostname);
+      } catch {
+        impact = false;
+      }
+    }
+    return awin || aliexpress || amazon || impact ? url.href : null;
   } catch {
     return null;
   }
@@ -44,6 +62,7 @@ export function entryMatchesRegion(entry, region) {
   if (!destination) return false;
   const url = new URL(destination);
   if (/(^|\.)amazon\.es$/i.test(url.hostname) && region.countryCode !== "ES") return false;
+  if (/^shokzes\.pxf\.io$/i.test(url.hostname) && region.countryCode !== "ES") return false;
   return true;
 }
 

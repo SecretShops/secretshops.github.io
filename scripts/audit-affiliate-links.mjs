@@ -4,6 +4,7 @@ import { readFile, rename, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { validateAmazonAffiliateUrl } from "./lib/amazon-associates-core.mjs";
+import { parseImpactAffiliateUrl } from "./lib/impact-affiliate-core.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const catalogDir = resolve(root, "data/catalog");
@@ -61,9 +62,12 @@ const [offersPayload, merchantsPayload, linksPayload, families, spainAliExpress,
 const merchants = new Map(
   merchantsPayload.merchants.map((merchant) => [merchant.id, merchant])
 );
+const canonicalOffers = new Map(
+  offersPayload.offers.map((offer) => [offer.id, offer])
+);
 const findings = [];
-const canonicalCounts = { awin: 0, amazon: 0 };
-const validCanonicalCounts = { awin: 0, amazon: 0 };
+const canonicalCounts = { awin: 0, amazon: 0, impact: 0 };
+const validCanonicalCounts = { awin: 0, amazon: 0, impact: 0 };
 
 for (const offer of offersPayload.offers) {
   const merchant = merchants.get(offer.merchantId);
@@ -77,6 +81,19 @@ for (const offer of offersPayload.offers) {
     canonicalCounts.amazon += 1;
     if (validateAmazonAffiliateUrl(offer.affiliateUrl, merchant?.associateTag)) validCanonicalCounts.amazon += 1;
     else findings.push({ offerId: offer.id, reason: "invalid_canonical_amazon_link" });
+  } else if (network === "impact") {
+    canonicalCounts.impact += 1;
+    const valid = parseImpactAffiliateUrl(offer.affiliateUrl, {
+      trackingHost: merchant.impactTrackingHost,
+      publisherId: merchant.impactPublisherId,
+      campaignId: merchant.impactCampaignId,
+      creativeId: merchant.impactCreativeId,
+      catalogSource: merchant.impactCatalogSource,
+      productSku: offer.merchantProductId,
+      landingDomains: merchant.landingDomains
+    });
+    if (valid) validCanonicalCounts.impact += 1;
+    else findings.push({ offerId: offer.id, reason: "invalid_canonical_impact_link" });
   } else {
     findings.push({ offerId: offer.id, reason: "unknown_canonical_network" });
   }
@@ -102,9 +119,23 @@ for (const [offerId, entry] of linkEntries) {
     continue;
   }
   const merchant = merchants.get(entry.merchantId);
-  const valid = merchant?.network === "amazon-associates"
-    ? Boolean(validateAmazonAffiliateUrl(entry.url, merchant.associateTag))
-    : validateAwin(entry.url, merchant?.awinAdvertiserId) || validateAliExpress(entry.url);
+  const canonicalOffer = canonicalOffers.get(offerId);
+  let valid = false;
+  if (merchant?.network === "amazon-associates") {
+    valid = Boolean(validateAmazonAffiliateUrl(entry.url, merchant.associateTag));
+  } else if (merchant?.network === "impact") {
+    valid = Boolean(parseImpactAffiliateUrl(entry.url, {
+      trackingHost: merchant.impactTrackingHost,
+      publisherId: merchant.impactPublisherId,
+      campaignId: merchant.impactCampaignId,
+      creativeId: merchant.impactCreativeId,
+      catalogSource: merchant.impactCatalogSource,
+      productSku: canonicalOffer?.merchantProductId,
+      landingDomains: merchant.landingDomains
+    }));
+  } else {
+    valid = validateAwin(entry.url, merchant?.awinAdvertiserId) || validateAliExpress(entry.url);
+  }
   if (!valid) findings.push({ offerId, reason: "invalid_public_destination" });
 }
 
@@ -128,6 +159,7 @@ const report = {
     awinPublishedLinks: hostCount(/(^|\.)awin1\.com$/i),
     aliexpressPublishedLinks: hostCount(/^s\.click\.aliexpress\.com$/i),
     amazonPublishedLinks: hostCount(/(^|\.)amazon\.es$/i),
+    impactPublishedLinks: hostCount(/\.pxf\.io$/i),
     findings: findings.length,
     allPublishedOffersTracked:
       findings.length === 0 &&

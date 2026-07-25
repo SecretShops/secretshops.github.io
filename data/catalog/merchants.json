@@ -15,6 +15,24 @@
       "statusUpdatedAt": "2026-07-23"
     },
     {
+      "id": "shokz-es",
+      "name": "SHOKZ ES",
+      "country": "ES",
+      "status": "approved",
+      "network": "impact",
+      "impactTrackingHost": "shokzes.pxf.io",
+      "impactPublisherId": "7518894",
+      "impactCampaignId": "3800995",
+      "impactCreativeId": "48345",
+      "impactCatalogSource": "CATF_31438",
+      "landingDomains": [
+        "es.shokz.com"
+      ],
+      "feedExpected": true,
+      "catalogMode": "retail",
+      "statusUpdatedAt": "2026-07-25"
+    },
+    {
       "id": "rebuy-es",
       "name": "reBuy ES",
       "country": "ES",

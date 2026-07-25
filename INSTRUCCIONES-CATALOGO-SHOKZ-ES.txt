@@ -1,0 +1,45 @@
+SECRETSHOP · CATÁLOGO SHOKZ ES
+25 DE JULIO DE 2026
+
+QUÉ CONTIENE ESTE PAQUETE
+- La arquitectura internacional que ya utiliza SecretShop.
+- SHOKZ ES registrado como merchant aprobado de Impact.
+- 50 variantes publicables agrupadas en 23 familias.
+- Precios en EUR, imágenes oficiales y enlaces individuales de Impact.
+- 62 filas sin stock, 18 noindex, 27 campañas internas, 15 filas padre
+  duplicadas y 2 filas sin precio válido excluidas.
+- Redirector /go.html actualizado para aceptar únicamente la campaña,
+  el publisher y el dominio oficial de SHOKZ ES.
+
+NO HACE FALTA
+- Crear un token de API de Impact.
+- Subir Imported-Shopify-Catalog_IR.txt.gz a la web.
+- Introducir manualmente el enlace genérico de la tienda en cada producto.
+
+SUBIDA MANUAL A GITHUB
+1. Descomprime este ZIP.
+2. Copia TODO su contenido dentro de la carpeta local del repositorio.
+3. Cuando Windows pregunte, selecciona reemplazar los archivos existentes.
+4. Comprueba en GitHub Desktop que no aparece ningún conflicto.
+5. Escribe un resumen como:
+   Añadir catálogo SHOKZ ES con enlaces Impact
+6. Pulsa Commit to main.
+7. Pulsa Push origin.
+8. Espera a que GitHub Pages termine de desplegar.
+
+COMPROBACIÓN DESPUÉS DE PUBLICAR
+1. Abre https://getsecretshop.com/
+2. Busca SHOKZ.
+3. Abre una ficha y comprueba imágenes, variantes y precio.
+4. Pulsa Ver oferta.
+5. Confirma que /go.html abre la ficha correcta en es.shokz.com.
+
+ACTUALIZAR EL FEED EN EL FUTURO
+No guardes el TXT.GZ dentro del repositorio. Desde la carpeta del proyecto:
+
+node scripts/import-impact-shokz.mjs --input "RUTA\AL\NUEVO-FEED.txt.gz" --dry-run
+node scripts/import-impact-shokz.mjs --input "RUTA\AL\NUEVO-FEED.txt.gz"
+npm run quality
+
+La explicación técnica completa está en:
+docs/impact-shokz-import.md

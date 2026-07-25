@@ -1,12 +1,12 @@
 {
   "schemaVersion": 3,
   "report": {
-    "generatedAt": "2026-07-24T20:40:09.522156+00:00",
-    "sourceProducts": 3301,
-    "sourceOffers": 3301,
-    "families": 603,
-    "variants": 3301,
-    "publicOffers": 3301,
+    "generatedAt": "2026-07-25T14:28:52.281953+00:00",
+    "sourceProducts": 3351,
+    "sourceOffers": 3351,
+    "families": 626,
+    "variants": 3351,
+    "publicOffers": 3351,
     "hidden": 0,
     "sofaProducts": 1620,
     "sofaFamilies": 107,

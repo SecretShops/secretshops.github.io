@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-25T14:28:51.551Z",
+  "merchantId": "shokz-es",
+  "sourceFile": "Imported-Shopify-Catalog_IR.txt.gz",
+  "dryRun": false,
+  "totals": {
+    "feedRows": 174,
+    "acceptedRows": 50,
+    "rejectedRows": 124,
+    "expectedFamilies": 23,
+    "productsBefore": 3351,
+    "productsAfter": 3351,
+    "offersBefore": 3351,
+    "offersAfter": 3351
+  },
+  "skipReasons": {
+    "not_in_stock": 62,
+    "parent_row": 15,
+    "noindex": 18,
+    "internal_campaign": 27,
+    "invalid_price": 2
+  },
+  "checks": {
+    "uniqueMerchantSku": true,
+    "impactTrackingValidated": true,
+    "spanishCurrencyOnly": true,
+    "inStockOnly": true,
+    "internalCampaignsExcluded": true,
+    "noindexExcluded": true
+  }
+}

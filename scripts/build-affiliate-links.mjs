@@ -4,6 +4,7 @@ import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { validateAmazonAffiliateUrl } from "./lib/amazon-associates-core.mjs";
+import { parseImpactAffiliateUrl } from "./lib/impact-affiliate-core.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -29,7 +30,7 @@ function collectOfferIds(payload) {
   );
 }
 
-function validateUrl(value, offerId, merchant) {
+function validateUrl(value, offerId, merchant, productSku = null) {
   const url = new URL(value);
   if (url.protocol !== "https:") {
     throw new Error(`${offerId}: el enlace no usa HTTPS`);
@@ -40,6 +41,19 @@ function validateUrl(value, offerId, merchant) {
     const valid = validateAmazonAffiliateUrl(url.href, merchant.associateTag);
     if (!valid) throw new Error(`${offerId}: enlace de Amazon o tag inválido`);
     return valid;
+  }
+  if (network === "impact") {
+    const valid = parseImpactAffiliateUrl(url.href, {
+      trackingHost: merchant.impactTrackingHost,
+      publisherId: merchant.impactPublisherId,
+      campaignId: merchant.impactCampaignId,
+      creativeId: merchant.impactCreativeId,
+      catalogSource: merchant.impactCatalogSource,
+      productSku,
+      landingDomains: merchant.landingDomains
+    });
+    if (!valid) throw new Error(`${offerId}: enlace de Impact inválido`);
+    return valid.href;
   }
 
   const awin =
@@ -96,7 +110,8 @@ for (const offer of offersPayload.offers || []) {
   candidates.set(offer.id, {
     url: offer.affiliateUrl,
     merchantId: offer.merchantId,
-    country: offer.country
+    country: offer.country,
+    merchantProductId: offer.merchantProductId
   });
 }
 
@@ -144,7 +159,12 @@ for (const offerId of [...referencedOfferIds].sort()) {
     continue;
   }
   links[offerId] = {
-    url: validateUrl(candidate.url, offerId, merchants.get(candidate.merchantId)),
+    url: validateUrl(
+      candidate.url,
+      offerId,
+      merchants.get(candidate.merchantId),
+      candidate.merchantProductId
+    ),
     merchantId: candidate.merchantId,
     country: candidate.country
   };
@@ -199,6 +219,7 @@ console.log(
       awin: entries.filter((entry) => entry.url.includes("awin1.com")).length,
       aliexpress: entries.filter((entry) => entry.url.includes("aliexpress.com")).length,
       amazon: entries.filter((entry) => /(^|\.)amazon\.es$/i.test(new URL(entry.url).hostname)).length,
+      impact: entries.filter((entry) => /\.pxf\.io$/i.test(new URL(entry.url).hostname)).length,
       regions: Object.fromEntries(
         [...regionalLinks.entries()].map(([regionId, values]) => [
           regionId,

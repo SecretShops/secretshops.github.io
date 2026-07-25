@@ -286,7 +286,17 @@ def main() -> int:
         )
         brand = representative.get("brand") or "Selección"
         model = representative.get("model")
-        family_title = f"{brand} {model}".strip() if model else representative["title"]
+        model_already_contains_brand = (
+            normalize(brand) == "shokz"
+            and normalize(model).startswith(f"{normalize(brand)} ")
+        )
+        family_title = (
+            str(model).strip()
+            if model and model_already_contains_brand
+            else f"{brand} {model}".strip()
+            if model
+            else representative["title"]
+        )
         families.append(
             {
                 "id": family_id,

@@ -29,6 +29,12 @@ test("acepta únicamente los destinos afiliados previstos", () => {
     allowedDestination("https://www.amazon.es/dp/B0ABC12345/ref=nosim?tag=christian0ddd-21"),
     "https://www.amazon.es/dp/B0ABC12345/ref=nosim?tag=christian0ddd-21"
   );
+  assert.equal(
+    allowedDestination(
+      "https://shokzes.pxf.io/c/7518894/3800995/48345?prodsku=123&u=https%3A%2F%2Fes.shokz.com%2Fproducts%2Fopenrun&intsrc=CATF_31438"
+    ),
+    "https://shokzes.pxf.io/c/7518894/3800995/48345?prodsku=123&u=https%3A%2F%2Fes.shokz.com%2Fproducts%2Fopenrun&intsrc=CATF_31438"
+  );
 });
 
 test("rechaza protocolos, hosts, rutas y parámetros inseguros", () => {
@@ -41,6 +47,9 @@ test("rechaza protocolos, hosts, rutas y parámetros inseguros", () => {
     "https://www.amazon.es/dp/B0ABC12345/ref=nosim?tag=otro-tag-21",
     "https://www.amazon.es/gp/product/B0ABC12345?tag=christian0ddd-21",
     "https://amazon.es.ejemplo.test/dp/B0ABC12345?tag=christian0ddd-21",
+    "https://shokzes.pxf.io/c/999/3800995/48345?prodsku=123&u=https%3A%2F%2Fes.shokz.com%2Fproducts%2Fopenrun&intsrc=CATF_31438",
+    "https://shokzes.pxf.io/c/7518894/3800995/48345?prodsku=123&u=https%3A%2F%2Fevil.example%2Fproducto&intsrc=CATF_31438",
+    "https://shokzes.pxf.io/c/7518894/3800995/48345?prodsku=123&u=https%3A%2F%2Fes.shokz.com%2Fproducts%2Fopenrun&intsrc=OTRO",
     "https://example.com/producto",
     "javascript:alert(1)",
     ""

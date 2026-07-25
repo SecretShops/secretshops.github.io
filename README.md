@@ -83,6 +83,22 @@ El importador universal está documentado en `docs/awin-universal-importer.md`. 
 
 No se deben añadir productos sin imagen real, ofertas sin destino HTTPS ni coincidencias basadas únicamente en títulos parecidos.
 
+### SHOKZ ES mediante Impact
+
+El importador específico de SHOKZ acepta el TXT o TXT.GZ estandarizado de
+Impact y no requiere API:
+
+```bash
+node scripts/import-impact-shokz.mjs --input "/ruta/al/feed.txt.gz" --dry-run
+node scripts/import-impact-shokz.mjs --input "/ruta/al/feed.txt.gz"
+npm run quality
+```
+
+Solo publica variantes con stock, precio EUR, imagen HTTPS y deep link válido
+de la campaña autorizada. Excluye automáticamente filas padre duplicadas,
+productos `noindex` y campañas internas. El procedimiento completo está en
+`docs/impact-shokz-import.md`.
+
 ## Datos del navegador
 
 Favoritos, vistos recientemente, búsquedas, comparador y tema se guardan solo en `localStorage`. No existe cuenta ni sincronización remota.
