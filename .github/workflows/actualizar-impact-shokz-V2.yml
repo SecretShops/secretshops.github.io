@@ -1,0 +1,570 @@
+name: Actualizar catálogo Shokz desde Impact
+
+on:
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Forzar sincronización aunque Impact no indique cambios"
+        required: false
+        type: boolean
+        default: false
+  schedule:
+    - cron: "37 05 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: actualizar-catalogo-shokz-impact
+  cancel-in-progress: false
+
+jobs:
+  actualizar:
+    name: Descargar, validar y publicar Shokz
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      IMPACT_ACCOUNT_SID: ${{ secrets.IMPACT_ACCOUNT_SID }}
+      IMPACT_API_TOKEN: ${{ secrets.IMPACT_API_TOKEN }}
+      IMPACT_EXPECTED_CAMPAIGN_ID: "3800995"
+      IMPACT_EXPECTED_CATALOG_SOURCE: "CATF_31438"
+      MIN_ACCEPTED_PRODUCTS: "5"
+      MAX_PRODUCT_DROP_PERCENT: "50"
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configurar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar dependencias
+        run: npm ci --ignore-scripts --no-audit --no-fund
+
+      - name: Verificar credenciales
+        shell: bash
+        run: |
+          set -euo pipefail
+          : "${IMPACT_ACCOUNT_SID:?Falta el secreto IMPACT_ACCOUNT_SID}"
+          : "${IMPACT_API_TOKEN:?Falta el secreto IMPACT_API_TOKEN}"
+
+      - name: Localizar catálogo Shokz
+        id: catalog
+        shell: bash
+        env:
+          FORCE_SYNC: ${{ github.event_name == 'workflow_dispatch' && inputs.force || false }}
+        run: |
+          set -euo pipefail
+
+          CATALOGS_JSON="${RUNNER_TEMP}/impact-catalogs.json"
+
+          curl \
+            --silent \
+            --show-error \
+            --fail-with-body \
+            --retry 3 \
+            --retry-all-errors \
+            --connect-timeout 20 \
+            --max-time 180 \
+            --user "${IMPACT_ACCOUNT_SID}:${IMPACT_API_TOKEN}" \
+            --header "Accept: application/json" \
+            --header "IR-Version: 15" \
+            --output "${CATALOGS_JSON}" \
+            "https://api.impact.com/Mediapartners/${IMPACT_ACCOUNT_SID}/Catalogs"
+
+          python3 - "${CATALOGS_JSON}" "${GITHUB_OUTPUT}" <<'PY'
+          import json
+          import os
+          import re
+          import sys
+          from pathlib import Path
+
+          catalogs_path = Path(sys.argv[1])
+          output_path = Path(sys.argv[2])
+          payload = json.loads(catalogs_path.read_text(encoding="utf-8"))
+
+          def extract_catalogs(value):
+              if isinstance(value, list):
+                  return [item for item in value if isinstance(item, dict)]
+              if not isinstance(value, dict):
+                  return []
+              for key in ("Catalogs", "catalogs"):
+                  nested = value.get(key)
+                  if isinstance(nested, list):
+                      return [item for item in nested if isinstance(item, dict)]
+                  if isinstance(nested, dict):
+                      for child_key in ("Catalog", "catalog"):
+                          child = nested.get(child_key)
+                          if isinstance(child, list):
+                              return [item for item in child if isinstance(item, dict)]
+                          if isinstance(child, dict):
+                              return [child]
+              return [value] if "Id" in value and "Name" in value else []
+
+          catalogs = extract_catalogs(payload)
+          if not catalogs:
+              raise SystemExit("Impact no devolvió catálogos.")
+
+          campaign_id = os.environ["IMPACT_EXPECTED_CAMPAIGN_ID"].strip()
+          source = os.environ["IMPACT_EXPECTED_CATALOG_SOURCE"].strip()
+          source_match = re.search(r"(\d+)$", source)
+          preferred_catalog_id = source_match.group(1) if source_match else ""
+
+          def text(item):
+              return " ".join(
+                  str(item.get(key) or "")
+                  for key in ("AdvertiserName", "CampaignName", "Name")
+              ).lower()
+
+          candidates = [
+              item for item in catalogs
+              if (
+                  str(item.get("CampaignId") or "") == campaign_id
+                  or "shokz" in text(item)
+              )
+              and str(item.get("Currency") or "").upper() == "EUR"
+          ]
+
+          exact = [
+              item for item in candidates
+              if preferred_catalog_id
+              and str(item.get("Id") or "") == preferred_catalog_id
+          ]
+          if exact:
+              selected = exact[0]
+          elif len(candidates) == 1:
+              selected = candidates[0]
+          else:
+              details = [
+                  {
+                      "Id": item.get("Id"),
+                      "Name": item.get("Name"),
+                      "CampaignId": item.get("CampaignId"),
+                      "Currency": item.get("Currency"),
+                  }
+                  for item in candidates
+              ]
+              raise SystemExit(
+                  "No se pudo seleccionar un único catálogo Shokz: "
+                  + json.dumps(details, ensure_ascii=False)
+              )
+
+          catalog_id = str(selected.get("Id") or "").strip()
+          updated = str(selected.get("DateLastUpdated") or "").strip()
+          item_count = str(selected.get("NumberOfItems") or "").strip()
+          name = str(selected.get("Name") or "").strip()
+
+          state_path = Path("data/catalog/import-reports/shokz-es-api-state.json")
+          previous = {}
+          if state_path.exists():
+              try:
+                  previous = json.loads(state_path.read_text(encoding="utf-8"))
+              except json.JSONDecodeError:
+                  previous = {}
+
+          force = os.environ.get("FORCE_SYNC", "false").lower() == "true"
+          unchanged = (
+              not force
+              and previous.get("catalogId") == catalog_id
+              and previous.get("dateLastUpdated") == updated
+              and bool(updated)
+          )
+
+          values = {
+              "catalog_id": catalog_id,
+              "catalog_name": name,
+              "catalog_updated": updated,
+              "catalog_items": item_count,
+              "skip": "true" if unchanged else "false",
+          }
+
+          with output_path.open("a", encoding="utf-8") as output:
+              for key, value in values.items():
+                  if "\n" in value or "\r" in value:
+                      raise SystemExit(f"Salida inválida en {key}")
+                  output.write(f"{key}={value}\n")
+
+          print(
+              json.dumps(
+                  {
+                      "catalogId": catalog_id,
+                      "name": name,
+                      "dateLastUpdated": updated,
+                      "numberOfItems": item_count,
+                      "skip": unchanged,
+                  },
+                  ensure_ascii=False,
+                  indent=2,
+              )
+          )
+          PY
+
+      - name: Informar que no hay cambios
+        if: steps.catalog.outputs.skip == 'true'
+        shell: bash
+        run: |
+          {
+            echo "# Catálogo Shokz sin cambios"
+            echo
+            echo "Impact no ha actualizado el catálogo desde la última sincronización."
+            echo
+            echo "- Catálogo: ${{ steps.catalog.outputs.catalog_name }}"
+            echo "- ID: ${{ steps.catalog.outputs.catalog_id }}"
+            echo "- Última actualización: ${{ steps.catalog.outputs.catalog_updated }}"
+          } >> "${GITHUB_STEP_SUMMARY}"
+
+      - name: Descargar feed de Impact
+        if: steps.catalog.outputs.skip != 'true'
+        id: download
+        shell: bash
+        env:
+          CATALOG_ID: ${{ steps.catalog.outputs.catalog_id }}
+        run: |
+          set -euo pipefail
+
+          FEED_PATH="${RUNNER_TEMP}/shokz-impact-feed.txt.gz"
+          FILES_RESPONSE="${RUNNER_TEMP}/impact-catalog-files-response"
+          FILES_JSON="${RUNNER_TEMP}/impact-catalog-files.json"
+          CANDIDATES="${RUNNER_TEMP}/impact-catalog-file-candidates.txt"
+          FILES_ENDPOINT="https://api.impact.com/Mediapartners/${IMPACT_ACCOUNT_SID}/Catalogs/${CATALOG_ID}/Files"
+
+          # El endpoint /Files es el recurso autorizado específicamente para
+          # recuperar los archivos del catálogo. Primero comprobamos si devuelve
+          # directamente el GZIP.
+          curl \
+            --location \
+            --silent \
+            --show-error \
+            --fail-with-body \
+            --retry 3 \
+            --retry-all-errors \
+            --connect-timeout 20 \
+            --max-time 300 \
+            --user "${IMPACT_ACCOUNT_SID}:${IMPACT_API_TOKEN}" \
+            --header "IR-Version: 15" \
+            --header "Accept: application/octet-stream, application/json" \
+            --output "${FILES_RESPONSE}" \
+            "${FILES_ENDPOINT}"
+
+          if gzip -t "${FILES_RESPONSE}" 2>/dev/null; then
+            mv "${FILES_RESPONSE}" "${FEED_PATH}"
+            echo "feed_path=${FEED_PATH}" >> "${GITHUB_OUTPUT}"
+            echo "Impact devolvió directamente el feed GZIP."
+            exit 0
+          fi
+
+          # Si /Files devuelve metadatos JSON, extraemos de forma segura la URL
+          # del fichero estandarizado de Impact (_IR) y usamos su enlace real.
+          cp "${FILES_RESPONSE}" "${FILES_JSON}"
+
+          python3 - "${FILES_JSON}" "${CANDIDATES}" <<'PY'
+          import json
+          import re
+          import sys
+          from pathlib import Path
+
+          source = Path(sys.argv[1])
+          destination = Path(sys.argv[2])
+
+          try:
+              payload = json.loads(source.read_text(encoding="utf-8"))
+          except (UnicodeDecodeError, json.JSONDecodeError) as error:
+              preview = source.read_bytes()[:120].hex()
+              raise SystemExit(
+                  "El endpoint /Files no devolvió GZIP ni JSON válido. "
+                  f"Inicio de respuesta (hex): {preview}. Error: {error}"
+              )
+
+          found = []
+
+          def visit(value, key=""):
+              if isinstance(value, dict):
+                  for child_key, child_value in value.items():
+                      visit(child_value, str(child_key))
+              elif isinstance(value, list):
+                  for child in value:
+                      visit(child, key)
+              elif isinstance(value, str):
+                  candidate = value.strip()
+                  key_lower = key.lower()
+                  looks_like_file = bool(
+                      re.search(r"\.(?:txt|tsv|csv)(?:\.gz)?(?:\?.*)?$", candidate, re.I)
+                  )
+                  looks_like_link_field = any(
+                      token in key_lower
+                      for token in ("url", "uri", "location", "download", "file")
+                  )
+                  if candidate and (looks_like_file or looks_like_link_field):
+                      found.append(candidate)
+
+          visit(payload)
+
+          unique = []
+          for value in found:
+              if value not in unique:
+                  unique.append(value)
+
+          unique.sort(
+              key=lambda value: (
+                  0 if re.search(r"_IR\.(?:txt|tsv|csv)(?:\.gz)?(?:\?.*)?$", value, re.I) else 1,
+                  0 if value.startswith("https://") else 1,
+                  value,
+              )
+          )
+
+          if not unique:
+              top_keys = sorted(payload.keys()) if isinstance(payload, dict) else []
+              raise SystemExit(
+                  "El endpoint /Files respondió, pero no incluyó una ruta descargable. "
+                  f"Claves principales: {top_keys}"
+              )
+
+          destination.write_text("\n".join(unique) + "\n", encoding="utf-8")
+          print(f"Rutas candidatas encontradas: {len(unique)}")
+          PY
+
+          downloaded="false"
+          while IFS= read -r candidate; do
+            [[ -n "${candidate}" ]] || continue
+
+            urls=()
+            if [[ "${candidate}" =~ ^https:// ]]; then
+              urls+=("${candidate}")
+            elif [[ "${candidate}" == /Mediapartners/* ]]; then
+              urls+=("https://api.impact.com${candidate}")
+            else
+              [[ "${candidate}" == /* ]] || candidate="/${candidate}"
+              # El propio endpoint /Files suele devolver un enlace absoluto o una
+              # URI API. Estos dos intentos se conservan solo como compatibilidad.
+              urls+=(
+                "https://api.impact.com${candidate}"
+                "https://app.impact.com${candidate}"
+              )
+            fi
+
+            for url in "${urls[@]}"; do
+              rm -f "${FEED_PATH}"
+              if curl \
+                --location \
+                --silent \
+                --show-error \
+                --fail-with-body \
+                --retry 2 \
+                --retry-all-errors \
+                --connect-timeout 20 \
+                --max-time 300 \
+                --user "${IMPACT_ACCOUNT_SID}:${IMPACT_API_TOKEN}" \
+                --header "IR-Version: 15" \
+                --output "${FEED_PATH}" \
+                "${url}"; then
+                if gzip -t "${FEED_PATH}" 2>/dev/null; then
+                  downloaded="true"
+                  break 2
+                fi
+              fi
+            done
+          done < "${CANDIDATES}"
+
+          if [[ "${downloaded}" != "true" ]]; then
+            echo "El endpoint /Files respondió, pero ninguna ruta produjo un GZIP válido." >&2
+            exit 1
+          fi
+
+          echo "feed_path=${FEED_PATH}" >> "${GITHUB_OUTPUT}"
+          echo "Feed descargado mediante el recurso Catalogs/{CatalogId}/Files."
+
+      - name: Validar cabecera del feed
+        if: steps.catalog.outputs.skip != 'true'
+        shell: bash
+        env:
+          FEED_PATH: ${{ steps.download.outputs.feed_path }}
+        run: |
+          set -euo pipefail
+          python3 - "${FEED_PATH}" <<'PY'
+          import gzip
+          import sys
+
+          required = {
+              "Unique Merchant SKU",
+              "Product Name",
+              "Product URL",
+              "Image URL",
+              "Current Price",
+              "Stock Availability",
+              "Parent SKU",
+              "Parent Name",
+              "Currency",
+              "Labels",
+          }
+
+          with gzip.open(sys.argv[1], "rt", encoding="utf-8-sig", newline="") as feed:
+              header = feed.readline().rstrip("\r\n").split("\t")
+
+          missing = sorted(required.difference(header))
+          if missing:
+              raise SystemExit("Faltan columnas obligatorias: " + ", ".join(missing))
+
+          print(f"Cabecera válida: {len(header)} columnas.")
+          PY
+
+      - name: Probar importación sin modificar archivos
+        if: steps.catalog.outputs.skip != 'true'
+        id: dry_run
+        shell: bash
+        env:
+          FEED_PATH: ${{ steps.download.outputs.feed_path }}
+        run: |
+          set -euo pipefail
+          REPORT="${RUNNER_TEMP}/shokz-dry-run.json"
+          node scripts/import-impact-shokz.mjs \
+            --input "${FEED_PATH}" \
+            --dry-run | tee "${REPORT}"
+          echo "report_path=${REPORT}" >> "${GITHUB_OUTPUT}"
+
+      - name: Aplicar controles de seguridad
+        if: steps.catalog.outputs.skip != 'true'
+        shell: bash
+        env:
+          REPORT_PATH: ${{ steps.dry_run.outputs.report_path }}
+        run: |
+          set -euo pipefail
+          python3 - "${REPORT_PATH}" <<'PY'
+          import json
+          import os
+          import sys
+          from pathlib import Path
+
+          report = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
+          accepted = int(report["totals"]["acceptedRows"])
+          feed_rows = int(report["totals"]["feedRows"])
+          minimum = int(os.environ["MIN_ACCEPTED_PRODUCTS"])
+          maximum_drop = float(os.environ["MAX_PRODUCT_DROP_PERCENT"])
+
+          offers = json.loads(
+              Path("data/catalog/offers.json").read_text(encoding="utf-8")
+          ).get("offers", [])
+          previous = sum(
+              1 for offer in offers if offer.get("merchantId") == "shokz-es"
+          )
+
+          if accepted < minimum:
+              raise SystemExit(
+                  f"Importación bloqueada: solo {accepted} productos aceptados; "
+                  f"mínimo exigido {minimum}."
+              )
+
+          if previous >= 10:
+              minimum_relative = previous * (1 - maximum_drop / 100)
+              if accepted < minimum_relative:
+                  raise SystemExit(
+                      "Importación bloqueada por caída anormal: "
+                      f"{previous} ofertas anteriores frente a {accepted} nuevas."
+                  )
+
+          if accepted > feed_rows:
+              raise SystemExit("Informe incoherente: aceptados superiores a filas del feed.")
+
+          print(
+              json.dumps(
+                  {
+                      "feedRows": feed_rows,
+                      "acceptedRows": accepted,
+                      "previousShokzOffers": previous,
+                      "maxAllowedDropPercent": maximum_drop,
+                  },
+                  ensure_ascii=False,
+                  indent=2,
+              )
+          )
+          PY
+
+      - name: Importar catálogo Shokz
+        if: steps.catalog.outputs.skip != 'true'
+        shell: bash
+        env:
+          FEED_PATH: ${{ steps.download.outputs.feed_path }}
+        run: |
+          set -euo pipefail
+          node scripts/import-impact-shokz.mjs --input "${FEED_PATH}"
+
+      - name: Reconstruir y validar la web
+        if: steps.catalog.outputs.skip != 'true'
+        run: npm run quality
+
+      - name: Guardar estado de sincronización
+        if: steps.catalog.outputs.skip != 'true'
+        shell: bash
+        env:
+          CATALOG_ID: ${{ steps.catalog.outputs.catalog_id }}
+          CATALOG_NAME: ${{ steps.catalog.outputs.catalog_name }}
+          CATALOG_UPDATED: ${{ steps.catalog.outputs.catalog_updated }}
+          CATALOG_ITEMS: ${{ steps.catalog.outputs.catalog_items }}
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          import os
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          path = Path("data/catalog/import-reports/shokz-es-api-state.json")
+          path.parent.mkdir(parents=True, exist_ok=True)
+          payload = {
+              "schemaVersion": 1,
+              "merchantId": "shokz-es",
+              "catalogId": os.environ["CATALOG_ID"],
+              "catalogName": os.environ["CATALOG_NAME"],
+              "dateLastUpdated": os.environ["CATALOG_UPDATED"],
+              "numberOfItems": os.environ["CATALOG_ITEMS"],
+              "syncedAt": datetime.now(timezone.utc).isoformat(),
+          }
+          path.write_text(
+              json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+              encoding="utf-8",
+          )
+          PY
+
+      - name: Guardar cambios válidos
+        if: steps.catalog.outputs.skip != 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add -A
+
+          if git diff --cached --quiet; then
+            echo "La validación terminó correctamente, pero no hay cambios que publicar."
+            exit 0
+          fi
+
+          git commit -m "Actualizar catálogo Shokz desde Impact"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+
+      - name: Resumen
+        if: steps.catalog.outputs.skip != 'true'
+        shell: bash
+        run: |
+          {
+            echo "# Catálogo Shokz actualizado"
+            echo
+            echo "- Catálogo: ${{ steps.catalog.outputs.catalog_name }}"
+            echo "- ID: ${{ steps.catalog.outputs.catalog_id }}"
+            echo "- Productos declarados por Impact: ${{ steps.catalog.outputs.catalog_items }}"
+            echo "- Última actualización en Impact: ${{ steps.catalog.outputs.catalog_updated }}"
+            echo
+            echo "La importación, las pruebas y las validaciones finalizaron correctamente."
+          } >> "${GITHUB_STEP_SUMMARY}"
