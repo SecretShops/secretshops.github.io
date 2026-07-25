@@ -1,3 +1,5 @@
+import "./cloudflare-analytics.js";
+
 const key = "secretshop:theme:v1";
 
 function renderTheme() {
