@@ -1,0 +1,143 @@
+name: Comprobar API de Impact para Shokz
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: comprobar-impact-shokz
+  cancel-in-progress: true
+
+jobs:
+  comprobar-catalogos:
+    name: Consultar catálogos disponibles
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      IMPACT_ACCOUNT_SID: ${{ secrets.IMPACT_ACCOUNT_SID }}
+      IMPACT_API_TOKEN: ${{ secrets.IMPACT_API_TOKEN }}
+
+    steps:
+      - name: Verificar credenciales configuradas
+        shell: bash
+        run: |
+          set -euo pipefail
+          : "${IMPACT_ACCOUNT_SID:?Falta el secreto IMPACT_ACCOUNT_SID}"
+          : "${IMPACT_API_TOKEN:?Falta el secreto IMPACT_API_TOKEN}"
+
+      - name: Consultar la API de Impact
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl \
+            --silent \
+            --show-error \
+            --fail-with-body \
+            --retry 2 \
+            --retry-all-errors \
+            --connect-timeout 20 \
+            --max-time 120 \
+            --user "${IMPACT_ACCOUNT_SID}:${IMPACT_API_TOKEN}" \
+            --header "Accept: application/json" \
+            --output impact-catalogs.json \
+            "https://api.impact.com/Mediapartners/${IMPACT_ACCOUNT_SID}/Catalogs"
+
+      - name: Analizar catálogos y localizar Shokz
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          import os
+          import sys
+          from pathlib import Path
+
+          response_path = Path("impact-catalogs.json")
+          try:
+              payload = json.loads(response_path.read_text(encoding="utf-8"))
+          except (OSError, json.JSONDecodeError) as error:
+              raise SystemExit(f"La respuesta de Impact no es JSON válido: {error}")
+
+          def catalog_list(value):
+              if isinstance(value, list):
+                  return value
+              if not isinstance(value, dict):
+                  return []
+
+              for key in ("Catalogs", "catalogs"):
+                  nested = value.get(key)
+                  if isinstance(nested, list):
+                      return nested
+                  if isinstance(nested, dict):
+                      for child_key in ("Catalog", "catalog"):
+                          child = nested.get(child_key)
+                          if isinstance(child, list):
+                              return child
+                          if isinstance(child, dict):
+                              return [child]
+
+              if "Id" in value and "Name" in value:
+                  return [value]
+              return []
+
+          catalogs = [item for item in catalog_list(payload) if isinstance(item, dict)]
+          if not catalogs:
+              message = payload.get("Message") if isinstance(payload, dict) else None
+              detail = f" Mensaje de Impact: {message}" if message else ""
+              raise SystemExit(f"La API respondió, pero no devolvió ningún catálogo.{detail}")
+
+          def clean(value):
+              return str(value or "").replace("|", r"\|").replace("\n", " ").strip()
+
+          def summary(item):
+              return {
+                  "Id": clean(item.get("Id")),
+                  "AdvertiserName": clean(item.get("AdvertiserName")),
+                  "CampaignName": clean(item.get("CampaignName")),
+                  "Name": clean(item.get("Name")),
+                  "Currency": clean(item.get("Currency")),
+                  "NumberOfItems": clean(item.get("NumberOfItems")),
+                  "DateLastUpdated": clean(item.get("DateLastUpdated")),
+              }
+
+          rows = [summary(item) for item in catalogs]
+          shokz = [
+              row for row in rows
+              if "shokz" in " ".join(
+                  (row["AdvertiserName"], row["CampaignName"], row["Name"])
+              ).lower()
+          ]
+
+          print(json.dumps(rows, ensure_ascii=False, indent=2))
+
+          summary_path = Path(os.environ["GITHUB_STEP_SUMMARY"])
+          lines = [
+              "# Comprobación de la API de Impact",
+              "",
+              f"Catálogos accesibles: **{len(rows)}**",
+              f"Catálogos identificados como Shokz: **{len(shokz)}**",
+              "",
+              "| ID | Anunciante | Campaña | Catálogo | Moneda | Productos | Actualización |",
+              "|---|---|---|---|---:|---:|---|",
+          ]
+          for row in rows:
+              lines.append(
+                  "| {Id} | {AdvertiserName} | {CampaignName} | {Name} | "
+                  "{Currency} | {NumberOfItems} | {DateLastUpdated} |".format(**row)
+              )
+
+          if shokz:
+              lines.extend(("", "La API tiene acceso a un catálogo relacionado con Shokz."))
+          else:
+              lines.extend((
+                  "",
+                  "La autenticación funciona, pero no se ha localizado Shokz entre los catálogos devueltos.",
+              ))
+
+          summary_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+          if not shokz:
+              sys.exit(2)
+          PY
