@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "region": "co",
+  "country": "CO",
+  "locale": "es-CO",
+  "currency": "COP",
+  "sources": [
+    {
+      "id": "aliexpress-co",
+      "path": "/data/catalog/aliexpress-co.json",
+      "country": "CO",
+      "currency": "COP",
+      "merchantId": "aliexpress",
+      "merchantName": "AliExpress"
+    }
+  ]
+}

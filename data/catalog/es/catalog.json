@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "region": "es",
+  "country": "ES",
+  "locale": "es-ES",
+  "currency": "EUR",
+  "sources": [
+    {
+      "id": "canonical-es",
+      "path": "/data/catalog/families.json",
+      "country": "ES",
+      "currency": "EUR"
+    },
+    {
+      "id": "aliexpress-es",
+      "path": "/data/catalog/aliexpress-es.json",
+      "country": "ES",
+      "currency": "EUR",
+      "merchantId": "aliexpress",
+      "merchantName": "AliExpress"
+    }
+  ]
+}

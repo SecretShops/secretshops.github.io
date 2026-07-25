@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-24T08:53:33.023Z",
-  "input": "/workspace/scratch/638a53904bb3/secretshop-repo/data/sources/amazon-es-products.csv",
+  "generatedAt": "2026-07-24T20:40:08.834Z",
+  "input": "/home/runner/work/secretshops.github.io/secretshops.github.io/data/sources/amazon-es-products.csv",
   "dryRun": false,
-  "replaceAmazon": true,
+  "replaceAmazon": false,
   "rows": 191,
   "accepted": 191,
   "rejected": 0,

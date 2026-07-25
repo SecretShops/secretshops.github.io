@@ -19,16 +19,27 @@ function isIsoDate(value) {
 }
 
 function validateConfig(payload) {
-  assert(payload.schemaVersion === 1, "catalog-config.json: schemaVersion inválido");
-  assert(Array.isArray(payload.supportedCountries), "catalog-config.json: supportedCountries debe ser un array");
+  assert(payload.schemaVersion === 2, "catalog-config.json: schemaVersion inválido");
+  assert(payload.regionsConfig === "/data/config/regions.json", "catalog-config.json: regionsConfig inválido");
+  assert(!Object.hasOwn(payload, "supportedCountries"), "catalog-config.json: los países deben definirse solo en regions.json");
+}
+
+function validateRegions(payload) {
+  assert(payload.schemaVersion === 1, "regions.json: schemaVersion inválido");
+  assert(Array.isArray(payload.regions), "regions.json: regions debe ser un array");
   const codes = new Set();
-  for (const country of payload.supportedCountries) {
-    assert(/^[A-Z]{2}$/.test(country.code), `Código de país inválido: ${country.code}`);
-    assert(!codes.has(country.code), `País duplicado: ${country.code}`);
-    codes.add(country.code);
-    assert(/^[A-Z]{3}$/.test(country.currency), `${country.code}: moneda inválida`);
-    assert(typeof country.enabled === "boolean", `${country.code}: enabled debe ser boolean`);
+  for (const region of payload.regions) {
+    assert(/^[a-z]{2}$/.test(region.id), `ID regional inválido: ${region.id}`);
+    assert(/^[A-Z]{2}$/.test(region.countryCode), `${region.id}: countryCode inválido`);
+    assert(!codes.has(region.countryCode), `País duplicado: ${region.countryCode}`);
+    codes.add(region.countryCode);
+    assert(/^[A-Z]{3}$/.test(region.currency), `${region.id}: moneda inválida`);
+    assert(["published", "draft"].includes(region.status), `${region.id}: status inválido`);
   }
+  assert(
+    payload.regions.some((region) => region.id === payload.defaultRegion && region.status === "published"),
+    "regions.json: defaultRegion debe existir y estar publicado"
+  );
   return codes;
 }
 
@@ -190,13 +201,17 @@ function validateOffers(payload, productIds, merchantData, countryCodes) {
 }
 
 const config = await readJson("catalog-config.json");
+const regions = JSON.parse(
+  await readFile(resolve(process.cwd(), "data/config/regions.json"), "utf8")
+);
 const merchants = await readJson("merchants.json");
 const taxonomy = await readJson("category-taxonomy.json");
 const profiles = await readJson("awin-import-profiles.json");
 const products = await readJson("products.json");
 const offers = await readJson("offers.json");
 
-const countryCodes = validateConfig(config);
+validateConfig(config);
+const countryCodes = validateRegions(regions);
 const merchantData = validateMerchants(merchants);
 const categoryLabels = validateTaxonomy(taxonomy);
 validateProfiles(profiles, merchantData.ids, categoryLabels);

@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "domain": "https://getsecretshop.com",
+  "defaultRegion": "es",
+  "selectorPath": "/paises/",
+  "regions": [
+    {
+      "id": "es",
+      "countryCode": "ES",
+      "name": "España",
+      "flag": "🇪🇸",
+      "locale": "es-ES",
+      "currency": "EUR",
+      "basePath": "/",
+      "status": "published",
+      "catalogManifest": "/data/catalog/es/catalog.json",
+      "affiliateLinks": "/data/catalog/es/affiliate-links.json",
+      "title": "SecretShop España | Compara antes de comprar",
+      "description": "Compara productos, opciones y ofertas disponibles para España antes de visitar la tienda."
+    },
+    {
+      "id": "mx",
+      "countryCode": "MX",
+      "name": "México",
+      "flag": "🇲🇽",
+      "locale": "es-MX",
+      "currency": "MXN",
+      "basePath": "/mx/",
+      "status": "draft",
+      "catalogManifest": "/data/catalog/mx/catalog.json",
+      "affiliateLinks": "/data/catalog/mx/affiliate-links.json",
+      "title": "SecretShop México | Compara antes de comprar",
+      "description": "Compara productos, opciones y ofertas disponibles para México antes de visitar la tienda."
+    },
+    {
+      "id": "co",
+      "countryCode": "CO",
+      "name": "Colombia",
+      "flag": "🇨🇴",
+      "locale": "es-CO",
+      "currency": "COP",
+      "basePath": "/co/",
+      "status": "draft",
+      "catalogManifest": "/data/catalog/co/catalog.json",
+      "affiliateLinks": "/data/catalog/co/affiliate-links.json",
+      "title": "SecretShop Colombia | Compara antes de comprar",
+      "description": "Compara productos, opciones y ofertas disponibles para Colombia antes de visitar la tienda."
+    },
+    {
+      "id": "pt",
+      "countryCode": "PT",
+      "name": "Portugal",
+      "flag": "🇵🇹",
+      "locale": "pt-PT",
+      "currency": "EUR",
+      "basePath": "/pt/",
+      "status": "draft",
+      "catalogManifest": null,
+      "affiliateLinks": null
+    },
+    {
+      "id": "cl",
+      "countryCode": "CL",
+      "name": "Chile",
+      "flag": "🇨🇱",
+      "locale": "es-CL",
+      "currency": "CLP",
+      "basePath": "/cl/",
+      "status": "draft",
+      "catalogManifest": null,
+      "affiliateLinks": null
+    },
+    {
+      "id": "pe",
+      "countryCode": "PE",
+      "name": "Perú",
+      "flag": "🇵🇪",
+      "locale": "es-PE",
+      "currency": "PEN",
+      "basePath": "/pe/",
+      "status": "draft",
+      "catalogManifest": null,
+      "affiliateLinks": null
+    },
+    {
+      "id": "ar",
+      "countryCode": "AR",
+      "name": "Argentina",
+      "flag": "🇦🇷",
+      "locale": "es-AR",
+      "currency": "ARS",
+      "basePath": "/ar/",
+      "status": "draft",
+      "catalogManifest": null,
+      "affiliateLinks": null
+    },
+    {
+      "id": "br",
+      "countryCode": "BR",
+      "name": "Brasil",
+      "flag": "🇧🇷",
+      "locale": "pt-BR",
+      "currency": "BRL",
+      "basePath": "/br/",
+      "status": "draft",
+      "catalogManifest": null,
+      "affiliateLinks": null
+    }
+  ]
+}

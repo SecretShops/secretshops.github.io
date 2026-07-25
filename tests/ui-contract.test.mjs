@@ -4,10 +4,12 @@ import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 
 const root = resolve(import.meta.dirname, "..");
-const [html, css, app] = await Promise.all([
+const [html, css, app, regionCore, regions] = await Promise.all([
   readFile(resolve(root, "index.html"), "utf8"),
   readFile(resolve(root, "assets/css/app.css"), "utf8"),
-  readFile(resolve(root, "assets/js/app.js"), "utf8")
+  readFile(resolve(root, "assets/js/app.js"), "utf8"),
+  readFile(resolve(root, "assets/js/region-core.js"), "utf8"),
+  readFile(resolve(root, "data/config/regions.json"), "utf8")
 ]);
 
 test("conserva la dirección visual y el texto aprobados", () => {
@@ -34,11 +36,16 @@ test("incluye la estructura funcional definitiva", () => {
   ]) {
     assert.ok(html.includes(marker), marker);
   }
-  assert.ok(app.includes("secretshop:favorites:v1"));
-  assert.ok(app.includes("secretshop:recent:v1"));
-  assert.ok(app.includes("secretshop:searches:v1"));
+  assert.ok(regionCore.includes("secretshop:${id}:favorites:v2"));
+  assert.ok(regionCore.includes("secretshop:${id}:recent:v2"));
+  assert.ok(regionCore.includes("secretshop:${id}:searches:v2"));
   assert.ok(app.includes("const MAX_COMPARE = 4"));
-  assert.ok(app.includes("./data/catalog/aliexpress-es.json"));
+  assert.ok(app.includes('const REGIONS_URL = "/data/config/regions.json"'));
+  assert.ok(app.includes("offerRedirectPath(activeRegion.id"));
+  assert.equal(html.includes("data-filter-country"), false);
+  assert.ok(html.includes("data-region-selector"));
+  assert.ok(regions.includes('"status": "published"'));
+  assert.ok(regions.includes('"status": "draft"'));
 });
 
 test("incluye modo oscuro, foco, reducción de movimiento y diseño adaptable", () => {

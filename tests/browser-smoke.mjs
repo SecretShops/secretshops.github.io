@@ -53,8 +53,12 @@ const server = createServer(async (request, response) => {
 await new Promise((resolveListen) => server.listen(0, "127.0.0.1", resolveListen));
 const address = server.address();
 const baseUrl = `http://127.0.0.1:${address.port}/`;
-const browser = await chromium.launch({ headless: true });
+const browser = await chromium.launch({
+  headless: true,
+  executablePath: process.env.PLAYWRIGHT_EXECUTABLE_PATH || undefined
+});
 const failures = [];
+let productPathname = "";
 
 async function inspectPage(page, label) {
   page.on("pageerror", (error) => failures.push(`${label}: ${error.message}`));
@@ -90,26 +94,42 @@ try {
   const initialCards = await desktop.locator("[data-catalog-grid] .product-card").count();
   if (initialCards !== 24) failures.push(`desktop: se esperaban 24 tarjetas iniciales y hay ${initialCards}`);
 
-  await desktop.locator("#header-search").fill("UGREEN");
+  const searchTarget = (await desktop.locator("[data-catalog-grid] .product-card h3").first().textContent())?.trim();
+  if (!searchTarget) throw new Error("desktop: no se pudo obtener un producto para probar la búsqueda");
+  await desktop.locator("#header-search").fill(searchTarget);
   await desktop.locator(".header-search").press("Enter");
+  await desktop.locator("[data-catalog-grid] .product-card").first().waitFor();
   await desktop.locator("[data-results-summary]").filter({ hasText: "producto" }).waitFor();
   const searchedCards = await desktop.locator("[data-catalog-grid] .product-card").count();
   if (searchedCards < 1 || searchedCards > 5) {
-    failures.push(`desktop: búsqueda UGREEN devolvió ${searchedCards} tarjetas`);
+    failures.push(`desktop: la búsqueda del primer producto devolvió ${searchedCards} tarjetas`);
   }
 
   await desktop.locator("[data-catalog-grid] [data-open-family]").first().click();
   await desktop.locator("#product-dialog[open]").waitFor();
+  productPathname = new URL(desktop.url()).pathname;
+  if (!productPathname.startsWith("/producto/")) {
+    failures.push("desktop: la ficha no usa una URL de producto real");
+  }
   await desktop.locator("#product-dialog .offer-link").first().waitFor();
   const outbound = await desktop.locator("#product-dialog .offer-link").first().getAttribute("href");
-  if (!outbound?.startsWith("./go.html?offer=")) failures.push("desktop: la oferta no usa el redirector validado");
+  if (!outbound?.startsWith("/go.html?region=es&offer=")) {
+    failures.push("desktop: la oferta no usa el redirector regional validado");
+  }
   await desktop.locator("#product-dialog [data-close-product]").click();
+  if (new URL(desktop.url()).pathname !== "/") {
+    failures.push("desktop: cerrar la ficha no restaura la portada regional");
+  }
 
   await desktop.locator("[data-clear-filters]").first().click();
   await desktop.locator("[data-catalog-grid] .product-card").first().waitFor();
   await desktop.locator("[data-catalog-grid] [data-toggle-favorite]").first().click();
   const favoriteCount = await desktop.locator("[data-favorite-count]").first().textContent();
   if (favoriteCount !== "1") failures.push(`desktop: contador de favoritos inesperado (${favoriteCount})`);
+  const storageKeys = await desktop.evaluate(() => Object.keys(localStorage));
+  if (!storageKeys.includes("secretshop:es:favorites:v2")) {
+    failures.push("desktop: favoritos no están aislados por región");
+  }
 
   await desktop.locator("[data-catalog-grid] [data-toggle-compare]").nth(0).click();
   await desktop.locator("[data-catalog-grid] [data-toggle-compare]").nth(1).click();
@@ -152,9 +172,8 @@ try {
   const mobile = await browser.newPage({ viewport: { width: 390, height: 844 }, isMobile: true });
   await inspectPage(mobile, "mobile");
   await isolateExternalImages(mobile);
+  await mobile.addInitScript(() => localStorage.clear());
   await mobile.goto(baseUrl, { waitUntil: "domcontentloaded" });
-  await mobile.evaluate(() => localStorage.clear());
-  await mobile.reload({ waitUntil: "domcontentloaded" });
   await mobile.locator("[data-catalog-grid] .product-card").first().waitFor();
   if (!(await mobile.locator("[data-menu-toggle]").isVisible())) {
     failures.push("mobile: el botón de menú no es visible");
@@ -196,6 +215,60 @@ try {
     );
   }
   await mobile.close();
+
+  const architecture = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  await inspectPage(architecture, "arquitectura");
+  await isolateExternalImages(architecture);
+  await architecture.goto(new URL("/paises/", baseUrl).href, { waitUntil: "domcontentloaded" });
+  const publishedCountries = await architecture.locator(".country-card").count();
+  if (publishedCountries !== 1) {
+    failures.push(`arquitectura: el selector muestra ${publishedCountries} países publicados`);
+  }
+  if (await architecture.locator('a[href^="/mx/"], a[href^="/co/"]').count()) {
+    failures.push("arquitectura: el selector expone una región draft");
+  }
+  await architecture.addScriptTag({ content: axe.source });
+  const selectorAccessibility = await architecture.evaluate(async () =>
+    window.axe.run(document, {
+      resultTypes: ["violations"],
+      runOnly: { type: "tag", values: ["wcag2a", "wcag2aa", "wcag21aa"] }
+    })
+  );
+  const selectorSerious = selectorAccessibility.violations.filter((violation) =>
+    ["serious", "critical"].includes(violation.impact)
+  );
+  if (selectorSerious.length) {
+    failures.push(
+      `arquitectura: selector ${selectorSerious.map((violation) => `${violation.id}(${violation.nodes.length})`).join(", ")}`
+    );
+  }
+
+  await architecture.goto(new URL(productPathname, baseUrl).href, { waitUntil: "domcontentloaded" });
+  await architecture.locator(".standalone-product").waitFor();
+  const canonical = await architecture.locator('link[rel="canonical"]').getAttribute("href");
+  if (!canonical?.endsWith(productPathname)) {
+    failures.push("arquitectura: la ficha estática no tiene un canonical propio");
+  }
+  const staticOutbound = await architecture.locator(".standalone-offer .offer-link").first().getAttribute("href");
+  if (!staticOutbound?.startsWith("/go.html?region=es&offer=")) {
+    failures.push("arquitectura: la ficha estática no usa el redirector regional");
+  }
+  await architecture.addScriptTag({ content: axe.source });
+  const productAccessibility = await architecture.evaluate(async () =>
+    window.axe.run(document, {
+      resultTypes: ["violations"],
+      runOnly: { type: "tag", values: ["wcag2a", "wcag2aa", "wcag21aa"] }
+    })
+  );
+  const productSerious = productAccessibility.violations.filter((violation) =>
+    ["serious", "critical"].includes(violation.impact)
+  );
+  if (productSerious.length) {
+    failures.push(
+      `arquitectura: ficha ${productSerious.map((violation) => `${violation.id}(${violation.nodes.length})`).join(", ")}`
+    );
+  }
+  await architecture.close();
 } finally {
   await browser.close();
   await new Promise((resolveClose) => server.close(resolveClose));
@@ -206,5 +279,5 @@ if (failures.length) {
   failures.forEach((failure) => console.error(`- ${failure}`));
   process.exitCode = 1;
 } else {
-  console.log("Pruebas de navegador: escritorio, móvil, búsqueda, ficha, favoritos, comparador, tema y accesibilidad OK.");
+  console.log("Pruebas de navegador: escritorio, móvil, selector regional, ficha SEO, búsqueda, favoritos, comparador, tema y accesibilidad OK.");
 }

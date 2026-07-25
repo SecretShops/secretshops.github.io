@@ -18,7 +18,8 @@ const [
   links,
   products,
   offers,
-  curated
+  curated,
+  regions
 ] = await Promise.all([
   readJson("data/catalog/families.json"),
   readJson("data/catalog/aliexpress-es.json"),
@@ -27,7 +28,8 @@ const [
   readJson("data/catalog/affiliate-links.json"),
   readJson("data/catalog/products.json"),
   readJson("data/catalog/offers.json"),
-  readJson("data/sources/curated-products.json")
+  readJson("data/sources/curated-products.json"),
+  readJson("data/config/regions.json")
 ]);
 
 const catalogs = [spain, spainAliExpress, mexico, colombia];
@@ -36,7 +38,7 @@ const publicOffers = families.flatMap((family) =>
   family.variants.flatMap((variant) => variant.offers)
 );
 
-test("los catálogos públicos usan el esquema definitivo", () => {
+test("los catálogos preparados usan el esquema definitivo", () => {
   assert.ok(catalogs.every((catalog) => catalog.schemaVersion === 3));
   assert.ok(spain.families.length > 0);
   assert.equal(
@@ -50,6 +52,9 @@ test("los catálogos públicos usan el esquema definitivo", () => {
   assert.ok(mexico.families.length > 0);
   assert.ok(colombia.families.length > 0);
   assert.equal(spainAliExpress.families.length, 411);
+  assert.equal(regions.regions.find((region) => region.id === "es").status, "published");
+  assert.equal(regions.regions.find((region) => region.id === "mx").status, "draft");
+  assert.equal(regions.regions.find((region) => region.id === "co").status, "draft");
 });
 
 test("familias, variantes y ofertas tienen IDs únicos", () => {
@@ -88,7 +93,7 @@ test("cada oferta publicada tiene exactamente un enlace seguro", () => {
   }
 });
 
-test("los cuatro productos curados de Colombia están publicados", () => {
+test("los cuatro productos curados de Colombia permanecen preparados en su catálogo draft", () => {
   const colombiaIds = new Set(colombia.families.map((family) => family.id));
   for (const product of curated.products) {
     assert.ok(colombiaIds.has(`market-co-${product.productId}`), product.productId);

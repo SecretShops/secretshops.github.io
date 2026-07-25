@@ -1,6 +1,20 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { allowedDestination } from "../assets/js/redirect.js";
+import {
+  allowedDestination,
+  entryMatchesRegion
+} from "../assets/js/redirect.js";
+
+const spain = {
+  id: "es",
+  countryCode: "ES",
+  status: "published"
+};
+const mexicoDraft = {
+  id: "mx",
+  countryCode: "MX",
+  status: "draft"
+};
 
 test("acepta únicamente los destinos afiliados previstos", () => {
   assert.equal(
@@ -33,4 +47,18 @@ test("rechaza protocolos, hosts, rutas y parámetros inseguros", () => {
   ]) {
     assert.equal(allowedDestination(value), null, value);
   }
+});
+
+test("el redirector rechaza ofertas de otro país y regiones draft", () => {
+  const spanishEntry = {
+    country: "ES",
+    url: "https://www.amazon.es/dp/B0ABC12345/ref=nosim?tag=christian0ddd-21"
+  };
+  const mexicanEntry = {
+    country: "MX",
+    url: "https://s.click.aliexpress.com/e/_ejemplo"
+  };
+  assert.equal(entryMatchesRegion(spanishEntry, spain), true);
+  assert.equal(entryMatchesRegion(mexicanEntry, spain), false);
+  assert.equal(entryMatchesRegion(mexicanEntry, mexicoDraft), false);
 });

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { readFile, rename, writeFile } from "node:fs/promises";
+import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { validateAmazonAffiliateUrl } from "./lib/amazon-associates-core.mjs";
@@ -14,6 +14,7 @@ async function readJson(path) {
 async function writeJsonAtomic(path, value) {
   const output = resolve(root, path);
   const temporary = `${output}.tmp`;
+  await mkdir(dirname(output), { recursive: true });
   await writeFile(temporary, `${JSON.stringify(value)}\n`, "utf8");
   await rename(temporary, output);
 }
@@ -64,7 +65,8 @@ const [
   mexicoSource,
   colombiaSource,
   curatedPayload,
-  merchantsPayload
+  merchantsPayload,
+  regionsPayload
 ] = await Promise.all([
   readJson("data/catalog/families.json"),
   readJson("data/catalog/aliexpress-es.json"),
@@ -75,7 +77,8 @@ const [
   readJson("data/aliexpress-mx-source.json"),
   readJson("data/aliexpress-co-source.json"),
   readJson("data/sources/curated-products.json"),
-  readJson("data/catalog/merchants.json")
+  readJson("data/catalog/merchants.json"),
+  readJson("data/config/regions.json")
 ]);
 
 const merchants = new Map(
@@ -160,13 +163,48 @@ await writeJsonAtomic("data/catalog/affiliate-links.json", {
   links
 });
 
+const generatedAt = new Date().toISOString();
+const regionsByCountry = new Map(
+  regionsPayload.regions
+    .filter((region) => region.catalogManifest && region.affiliateLinks)
+    .map((region) => [region.countryCode, region])
+);
+const regionalLinks = new Map(
+  [...regionsByCountry.values()].map((region) => [region.id, {}])
+);
+
+for (const [offerId, entry] of Object.entries(links)) {
+  const region = regionsByCountry.get(String(entry.country || "").toUpperCase());
+  if (!region) {
+    throw new Error(`${offerId}: no existe una región configurada para ${entry.country}`);
+  }
+  regionalLinks.get(region.id)[offerId] = entry;
+}
+
+for (const region of regionsByCountry.values()) {
+  const regionalPath = region.affiliateLinks.replace(/^\//, "");
+  await writeJsonAtomic(regionalPath, {
+    schemaVersion: 1,
+    region: region.id,
+    country: region.countryCode,
+    generatedAt,
+    links: regionalLinks.get(region.id)
+  });
+}
+
 console.log(
   JSON.stringify(
     {
       publishedOfferLinks: Object.keys(links).length,
       awin: entries.filter((entry) => entry.url.includes("awin1.com")).length,
       aliexpress: entries.filter((entry) => entry.url.includes("aliexpress.com")).length,
-      amazon: entries.filter((entry) => /(^|\.)amazon\.es$/i.test(new URL(entry.url).hostname)).length
+      amazon: entries.filter((entry) => /(^|\.)amazon\.es$/i.test(new URL(entry.url).hostname)).length,
+      regions: Object.fromEntries(
+        [...regionalLinks.entries()].map(([regionId, values]) => [
+          regionId,
+          Object.keys(values).length
+        ])
+      )
     },
     null,
     2

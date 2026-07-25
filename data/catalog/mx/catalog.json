@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "region": "mx",
+  "country": "MX",
+  "locale": "es-MX",
+  "currency": "MXN",
+  "sources": [
+    {
+      "id": "aliexpress-mx",
+      "path": "/data/catalog/aliexpress-mx.json",
+      "country": "MX",
+      "currency": "MXN",
+      "merchantId": "aliexpress",
+      "merchantName": "AliExpress"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+SECRETSHOP - ARQUITECTURA INTERNACIONAL DEFINITIVA
+25 DE JULIO DE 2026
+
+ESTE ARCHIVO PREVALECE SOBRE LAS INSTRUCCIONES HISTÓRICAS INCLUIDAS EN EL
+PROYECTO CUANDO HAYA ALGUNA DIFERENCIA SOBRE PAÍSES, RUTAS O PUBLICACIÓN.
+
+ESTADO DE ESTA ENTREGA
+- España: publicada en la raíz (/).
+- México: preparado como borrador; /mx/ no se genera.
+- Colombia: preparado como borrador; /co/ no se genera.
+- Selector: /paises/ solo muestra países publicados.
+
+SUBIDA MANUAL
+1. Haz una copia del repositorio actualmente publicado.
+2. Sustituye su contenido por TODO el contenido de esta carpeta.
+3. No elimines CNAME ni .nojekyll.
+4. Confirma que el archivo CNAME contiene getsecretshop.com.
+5. Espera a que GitHub Pages termine el despliegue.
+6. Comprueba portada, /paises/, una ficha de /producto/, búsqueda, filtros,
+   favoritos, comparador y un enlace de /go.html.
+
+NO ES NECESARIO
+- Cambiar DNS.
+- Crear dominios para México o Colombia.
+- Modificar Cloudflare.
+- Modificar Awin.
+
+VALIDACIÓN LOCAL
+npm ci
+npm run quality
+npx playwright install chromium
+npm run test:browser
+
+DOCUMENTACIÓN COMPLETA
+docs/arquitectura-internacional-definitiva.md
+docs/informe-validacion-arquitectura-2026-07-25.md

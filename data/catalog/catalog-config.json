@@ -1,57 +1,6 @@
 {
-  "schemaVersion": 1,
-  "defaultCountry": "ES",
-  "defaultCurrency": "EUR",
-  "supportedCountries": [
-    {
-      "code": "ES",
-      "name": "España",
-      "currency": "EUR",
-      "enabled": true
-    },
-    {
-      "code": "PT",
-      "name": "Portugal",
-      "currency": "EUR",
-      "enabled": false
-    },
-    {
-      "code": "MX",
-      "name": "México",
-      "currency": "MXN",
-      "enabled": false
-    },
-    {
-      "code": "CO",
-      "name": "Colombia",
-      "currency": "COP",
-      "enabled": false
-    },
-    {
-      "code": "CL",
-      "name": "Chile",
-      "currency": "CLP",
-      "enabled": false
-    },
-    {
-      "code": "PE",
-      "name": "Perú",
-      "currency": "PEN",
-      "enabled": false
-    },
-    {
-      "code": "AR",
-      "name": "Argentina",
-      "currency": "ARS",
-      "enabled": false
-    },
-    {
-      "code": "BR",
-      "name": "Brasil",
-      "currency": "BRL",
-      "enabled": false
-    }
-  ],
+  "schemaVersion": 2,
+  "regionsConfig": "/data/config/regions.json",
   "matching": {
     "exactPriority": [
       "gtin",

@@ -63,7 +63,9 @@ for (const path of htmlFiles) {
   if (duplicateIds.length) {
     errors.push(`${name}: IDs duplicados (${duplicateIds.join(", ")})`);
   }
-  if (!/<html\b[^>]*\blang="es"/i.test(html)) errors.push(`${name}: falta lang="es"`);
+  if (!/<html\b[^>]*\blang="(?:es|es-[A-Z]{2}|pt-[A-Z]{2})"/i.test(html)) {
+    errors.push(`${name}: falta un lang regional válido`);
+  }
   if (!/<meta\b[^>]*name="viewport"/i.test(html)) errors.push(`${name}: falta viewport`);
   if (!/<meta\b[^>]*name="description"/i.test(html)) errors.push(`${name}: falta descripción`);
   if (!/<title>[^<]+<\/title>/i.test(html)) errors.push(`${name}: falta title`);
@@ -76,7 +78,9 @@ for (const path of htmlFiles) {
   for (const match of html.matchAll(/\b(?:href|src)="([^"]+)"/g)) {
     const reference = localReference(match[1]);
     if (!reference) continue;
-    let target = resolve(dirname(path), decodeURIComponent(reference));
+    let target = reference.startsWith("/")
+      ? resolve(root, `.${decodeURIComponent(reference)}`)
+      : resolve(dirname(path), decodeURIComponent(reference));
     if (await exists(target)) {
       const targetStat = await stat(target);
       if (targetStat.isDirectory()) target = resolve(target, "index.html");

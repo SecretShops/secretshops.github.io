@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Elige el país para ver únicamente productos, precios, tiendas y enlaces válidos para tu mercado.">
+  <meta name="theme-color" content="#1f1f1f">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Elige tu país | SecretShop">
+  <meta property="og:url" content="https://getsecretshop.com/paises/">
+  <title>Elige tu país | SecretShop</title>
+  <link rel="canonical" href="https://getsecretshop.com/paises/">
+  <link rel="alternate" hreflang="x-default" href="https://getsecretshop.com/paises/">
+  <link rel="alternate" hreflang="es-ES" href="https://getsecretshop.com/">
+  <link rel="icon" href="/assets/brand/secretshop-logo-compact.png" type="image/png">
+  <link rel="stylesheet" href="/assets/css/app.css">
+  <script>
+    (() => {
+      try {
+        const saved = localStorage.getItem("secretshop:theme:v1");
+        const dark = matchMedia("(prefers-color-scheme: dark)").matches;
+        document.documentElement.dataset.theme = saved || (dark ? "dark" : "light");
+      } catch {}
+    })();
+  </script>
+</head>
+<body>
+  <header class="content-header">
+    <div class="shell">
+      <a class="brand" href="/">
+        <img src="/assets/brand/secretshop-logo-compact.png" alt="" width="42" height="42">
+        <span>SecretShop</span>
+      </a>
+      <button class="button secondary" type="button" data-theme-toggle>◐ Modo oscuro</button>
+    </div>
+  </header>
+  <main class="content-page">
+    <div class="content-shell">
+      <header class="content-hero">
+        <p class="eyebrow">SecretShop internacional</p>
+        <h1>Elige tu país</h1>
+        <p>Así verás únicamente productos, precios, tiendas y enlaces preparados para tu mercado. No convertimos monedas ni mezclamos ofertas de países distintos.</p>
+      </header>
+      <section aria-labelledby="paises-disponibles">
+        <h2 id="paises-disponibles" class="sr-only">Países disponibles</h2>
+        <div class="country-grid">
+
+        <a class="country-card" href="/" hreflang="es-ES">
+          <span class="country-flag" aria-hidden="true">🇪🇸</span>
+          <span>
+            <strong>España</strong>
+            <small>EUR · catálogo disponible</small>
+          </span>
+          <span aria-hidden="true">→</span>
+        </a>
+        </div>
+      </section>
+      <aside class="prose-card country-note">
+        <h2>Expansión progresiva</h2>
+        <p>Solo aparecen países con un catálogo completo y validado. Las nuevas regiones se incorporarán cuando sus precios, disponibilidad y enlaces de afiliación estén comprobados.</p>
+      </aside>
+    </div>
+  </main>
+  <script type="module" src="/assets/js/static.js"></script>
+</body>
+</html>

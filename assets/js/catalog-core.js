@@ -126,13 +126,23 @@ const GROUP_BY_ALIAS = new Map(
 const COUNTRY_LABELS = {
   ES: "España",
   MX: "México",
-  CO: "Colombia"
+  CO: "Colombia",
+  PT: "Portugal",
+  CL: "Chile",
+  PE: "Perú",
+  AR: "Argentina",
+  BR: "Brasil"
 };
 
 const COUNTRY_LOCALES = {
   ES: "es-ES",
   MX: "es-MX",
-  CO: "es-CO"
+  CO: "es-CO",
+  PT: "pt-PT",
+  CL: "es-CL",
+  PE: "es-PE",
+  AR: "es-AR",
+  BR: "pt-BR"
 };
 
 export function asArray(value) {

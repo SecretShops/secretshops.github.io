@@ -3,7 +3,6 @@ import {
   bestOffer,
   categoryGuide,
   categoryStats,
-  countryLabel,
   discountPercent,
   displayOfferPrice,
   escapeHtml,
@@ -19,40 +18,17 @@ import {
   topScored,
   uniqueStrings
 } from "./catalog-core.js";
+import {
+  offerRedirectPath,
+  productPath,
+  publicAssetUrl,
+  regionStorageKeys,
+  resolveActiveRegion,
+  validateRegionConfig
+} from "./region-core.js";
 
-const DATA_SOURCES = [
-  {
-    id: "catalog-es",
-    url: "./data/catalog/families.json",
-    country: "ES",
-    currency: "EUR",
-    merchantId: "muebles-style-spain",
-    merchantName: "Muebles Style"
-  },
-  {
-    id: "catalog-aliexpress-es",
-    url: "./data/catalog/aliexpress-es.json",
-    country: "ES",
-    merchantId: "aliexpress",
-    merchantName: "AliExpress"
-  },
-  {
-    id: "catalog-mx",
-    url: "./data/catalog/aliexpress-mx.json",
-    country: "MX",
-    merchantId: "aliexpress",
-    merchantName: "AliExpress"
-  },
-  {
-    id: "catalog-co",
-    url: "./data/catalog/aliexpress-co.json",
-    country: "CO",
-    merchantId: "aliexpress",
-    merchantName: "AliExpress"
-  }
-];
-
-const STORAGE_KEYS = {
+const REGIONS_URL = "/data/config/regions.json";
+const LEGACY_STORAGE_KEYS = {
   favorites: "secretshop:favorites:v1",
   recent: "secretshop:recent:v1",
   searches: "secretshop:searches:v1",
@@ -65,14 +41,20 @@ const MAX_COMPARE = 4;
 const MAIN_CATEGORIES = ["Tecnología", "Moda", "Hogar", "Belleza y cuidado"];
 const HERO_ROTATION_MS = 12_000;
 const DEALS_ROTATION_MS = 18_000;
-const formatter = new Intl.NumberFormat("es-ES");
+let activeRegion = null;
+let regionsConfig = null;
+let catalogSources = [];
+let storageKeys = null;
+let formatter = new Intl.NumberFormat("es-ES");
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 
-function readStoredArray(key) {
+function readStoredArray(key, legacyKey = null) {
   try {
-    const parsed = JSON.parse(localStorage.getItem(key) || "[]");
+    const current = localStorage.getItem(key);
+    const fallback = current === null && legacyKey ? localStorage.getItem(legacyKey) : null;
+    const parsed = JSON.parse(current ?? fallback ?? "[]");
     return Array.isArray(parsed) ? parsed.map(String) : [];
   } catch {
     return [];
@@ -89,10 +71,11 @@ function writeStoredArray(key, values) {
 
 function initialState() {
   const params = new URLSearchParams(location.search);
+  const legacy = activeRegion.id === regionsConfig.defaultRegion ? LEGACY_STORAGE_KEYS : {};
   return {
     query: String(params.get("q") || "").slice(0, 120),
     category: params.get("categoria") || "all",
-    country: params.get("pais") || "all",
+    country: activeRegion.countryCode,
     store: params.get("tienda") || "all",
     sort: params.get("orden") || "relevance",
     minimumPrice: null,
@@ -100,10 +83,10 @@ function initialState() {
     discountOnly: false,
     multipleVariants: false,
     visible: PAGE_SIZE,
-    favorites: new Set(readStoredArray(STORAGE_KEYS.favorites)),
-    recent: readStoredArray(STORAGE_KEYS.recent),
-    searches: readStoredArray(STORAGE_KEYS.searches),
-    compare: readStoredArray(STORAGE_KEYS.compare).slice(0, MAX_COMPARE),
+    favorites: new Set(readStoredArray(storageKeys.favorites, legacy.favorites)),
+    recent: readStoredArray(storageKeys.recent, legacy.recent),
+    searches: readStoredArray(storageKeys.searches, legacy.searches),
+    compare: readStoredArray(storageKeys.compare, legacy.compare).slice(0, MAX_COMPARE),
     savedTab: "favorites",
     selectedFamilyId: null,
     selectedVariantId: null,
@@ -113,9 +96,10 @@ function initialState() {
   };
 }
 
-const state = initialState();
+let state = null;
 let families = [];
 let familyById = new Map();
+let familyByProductPath = new Map();
 let catalogWarnings = [];
 let inputTimer = null;
 let heroRotationTimer = null;
@@ -140,6 +124,8 @@ function currentFilters(overrides = {}) {
 function dispatchAnalytics(name, detail = {}) {
   const payload = {
     event: `secretshop_${name}`,
+    region: activeRegion.id,
+    country: activeRegion.countryCode,
     ...detail
   };
   window.dataLayer = window.dataLayer || [];
@@ -176,7 +162,7 @@ function syncBodyModalState() {
 }
 
 async function fetchCatalogSource(source) {
-  const response = await fetch(source.url, {
+  const response = await fetch(source.path, {
     cache: "no-store",
     headers: { Accept: "application/json" }
   });
@@ -191,17 +177,30 @@ async function fetchCatalogSource(source) {
 }
 
 async function loadCatalog() {
-  const settled = await Promise.allSettled(DATA_SOURCES.map(fetchCatalogSource));
+  const settled = await Promise.allSettled(catalogSources.map(fetchCatalogSource));
   const loaded = [];
   const failed = [];
   settled.forEach((result, index) => {
     if (result.status === "fulfilled") loaded.push(result.value);
-    else failed.push(`${DATA_SOURCES[index].id}: ${result.reason?.message || "error"}`);
+    else failed.push(`${catalogSources[index].id}: ${result.reason?.message || "error"}`);
   });
 
   const merged = mergeCatalogPayloads(loaded);
+  for (const family of merged.families) {
+    for (const offer of family.offers) {
+      if (offer.country !== activeRegion.countryCode) {
+        throw new Error(`${offer.id}: oferta de ${offer.country} detectada en ${activeRegion.id}`);
+      }
+      if (offer.currency && offer.currency !== activeRegion.currency) {
+        throw new Error(`${offer.id}: moneda ${offer.currency} detectada en ${activeRegion.id}`);
+      }
+    }
+  }
   families = merged.families;
   familyById = new Map(families.map((family) => [family.id, family]));
+  familyByProductPath = new Map(
+    families.map((family) => [productPath(family, activeRegion), family.id])
+  );
   catalogWarnings = [...merged.warnings, ...failed];
 
   state.favorites = new Set(
@@ -219,21 +218,20 @@ async function loadCatalog() {
 }
 
 function persistPersonalState() {
-  writeStoredArray(STORAGE_KEYS.favorites, [...state.favorites]);
-  writeStoredArray(STORAGE_KEYS.recent, state.recent);
-  writeStoredArray(STORAGE_KEYS.searches, state.searches);
-  writeStoredArray(STORAGE_KEYS.compare, state.compare);
+  writeStoredArray(storageKeys.favorites, [...state.favorites]);
+  writeStoredArray(storageKeys.recent, state.recent);
+  writeStoredArray(storageKeys.searches, state.searches);
+  writeStoredArray(storageKeys.compare, state.compare);
 }
 
 function updateUrl() {
   const params = new URLSearchParams();
   if (state.query) params.set("q", state.query);
   if (state.category !== "all") params.set("categoria", state.category);
-  if (state.country !== "all") params.set("pais", state.country);
   if (state.store !== "all") params.set("tienda", state.store);
   if (state.sort !== "relevance") params.set("orden", state.sort);
   const query = params.toString();
-  const next = `${location.pathname}${query ? `?${query}` : ""}${location.hash}`;
+  const next = `${activeRegion.basePath}${query ? `?${query}` : ""}`;
   history.replaceState(history.state, "", next);
 }
 
@@ -256,10 +254,14 @@ function renderCatalogStatus(stats) {
 function renderMetrics(stats) {
   $("[data-family-total]").textContent = formatter.format(stats.families);
   $("[data-variant-total]").textContent = formatter.format(stats.variants);
-  $("[data-market-total]").textContent = formatter.format(stats.countries.length);
+  $("[data-store-total]").textContent = formatter.format(stats.stores.length);
   $$("[data-current-year]").forEach((node) => {
     node.textContent = String(new Date().getFullYear());
   });
+}
+
+function familyHref(family) {
+  return productPath(family, activeRegion);
 }
 
 function familyPriceMarkup(family, offer) {
@@ -278,11 +280,10 @@ function familyPriceMarkup(family, offer) {
 }
 
 function productCardMarkup(family, options = {}) {
-  const offer = bestOffer(family, state.country);
+  const offer = bestOffer(family, activeRegion.countryCode);
   const favorite = state.favorites.has(family.id);
   const compared = state.compare.includes(family.id);
   const discount = discountPercent(offer);
-  const marketLabel = family.countries.map(countryLabel).join(" · ");
   const optionText = family.variantCount === 1
     ? "1 opción"
     : `${formatter.format(family.variantCount)} opciones`;
@@ -296,7 +297,6 @@ function productCardMarkup(family, options = {}) {
       <div class="product-media">
         <div class="card-badges">
           ${discount > 0 ? `<span class="badge discount">−${discount}%</span>` : ""}
-          <span class="badge">${escapeHtml(marketLabel)}</span>
         </div>
         <button
           class="card-icon-button ${favorite ? "is-active" : ""}"
@@ -306,7 +306,7 @@ function productCardMarkup(family, options = {}) {
           aria-pressed="${favorite}"
         >${favorite ? "♥" : "♡"}</button>
         <img
-          src="${escapeHtml(family.image)}"
+          src="${escapeHtml(publicAssetUrl(family.image))}"
           alt="${escapeHtml(family.title)}"
           loading="${loading}"
           width="420"
@@ -323,9 +323,9 @@ function productCardMarkup(family, options = {}) {
         ${familyPriceMarkup(family, offer)}
         <p class="store-line"><span class="availability-dot"></span>${escapeHtml(storeText)}</p>
         <div class="product-actions">
-          <button class="product-open" type="button" data-open-family="${escapeHtml(family.id)}">
+          <a class="product-open" href="${escapeHtml(familyHref(family))}" data-open-family="${escapeHtml(family.id)}">
             ${family.offerCount > 1 ? "Comparar precios" : "Ver oferta"}
-          </button>
+          </a>
           <button
             class="compare-toggle ${compared ? "is-active" : ""}"
             type="button"
@@ -361,13 +361,13 @@ function renderHero({ animate = false } = {}) {
         ? "1 opción"
         : `${formatter.format(family.variantCount)} opciones`;
       return `
-        <button class="mosaic-card" type="button" data-open-family="${escapeHtml(family.id)}">
-          <img src="${escapeHtml(family.image)}" alt="${escapeHtml(family.title)}" width="500" height="500" loading="eager">
+        <a class="mosaic-card" href="${escapeHtml(familyHref(family))}" data-open-family="${escapeHtml(family.id)}">
+          <img src="${escapeHtml(publicAssetUrl(family.image))}" alt="${escapeHtml(family.title)}" width="500" height="500" loading="eager">
           <span class="mosaic-label">
             <strong>${escapeHtml(family.title)}</strong>
             <span>${escapeHtml(displayOfferPrice(offer))} · ${escapeHtml(optionLabel)}</span>
           </span>
-        </button>`;
+        </a>`;
     }).join("");
     container.classList.remove("is-changing");
   };
@@ -399,7 +399,7 @@ function renderCategories() {
     return `
       <button class="category-card" type="button" data-set-category="${escapeHtml(category.name)}">
         <span class="category-visual" aria-hidden="true">
-          ${image ? `<img src="${escapeHtml(image)}" alt="" loading="lazy">` : `<span class="category-icon">${escapeHtml(category.icon)}</span>`}
+          ${image ? `<img src="${escapeHtml(publicAssetUrl(image))}" alt="" loading="lazy">` : `<span class="category-icon">${escapeHtml(category.icon)}</span>`}
         </span>
         <span class="category-copy">
           <strong>${escapeHtml(category.name)}</strong>
@@ -467,18 +467,12 @@ function renderFilterOptions() {
       ${options.rawCategories.map((category) => `<option value="${escapeHtml(category)}">${escapeHtml(category)}</option>`).join("")}
     </optgroup>`;
 
-  $("[data-filter-country]").innerHTML = `
-    <option value="all">Todos los mercados</option>
-    ${options.countries.map(({ code, label }) => `<option value="${escapeHtml(code)}">${escapeHtml(label)}</option>`).join("")}`;
   $("[data-filter-store]").innerHTML = `
     <option value="all">Todas las tiendas</option>
     ${options.stores.map((store) => `<option value="${escapeHtml(store)}">${escapeHtml(store)}</option>`).join("")}`;
 
   if (![...categorySelect.options].some((option) => option.value === state.category)) {
     state.category = "all";
-  }
-  if (![...$("[data-filter-country]").options].some((option) => option.value === state.country)) {
-    state.country = "all";
   }
   if (![...$("[data-filter-store]").options].some((option) => option.value === state.store)) {
     state.store = "all";
@@ -488,7 +482,6 @@ function renderFilterOptions() {
 
 function syncFilterControls() {
   $("[data-filter-category]").value = state.category;
-  $("[data-filter-country]").value = state.country;
   $("[data-filter-store]").value = state.store;
   $("[data-sort]").value = state.sort;
   $("[data-price-min]").value = state.minimumPrice ?? "";
@@ -501,7 +494,6 @@ function activeFilterEntries() {
   return [
     state.query ? { key: "query", label: `Búsqueda: ${state.query}` } : null,
     state.category !== "all" ? { key: "category", label: state.category } : null,
-    state.country !== "all" ? { key: "country", label: countryLabel(state.country) } : null,
     state.store !== "all" ? { key: "store", label: state.store } : null,
     Number.isFinite(state.minimumPrice) ? { key: "minimumPrice", label: `Desde ${state.minimumPrice}` } : null,
     Number.isFinite(state.maximumPrice) ? { key: "maximumPrice", label: `Hasta ${state.maximumPrice}` } : null,
@@ -558,14 +550,13 @@ function renderCatalog({ updateHistory = true } = {}) {
       <div class="empty-state">
         <div>
           <h3>No hemos encontrado coincidencias</h3>
-          <p>Prueba otra palabra, elimina algún filtro o cambia de mercado.</p>
+          <p>Prueba otra palabra o elimina algún filtro.</p>
           <button class="button secondary" type="button" data-clear-filters>Limpiar filtros</button>
         </div>
       </div>`;
 
   const summary = $("[data-results-summary]");
-  const market = state.country === "all" ? "" : ` en ${countryLabel(state.country)}`;
-  summary.textContent = `${formatter.format(results.length)} ${results.length === 1 ? "producto" : "productos"}${market}`;
+  summary.textContent = `${formatter.format(results.length)} ${results.length === 1 ? "producto" : "productos"} en ${activeRegion.name}`;
 
   const loadMore = $("[data-load-more]");
   loadMore.hidden = visible.length >= results.length;
@@ -589,7 +580,7 @@ function renderCompareTray() {
   $("[data-compare-thumbs]").innerHTML = state.compare
     .map((id) => familyById.get(id))
     .filter(Boolean)
-    .map((family) => `<img src="${escapeHtml(family.image)}" alt="">`)
+    .map((family) => `<img src="${escapeHtml(publicAssetUrl(family.image))}" alt="">`)
     .join("");
 }
 
@@ -625,7 +616,6 @@ function saveSearch(query) {
 function setCategory(category, scroll = true) {
   state.query = "";
   state.category = category || "all";
-  state.country = "all";
   state.store = "all";
   state.minimumPrice = null;
   state.maximumPrice = null;
@@ -640,7 +630,6 @@ function setCategory(category, scroll = true) {
 function setStore(store, scroll = true) {
   state.query = "";
   state.category = "all";
-  state.country = "all";
   state.store = store || "all";
   state.minimumPrice = null;
   state.maximumPrice = null;
@@ -667,7 +656,6 @@ function setCollection(collection) {
 function clearFilters() {
   state.query = "";
   state.category = "all";
-  state.country = "all";
   state.store = "all";
   state.sort = "relevance";
   state.minimumPrice = null;
@@ -683,7 +671,6 @@ function removeFilter(key) {
   const resets = {
     query: "",
     category: "all",
-    country: "all",
     store: "all",
     minimumPrice: null,
     maximumPrice: null,
@@ -774,28 +761,30 @@ function variantAttributes(variant) {
 }
 
 function offerRowMarkup(offer, index) {
+  const href = offerRedirectPath(activeRegion.id, offer.id);
   return `
     <tr class="${index === 0 ? "best-row" : ""}">
       <td><strong>${escapeHtml(offer.merchantName)}</strong>${bestPriceNote(offer, index) ? `<br><small>${bestPriceNote(offer, index)}</small>` : ""}</td>
       <td>${escapeHtml(displayOfferPrice(offer))}</td>
       <td>${escapeHtml(shippingLabel(offer))}</td>
       <td>${escapeHtml(availabilityLabel(offer.availability))}</td>
-      <td><a class="offer-link" href="./go.html?offer=${encodeURIComponent(offer.id)}" target="_blank" rel="nofollow sponsored noopener" data-outbound-offer="${escapeHtml(offer.id)}">Ver oferta</a></td>
+      <td><a class="offer-link" href="${escapeHtml(href)}" target="_blank" rel="nofollow sponsored noopener" data-outbound-offer="${escapeHtml(offer.id)}">Ver oferta</a></td>
     </tr>`;
 }
 
 function offerCardMarkup(offer, index) {
+  const href = offerRedirectPath(activeRegion.id, offer.id);
   return `
     <article class="offer-card ${index === 0 ? "is-best" : ""}">
       <div>
         <strong>${escapeHtml(offer.merchantName)}</strong>
-        <small>${escapeHtml(countryLabel(offer.country))}${bestPriceNote(offer, index) ? ` · ${bestPriceNote(offer, index)}` : ""}</small>
+        <small>${bestPriceNote(offer, index) || escapeHtml(activeRegion.name)}</small>
       </div>
       <div>
         <strong>${escapeHtml(displayOfferPrice(offer))}</strong>
         <small>${escapeHtml(shippingLabel(offer))} de envío</small>
       </div>
-      <a class="offer-link" href="./go.html?offer=${encodeURIComponent(offer.id)}" target="_blank" rel="nofollow sponsored noopener" data-outbound-offer="${escapeHtml(offer.id)}">Ver oferta en la tienda</a>
+      <a class="offer-link" href="${escapeHtml(href)}" target="_blank" rel="nofollow sponsored noopener" data-outbound-offer="${escapeHtml(offer.id)}">Ver oferta en la tienda</a>
     </article>`;
 }
 
@@ -827,14 +816,14 @@ function renderProductDialog(familyId, preferredVariantId = null) {
       <div class="detail-media">
         <div class="detail-main-image">
           <button type="button" data-open-image="${escapeHtml(state.selectedImage)}" aria-label="Ampliar imagen">
-            <img src="${escapeHtml(state.selectedImage)}" alt="${escapeHtml(family.title)}">
+            <img src="${escapeHtml(publicAssetUrl(state.selectedImage))}" alt="${escapeHtml(family.title)}">
           </button>
         </div>
         ${images.length > 1 ? `
           <div class="gallery-thumbs" aria-label="Galería del producto">
             ${images.map((image, index) => `
               <button class="${image === state.selectedImage ? "is-active" : ""}" type="button" data-select-image="${escapeHtml(image)}" aria-label="Mostrar imagen ${index + 1}">
-                <img src="${escapeHtml(image)}" alt="" loading="lazy">
+                <img src="${escapeHtml(publicAssetUrl(image))}" alt="" loading="lazy">
               </button>`).join("")}
           </div>` : ""}
       </div>
@@ -850,7 +839,7 @@ function renderProductDialog(familyId, preferredVariantId = null) {
         <div class="detail-summary">
           <span class="score">SecretScore ${family.secretScore.toFixed(1)}</span>
           <span>${formatter.format(family.variantCount)} ${family.variantCount === 1 ? "opción" : "opciones"}</span>
-          <span>${family.countries.map(countryLabel).join(" · ")}</span>
+          <span>${escapeHtml(activeRegion.name)}</span>
         </div>
         ${variant.title !== family.title ? `<p class="detail-variant-title">${escapeHtml(variant.title)}</p>` : ""}
         <p class="detail-description">${escapeHtml(family.description)}</p>
@@ -880,11 +869,11 @@ function renderProductDialog(familyId, preferredVariantId = null) {
           ${offers.length === 1 ? `
             <div class="offer-highlight">
               <div>
-                <p>${escapeHtml(best.merchantName)} · ${escapeHtml(countryLabel(best.country))}</p>
+                <p>${escapeHtml(best.merchantName)} · ${escapeHtml(activeRegion.name)}</p>
                 <strong class="offer-main-price">${escapeHtml(displayOfferPrice(best))}</strong>
                 <small>${escapeHtml(shippingDetailLabel(best))} · ${escapeHtml(availabilityLabel(best.availability))}</small>
               </div>
-              <a class="offer-link" href="./go.html?offer=${encodeURIComponent(best.id)}" target="_blank" rel="nofollow sponsored noopener" data-outbound-offer="${escapeHtml(best.id)}">Ver oferta</a>
+              <a class="offer-link" href="${escapeHtml(offerRedirectPath(activeRegion.id, best.id))}" target="_blank" rel="nofollow sponsored noopener" data-outbound-offer="${escapeHtml(best.id)}">Ver oferta</a>
             </div>` : `
             <div class="offer-table-wrap">
               <table class="offer-table">
@@ -909,17 +898,17 @@ function renderProductDialog(familyId, preferredVariantId = null) {
             <div class="detail-section-head"><h3 id="related-title">Alternativas similares</h3><span>No se consideran el mismo producto</span></div>
             <div class="detail-related">
               ${related.map((item) => `
-                <button type="button" data-open-family="${escapeHtml(item.id)}">
-                  <img src="${escapeHtml(item.image)}" alt="">
+                <a href="${escapeHtml(familyHref(item))}" data-open-family="${escapeHtml(item.id)}">
+                  <img src="${escapeHtml(publicAssetUrl(item.image))}" alt="">
                   <span>${escapeHtml(item.title)}</span>
-                </button>`).join("")}
+                </a>`).join("")}
             </div>
           </section>` : ""}
       </div>
     </article>
     <div class="image-viewer" data-image-viewer hidden>
       <button type="button" data-close-image aria-label="Cerrar imagen ampliada">×</button>
-      <img src="${escapeHtml(state.selectedImage)}" alt="${escapeHtml(family.title)} ampliado">
+      <img src="${escapeHtml(publicAssetUrl(state.selectedImage))}" alt="${escapeHtml(family.title)} ampliado">
     </div>`;
 }
 
@@ -931,8 +920,10 @@ function openProduct(familyId, options = {}) {
   renderProductDialog(familyId, options.variantId);
   openDialog($("#product-dialog"));
   if (options.route !== false) {
-    const hash = `#/producto/${encodeURIComponent(familyId)}`;
-    if (location.hash !== hash) history.pushState({ product: familyId }, "", hash);
+    const route = familyHref(family);
+    if (location.pathname !== route) {
+      history.pushState({ product: familyId }, "", route);
+    }
   }
   dispatchAnalytics("product_view", {
     family_id: familyId,
@@ -945,26 +936,27 @@ function closeProduct({ clearRoute = true } = {}) {
   state.selectedFamilyId = null;
   state.selectedVariantId = null;
   state.selectedImage = null;
-  if (clearRoute && location.hash.startsWith("#/producto/")) {
-    history.replaceState(null, "", `${location.pathname}${location.search}`);
+  if (clearRoute && familyByProductPath.has(normalizeRoute(location.pathname))) {
+    updateUrl();
   }
 }
 
+function normalizeRoute(pathname) {
+  const value = String(pathname || "/").replace(/\/+/g, "/");
+  return value === "/" ? "/" : `${value.replace(/\/+$/, "")}/`;
+}
+
 function handleProductRoute() {
-  const match = location.hash.match(/^#\/producto\/(.+)$/);
-  if (!match) {
+  const familyId = familyByProductPath.get(normalizeRoute(location.pathname));
+  if (!familyId) {
     if ($("#product-dialog")?.open) closeProduct({ clearRoute: false });
     return;
   }
-  const familyId = decodeURIComponent(match[1]);
   if (familyById.has(familyId)) {
     if (!$("#product-dialog")?.open || state.selectedFamilyId !== familyId) {
       openProduct(familyId, { route: false });
     }
-  } else {
-    history.replaceState(null, "", `${location.pathname}${location.search}`);
-    showToast("Ese producto ya no está disponible.");
-  }
+  } else showToast("Ese producto ya no está disponible.");
 }
 
 function renderComparison() {
@@ -985,7 +977,7 @@ function renderComparison() {
             ${selected.map((family) => `
               <td>
                 <div class="compare-product-head">
-                  <img src="${escapeHtml(family.image)}" alt="">
+                  <img src="${escapeHtml(publicAssetUrl(family.image))}" alt="">
                   <strong>${escapeHtml(family.title)}</strong>
                   <button type="button" data-toggle-compare="${escapeHtml(family.id)}">Quitar</button>
                 </div>
@@ -995,11 +987,10 @@ function renderComparison() {
         <tbody>
           <tr><th>Categoría</th>${cells((family) => escapeHtml(family.primaryGroup))}</tr>
           <tr><th>SecretScore</th>${cells((family) => `<span class="score">${family.secretScore.toFixed(1)}</span>`)}</tr>
-          <tr><th>Precio</th>${cells((family) => escapeHtml(displayOfferPrice(bestOffer(family, state.country))))}</tr>
+          <tr><th>Precio</th>${cells((family) => escapeHtml(displayOfferPrice(bestOffer(family, activeRegion.countryCode))))}</tr>
           <tr><th>Opciones</th>${cells((family) => formatter.format(family.variantCount))}</tr>
           <tr><th>Tiendas</th>${cells((family) => escapeHtml(family.stores.join(", ")))}</tr>
-          <tr><th>Mercados</th>${cells((family) => escapeHtml(family.countries.map(countryLabel).join(", ")))}</tr>
-          <tr><th>Ver detalle</th>${cells((family) => `<button class="button secondary" type="button" data-open-family="${escapeHtml(family.id)}">Abrir</button>`)}</tr>
+          <tr><th>Ver detalle</th>${cells((family) => `<a class="button secondary" href="${escapeHtml(familyHref(family))}" data-open-family="${escapeHtml(family.id)}">Abrir</a>`)}</tr>
         </tbody>
       </table>
     </div>
@@ -1007,7 +998,7 @@ function renderComparison() {
       ${selected.map((family) => `
         <article class="comparison-card">
           <div class="comparison-card-head">
-            <img src="${escapeHtml(family.image)}" alt="">
+            <img src="${escapeHtml(publicAssetUrl(family.image))}" alt="">
             <div>
               <strong>${escapeHtml(family.title)}</strong>
               <span class="score">SecretScore ${family.secretScore.toFixed(1)}</span>
@@ -1015,13 +1006,12 @@ function renderComparison() {
           </div>
           <dl>
             <div><dt>Categoría</dt><dd>${escapeHtml(family.primaryGroup)}</dd></div>
-            <div><dt>Precio</dt><dd>${escapeHtml(displayOfferPrice(bestOffer(family, state.country)))}</dd></div>
+            <div><dt>Precio</dt><dd>${escapeHtml(displayOfferPrice(bestOffer(family, activeRegion.countryCode)))}</dd></div>
             <div><dt>Opciones</dt><dd>${formatter.format(family.variantCount)}</dd></div>
             <div><dt>Tiendas</dt><dd>${escapeHtml(family.stores.join(", "))}</dd></div>
-            <div><dt>Mercados</dt><dd>${escapeHtml(family.countries.map(countryLabel).join(", "))}</dd></div>
           </dl>
           <div class="comparison-card-actions">
-            <button class="button secondary" type="button" data-open-family="${escapeHtml(family.id)}">Abrir ficha</button>
+            <a class="button secondary" href="${escapeHtml(familyHref(family))}" data-open-family="${escapeHtml(family.id)}">Abrir ficha</a>
             <button class="comparison-remove" type="button" data-toggle-compare="${escapeHtml(family.id)}">Quitar</button>
           </div>
         </article>`).join("")}
@@ -1056,7 +1046,7 @@ function renderSavedContent() {
   content.innerHTML = selectedFamilies.length
     ? `<div class="saved-list">${selectedFamilies.map((family) => `
         <article class="saved-item">
-          <img src="${escapeHtml(family.image)}" alt="">
+          <img src="${escapeHtml(publicAssetUrl(family.image))}" alt="">
           <div>
             <strong>${escapeHtml(family.title)}</strong>
             <small>${escapeHtml(family.primaryGroup)} · ${escapeHtml(displayOfferPrice(bestOffer(family)))}</small>
@@ -1090,7 +1080,7 @@ function renderSuggestions(input) {
       data-suggestion-index="${index}"
     >
       ${suggestion.image
-        ? `<img src="${escapeHtml(suggestion.image)}" alt="">`
+        ? `<img src="${escapeHtml(publicAssetUrl(suggestion.image))}" alt="">`
         : `<span class="category-icon" aria-hidden="true">⌕</span>`}
       <span>
         <strong>${escapeHtml(suggestion.label)}</strong>
@@ -1137,7 +1127,7 @@ function toggleTheme() {
   const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
   document.documentElement.dataset.theme = next;
   try {
-    localStorage.setItem(STORAGE_KEYS.theme, next);
+    localStorage.setItem(storageKeys.theme, next);
   } catch {}
   renderThemeControls();
 }
@@ -1163,10 +1153,6 @@ function applyAdvancedFilters(event) {
   const maximum = Number($("[data-price-max]").value);
   const hasMinimum = $("[data-price-min]").value !== "" && Number.isFinite(minimum);
   const hasMaximum = $("[data-price-max]").value !== "" && Number.isFinite(maximum);
-  if ((hasMinimum || hasMaximum) && state.country === "all") {
-    showToast("Elige un mercado antes de filtrar por precio; las monedas son distintas.");
-    return;
-  }
   if (hasMinimum && hasMaximum && minimum > maximum) {
     showToast("El precio mínimo no puede superar al máximo.");
     return;
@@ -1217,13 +1203,6 @@ function wireEvents() {
   document.addEventListener("change", (event) => {
     if (event.target.matches("[data-filter-category]")) {
       state.category = event.target.value;
-      state.visible = PAGE_SIZE;
-      renderCatalog();
-    }
-    if (event.target.matches("[data-filter-country]")) {
-      state.country = event.target.value;
-      state.minimumPrice = null;
-      state.maximumPrice = null;
       state.visible = PAGE_SIZE;
       renderCatalog();
     }
@@ -1412,7 +1391,7 @@ function wireEvents() {
     if (image) {
       state.selectedImage = image.dataset.selectImage;
       const main = $(".detail-main-image img");
-      if (main) main.src = state.selectedImage;
+      if (main) main.src = publicAssetUrl(state.selectedImage);
       $$("[data-select-image]").forEach((button) => {
         button.classList.toggle("is-active", button === image);
       });
@@ -1424,7 +1403,9 @@ function wireEvents() {
     if (event.target.closest("[data-open-image]")) {
       const viewer = $("[data-image-viewer]");
       viewer.hidden = false;
-      $(".image-viewer img").src = event.target.closest("[data-open-image]").dataset.openImage;
+      $(".image-viewer img").src = publicAssetUrl(
+        event.target.closest("[data-open-image]").dataset.openImage
+      );
       return;
     }
     if (event.target.closest("[data-close-image]")) {
@@ -1476,7 +1457,6 @@ function wireEvents() {
     }
   }, true);
 
-  window.addEventListener("hashchange", handleProductRoute);
   window.addEventListener("popstate", handleProductRoute);
 }
 
@@ -1555,9 +1535,61 @@ function renderInitial(stats) {
   wireControlledRotations();
 }
 
+async function fetchJson(url, label) {
+  const response = await fetch(url, {
+    cache: "no-store",
+    headers: { Accept: "application/json" }
+  });
+  if (!response.ok) throw new Error(`${label}: respuesta ${response.status}`);
+  return response.json();
+}
+
+async function initializeRegion() {
+  regionsConfig = validateRegionConfig(
+    await fetchJson(REGIONS_URL, "Configuración regional")
+  );
+  activeRegion = resolveActiveRegion(
+    regionsConfig,
+    document.documentElement.dataset.region,
+    location.pathname
+  );
+  const manifest = await fetchJson(activeRegion.catalogManifest, `Catálogo ${activeRegion.id}`);
+  if (
+    manifest?.schemaVersion !== 1 ||
+    manifest.region !== activeRegion.id ||
+    manifest.country !== activeRegion.countryCode ||
+    manifest.currency !== activeRegion.currency ||
+    !Array.isArray(manifest.sources)
+  ) {
+    throw new Error(`${activeRegion.id}: manifest regional incoherente`);
+  }
+  catalogSources = manifest.sources.map((source) => ({
+    ...source,
+    country: source.country || activeRegion.countryCode,
+    currency: source.currency || activeRegion.currency
+  }));
+  storageKeys = regionStorageKeys(activeRegion.id);
+  formatter = new Intl.NumberFormat(activeRegion.locale);
+  state = initialState();
+  document.documentElement.lang = activeRegion.locale;
+  $$("[data-region-name]").forEach((node) => {
+    node.textContent = activeRegion.name;
+  });
+  $$("[data-region-flag]").forEach((node) => {
+    node.textContent = activeRegion.flag;
+  });
+  $$("[data-region-selector]").forEach((link) => {
+    link.href = regionsConfig.selectorPath;
+  });
+  $$("[data-region-home]").forEach((link) => {
+    link.href = activeRegion.basePath;
+  });
+}
+
 async function start() {
-  wireEvents();
   try {
+    await initializeRegion();
+    wireEvents();
     const stats = await loadCatalog();
     renderInitial(stats);
   } catch (error) {

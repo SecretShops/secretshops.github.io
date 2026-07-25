@@ -1,4 +1,10 @@
+import {
+  regionById,
+  validateRegionConfig
+} from "./region-core.js";
+
 const AMAZON_ASSOCIATE_TAG = "christian0ddd-21";
+const REGIONS_URL = "/data/config/regions.json";
 
 function fail(text) {
   const title = document.querySelector("[data-redirect-title]");
@@ -30,24 +36,55 @@ export function allowedDestination(value) {
   }
 }
 
+export function entryMatchesRegion(entry, region) {
+  if (!entry || !region) return false;
+  if (region.status !== "published") return false;
+  if (String(entry.country || "").toUpperCase() !== region.countryCode) return false;
+  const destination = allowedDestination(entry.url);
+  if (!destination) return false;
+  const url = new URL(destination);
+  if (/(^|\.)amazon\.es$/i.test(url.hostname) && region.countryCode !== "ES") return false;
+  return true;
+}
+
+async function fetchJson(url, label) {
+  const response = await fetch(url, {
+    cache: "no-store",
+    headers: { Accept: "application/json" }
+  });
+  if (!response.ok) throw new Error(`${label}: respuesta ${response.status}`);
+  return response.json();
+}
+
 async function redirect() {
-  const offerId = new URLSearchParams(location.search).get("offer")?.trim();
+  const params = new URLSearchParams(location.search);
+  const offerId = params.get("offer")?.trim();
   if (!offerId || offerId.length > 200) {
     fail("La oferta indicada no es válida o ya no está disponible.");
     return;
   }
 
   try {
-    const response = await fetch("./data/catalog/affiliate-links.json", {
-      cache: "no-store",
-      headers: { Accept: "application/json" }
-    });
-    if (!response.ok) throw new Error("No se pudo comprobar el catálogo.");
-    const payload = await response.json();
+    const config = validateRegionConfig(
+      await fetchJson(REGIONS_URL, "Configuración regional")
+    );
+    const requestedRegion = String(params.get("region") || config.defaultRegion).toLowerCase();
+    const region = regionById(config, requestedRegion);
+    if (!region || region.status !== "published" || !region.affiliateLinks) {
+      fail("El país indicado todavía no está disponible.");
+      return;
+    }
+    const back = document.querySelector("[data-redirect-back]");
+    if (back) back.href = region.basePath;
+
+    const payload = await fetchJson(region.affiliateLinks, "Enlaces regionales");
+    if (payload.region !== region.id || payload.country !== region.countryCode) {
+      throw new Error("El archivo de enlaces no pertenece a la región solicitada.");
+    }
     const entry = payload?.links?.[offerId];
     const destination = allowedDestination(entry?.url);
-    if (!destination) {
-      fail("La oferta no está publicada o su enlace no supera la verificación.");
+    if (!destination || !entryMatchesRegion(entry, region)) {
+      fail("La oferta no está publicada para este país o su enlace no supera la verificación.");
       return;
     }
 
@@ -58,6 +95,7 @@ async function redirect() {
           offerId,
           merchantId: entry.merchantId,
           country: entry.country,
+          region: region.id,
           at: new Date().toISOString()
         })
       );

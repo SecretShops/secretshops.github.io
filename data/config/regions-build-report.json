@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-25T10:40:21.287Z",
+  "publishedRegions": [
+    "es"
+  ],
+  "draftRegions": [
+    "mx",
+    "co",
+    "pt",
+    "cl",
+    "pe",
+    "ar",
+    "br"
+  ],
+  "regions": [
+    {
+      "region": "es",
+      "country": "ES",
+      "status": "published",
+      "families": 1014,
+      "variants": 3712,
+      "offers": 3712,
+      "productPages": 1014,
+      "lastmod": "2026-07-24"
+    }
+  ]
+}

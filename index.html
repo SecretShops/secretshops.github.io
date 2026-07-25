@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="es" data-theme="light">
+<html lang="es-ES" data-theme="light" data-region="es">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta
     name="description"
-    content="Compara productos, opciones y ofertas por país con información clara antes de visitar la tienda."
+    content="Compara productos, opciones y ofertas disponibles para España antes de visitar la tienda."
   >
   <meta name="theme-color" content="#1f1f1f">
   <meta name="color-scheme" content="light dark">
@@ -20,11 +20,13 @@
     property="og:description"
     content="Encuentra productos y revisa precios, opciones y disponibilidad con una comparación transparente."
   >
-  <title>SecretShop | Compara antes de comprar</title>
+  <title>SecretShop España | Compara antes de comprar</title>
   <link rel="canonical" href="https://getsecretshop.com/">
-  <link rel="icon" href="./assets/brand/secretshop-logo-compact.png" type="image/png">
-  <link rel="apple-touch-icon" href="./assets/brand/secretshop-logo-compact.png">
-  <link rel="stylesheet" href="./assets/css/app.css">
+  <link rel="alternate" hreflang="es-ES" href="https://getsecretshop.com/">
+  <link rel="alternate" hreflang="x-default" href="https://getsecretshop.com/paises/">
+  <link rel="icon" href="/assets/brand/secretshop-logo-compact.png" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/brand/secretshop-logo-compact.png">
+  <link rel="stylesheet" href="/assets/css/app.css">
   <script>
     (() => {
       try {
@@ -40,8 +42,8 @@
 
   <header class="site-header" data-site-header>
     <div class="header-primary shell">
-      <a class="brand" href="./" aria-label="SecretShop, inicio">
-        <img src="./assets/brand/secretshop-logo-compact.png" alt="" width="42" height="42">
+      <a class="brand" href="/" data-region-home aria-label="SecretShop, inicio">
+        <img src="/assets/brand/secretshop-logo-compact.png" alt="" width="42" height="42">
         <span>SecretShop</span>
       </a>
 
@@ -71,13 +73,17 @@
       </form>
 
       <nav class="primary-nav" aria-label="Navegación principal">
-        <a class="nav-catalog" href="#catalogo">Catálogo</a>
-        <a href="#ofertas">Ofertas</a>
-        <a href="#tiendas">Tiendas</a>
-        <a href="#guias">Guías</a>
+        <a class="nav-catalog" href="/#catalogo">Catálogo</a>
+        <a href="/#ofertas">Ofertas</a>
+        <a href="/#tiendas">Tiendas</a>
+        <a href="/#guias">Guías</a>
       </nav>
 
       <div class="header-actions">
+        <a class="region-selector" href="/paises/" data-region-selector aria-label="Cambiar país">
+          <span data-region-flag aria-hidden="true">🇪🇸</span>
+          <span class="action-label" data-region-name>España</span>
+        </a>
         <button class="icon-action saved-action" type="button" data-open-saved aria-label="Abrir favoritos e historial">
           <span aria-hidden="true">♡</span>
           <span class="action-label">Favoritos</span>
@@ -103,7 +109,7 @@
           <h1>Compara antes de comprar. <span>Decide mejor.</span></h1>
           <p class="hero-lead">
             Encuentra el producto adecuado, revisa sus opciones y compara las tiendas
-            disponibles antes de completar la compra.
+            disponibles para <span data-region-name>España</span> antes de completar la compra.
           </p>
 
           <form class="hero-search search-box" data-search-form role="search">
@@ -121,8 +127,8 @@
           </form>
 
           <div class="hero-actions">
-            <a class="button primary" href="#catalogo">Explorar productos</a>
-            <a class="button secondary" href="#categorias">Ver categorías</a>
+            <a class="button primary" href="/#catalogo">Explorar productos</a>
+            <a class="button secondary" href="/#categorias">Ver categorías</a>
           </div>
 
           <dl class="hero-metrics" aria-label="Resumen del catálogo">
@@ -135,8 +141,8 @@
               <dd>opciones</dd>
             </div>
             <div>
-              <dt data-market-total>—</dt>
-              <dd>mercados</dd>
+              <dt data-store-total>—</dt>
+              <dd>tiendas</dd>
             </div>
           </dl>
         </div>
@@ -153,7 +159,7 @@
       <div class="shell">
         <span aria-hidden="true">i</span>
         <p>Podemos recibir una comisión por algunas compras, sin coste adicional para ti. En calidad de Afiliado de Amazon, obtengo ingresos por las compras adscritas que cumplen los requisitos aplicables.</p>
-        <a href="./afiliacion.html">Cómo funciona</a>
+        <a href="/afiliacion.html">Cómo funciona</a>
       </div>
     </aside>
 
@@ -165,7 +171,7 @@
             <h2>Cuatro formas de empezar</h2>
             <p>Entra por una categoría principal o abre el catálogo completo para ver todas las secciones.</p>
           </div>
-          <a class="text-link" href="#catalogo">Ver catálogo completo <span aria-hidden="true">→</span></a>
+          <a class="text-link" href="/#catalogo">Ver catálogo completo <span aria-hidden="true">→</span></a>
         </div>
         <div class="category-grid" data-category-grid aria-live="polite">
           <div class="card-skeleton"></div>
@@ -231,12 +237,6 @@
             </select>
           </label>
           <label>
-            <span>Mercado</span>
-            <select data-filter-country>
-              <option value="all">Todos los mercados</option>
-            </select>
-          </label>
-          <label>
             <span>Tienda</span>
             <select data-filter-store>
               <option value="all">Todas las tiendas</option>
@@ -285,22 +285,22 @@
             <h2>Información útil antes de decidir</h2>
             <p>Criterios prácticos para comparar sin depender únicamente del precio.</p>
           </div>
-          <a class="text-link" href="./guias/">Ver todas las guías <span aria-hidden="true">→</span></a>
+          <a class="text-link" href="/guias/">Ver todas las guías <span aria-hidden="true">→</span></a>
         </div>
         <div class="guide-grid">
-          <a class="guide-card guide-featured" href="./guias/comparar-precios.html">
+          <a class="guide-card guide-featured" href="/guias/comparar-precios.html">
             <span class="guide-label">Guía esencial</span>
             <h3>Cómo comparar el precio real de una compra online</h3>
             <p>Producto, envío, opción, disponibilidad y condiciones: qué revisar antes de salir a la tienda.</p>
             <span class="guide-action">Leer guía →</span>
           </a>
-          <a class="guide-card" href="./guias/elegir-sofa.html">
+          <a class="guide-card" href="/guias/elegir-sofa.html">
             <span class="guide-label">Hogar</span>
             <h3>Cómo elegir un sofá sin equivocarte con las medidas</h3>
             <p>Espacio, plazas, orientación, materiales y acceso a la vivienda.</p>
             <span class="guide-action">Leer guía →</span>
           </a>
-          <a class="guide-card" href="./guias/compra-segura.html">
+          <a class="guide-card" href="/guias/compra-segura.html">
             <span class="guide-label">Seguridad</span>
             <h3>Señales que conviene comprobar antes de comprar</h3>
             <p>Datos de la tienda, devolución, pago, seguimiento y precio final.</p>
@@ -322,7 +322,7 @@
           <li>
             <span>1</span>
             <h3>Busca y filtra</h3>
-            <p>Encuentra productos por nombre, marca, categoría, tienda o mercado.</p>
+            <p>Encuentra productos por nombre, marca, categoría o tienda dentro de tu país.</p>
           </li>
           <li>
             <span>2</span>
@@ -350,7 +350,7 @@
             artículos solo porque se parecen y no mostramos una comparación cuando faltan
             datos suficientes.
           </p>
-          <a class="button secondary" href="./metodologia.html">Conocer la metodología</a>
+          <a class="button secondary" href="/metodologia.html">Conocer la metodología</a>
         </div>
       </div>
     </section>
@@ -361,7 +361,7 @@
           <div>
             <p class="eyebrow">Tiendas disponibles</p>
             <h2>Fuentes activas en el catálogo</h2>
-            <p>Solo mostramos tiendas y mercados con productos publicables en este momento.</p>
+            <p>Solo mostramos tiendas con productos publicables para el país seleccionado.</p>
           </div>
         </div>
         <div class="store-grid" data-store-grid></div>
@@ -372,8 +372,8 @@
   <footer class="site-footer">
     <div class="shell footer-grid">
       <div class="footer-brand">
-        <a class="brand brand-footer" href="./">
-          <img src="./assets/brand/secretshop-logo-compact.png" alt="" width="42" height="42">
+        <a class="brand brand-footer" href="/" data-region-home>
+          <img src="/assets/brand/secretshop-logo-compact.png" alt="" width="42" height="42">
           <span>SecretShop</span>
         </a>
         <p>Una forma más clara de organizar productos, opciones y ofertas antes de comprar.</p>
@@ -381,30 +381,31 @@
       </div>
       <div>
         <h2>SecretShop</h2>
-        <a href="#como-funciona">Cómo funciona</a>
-        <a href="./metodologia.html">Metodología</a>
-        <a href="./afiliacion.html">Afiliación</a>
+        <a href="/#como-funciona">Cómo funciona</a>
+        <a href="/metodologia.html">Metodología</a>
+        <a href="/afiliacion.html">Afiliación</a>
         <a href="mailto:secretoatlas@gmail.com">Contacto</a>
       </div>
       <div>
         <h2>Categorías</h2>
-        <a href="#catalogo" data-footer-category="Tecnología">Tecnología</a>
-        <a href="#catalogo" data-footer-category="Hogar">Hogar</a>
-        <a href="#catalogo" data-footer-category="Moda mujer">Moda</a>
-        <a href="#catalogo" data-footer-category="Belleza y cuidado">Belleza</a>
+        <a href="/#catalogo" data-footer-category="Tecnología">Tecnología</a>
+        <a href="/#catalogo" data-footer-category="Hogar">Hogar</a>
+        <a href="/#catalogo" data-footer-category="Moda mujer">Moda</a>
+        <a href="/#catalogo" data-footer-category="Belleza y cuidado">Belleza</a>
       </div>
       <div>
         <h2>Explorar</h2>
-        <a href="#ofertas">Ofertas</a>
-        <a href="#tiendas">Tiendas</a>
-        <a href="./guias/">Guías de compra</a>
+        <a href="/#ofertas">Ofertas</a>
+        <a href="/#tiendas">Tiendas</a>
+        <a href="/guias/">Guías de compra</a>
+        <a href="/paises/" data-region-selector>País: <span data-region-name>España</span></a>
         <button type="button" data-open-saved>Favoritos e historial</button>
       </div>
       <div>
         <h2>Legal</h2>
-        <a href="./privacidad.html">Privacidad</a>
-        <a href="./aviso-legal.html">Aviso legal</a>
-        <a href="./afiliacion.html">Transparencia</a>
+        <a href="/privacidad.html">Privacidad</a>
+        <a href="/aviso-legal.html">Aviso legal</a>
+        <a href="/afiliacion.html">Transparencia</a>
       </div>
     </div>
     <div class="shell footer-bottom">
@@ -510,20 +511,21 @@
 
   <dialog id="menu-dialog" class="mobile-menu" aria-label="Menú principal">
     <div class="mobile-menu-head">
-      <a class="brand" href="./">
-        <img src="./assets/brand/secretshop-logo-compact.png" alt="" width="38" height="38">
+      <a class="brand" href="/" data-region-home>
+        <img src="/assets/brand/secretshop-logo-compact.png" alt="" width="38" height="38">
         <span>SecretShop</span>
       </a>
       <button class="modal-close" type="button" data-close-dialog aria-label="Cerrar">×</button>
     </div>
     <nav>
-      <a href="#categorias">Categorías</a>
-      <a href="#ofertas">Ofertas</a>
-      <a href="#catalogo">Catálogo</a>
-      <a href="#tiendas">Tiendas</a>
-      <a href="#guias">Guías</a>
-      <a href="#como-funciona">Cómo funciona</a>
-      <a href="./metodologia.html">Metodología</a>
+      <a href="/paises/" data-region-selector><span data-region-flag aria-hidden="true">🇪🇸</span> País: <span data-region-name>España</span></a>
+      <a href="/#categorias">Categorías</a>
+      <a href="/#ofertas">Ofertas</a>
+      <a href="/#catalogo">Catálogo</a>
+      <a href="/#tiendas">Tiendas</a>
+      <a href="/#guias">Guías</a>
+      <a href="/#como-funciona">Cómo funciona</a>
+      <a href="/metodologia.html">Metodología</a>
     </nav>
   </dialog>
 
@@ -533,6 +535,6 @@
     <div class="noscript">SecretShop necesita JavaScript para cargar y filtrar el catálogo.</div>
   </noscript>
 
-  <script type="module" src="./assets/js/app.js"></script>
+  <script type="module" src="/assets/js/app.js"></script>
 </body>
 </html>

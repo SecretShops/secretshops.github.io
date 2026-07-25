@@ -1,99 +1,54 @@
-# Cargador y conexión visual del catálogo Awin
+# Carga regional del catálogo
 
 ## Estado actual
 
-El catálogo está publicado mediante:
+La interfaz no utiliza un cargador global ni mezcla países. El arranque sigue este orden:
 
-```json
-{
-  "enabled": true,
-  "autoStart": true,
-  "includeUnavailableOffers": false
-}
-```
+1. `assets/js/app.js` carga `data/config/regions.json`.
+2. Resuelve la región declarada en la página y comprueba que esté `published`.
+3. Carga el manifiesto `data/catalog/<region>/catalog.json`.
+4. Carga exclusivamente las fuentes declaradas por ese manifiesto.
+5. `assets/js/catalog-core.js` normaliza familias, variantes y ofertas.
+6. Se rechaza la carga si una oferta pertenece a otro país o utiliza otra moneda.
 
-El navegador carga los JSON de `data/catalog`, valida los merchants aprobados, adapta los productos al formato visual de SecretShop y los integra con el catálogo estático existente.
-
-## Flujo de carga
-
-1. `scripts/catalog-bootstrap.js` lee `catalog-runtime.json`.
-2. `scripts/catalog-loader.js` carga `merchants.json`, `products.json` y `offers.json`.
-3. Se conservan únicamente merchants aprobados y ofertas válidas para el país/moneda activos.
-4. `scripts/catalog-ui-adapter.js` convierte el modelo normalizado al modelo de tarjetas de SecretShop.
-5. Se emite `secretshop:awin-catalog-ready` con `detail.uiProducts`.
-6. `index.html` fusiona los productos Awin con las fuentes estáticas y vuelve a renderizar tiendas, categorías, resultados e inventario.
-
-## Archivos
-
-- `data/catalog/catalog-runtime.json`: publicación, país y opciones del cargador.
-- `data/catalog/catalog-config.json`: países, matching, frescura y nombres de archivos auxiliares.
-- `data/catalog/category-taxonomy.json`: categorías y jerarquía.
-- `scripts/catalog-loader.js`: carga y filtrado del catálogo.
-- `scripts/catalog-ui-adapter.js`: adaptación de productos y ofertas a la interfaz.
-- `scripts/catalog-bootstrap.js`: arranque y eventos.
-- `scripts/catalog-loader.test.mjs`: pruebas del cargador.
-- `scripts/catalog-ui-adapter.test.mjs`: pruebas del adaptador.
-- `scripts/validate-catalog.mjs`: validación integral de JSON.
-
-## Categorías de Hogar
-
-La categoría general `Hogar` se mantiene en la portada. Sus subcategorías aparecen en el filtro como:
+España carga:
 
 ```text
-Hogar › Sofás
-Hogar › Sillas y sillones
-Hogar › Bancos, pufs y reposapiés
-Hogar › Camas y colchones
-Hogar › Mesas y escritorios
-Hogar › Almacenaje
-Hogar › Iluminación
-Hogar › Textiles y cojines
-Hogar › Jardín y terraza
-Hogar › Cocina y comedor
-Hogar › Decoración y accesorios
+data/catalog/es/catalog.json
+├── data/catalog/families.json
+└── data/catalog/aliexpress-es.json
 ```
 
-Las subcategorías no generan secciones duplicadas en la portada; sirven para filtrar el catálogo con más precisión.
+México y Colombia conservan manifiestos independientes, pero no se cargan en producción mientras su estado sea `draft`.
+
+## Archivos principales
+
+- `data/config/regions.json`: países, rutas, monedas y publicación.
+- `data/catalog/<region>/catalog.json`: fuentes regionales.
+- `data/catalog/<region>/affiliate-links.json`: destinos comerciales regionales.
+- `assets/js/region-core.js`: resolución de región, rutas y almacenamiento.
+- `assets/js/catalog-core.js`: normalización, búsqueda, filtros y comparación.
+- `assets/js/app.js`: interfaz del catálogo regional.
+- `scripts/build-regional-site.mjs`: fichas y sitemaps.
+- `scripts/validate-regions.mjs`: comprobación de aislamiento.
 
 ## Seguridad y calidad
 
-- Solo publica merchants con estado `approved`.
-- Exige enlaces afiliados HTTPS.
-- Comprueba país y moneda.
-- Excluye por defecto ofertas agotadas, no disponibles o descatalogadas.
-- Puede marcar ofertas antiguas como `isStale` sin retirarlas inmediatamente.
-- No mezcla productos con identificadores incompatibles.
-- Calcula el precio total con transporte cuando el feed informa el coste.
-- Añade dinámicamente `Menos de 10` cuando el precio total es inferior al umbral.
-
-## Objetos y eventos disponibles
-
-```js
-window.SecretShopAwinCatalog
-window.CATALOG_AWIN
-```
-
-Eventos:
-
-```text
-secretshop:awin-catalog-disabled
-secretshop:awin-catalog-ready
-secretshop:awin-catalog-error
-```
-
-## Desactivación de emergencia
-
-Cambiar en `data/catalog/catalog-runtime.json`:
-
-```json
-"enabled": false
-```
-
-El sitio conservará el catálogo estático y dejará de incorporar los productos Awin.
+- La URL determina el país.
+- No existe selección interna `?pais=`.
+- No se convierten monedas.
+- Un error de país o moneda bloquea el catálogo.
+- Los enlaces requieren región publicada y oferta del mismo país.
+- Los merchants canónicos deben estar aprobados.
+- Las salidas usan HTTPS y dominios expresamente permitidos.
+- Los productos con identificadores incompatibles no se fusionan.
 
 ## Verificación
 
 ```bash
-node --test scripts/catalog-loader.test.mjs scripts/catalog-ui-adapter.test.mjs
-node scripts/validate-catalog.mjs
+npm run build:regions
+npm test
+npm run validate:catalog
+npm run validate:regions
+npm run validate:site
 ```
