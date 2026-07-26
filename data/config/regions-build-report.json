@@ -1,27 +1,57 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-26T12:59:24.532Z",
+  "generatedAt": "2026-07-26T20:27:34.962Z",
   "publishedRegions": [
-    "es"
+    "es",
+    "pt"
   ],
   "draftRegions": [
     "mx",
     "co",
-    "pt",
     "cl",
     "pe",
     "ar",
-    "br"
+    "br",
+    "ve",
+    "us",
+    "gb",
+    "fr",
+    "de",
+    "it",
+    "at",
+    "be",
+    "ie",
+    "nl",
+    "fi",
+    "sk",
+    "lv",
+    "lt",
+    "lu",
+    "ee",
+    "si",
+    "hr",
+    "mc",
+    "gr"
   ],
   "regions": [
     {
       "region": "es",
       "country": "ES",
       "status": "published",
-      "families": 2385,
-      "variants": 7662,
-      "offers": 7662,
-      "productPages": 2385,
+      "families": 2764,
+      "variants": 9601,
+      "offers": 9601,
+      "productPages": 2764,
+      "lastmod": "2026-07-26"
+    },
+    {
+      "region": "pt",
+      "country": "PT",
+      "status": "published",
+      "families": 279,
+      "variants": 1473,
+      "offers": 1473,
+      "productPages": 279,
       "lastmod": "2026-07-26"
     }
   ]

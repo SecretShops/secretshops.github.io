@@ -221,7 +221,7 @@ try {
   await isolateExternalImages(architecture);
   await architecture.goto(new URL("/paises/", baseUrl).href, { waitUntil: "domcontentloaded" });
   const publishedCountries = await architecture.locator(".country-card").count();
-  if (publishedCountries !== 1) {
+  if (publishedCountries !== 2) {
     failures.push(`arquitectura: el selector muestra ${publishedCountries} países publicados`);
   }
   if (await architecture.locator('a[href^="/mx/"], a[href^="/co/"]').count()) {

@@ -8,6 +8,7 @@ const REGIONS_URL = "/data/config/regions.json";
 
 const IMPACT_RULES = [
   { host: "shokzes.pxf.io", path: "/c/7518894/3800995/48345", source: "CATF_31438", landing: /(^|\.)es\.shokz\.com$/i, countries: ["ES"] },
+  { host: "loungeeu.sjv.io", path: "/c/7518894/3973367/54841", source: "CATF_35417", landing: /(^|\.)eu\.lounge\.com$/i, countries: ["ES"] },
   { host: "coacheu.pxf.io", path: "/c/7518894/3956002/52133", source: "CATF_34935", landing: /(^|\.)es\.coach\.com$/i, countries: ["ES"] },
   { host: "italistinc.pxf.io", path: "/c/7518894/3947549/53066", source: "CATF_34671", landing: /(^|\.)r114wg-zn\.myshopify\.com$/i, countries: ["ES", "PT"] },
   { host: "italistinc.pxf.io", path: "/c/7518894/3902447/53066", source: "CATF_33797", landing: /(^|\.)italist\.com$/i, countries: ["US", "VE"] },
@@ -58,20 +59,33 @@ export function allowedDestination(value) {
   }
 }
 
+export function destinationAllowedForCountry(value, countryCode) {
+  const country = String(countryCode || "").toUpperCase();
+  const destination = allowedDestination(value);
+  if (!destination || !country) return null;
+  const url = new URL(destination);
+  if (/(^|\.)amazon\.es$/i.test(url.hostname) && country !== "ES") return null;
+  const rule = impactRule(url);
+  if (rule && !rule.countries.includes(country)) return null;
+  return destination;
+}
+
 export function entryMatchesRegion(entry, region) {
   if (!entry || !region || region.status !== "published") return false;
   if (String(entry.country || "").toUpperCase() !== region.countryCode) return false;
-  const destination = allowedDestination(entry.url);
-  if (!destination) return false;
-  const url = new URL(destination);
-  if (/(^|\.)amazon\.es$/i.test(url.hostname) && region.countryCode !== "ES") return false;
-  const rule = impactRule(url);
-  if (rule && !rule.countries.includes(region.countryCode)) return false;
-  return true;
+  return Boolean(destinationAllowedForCountry(entry.url, region.countryCode));
 }
 
 async function fetchJson(url, label) {
-  const response = await fetch(url, { cache: "no-store", headers: { Accept: "application/json" } });
+  const target = new URL(url, location.origin);
+  target.searchParams.set("_ss", String(Date.now()));
+  const response = await fetch(target.href, {
+    cache: "no-store",
+    headers: {
+      Accept: "application/json",
+      "Cache-Control": "no-cache"
+    }
+  });
   if (!response.ok) throw new Error(`${label}: respuesta ${response.status}`);
   return response.json();
 }

@@ -1,15 +1,41 @@
 #!/usr/bin/env node
 
-import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
-import { dirname, resolve } from "node:path";
+import { access, mkdir, readFile, rename, writeFile } from "node:fs/promises";
+import { dirname, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
+import { destinationAllowedForCountry } from "../assets/js/redirect.js";
 import { validateAmazonAffiliateUrl } from "./lib/amazon-associates-core.mjs";
 import { parseImpactAffiliateUrl } from "./lib/impact-affiliate-core.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
+async function exists(path) {
+  try {
+    await access(path);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function localPath(publicPath) {
+  const value = String(publicPath || "");
+  if (!value.startsWith("/") || value.includes("..")) {
+    throw new Error(`Ruta pública insegura: ${value}`);
+  }
+  const output = resolve(root, `.${value}`);
+  if (output !== root && !output.startsWith(`${root}${sep}`)) {
+    throw new Error(`Ruta fuera del repositorio: ${value}`);
+  }
+  return output;
+}
+
 async function readJson(path) {
   return JSON.parse(await readFile(resolve(root, path), "utf8"));
+}
+
+async function readPublicJson(path) {
+  return JSON.parse(await readFile(localPath(path), "utf8"));
 }
 
 async function writeJsonAtomic(path, value) {
@@ -30,7 +56,7 @@ function collectOfferIds(payload) {
   );
 }
 
-function validateUrl(value, offerId, merchant, productSku = null) {
+function validateCanonicalUrl(value, offerId, merchant, productSku = null) {
   const url = new URL(value);
   if (url.protocol !== "https:") {
     throw new Error(`${offerId}: el enlace no usa HTTPS`);
@@ -98,16 +124,16 @@ const [
 const merchants = new Map(
   merchantsPayload.merchants.map((merchant) => [merchant.id, merchant])
 );
-const referencedOfferIds = new Set([
+const canonicalOfferIds = new Set([
   ...collectOfferIds(families),
   ...collectOfferIds(spainAliExpressCatalog),
   ...collectOfferIds(mexicoCatalog),
   ...collectOfferIds(colombiaCatalog)
 ]);
-const candidates = new Map();
+const canonicalCandidates = new Map();
 
 for (const offer of offersPayload.offers || []) {
-  candidates.set(offer.id, {
+  canonicalCandidates.set(offer.id, {
     url: offer.affiliateUrl,
     merchantId: offer.merchantId,
     country: offer.country,
@@ -116,7 +142,7 @@ for (const offer of offersPayload.offers || []) {
 }
 
 for (const record of spainAliExpressSource) {
-  candidates.set(`aliexpress-es:${record.product_id}`, {
+  canonicalCandidates.set(`aliexpress-es:${record.product_id}`, {
     url: record.tracking_url,
     merchantId: "aliexpress",
     country: "ES"
@@ -124,7 +150,7 @@ for (const record of spainAliExpressSource) {
 }
 
 for (const record of mexicoSource) {
-  candidates.set(`aliexpress-mx:${record.product_id}`, {
+  canonicalCandidates.set(`aliexpress-mx:${record.product_id}`, {
     url: record.tracking_url,
     merchantId: "aliexpress",
     country: "MX"
@@ -132,7 +158,7 @@ for (const record of mexicoSource) {
 }
 
 for (const record of colombiaSource) {
-  candidates.set(`aliexpress-co:${record.product_id}`, {
+  canonicalCandidates.set(`aliexpress-co:${record.product_id}`, {
     url: record.tracking_url,
     merchantId: "aliexpress",
     country: "CO"
@@ -140,7 +166,7 @@ for (const record of colombiaSource) {
 }
 
 for (const product of curatedPayload.products || []) {
-  candidates.set(
+  canonicalCandidates.set(
     `aliexpress-${String(product.country).toLowerCase()}:${product.productId}`,
     {
       url: product.affiliateUrl,
@@ -150,16 +176,16 @@ for (const product of curatedPayload.products || []) {
   );
 }
 
-const links = {};
-const missing = [];
-for (const offerId of [...referencedOfferIds].sort()) {
-  const candidate = candidates.get(offerId);
+const canonicalLinks = {};
+const missingCanonical = [];
+for (const offerId of [...canonicalOfferIds].sort()) {
+  const candidate = canonicalCandidates.get(offerId);
   if (!candidate) {
-    missing.push(offerId);
+    missingCanonical.push(offerId);
     continue;
   }
-  links[offerId] = {
-    url: validateUrl(
+  canonicalLinks[offerId] = {
+    url: validateCanonicalUrl(
       candidate.url,
       offerId,
       merchants.get(candidate.merchantId),
@@ -170,61 +196,103 @@ for (const offerId of [...referencedOfferIds].sort()) {
   };
 }
 
-if (missing.length) {
+if (missingCanonical.length) {
   throw new Error(
-    `Faltan ${missing.length} enlaces para ofertas publicadas: ${missing.slice(0, 5).join(", ")}`
+    `Faltan ${missingCanonical.length} enlaces canónicos: ${missingCanonical.slice(0, 5).join(", ")}`
   );
 }
 
-const entries = Object.values(links);
-await writeJsonAtomic("data/catalog/affiliate-links.json", {
-  schemaVersion: 1,
-  generatedAt: new Date().toISOString(),
-  links
-});
-
 const generatedAt = new Date().toISOString();
-const regionsByCountry = new Map(
-  regionsPayload.regions
-    .filter((region) => region.catalogManifest && region.affiliateLinks)
-    .map((region) => [region.countryCode, region])
-);
-const regionalLinks = new Map(
-  [...regionsByCountry.values()].map((region) => [region.id, {}])
-);
+const regionalPlans = [];
+const regionalErrors = [];
 
-for (const [offerId, entry] of Object.entries(links)) {
-  const region = regionsByCountry.get(String(entry.country || "").toUpperCase());
-  if (!region) {
-    throw new Error(`${offerId}: no existe una región configurada para ${entry.country}`);
+for (const region of regionsPayload.regions) {
+  if (!region.catalogManifest || !region.affiliateLinks) continue;
+
+  const manifest = await readPublicJson(region.catalogManifest);
+  const referencedOfferIds = new Set();
+  for (const source of manifest.sources || []) {
+    const payload = await readPublicJson(source.path);
+    for (const offerId of collectOfferIds(payload)) referencedOfferIds.add(offerId);
   }
-  regionalLinks.get(region.id)[offerId] = entry;
+
+  const regionalFile = localPath(region.affiliateLinks);
+  const existingPayload = await exists(regionalFile)
+    ? JSON.parse(await readFile(regionalFile, "utf8"))
+    : { links: {} };
+
+  const candidates = new Map();
+  for (const [offerId, entry] of Object.entries(existingPayload.links || {})) {
+    if (String(entry.country || "").toUpperCase() === region.countryCode) {
+      candidates.set(offerId, entry);
+    }
+  }
+  // Las fuentes canónicas son regenerables y deben prevalecer sobre copias antiguas.
+  for (const [offerId, entry] of Object.entries(canonicalLinks)) {
+    if (String(entry.country || "").toUpperCase() === region.countryCode) {
+      candidates.set(offerId, entry);
+    }
+  }
+
+  const links = {};
+  for (const offerId of [...referencedOfferIds].sort()) {
+    const candidate = candidates.get(offerId);
+    if (!candidate) {
+      regionalErrors.push(`${region.id}: falta enlace para ${offerId}`);
+      continue;
+    }
+    const safeUrl = destinationAllowedForCountry(candidate.url, region.countryCode);
+    if (!safeUrl) {
+      regionalErrors.push(`${region.id}/${offerId}: destino no permitido`);
+      continue;
+    }
+    links[offerId] = {
+      ...candidate,
+      url: safeUrl,
+      country: region.countryCode
+    };
+  }
+
+  regionalPlans.push({
+    region,
+    referencedOfferIds,
+    links
+  });
 }
 
-for (const region of regionsByCountry.values()) {
-  const regionalPath = region.affiliateLinks.replace(/^\//, "");
-  await writeJsonAtomic(regionalPath, {
+if (regionalErrors.length) {
+  throw new Error(
+    `No se pueden generar los enlaces regionales (${regionalErrors.length} incidencias): ${regionalErrors.slice(0, 8).join("; ")}`
+  );
+}
+
+await writeJsonAtomic("data/catalog/affiliate-links.json", {
+  schemaVersion: 1,
+  generatedAt,
+  links: canonicalLinks
+});
+
+for (const { region, links } of regionalPlans) {
+  await writeJsonAtomic(region.affiliateLinks.replace(/^\//, ""), {
     schemaVersion: 1,
     region: region.id,
     country: region.countryCode,
     generatedAt,
-    links: regionalLinks.get(region.id)
+    links
   });
 }
 
+const canonicalEntries = Object.values(canonicalLinks);
 console.log(
   JSON.stringify(
     {
-      publishedOfferLinks: Object.keys(links).length,
-      awin: entries.filter((entry) => entry.url.includes("awin1.com")).length,
-      aliexpress: entries.filter((entry) => entry.url.includes("aliexpress.com")).length,
-      amazon: entries.filter((entry) => /(^|\.)amazon\.es$/i.test(new URL(entry.url).hostname)).length,
-      impact: entries.filter((entry) => /\.pxf\.io$/i.test(new URL(entry.url).hostname)).length,
+      canonicalOfferLinks: Object.keys(canonicalLinks).length,
+      awin: canonicalEntries.filter((entry) => entry.url.includes("awin1.com")).length,
+      aliexpress: canonicalEntries.filter((entry) => entry.url.includes("aliexpress.com")).length,
+      amazon: canonicalEntries.filter((entry) => /(^|\.)amazon\.es$/i.test(new URL(entry.url).hostname)).length,
+      impact: canonicalEntries.filter((entry) => /\.(?:pxf|sjv)\.io$/i.test(new URL(entry.url).hostname)).length,
       regions: Object.fromEntries(
-        [...regionalLinks.entries()].map(([regionId, values]) => [
-          regionId,
-          Object.keys(values).length
-        ])
+        regionalPlans.map(({ region, links }) => [region.id, Object.keys(links).length])
       )
     },
     null,

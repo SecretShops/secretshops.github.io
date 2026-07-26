@@ -35,6 +35,18 @@ test("acepta únicamente los destinos afiliados previstos", () => {
     ),
     "https://shokzes.pxf.io/c/7518894/3800995/48345?prodsku=123&u=https%3A%2F%2Fes.shokz.com%2Fproducts%2Fopenrun&intsrc=CATF_31438"
   );
+  assert.equal(
+    allowedDestination(
+      "https://loungeeu.sjv.io/c/7518894/3973367/54841?prodsku=123&u=https%3A%2F%2Feu.lounge.com%2Fproducts%2Fexample&intsrc=CATF_35417"
+    ),
+    "https://loungeeu.sjv.io/c/7518894/3973367/54841?prodsku=123&u=https%3A%2F%2Feu.lounge.com%2Fproducts%2Fexample&intsrc=CATF_35417"
+  );
+  assert.equal(
+    allowedDestination(
+      "https://heybikeeu.sjv.io/c/7518894/3806125/49281?prodsku=123&u=https%3A%2F%2Feu.heybike.com%2Fproducts%2Fexample&intsrc=CATF_31506"
+    ),
+    "https://heybikeeu.sjv.io/c/7518894/3806125/49281?prodsku=123&u=https%3A%2F%2Feu.heybike.com%2Fproducts%2Fexample&intsrc=CATF_31506"
+  );
 });
 
 test("rechaza protocolos, hosts, rutas y parámetros inseguros", () => {
