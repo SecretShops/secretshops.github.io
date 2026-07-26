@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "region": "gb",
+  "country": "GB",
+  "locale": "en-GB",
+  "currency": "GBP",
+  "sources": [
+    {
+      "id": "impact-hewi",
+      "path": "/data/catalog/gb/impact-hewi.json",
+      "country": "GB",
+      "currency": "GBP",
+      "merchantId": "hewi",
+      "merchantName": "HEWI"
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+﻿Región,País,Estado,Moneda,Fuentes,Familias,Enlaces
+es,ES,published,EUR,"coach_es, italist_eur",220,826
+pt,PT,published,EUR,italist_eur,120,360
+gb,GB,draft,GBP,hewi,120,120
+us,US,draft,USD,"vivien, xteink, plantifique, italist_usd",225,1026
+ve,VE,draft,USD,"vivien, italist_usd",170,903

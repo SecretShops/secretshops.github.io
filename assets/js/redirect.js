@@ -4,9 +4,18 @@ import {
 } from "./region-core.js";
 
 const AMAZON_ASSOCIATE_TAG = "christian0ddd-21";
-const SHOKZ_IMPACT_PATH = "/c/7518894/3800995/48345";
-const SHOKZ_IMPACT_SOURCE = "CATF_31438";
 const REGIONS_URL = "/data/config/regions.json";
+
+const IMPACT_RULES = [
+  { host: "shokzes.pxf.io", path: "/c/7518894/3800995/48345", source: "CATF_31438", landing: /(^|\.)es\.shokz\.com$/i, countries: ["ES"] },
+  { host: "coacheu.pxf.io", path: "/c/7518894/3956002/52133", source: "CATF_34935", landing: /(^|\.)es\.coach\.com$/i, countries: ["ES"] },
+  { host: "italistinc.pxf.io", path: "/c/7518894/3947549/53066", source: "CATF_34671", landing: /(^|\.)r114wg-zn\.myshopify\.com$/i, countries: ["ES", "PT"] },
+  { host: "italistinc.pxf.io", path: "/c/7518894/3902447/53066", source: "CATF_33797", landing: /(^|\.)italist\.com$/i, countries: ["US", "VE"] },
+  { host: "hewi.pxf.io", path: "/c/7518894/3904894/53088", source: "CATF_33842", landing: /(^|\.)hardlyeverwornit\.com$/i, countries: ["GB"] },
+  { host: "vivienhair.sjv.io", path: "/c/7518894/3858868/51252", source: "CATF_32690", landing: /(^|\.)vivienhair\.com$/i, countries: ["US", "VE"] },
+  { host: "go.sjv.io", path: "/c/7518894/3933983/54011", source: "CATF_34508", landing: /(^|\.)xteink\.com$/i, countries: ["US"] },
+  { host: "plantifique.sjv.io", path: "/c/7518894/3942357/54380", source: "CATF_34614", landing: /(^|\.)plantifique\.com$/i, countries: ["US"] }
+];
 
 function fail(text) {
   const title = document.querySelector("[data-redirect-title]");
@@ -19,58 +28,46 @@ function fail(text) {
   loader.hidden = true;
 }
 
+function impactRule(url) {
+  return IMPACT_RULES.find((rule) => {
+    if (url.hostname.toLowerCase() !== rule.host || url.pathname !== rule.path) return false;
+    if (!url.searchParams.get("prodsku") || url.searchParams.get("intsrc") !== rule.source) return false;
+    try {
+      const landing = new URL(url.searchParams.get("u"));
+      return landing.protocol === "https:" && rule.landing.test(landing.hostname);
+    } catch {
+      return false;
+    }
+  }) || null;
+}
+
 export function allowedDestination(value) {
   try {
     const url = new URL(value);
     if (url.protocol !== "https:") return null;
-    const awin =
-      /(^|\.)awin1\.com$/i.test(url.hostname) &&
-      ["/pclick.php", "/cread.php"].includes(url.pathname) &&
-      ["a", "p", "m"].every((key) => url.searchParams.get(key));
+    const awin = /(^|\.)awin1\.com$/i.test(url.hostname) && ["/pclick.php", "/cread.php"].includes(url.pathname) && ["a", "p", "m"].every((key) => url.searchParams.get(key));
     const aliexpress = /^s\.click\.aliexpress\.com$/i.test(url.hostname);
-    const amazon =
-      /^(?:www\.)?amazon\.es$/i.test(url.hostname) &&
-      /^\/dp\/[A-Z0-9]{10}\/ref=nosim\/?$/i.test(url.pathname) &&
-      url.searchParams.get("tag") === AMAZON_ASSOCIATE_TAG;
-    let impact = false;
-    if (
-      /^shokzes\.pxf\.io$/i.test(url.hostname) &&
-      url.pathname === SHOKZ_IMPACT_PATH &&
-      Boolean(url.searchParams.get("prodsku")) &&
-      url.searchParams.get("intsrc") === SHOKZ_IMPACT_SOURCE
-    ) {
-      try {
-        const landing = new URL(url.searchParams.get("u"));
-        impact =
-          landing.protocol === "https:" &&
-          /(^|\.)es\.shokz\.com$/i.test(landing.hostname);
-      } catch {
-        impact = false;
-      }
-    }
-    return awin || aliexpress || amazon || impact ? url.href : null;
+    const amazon = /^(?:www\.)?amazon\.es$/i.test(url.hostname) && /^\/dp\/[A-Z0-9]{10}\/ref=nosim\/?$/i.test(url.pathname) && url.searchParams.get("tag") === AMAZON_ASSOCIATE_TAG;
+    return awin || aliexpress || amazon || impactRule(url) ? url.href : null;
   } catch {
     return null;
   }
 }
 
 export function entryMatchesRegion(entry, region) {
-  if (!entry || !region) return false;
-  if (region.status !== "published") return false;
+  if (!entry || !region || region.status !== "published") return false;
   if (String(entry.country || "").toUpperCase() !== region.countryCode) return false;
   const destination = allowedDestination(entry.url);
   if (!destination) return false;
   const url = new URL(destination);
   if (/(^|\.)amazon\.es$/i.test(url.hostname) && region.countryCode !== "ES") return false;
-  if (/^shokzes\.pxf\.io$/i.test(url.hostname) && region.countryCode !== "ES") return false;
+  const rule = impactRule(url);
+  if (rule && !rule.countries.includes(region.countryCode)) return false;
   return true;
 }
 
 async function fetchJson(url, label) {
-  const response = await fetch(url, {
-    cache: "no-store",
-    headers: { Accept: "application/json" }
-  });
+  const response = await fetch(url, { cache: "no-store", headers: { Accept: "application/json" } });
   if (!response.ok) throw new Error(`${label}: respuesta ${response.status}`);
   return response.json();
 }
@@ -82,11 +79,8 @@ async function redirect() {
     fail("La oferta indicada no es válida o ya no está disponible.");
     return;
   }
-
   try {
-    const config = validateRegionConfig(
-      await fetchJson(REGIONS_URL, "Configuración regional")
-    );
+    const config = validateRegionConfig(await fetchJson(REGIONS_URL, "Configuración regional"));
     const requestedRegion = String(params.get("region") || config.defaultRegion).toLowerCase();
     const region = regionById(config, requestedRegion);
     if (!region || region.status !== "published" || !region.affiliateLinks) {
@@ -95,37 +89,21 @@ async function redirect() {
     }
     const back = document.querySelector("[data-redirect-back]");
     if (back) back.href = region.basePath;
-
     const payload = await fetchJson(region.affiliateLinks, "Enlaces regionales");
-    if (payload.region !== region.id || payload.country !== region.countryCode) {
-      throw new Error("El archivo de enlaces no pertenece a la región solicitada.");
-    }
+    if (payload.region !== region.id || payload.country !== region.countryCode) throw new Error("El archivo de enlaces no pertenece a la región solicitada.");
     const entry = payload?.links?.[offerId];
     const destination = allowedDestination(entry?.url);
     if (!destination || !entryMatchesRegion(entry, region)) {
       fail("La oferta no está publicada para este país o su enlace no supera la verificación.");
       return;
     }
-
     try {
-      sessionStorage.setItem(
-        "secretshop:last-outbound:v1",
-        JSON.stringify({
-          offerId,
-          merchantId: entry.merchantId,
-          country: entry.country,
-          region: region.id,
-          at: new Date().toISOString()
-        })
-      );
+      sessionStorage.setItem("secretshop:last-outbound:v1", JSON.stringify({ offerId, merchantId: entry.merchantId, country: entry.country, region: region.id, at: new Date().toISOString() }));
     } catch {}
-
     location.replace(destination);
   } catch {
     fail("No hemos podido verificar el enlace. Vuelve al catálogo e inténtalo de nuevo.");
   }
 }
 
-if (typeof window !== "undefined" && typeof document !== "undefined") {
-  redirect();
-}
+if (typeof window !== "undefined" && typeof document !== "undefined") redirect();

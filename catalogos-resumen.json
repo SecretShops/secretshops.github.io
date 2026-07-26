@@ -1,0 +1,125 @@
+{
+  "generatedAt": "2026-07-26T20:00:00+02:00",
+  "regions": {
+    "es": {
+      "country": "ES",
+      "status": "published",
+      "currency": "EUR",
+      "sources": [
+        "coach_es",
+        "italist_eur"
+      ],
+      "families": 220,
+      "links": 826
+    },
+    "pt": {
+      "country": "PT",
+      "status": "published",
+      "currency": "EUR",
+      "sources": [
+        "italist_eur"
+      ],
+      "families": 120,
+      "links": 360
+    },
+    "gb": {
+      "country": "GB",
+      "status": "draft",
+      "currency": "GBP",
+      "sources": [
+        "hewi"
+      ],
+      "families": 120,
+      "links": 120
+    },
+    "us": {
+      "country": "US",
+      "status": "draft",
+      "currency": "USD",
+      "sources": [
+        "vivien",
+        "xteink",
+        "plantifique",
+        "italist_usd"
+      ],
+      "families": 225,
+      "links": 1026
+    },
+    "ve": {
+      "country": "VE",
+      "status": "draft",
+      "currency": "USD",
+      "sources": [
+        "vivien",
+        "italist_usd"
+      ],
+      "families": 170,
+      "links": 903
+    }
+  },
+  "feeds": [
+    {
+      "feed": "coach_es",
+      "input_rows_grouped": 1714,
+      "selected_families": 100,
+      "currency": "EUR",
+      "merchant": "Coach",
+      "min_selected": 59.0,
+      "max_selected": 550.0
+    },
+    {
+      "feed": "italist_eur",
+      "input_rows_grouped": 39820,
+      "selected_families": 120,
+      "currency": "EUR",
+      "merchant": "Italist",
+      "min_selected": 55.54,
+      "max_selected": 1757.11
+    },
+    {
+      "feed": "hewi",
+      "input_rows_grouped": 29559,
+      "selected_families": 120,
+      "currency": "GBP",
+      "merchant": "HEWI",
+      "min_selected": 24.86,
+      "max_selected": 2999.0
+    },
+    {
+      "feed": "vivien",
+      "input_rows_grouped": 363,
+      "selected_families": 70,
+      "currency": "USD",
+      "merchant": "Vivien Hair",
+      "min_selected": 11.99,
+      "max_selected": 340.99
+    },
+    {
+      "feed": "xteink",
+      "input_rows_grouped": 20,
+      "selected_families": 20,
+      "currency": "USD",
+      "merchant": "Xteink",
+      "min_selected": 3.99,
+      "max_selected": 69.0
+    },
+    {
+      "feed": "plantifique",
+      "input_rows_grouped": 58,
+      "selected_families": 35,
+      "currency": "USD",
+      "merchant": "Plantifique",
+      "min_selected": 9.99,
+      "max_selected": 115.99
+    },
+    {
+      "feed": "italist_usd",
+      "input_rows_grouped": 74259,
+      "selected_families": 100,
+      "currency": "USD",
+      "merchant": "Italist",
+      "min_selected": 64.77,
+      "max_selected": 2140.32
+    }
+  ]
+}

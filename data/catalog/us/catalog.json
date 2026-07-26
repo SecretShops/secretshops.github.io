@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "region": "us",
+  "country": "US",
+  "locale": "en-US",
+  "currency": "USD",
+  "sources": [
+    {
+      "id": "impact-vivien",
+      "path": "/data/catalog/us/impact-vivien.json",
+      "country": "US",
+      "currency": "USD",
+      "merchantId": "vivien-hair",
+      "merchantName": "Vivien Hair"
+    },
+    {
+      "id": "impact-xteink",
+      "path": "/data/catalog/us/impact-xteink.json",
+      "country": "US",
+      "currency": "USD",
+      "merchantId": "xteink",
+      "merchantName": "Xteink"
+    },
+    {
+      "id": "impact-plantifique",
+      "path": "/data/catalog/us/impact-plantifique.json",
+      "country": "US",
+      "currency": "USD",
+      "merchantId": "plantifique",
+      "merchantName": "Plantifique"
+    },
+    {
+      "id": "impact-italist-usd",
+      "path": "/data/catalog/us/impact-italist-usd.json",
+      "country": "US",
+      "currency": "USD",
+      "merchantId": "italist",
+      "merchantName": "Italist"
+    }
+  ]
+}

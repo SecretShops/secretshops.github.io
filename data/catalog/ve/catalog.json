@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "region": "ve",
+  "country": "VE",
+  "locale": "es-VE",
+  "currency": "USD",
+  "sources": [
+    {
+      "id": "impact-vivien",
+      "path": "/data/catalog/ve/impact-vivien.json",
+      "country": "VE",
+      "currency": "USD",
+      "merchantId": "vivien-hair",
+      "merchantName": "Vivien Hair"
+    },
+    {
+      "id": "impact-italist-usd",
+      "path": "/data/catalog/ve/impact-italist-usd.json",
+      "country": "VE",
+      "currency": "USD",
+      "merchantId": "italist",
+      "merchantName": "Italist"
+    }
+  ]
+}

@@ -18,6 +18,22 @@
       "currency": "EUR",
       "merchantId": "aliexpress",
       "merchantName": "AliExpress"
+    },
+    {
+      "id": "impact-coach-es",
+      "path": "/data/catalog/es/impact-coach-es.json",
+      "country": "ES",
+      "currency": "EUR",
+      "merchantId": "coach",
+      "merchantName": "Coach"
+    },
+    {
+      "id": "impact-italist-eur",
+      "path": "/data/catalog/es/impact-italist-eur.json",
+      "country": "ES",
+      "currency": "EUR",
+      "merchantId": "italist",
+      "merchantName": "Italist"
     }
   ]
 }

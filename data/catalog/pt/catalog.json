@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "region": "pt",
+  "country": "PT",
+  "locale": "pt-PT",
+  "currency": "EUR",
+  "sources": [
+    {
+      "id": "impact-italist-eur",
+      "path": "/data/catalog/pt/impact-italist-eur.json",
+      "country": "PT",
+      "currency": "EUR",
+      "merchantId": "italist",
+      "merchantName": "Italist"
+    }
+  ]
+}

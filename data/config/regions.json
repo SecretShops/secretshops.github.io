@@ -54,9 +54,11 @@
       "locale": "pt-PT",
       "currency": "EUR",
       "basePath": "/pt/",
-      "status": "draft",
-      "catalogManifest": null,
-      "affiliateLinks": null
+      "status": "published",
+      "catalogManifest": "/data/catalog/pt/catalog.json",
+      "affiliateLinks": "/data/catalog/pt/affiliate-links.json",
+      "title": "SecretShop Portugal | Compare antes de comprar",
+      "description": "Compare produtos, opções e ofertas disponíveis para Portugal antes de visitar a loja."
     },
     {
       "id": "cl",
@@ -105,6 +107,48 @@
       "status": "draft",
       "catalogManifest": null,
       "affiliateLinks": null
+    },
+    {
+      "id": "ve",
+      "countryCode": "VE",
+      "name": "Venezuela",
+      "flag": "🇻🇪",
+      "locale": "es-VE",
+      "currency": "USD",
+      "basePath": "/ve/",
+      "status": "draft",
+      "catalogManifest": "/data/catalog/ve/catalog.json",
+      "affiliateLinks": "/data/catalog/ve/affiliate-links.json",
+      "title": "SecretShop Venezuela | Compara antes de comprar",
+      "description": "Compara productos y ofertas con envío potencial a Venezuela antes de visitar la tienda."
+    },
+    {
+      "id": "us",
+      "countryCode": "US",
+      "name": "Estados Unidos",
+      "flag": "🇺🇸",
+      "locale": "en-US",
+      "currency": "USD",
+      "basePath": "/us/",
+      "status": "draft",
+      "catalogManifest": "/data/catalog/us/catalog.json",
+      "affiliateLinks": "/data/catalog/us/affiliate-links.json",
+      "title": "SecretShop United States | Compare before buying",
+      "description": "Compare products, variants and available offers before visiting the store."
+    },
+    {
+      "id": "gb",
+      "countryCode": "GB",
+      "name": "Reino Unido",
+      "flag": "🇬🇧",
+      "locale": "en-GB",
+      "currency": "GBP",
+      "basePath": "/gb/",
+      "status": "draft",
+      "catalogManifest": "/data/catalog/gb/catalog.json",
+      "affiliateLinks": "/data/catalog/gb/affiliate-links.json",
+      "title": "SecretShop United Kingdom | Compare before buying",
+      "description": "Compare products, variants and available offers before visiting the store."
     }
   ]
 }
