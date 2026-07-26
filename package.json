@@ -19,7 +19,13 @@
     "amazon:import": "node scripts/import-amazon-products.mjs && npm run quality",
     "impact:shokz:dry": "node scripts/import-impact-shokz.mjs --dry-run",
     "impact:shokz:import": "node scripts/import-impact-shokz.mjs",
-    "validate:seo": "node scripts/validate-seo.mjs"
+    "validate:seo": "node scripts/validate-seo.mjs",
+    "awin:import": "node scripts/import-awin.mjs",
+    "awin:bikila:dry": "node scripts/import-awin.mjs data/sources/awin/bikila-es.csv.gz --merchant bikila-es --dry-run",
+    "awin:bikila:import": "node scripts/import-awin.mjs data/sources/awin/bikila-es.csv.gz --merchant bikila-es",
+    "catalog:prepared:check": "node scripts/import-prepared-catalog.mjs",
+    "lounge:es:check": "node scripts/import-prepared-catalog.mjs data/sources/lounge-eu/lounge-es-catalogo-preparado.csv lounge-eu",
+    "lounge:pt:check": "node scripts/import-prepared-catalog.mjs data/sources/lounge-eu/lounge-pt-catalogo-preparado.csv lounge-eu"
   },
   "engines": {
     "node": "^20.19.0 || >=22.12.0",

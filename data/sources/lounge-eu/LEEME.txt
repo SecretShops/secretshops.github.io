@@ -1,0 +1,26 @@
+SECRETShop · Lounge EU · Catálogo preparado
+==============================================
+
+Fuente: Imported-Shopify-Catalog_IR (1).txt.gz
+Filas originales: 21,824
+Productos principales: 1,379
+Productos seleccionados: 1,146
+Productos excluidos: 233
+Variantes disponibles conservadas aparte: 12,571
+
+ARCHIVOS
+- lounge-es-catalogo-preparado.csv: catálogo localizado para España.
+- lounge-pt-catalogo-preparado.csv: catálogo localizado para Portugal.
+- lounge-eu-seleccion-maestra.csv: selección común con datos ES/PT.
+- lounge-eu-variantes-disponibles.csv: tallas/variantes en stock, fuera del catálogo principal.
+- lounge-eu-excluidos.csv: productos eliminados y motivo.
+- lounge-eu-informe-depuracion.xlsx: informe de revisión.
+- lounge-eu-manifest.json: controles y métricas reproducibles.
+
+REGLAS APLICADAS
+- Una fila por producto principal.
+- Solo productos con alguna variante disponible.
+- Se excluyen Gift Wrap, Donation y Gift Cards.
+- Precio positivo, imagen HTTPS y seguimiento de Impact válidos.
+- Los títulos localizados son borradores controlados y deben revisarse antes de publicar.
+- No se ha modificado GitHub ni la web.

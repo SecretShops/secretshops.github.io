@@ -1,0 +1,11 @@
+SECRETShop · Lounge EU
+
+Integración actual:
+- España: 1.146 productos integrados en el catálogo maestro y preparados para publicación.
+- Portugal: fuente completa de 1.146 productos conservada en data/sources/lounge-eu/, sin publicarla ni mezclarla con España porque la región /pt/ continúa en borrador.
+- Red: Impact.
+- Merchant: lounge-eu.
+- Seguimiento: loungeeu.sjv.io.
+
+IMPORTANTE: los títulos localizados tienen estado borrador_controlado_revisar_antes_de_publicar según el informe original.
+Los archivos de variantes, exclusiones, informe y manifest se conservan en data/sources/lounge-eu/.

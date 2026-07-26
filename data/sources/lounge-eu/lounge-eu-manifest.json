@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-26T12:52:10",
+  "sourceFile": "Imported-Shopify-Catalog_IR (1).txt.gz",
+  "sourceSha256": "c8cef2dc140caf6be9239ad4e2b1e980af20bc73c29ec618a6b48c8274f2a129",
+  "merchant": {
+    "id": "lounge-eu",
+    "name": "Lounge EU",
+    "network": "impact",
+    "trackingHost": "loungeeu.sjv.io",
+    "landingDomain": "eu.lounge.com",
+    "marketsPrepared": [
+      "ES",
+      "PT"
+    ],
+    "currency": "EUR"
+  },
+  "totals": {
+    "feedRows": 21824,
+    "parentProducts": 1379,
+    "selectedProducts": 1146,
+    "excludedProducts": 233,
+    "availableVariantRows": 12571,
+    "discountedProducts": 397,
+    "productsAtOrUnder10EUR": 159
+  },
+  "priorityCounts": {
+    "A": 140,
+    "B": 417,
+    "C": 589
+  },
+  "exclusionCounts": {
+    "Artículo no comercializable": 3,
+    "Sin stock en todas las variantes": 230
+  },
+  "categoryCountsES": {
+    "Lencería · Braguitas y tangas": 462,
+    "Lencería · Sujetadores": 313,
+    "Pijamas": 83,
+    "Moda mujer · Tops y camisas": 32,
+    "Moda mujer · Pantalones y faldas": 29,
+    "Moda mujer · Chaquetas y punto": 26,
+    "Moda mujer · Otras prendas": 26,
+    "Accesorios mujer": 23,
+    "Accesorios mujer · Bolsos": 23,
+    "Moda mujer · Calzado": 19,
+    "Lencería · Accesorios": 18,
+    "Lencería · Corsés y bustiers": 17,
+    "Lencería · Bodies": 12,
+    "Lencería · Conjuntos": 11,
+    "Baño · Partes inferiores": 11,
+    "Moda hombre · Ropa interior": 10,
+    "Moda mujer · Vestidos": 8,
+    "Accesorios mujer · Medias y calcetines": 7,
+    "Baño · Tops": 7,
+    "Batas y ropa de descanso": 4,
+    "Baño · Bañadores": 4,
+    "Cuidado de prendas": 1
+  },
+  "checks": {
+    "uniqueParentSku": true,
+    "oneRowPerParentProduct": true,
+    "inStockOnly": true,
+    "positivePriceOnly": true,
+    "impactTrackingHostValidated": true,
+    "landingDomainValidated": true,
+    "imageHttpsOnly": true,
+    "currencyEUR": true
+  },
+  "publicationNote": "Los títulos localizados son borradores creados con un glosario controlado. Deben revisarse editorialmente antes de publicar el catálogo definitivo.",
+  "outputs": {
+    "lounge-eu-seleccion-maestra.csv": {
+      "sha256": "80cc90cb5fc9dc5b32f636172f8815a6ecb22806d33df9d700a54eba8d9a7b6d",
+      "sizeBytes": 2815459
+    },
+    "lounge-es-catalogo-preparado.csv": {
+      "sha256": "96810db9e35efb313ff9fc0be7f8d8390ab406bb9f0e96db5bb7ac80783b7c5f",
+      "sizeBytes": 1585189
+    },
+    "lounge-pt-catalogo-preparado.csv": {
+      "sha256": "8563dbdb6a6812b8c8471889119aa98f8099081b73c13e1c8b699e8a757d1fd5",
+      "sizeBytes": 1581728
+    },
+    "lounge-eu-variantes-disponibles.csv": {
+      "sha256": "4b6a3222f589d0f6012aae8da7a4c063def2c299d7df2d8a8cc47264449a81b9",
+      "sizeBytes": 5248203
+    },
+    "lounge-eu-excluidos.csv": {
+      "sha256": "3060daeb40202334fe57d8d7565d41ea7db1048ea6f765c6498b15347e9a975d",
+      "sizeBytes": 61771
+    },
+    "lounge-eu-informe-depuracion.xlsx": {
+      "sha256": "38d99b8a04705cfee97815b1eaba063f52b8e45ca4a586a2e8e63661e39d58c7",
+      "sizeBytes": 350407
+    },
+    "LEEME.txt": {
+      "sha256": "520c9c99f86e899738692544d5431185181e90d50ef1e2d48319079d35a2d148",
+      "sizeBytes": 1149
+    }
+  }
+}

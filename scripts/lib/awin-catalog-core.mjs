@@ -301,6 +301,24 @@ function makeDescription(row, title, merchantName, profile) {
   return `Consulta los detalles, medidas y disponibilidad de ${title} en ${merchantName}.`;
 }
 
+
+function inferBrand(row, profile) {
+  const explicit = cleanOptional(field(row, "brand"));
+  if (explicit) return explicit;
+
+  const title = cleanText(field(row, "title"));
+  const normalizedTitle = normalizeSearchText(title);
+  const knownBrands = Array.isArray(profile.knownBrands) ? profile.knownBrands : [];
+  const match = [...knownBrands]
+    .sort((a, b) => String(b).length - String(a).length)
+    .find((brand) => {
+      const normalizedBrand = normalizeSearchText(brand);
+      return normalizedBrand && (normalizedTitle === normalizedBrand || normalizedTitle.startsWith(`${normalizedBrand} `));
+    });
+
+  return match || profile.defaultBrand || "Sin marca";
+}
+
 function isExcludedBrand(brand, merchant) {
   const exclusions = Array.isArray(merchant.excludeBrands) ? merchant.excludeBrands : [];
   const normalizedBrand = normalizeBrand(brand);
@@ -308,7 +326,7 @@ function isExcludedBrand(brand, merchant) {
 }
 
 export function buildCandidate({ row, merchant, profile, taxonomy, generatedAt }) {
-  const brand = cleanOptional(field(row, "brand")) || "Sin marca";
+  const brand = inferBrand(row, profile);
   const identifiers = getIdentifiers(row);
   const variant = buildVariant(row);
   const model = cleanOptional(field(row, "model"));

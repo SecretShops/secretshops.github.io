@@ -1,12 +1,12 @@
 {
   "schemaVersion": 3,
   "report": {
-    "generatedAt": "2026-07-26T11:13:42.398520+00:00",
-    "sourceProducts": 3350,
-    "sourceOffers": 3350,
-    "families": 626,
-    "variants": 3350,
-    "publicOffers": 3350,
+    "generatedAt": "2026-07-26T12:59:22.334813+00:00",
+    "sourceProducts": 7251,
+    "sourceOffers": 7251,
+    "families": 1974,
+    "variants": 7251,
+    "publicOffers": 7251,
     "hidden": 0,
     "sofaProducts": 1620,
     "sofaFamilies": 107,
@@ -34,6 +34,11 @@
       {
         "id": "fam-ce73c1237282",
         "title": "KAWOLA ANNY",
+        "variants": 72
+      },
+      {
+        "id": "fam-45c4c674f676",
+        "title": "BROOKS GHOST 18",
         "variants": 72
       },
       {
@@ -72,6 +77,16 @@
         "variants": 52
       },
       {
+        "id": "fam-64eafdbd35e1",
+        "title": "ADIDAS ADIZERO EVO SL WOVEN",
+        "variants": 50
+      },
+      {
+        "id": "fam-9a9e20904375",
+        "title": "ASICS NOVABLAST 6",
+        "variants": 49
+      },
+      {
         "id": "fam-048c2817761a",
         "title": "KAWOLA SAMU",
         "variants": 48
@@ -82,34 +97,19 @@
         "variants": 47
       },
       {
-        "id": "fam-9df403de82e6",
-        "title": "KAWOLA SAMU",
-        "variants": 42
+        "id": "fam-d0666db1ba3f",
+        "title": "BROOKS GLYCERIN 23",
+        "variants": 45
       },
       {
-        "id": "fam-4451881bd766",
-        "title": "KAWOLA CHARME",
-        "variants": 40
+        "id": "fam-2a162923a5e9",
+        "title": "BROOKS GHOST 18 MUJER",
+        "variants": 44
       },
       {
-        "id": "fam-0bc358644f0c",
-        "title": "KAWOLA LAISKA",
-        "variants": 40
-      },
-      {
-        "id": "fam-4dcdc0ec2d06",
-        "title": "KAWOLA LANA",
-        "variants": 40
-      },
-      {
-        "id": "fam-22bb1daa42d6",
-        "title": "KAWOLA MADELINE",
-        "variants": 40
-      },
-      {
-        "id": "fam-d064ca648e56",
-        "title": "KAWOLA MIKA",
-        "variants": 40
+        "id": "fam-e23c085817ed",
+        "title": "BROOKS ADRENALINE GTS 25",
+        "variants": 43
       }
     ],
     "policy": "Agrupación conservadora por marca, categoría, modelo y tipo; las ofertas permanecen asociadas a una variante exacta."

@@ -6,7 +6,7 @@ import { DEFAULT_CATALOG_DIR, importAwinFeed } from "./lib/awin-catalog-core.mjs
 
 export function printHelp() {
   console.log(`Uso:
-  node scripts/import-awin.mjs <feed.csv|feed.zip> [opciones]
+  node scripts/import-awin.mjs <feed.csv|feed.csv.gz|feed.zip> [opciones]
 
 Opciones:
   --merchant <id>            ID interno del merchant en merchants.json.

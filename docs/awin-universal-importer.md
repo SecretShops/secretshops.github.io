@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-`import-awin.mjs` convierte un feed oficial de Awin, en CSV o ZIP, al catálogo normalizado de SecretShop. El mismo importador sirve para los anunciantes registrados en `merchants.json`; las diferencias de cada tienda se definen mediante perfiles, sin duplicar la lógica de importación.
+`import-awin.mjs` convierte un feed oficial de Awin, en CSV, CSV.GZ o ZIP, al catálogo normalizado de SecretShop. El mismo importador sirve para los anunciantes registrados en `merchants.json`; las diferencias de cada tienda se definen mediante perfiles, sin duplicar la lógica de importación.
 
 No realiza scraping ni consulta páginas de producto. Utiliza exclusivamente los datos incluidos en el feed de afiliación.
 

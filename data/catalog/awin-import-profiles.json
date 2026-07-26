@@ -150,6 +150,118 @@
         }
       ],
       "requireGlobalIdentifier": true
+    },
+    "bikila-es": {
+      "country": "ES",
+      "currency": "EUR",
+      "department": "Deporte",
+      "fallbackCategory": "Running",
+      "defaultCondition": "new",
+      "requireGlobalIdentifier": false,
+      "requireExactIdentifier": true,
+      "knownBrands": [
+        "NEW BALANCE",
+        "SWEET SMILE",
+        "COMPRESSPORT",
+        "NNORMAL",
+        "SAUCONY",
+        "SALOMON",
+        "SKECHERS",
+        "SOFSOLE",
+        "SUB-2",
+        "ADIDAS",
+        "BROOKS",
+        "ASICS",
+        "NIKE",
+        "HOKA",
+        "MIZUNO",
+        "ALTRA",
+        "PUMA",
+        "GOODR",
+        "HANKER",
+        "CURREX",
+        "EASSUN",
+        "OOFOS",
+        "LURBEL",
+        "BUFF",
+        "LEKI",
+        "KAILAS",
+        "TOPO",
+        "361",
+        "BIKILA",
+        "SPENCO"
+      ],
+      "categoryRules": [
+        {
+          "category": "Calcetines deportivos",
+          "includeAny": [
+            "sock",
+            "socks",
+            "calcetin",
+            "calcetines"
+          ]
+        },
+        {
+          "category": "Accesorios de running",
+          "includeAny": [
+            "gafas",
+            "sunglasses",
+            "gorra",
+            "visera",
+            "cinturon",
+            "mochila",
+            "chaleco",
+            "baston",
+            "plantilla",
+            "cordones",
+            "accesorio"
+          ]
+        },
+        {
+          "category": "Textil deportivo",
+          "includeAny": [
+            "camiseta",
+            "shirt",
+            "short",
+            "malla",
+            "tight",
+            "sudadera",
+            "chaqueta",
+            "jacket",
+            "pantalon",
+            "top",
+            "bra"
+          ]
+        },
+        {
+          "category": "Zapatillas de trail",
+          "includeAny": [
+            "trail",
+            "mountain",
+            "montana",
+            "senderismo"
+          ]
+        },
+        {
+          "category": "Zapatillas de clavos",
+          "includeAny": [
+            "track spikes",
+            "spike",
+            "clavos"
+          ]
+        },
+        {
+          "category": "Zapatillas de running",
+          "includeAny": [
+            "running",
+            "runner",
+            "road",
+            "zapatilla",
+            "shoe",
+            "shoes"
+          ]
+        }
+      ]
     }
   }
 }

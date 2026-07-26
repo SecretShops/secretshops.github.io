@@ -1,4 +1,4 @@
-import { inflateRawSync } from "node:zlib";
+import { gunzipSync, inflateRawSync } from "node:zlib";
 import { readFile, writeFile, rename, mkdir, rm } from "node:fs/promises";
 import { extname, basename, dirname, resolve } from "node:path";
 
@@ -175,6 +175,15 @@ export async function readAwinFeed(inputPath) {
     };
   }
 
+  if (extension === ".gz") {
+    const parsed = parseCsv(gunzipSync(buffer).toString("utf8"));
+    return {
+      ...parsed,
+      sourceArchive: basename(absolutePath),
+      sourceFile: basename(absolutePath).replace(/\.gz$/i, "")
+    };
+  }
+
   if ([".csv", ".txt"].includes(extension)) {
     const parsed = parseCsv(buffer.toString("utf8"));
     return {
@@ -184,7 +193,7 @@ export async function readAwinFeed(inputPath) {
     };
   }
 
-  throw new Error("Formato no compatible. Utiliza el CSV o ZIP descargado de Awin.");
+  throw new Error("Formato no compatible. Utiliza el CSV, CSV.GZ o ZIP descargado de Awin.");
 }
 
 export function cleanText(value) {

@@ -92,7 +92,8 @@ test("cada oferta publicada tiene exactamente un enlace seguro", () => {
       /(^|\.)awin1\.com$/i.test(url.hostname) ||
       /^s\.click\.aliexpress\.com$/i.test(url.hostname) ||
       /(^|\.)amazon\.es$/i.test(url.hostname) ||
-      /^shokzes\.pxf\.io$/i.test(url.hostname),
+      /^shokzes\.pxf\.io$/i.test(url.hostname) ||
+      /^loungeeu\.sjv\.io$/i.test(url.hostname),
       offerId
     );
   }

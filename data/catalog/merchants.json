@@ -210,6 +210,48 @@
       "rejectionReasonText": "El anunciante aún no colabora con este tipo de afiliado",
       "retryable": false,
       "statusUpdatedAt": "2026-07-22"
+    },
+    {
+      "id": "bikila-es",
+      "name": "BIKILA ES",
+      "country": "ES",
+      "status": "approved",
+      "network": "awin",
+      "awinAdvertiserId": "75838",
+      "feedExpected": true,
+      "feedId": "104663",
+      "catalogMode": "retail",
+      "landingDomains": [
+        "bikila.com",
+        "www.bikila.com"
+      ],
+      "statusUpdatedAt": "2026-07-26"
+    },
+    {
+      "id": "lounge-eu",
+      "name": "Lounge EU",
+      "country": "ES",
+      "countries": [
+        "ES"
+      ],
+      "status": "approved",
+      "network": "impact",
+      "impactTrackingHost": "loungeeu.sjv.io",
+      "impactPublisherId": "7518894",
+      "impactCampaignId": "3973367",
+      "impactCreativeId": "54841",
+      "impactCatalogSource": "CATF_35417",
+      "landingDomains": [
+        "eu.lounge.com"
+      ],
+      "feedExpected": true,
+      "catalogMode": "retail",
+      "currency": "EUR",
+      "statusUpdatedAt": "2026-07-26",
+      "publicationStatus": "prepared_titles_require_editorial_review",
+      "preparedCountries": [
+        "PT"
+      ]
     }
   ]
 }

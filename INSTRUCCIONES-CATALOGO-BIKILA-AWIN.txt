@@ -1,0 +1,32 @@
+SECRETShop — BIKILA ES + IMPORTADOR UNIVERSAL AWIN
+Fecha: 26 de julio de 2026
+
+CONTENIDO
+- Catálogo completo de BIKILA ES importado desde el feed oficial de Awin.
+- 2.755 variantes/ofertas BIKILA aceptadas.
+- Enlaces aw_deep_link conservados y auditados.
+- Importador universal compatible con CSV, CSV.GZ y ZIP de Awin.
+- Perfil específico BIKILA ES y taxonomía deportiva añadidos.
+
+ACTUALIZAR BIKILA EN EL FUTURO
+1. Sustituir data/sources/awin/bikila-es.csv.gz por el feed nuevo.
+2. Ejecutar:
+   npm run awin:bikila:dry
+3. Revisar data/catalog/import-reports/bikila-es-last.json.
+4. Ejecutar:
+   npm run awin:bikila:import
+   npm run quality
+
+IMPORTAR OTRO ANUNCIANTE AWIN
+1. Añadir el merchant aprobado a data/catalog/merchants.json.
+2. Añadir su perfil a data/catalog/awin-import-profiles.json si necesita reglas propias.
+3. Ejecutar:
+   node scripts/import-awin.mjs RUTA_DEL_FEED --merchant ID_DEL_MERCHANT --dry-run
+4. Si el informe es correcto, repetir sin --dry-run y ejecutar npm run quality.
+
+VALIDACIÓN REALIZADA
+- 49 pruebas unitarias/integración superadas.
+- Catálogo validado: 6.106 productos y 6.106 ofertas totales.
+- 6.963 enlaces comerciales publicados auditados, 0 incidencias.
+- Regiones, SEO y referencias locales validadas.
+- La prueba opcional de navegador Playwright no se incluyó en el dictamen porque el entorno no resolvió el paquete Playwright; las validaciones estructurales y funcionales sí finalizaron correctamente.

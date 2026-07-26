@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-26T11:13:43.725Z",
+  "generatedAt": "2026-07-26T12:59:24.532Z",
   "publishedRegions": [
     "es"
   ],
@@ -18,10 +18,10 @@
       "region": "es",
       "country": "ES",
       "status": "published",
-      "families": 1037,
-      "variants": 3761,
-      "offers": 3761,
-      "productPages": 1037,
+      "families": 2385,
+      "variants": 7662,
+      "offers": 7662,
+      "productPages": 2385,
       "lastmod": "2026-07-26"
     }
   ]
