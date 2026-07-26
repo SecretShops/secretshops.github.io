@@ -1,22 +1,14 @@
 {
   "schemaVersion": 1,
-  "region": "pt",
-  "country": "PT",
-  "locale": "pt-PT",
+  "region": "it",
+  "country": "IT",
+  "locale": "it-IT",
   "currency": "EUR",
   "sources": [
     {
-      "id": "impact-italist-eur",
-      "path": "/data/catalog/pt/impact-italist-eur.json",
-      "country": "PT",
-      "currency": "EUR",
-      "merchantId": "italist",
-      "merchantName": "Italist"
-    },
-    {
       "id": "impact-heybike-eur",
       "path": "/data/catalog/shared/impact-heybike-eur.json",
-      "country": "PT",
+      "country": "IT",
       "currency": "EUR",
       "merchantId": "heybike",
       "merchantName": "Heybike"
@@ -24,7 +16,7 @@
     {
       "id": "impact-pixar-eur",
       "path": "/data/catalog/shared/impact-pixar-eur.json",
-      "country": "PT",
+      "country": "IT",
       "currency": "EUR",
       "merchantId": "pixar",
       "merchantName": "PIXAR Bikes"
@@ -32,7 +24,7 @@
     {
       "id": "impact-dore-rose-eur",
       "path": "/data/catalog/shared/impact-dore-rose-eur.json",
-      "country": "PT",
+      "country": "IT",
       "currency": "EUR",
       "merchantId": "dore-rose",
       "merchantName": "Dore & Rose"

@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "region": "gr",
+  "country": "GR",
+  "locale": "el-GR",
+  "currency": "EUR",
+  "sources": [
+    {
+      "id": "impact-dore-rose-eur",
+      "path": "/data/catalog/shared/impact-dore-rose-eur.json",
+      "country": "GR",
+      "currency": "EUR",
+      "merchantId": "dore-rose",
+      "merchantName": "Dore & Rose"
+    }
+  ]
+}

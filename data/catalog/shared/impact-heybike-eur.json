@@ -1,0 +1,1969 @@
+{
+  "schemaVersion": 3,
+  "generatedAt": "2026-07-26T21:30:00+02:00",
+  "families": [
+    {
+      "id": "heybike-2bd26e338ed2",
+      "slug": "heybike-ec-1-st-combo",
+      "title": "EC 1-ST Combo",
+      "brand": "Heybike",
+      "model": null,
+      "category": "Deportes y aire libre",
+      "categories": [
+        "Deportes y aire libre"
+      ],
+      "description": "",
+      "image": "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/ST_b3880755-946e-4389-b171-4b8dcf45a005.png?v=1751365602",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/ST_b3880755-946e-4389-b171-4b8dcf45a005.png?v=1751365602",
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/ST_c6587fc1-8521-4d00-9f70-52bde76619cb.png?v=1751365602",
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/ST_0ef5099e-d3d2-4b11-b0f0-bb0b4e2cf17f.png?v=1751365602"
+      ],
+      "minPrice": 1799.0,
+      "maxPrice": 1799.0,
+      "variantCount": 3,
+      "secretScore": 8.1,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "heybike-ec-1-st-combo-47794595299613",
+          "title": "EC 1-ST Combo - Türkisblau / Hellrosa",
+          "label": "Türkisblau · Hellrosa",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/ST_b3880755-946e-4389-b171-4b8dcf45a005.png?v=1751365602"
+          ],
+          "offers": [
+            {
+              "id": "heybike:47794595299613",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 1799.0,
+              "previousPrice": 3398.0,
+              "shippingCost": null,
+              "totalPrice": 1799.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        },
+        {
+          "id": "heybike-ec-1-st-combo-47794595332381",
+          "title": "EC 1-ST Combo - Türkisblau / Türkisblau",
+          "label": "Türkisblau",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/ST_c6587fc1-8521-4d00-9f70-52bde76619cb.png?v=1751365602"
+          ],
+          "offers": [
+            {
+              "id": "heybike:47794595332381",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 1799.0,
+              "previousPrice": 3398.0,
+              "shippingCost": null,
+              "totalPrice": 1799.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        },
+        {
+          "id": "heybike-ec-1-st-combo-47794595397917",
+          "title": "EC 1-ST Combo - Hellrosa / Hellrosa",
+          "label": "Hellrosa",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/ST_0ef5099e-d3d2-4b11-b0f0-bb0b4e2cf17f.png?v=1751365602"
+          ],
+          "offers": [
+            {
+              "id": "heybike:47794595397917",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 1799.0,
+              "previousPrice": 3398.0,
+              "shippingCost": null,
+              "totalPrice": 1799.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "heybike-ff0c9794d8d3",
+      "slug": "heybike-ec1-gepacktrager",
+      "title": "EC1 Gepäckträger",
+      "brand": "Heybike",
+      "model": null,
+      "category": "Deportes y aire libre",
+      "categories": [
+        "Deportes y aire libre"
+      ],
+      "description": "Die Maße des hinteren Gepäckträgers betragen 62 × 18 × 38 cm.Hergestellt aus hochwertigen Materialien, zeichnet sich unser Heckgepäckträger durch außergewöhnliche Haltbarkeit aus und bietet die ideale Lösung, um Ihre Essentials zu transportieren, sei es Ihre Ausrüstung für den täglichen Arbeitsweg, Einkäufe oder Proviant für Wochenendausflüge.",
+      "image": "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/01_9487cf7c-52ac-4d80-9464-bcfa2f89c362.png?v=1702366852",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/01_9487cf7c-52ac-4d80-9464-bcfa2f89c362.png?v=1702366852",
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/02_04e48936-ce65-4d94-94cf-3fe2917905fa.png?v=1702366852",
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/03_8e0d25cf-5073-41bb-8aef-a29f955cc485.png?v=1702366852",
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/04_cb68024d-fb40-48b3-b046-83aca32d679d.png?v=1702366853"
+      ],
+      "minPrice": 69.0,
+      "maxPrice": 69.0,
+      "variantCount": 1,
+      "secretScore": 8.1,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "heybike-ec1-gepacktrager-48584895070493",
+          "title": "EC1 Gepäckträger",
+          "label": "Modelo disponible",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/01_9487cf7c-52ac-4d80-9464-bcfa2f89c362.png?v=1702366852",
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/02_04e48936-ce65-4d94-94cf-3fe2917905fa.png?v=1702366852",
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/03_8e0d25cf-5073-41bb-8aef-a29f955cc485.png?v=1702366852",
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/04_cb68024d-fb40-48b3-b046-83aca32d679d.png?v=1702366853"
+          ],
+          "offers": [
+            {
+              "id": "heybike:48584895070493",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 69.0,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 69.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "heybike-693574c69192",
+      "slug": "heybike-ec1-heckgepacktrager",
+      "title": "EC1 Heckgepäckträger",
+      "brand": "Heybike",
+      "model": null,
+      "category": "Deportes y aire libre",
+      "categories": [
+        "Deportes y aire libre"
+      ],
+      "description": "Entdecken Sie den perfekten Begleiter für Ihre Radabenteuer - unseren Fahrradheckgepäckträger. Entwickelt für Stil und Nutzen, besticht dieser schlanke und robuste Träger durch sein zeitgemäßes Design, das nahtlos in die Ästhetik Ihres Fahrrads integriert ist.Hergestellt aus hochwertigen Materialien, zeichnet sich unser Heckgepäckträger durch außergewöhnliche Haltbarkeit aus und bietet die ideale Lösung, um Ihre Essentials zu transportieren, sei es Ihre Ausrüstung für den täglichen Arbeitsweg, Einkäufe oder Proviant für Wochenendausflüge.Mit seiner benutzerfreundlichen Montage und dem sicheren Befestigungssystem können Sie unserem Fahrradheckgepäckträger vertrauen, Ihre Ladung stabil und sicher zu transportieren, egal wohin Ihre Fahrt Sie führt. Verabschieden Sie sich von sperrigen Rucksäcken und sagen Sie hallo zu einer bequemeren, praktischeren und stilvolleren Radreise.Rüsten Sie Ihr Radfahren auf und verleihen Sie Ihren Fahrten mit unserem Fahrradheckgepäckträger eine Prise praktischer Eleganz. Steigern Sie Ihre Fahrten und genießen Sie die Freiheit, zu transportieren, was Sie benötigen, wann Sie es benötigen.",
+      "image": "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/01_9487cf7c-52ac-4d80-9464-bcfa2f89c362.png?v=1702366852",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/01_9487cf7c-52ac-4d80-9464-bcfa2f89c362.png?v=1702366852"
+      ],
+      "minPrice": 69.0,
+      "maxPrice": 69.0,
+      "variantCount": 2,
+      "secretScore": 8.1,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "heybike-ec1-heckgepacktrager-47286514843933",
+          "title": "EC1 Heckgepäckträger - EC 1",
+          "label": "EC 1",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/01_9487cf7c-52ac-4d80-9464-bcfa2f89c362.png?v=1702366852"
+          ],
+          "offers": [
+            {
+              "id": "heybike:47286514843933",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 69.0,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 69.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        },
+        {
+          "id": "heybike-ec1-heckgepacktrager-47286514876701",
+          "title": "EC1 Heckgepäckträger - EC 1-ST",
+          "label": "EC 1-ST",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/01_9487cf7c-52ac-4d80-9464-bcfa2f89c362.png?v=1702366852"
+          ],
+          "offers": [
+            {
+              "id": "heybike:47286514876701",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 69.0,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 69.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "heybike-0e98d3c8cce7",
+      "slug": "heybike-ec1-st-ec1-7-gang-freilauf",
+      "title": "EC1-ST & EC1 7-Gang-Freilauf",
+      "brand": "Heybike",
+      "model": null,
+      "category": "Deportes y aire libre",
+      "categories": [
+        "Deportes y aire libre"
+      ],
+      "description": "7-Gang-Freilauf – Zuverlässiges und langlebiges Ritzelpaket für sanfte und präzise Schaltvorgänge.",
+      "image": "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/7-Gang-Freilauf.png?v=1742358892",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/7-Gang-Freilauf.png?v=1742358892"
+      ],
+      "minPrice": 35.0,
+      "maxPrice": 35.0,
+      "variantCount": 1,
+      "secretScore": 8.1,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "heybike-ec1-st-ec1-7-gang-freilauf-55551826559357",
+          "title": "EC1-ST & EC1 7-Gang-Freilauf",
+          "label": "Modelo disponible",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/7-Gang-Freilauf.png?v=1742358892"
+          ],
+          "offers": [
+            {
+              "id": "heybike:55551826559357",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 35.0,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 35.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "heybike-0d67417c6e5a",
+      "slug": "heybike-ec1-st-ec1-reifen",
+      "title": "EC1-ST & EC1 Reifen",
+      "brand": "Heybike",
+      "model": null,
+      "category": "Deportes y aire libre",
+      "categories": [
+        "Deportes y aire libre"
+      ],
+      "description": "Schlauch – 700C x 40C, mit verlängertem Ventil (48 mm), Chaoyang-Reifen. Strapazierfähig und zuverlässig für eine lange Lebensdauer. Reifen – 700C x 40C, pannensicher mit reflektierendem Streifen, Chaoyang-Reifen.",
+      "image": "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Schlauch.png?v=1742370090",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Schlauch.png?v=1742370090"
+      ],
+      "minPrice": 30.0,
+      "maxPrice": 30.0,
+      "variantCount": 2,
+      "secretScore": 8.1,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "heybike-ec1-st-ec1-reifen-55552632127869",
+          "title": "EC1-ST & EC1 Reifen - EC1 / Schlauch",
+          "label": "EC1 · Schlauch",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Schlauch.png?v=1742370090"
+          ],
+          "offers": [
+            {
+              "id": "heybike:55552632127869",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 30.0,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 30.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        },
+        {
+          "id": "heybike-ec1-st-ec1-reifen-55552632160637",
+          "title": "EC1-ST & EC1 Reifen - EC1-ST / Schlauch",
+          "label": "EC1-ST · Schlauch",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Schlauch.png?v=1742370090"
+          ],
+          "offers": [
+            {
+              "id": "heybike:55552632160637",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 30.0,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 30.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "heybike-7064bc4a84ba",
+      "slug": "heybike-ec1-st-ec1-sattel",
+      "title": "EC1-ST & EC1 Sattel",
+      "brand": "Heybike",
+      "model": null,
+      "category": "Deportes y aire libre",
+      "categories": [
+        "Deportes y aire libre"
+      ],
+      "description": "Der Sattel bietet im Vergleich zum Standard-Modell eine verbesserte Weichheit für zusätzlichen Komfort. Sattelstütze: Aluminium, 80 mm, schwarz. Leicht und stabil für eine sichere Sitzposition.",
+      "image": "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/6_d7c73bae-5658-4031-985b-a37c98f724e6.png?v=1728354537",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/6_d7c73bae-5658-4031-985b-a37c98f724e6.png?v=1728354537"
+      ],
+      "minPrice": 79.0,
+      "maxPrice": 79.0,
+      "variantCount": 1,
+      "secretScore": 8.1,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "heybike-ec1-st-ec1-sattel-55552472678781",
+          "title": "EC1-ST & EC1 Sattel - Sattel",
+          "label": "Sattel",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/6_d7c73bae-5658-4031-985b-a37c98f724e6.png?v=1728354537"
+          ],
+          "offers": [
+            {
+              "id": "heybike:55552472678781",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 79.0,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 79.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "heybike-5075bab8827d",
+      "slug": "heybike-fahrradtrager-packtasche",
+      "title": "Fahrradträger Packtasche",
+      "brand": "Heybike",
+      "model": null,
+      "category": "Deportes y aire libre",
+      "categories": [
+        "Deportes y aire libre"
+      ],
+      "description": "Die Fahrradgepäckträgertasche wird mit 2 großen Seitentaschen geliefert. Jede Seite hat 15L Lagerung. 30L Kapazität insgesamt ist genug für Ihre täglichen Pendeln oder Einkaufen Lasten. Merkmale 1. Großes Fassungsvermögen: Die Rahmentasche mit 30 Litern (ca. 13,2 Gallonen) großem Fassungsvermögen reicht aus, um Ihren Arbeitsweg zu bewältigen und Ihre wichtigsten Utensilien gut organisiert zu halten. Es kann Ihre Brieftasche, Handy, Handtücher, kleine Werkzeuge, Outdoor-Produkte, Wasserflaschen, Karten, Lebensmittel und Ladegeräte im Hauptfach zu speichern, die ideal für einen Wochenendausflug zu verwenden ist. 2. Größe: 22''L x 12.6''W x 10.2''H; Maximale Gesamtbelastung: 20kg (44lbs) 3. Einfach zu installieren: Schnelle Installation und Freigabe, mit vier Regal Riemen und Schnallen für die Montage.",
+      "image": "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/1_7f2d0be8-4849-48c7-a0f8-1b35eeecbf90.jpg?v=1783670010",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/1_7f2d0be8-4849-48c7-a0f8-1b35eeecbf90.jpg?v=1783670010",
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/2_05656e4a-8c55-4c9f-b179-b870ae4591bf.jpg?v=1783670667"
+      ],
+      "minPrice": 89.0,
+      "maxPrice": 89.0,
+      "variantCount": 2,
+      "secretScore": 8.1,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "heybike-fahrradtrager-packtasche-47287912825117",
+          "title": "Fahrradträger Packtasche - Schwarz",
+          "label": "Schwarz",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/1_7f2d0be8-4849-48c7-a0f8-1b35eeecbf90.jpg?v=1783670010"
+          ],
+          "offers": [
+            {
+              "id": "heybike:47287912825117",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 89.0,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 89.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        },
+        {
+          "id": "heybike-fahrradtrager-packtasche-47287912857885",
+          "title": "Fahrradträger Packtasche - Grün",
+          "label": "Grün",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/2_05656e4a-8c55-4c9f-b179-b870ae4591bf.jpg?v=1783670667"
+          ],
+          "offers": [
+            {
+              "id": "heybike:47287912857885",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 89.0,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 89.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "heybike-48bdc9641ab0",
+      "slug": "heybike-flaschenhalter",
+      "title": "Flaschenhalter",
+      "brand": "Heybike",
+      "model": null,
+      "category": "Deportes y aire libre",
+      "categories": [
+        "Deportes y aire libre"
+      ],
+      "description": "",
+      "image": "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/358000854fe0ad24249b85f64640f9a4.png?v=1702366705",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/358000854fe0ad24249b85f64640f9a4.png?v=1702366705",
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/358000854fe0ad24249b85f64640f9a4_cc8a2525-010e-4c41-93a6-e99299f40d7d.png?v=1702366712",
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/fd04e833fb45ca7c14d25a877d4c9581.png?v=1702366712",
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/55.png?v=1702366712",
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/125.png?v=1702366712"
+      ],
+      "minPrice": 39.0,
+      "maxPrice": 39.0,
+      "variantCount": 1,
+      "secretScore": 8.1,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "heybike-flaschenhalter-47286504784157",
+          "title": "Flaschenhalter",
+          "label": "Modelo disponible",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/358000854fe0ad24249b85f64640f9a4.png?v=1702366705",
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/358000854fe0ad24249b85f64640f9a4_cc8a2525-010e-4c41-93a6-e99299f40d7d.png?v=1702366712",
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/fd04e833fb45ca7c14d25a877d4c9581.png?v=1702366712",
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/55.png?v=1702366712",
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/125.png?v=1702366712"
+          ],
+          "offers": [
+            {
+              "id": "heybike:47286504784157",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 39.0,
+              "previousPrice": 49.0,
+              "shippingCost": null,
+              "totalPrice": 39.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "heybike-47310b578917",
+      "slug": "heybike-front-korb-mit-bodenplatte",
+      "title": "Front Korb (mit Bodenplatte)",
+      "brand": "Heybike",
+      "model": null,
+      "category": "Deportes y aire libre",
+      "categories": [
+        "Deportes y aire libre"
+      ],
+      "description": "Beschreibung:Ideal für Ausflüge, Picknicks, den Lebensmitteleinkauf und vieles mehr.Die Ausführung mit „Eisenboden“ zeichnet sich durch einen robusten Boden aus Metall aus, der dafür sorgt, dass Ihre Snacks sicher an ihrem Platz bleiben. Mit diesem stabilen Korb, der vorne am Fahrrad montiert wird, können Sie die Transportkapazität Ihres Fahrrads erweitern und Ihre Fahrten komfortabler gestalten. Eigenschaften:1. Abmessungen (L x B x H): 32 cm x 30 cm x 15 cm2. Tragfähigkeit: 13 kg3. Befestigungsschrauben im Lieferumfang enthalten4. Einfache Montage und Demontage Bitte beachten Sie: Aufgrund unterschiedlicher Produktionschargen verfügt Ihr Fahrrad möglicherweise nicht über die vier Schraublöcher am Steuerrohr, die für die Montage dieses Frontkorbs erforderlich sind. Für weitere Informationen wenden Sie sich bitte an den Kundendienst.",
+      "image": "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/2_01ecbebc-7bbc-47ce-ba24-067b235e393e.png?v=1783667229",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/2_01ecbebc-7bbc-47ce-ba24-067b235e393e.png?v=1783667229",
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/6_ef551837-1541-4eff-b65e-8b2f4c27a3e0.png?v=1783667226",
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/4_1d234836-7317-48bb-9e22-1c6c75b50a51.png?v=1783667227",
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/4_3fe016ca-d2d2-4bef-b317-76dd8db00081.jpg?v=1783667225",
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/1_da5d4d58-e34b-40b3-8bfe-7e21d5113959.png?v=1783667226"
+      ],
+      "minPrice": 89.0,
+      "maxPrice": 89.0,
+      "variantCount": 1,
+      "secretScore": 8.1,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "heybike-front-korb-mit-bodenplatte-58376116207997",
+          "title": "Front Korb (mit Bodenplatte)",
+          "label": "Modelo disponible",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/2_01ecbebc-7bbc-47ce-ba24-067b235e393e.png?v=1783667229",
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/6_ef551837-1541-4eff-b65e-8b2f4c27a3e0.png?v=1783667226",
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/4_1d234836-7317-48bb-9e22-1c6c75b50a51.png?v=1783667227",
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/4_3fe016ca-d2d2-4bef-b317-76dd8db00081.jpg?v=1783667225",
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/1_da5d4d58-e34b-40b3-8bfe-7e21d5113959.png?v=1783667226"
+          ],
+          "offers": [
+            {
+              "id": "heybike:58376116207997",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 89.0,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 89.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "heybike-0cf4fbf0bb96",
+      "slug": "heybike-helio-f-vintage-edition",
+      "title": "Helio F - Vintage Edition",
+      "brand": "Heybike",
+      "model": null,
+      "category": "Deportes y aire libre",
+      "categories": [
+        "Deportes y aire libre"
+      ],
+      "description": "Das smarte klassische Fahrrad",
+      "image": "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Helio_F_12e7c71b-4136-4ec0-9b31-792734f0ea29.png?v=1783075291",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Helio_F_12e7c71b-4136-4ec0-9b31-792734f0ea29.png?v=1783075291",
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Helio_F-_-1_39282a7c-21f0-4dcc-93cc-328b2055d3e4.png?v=1783075292"
+      ],
+      "minPrice": 1399.0,
+      "maxPrice": 1399.0,
+      "variantCount": 2,
+      "secretScore": 8.1,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "heybike-helio-f-vintage-edition-56931232317821",
+          "title": "Helio F - Vintage Edition - Anchor Red",
+          "label": "Anchor Red",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Helio_F_12e7c71b-4136-4ec0-9b31-792734f0ea29.png?v=1783075291"
+          ],
+          "offers": [
+            {
+              "id": "heybike:56931232317821",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 1399.0,
+              "previousPrice": 1499.0,
+              "shippingCost": null,
+              "totalPrice": 1399.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        },
+        {
+          "id": "heybike-helio-f-vintage-edition-56931232350589",
+          "title": "Helio F - Vintage Edition - Racing Green",
+          "label": "Racing Green",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Helio_F-_-1_39282a7c-21f0-4dcc-93cc-328b2055d3e4.png?v=1783075292"
+          ],
+          "offers": [
+            {
+              "id": "heybike:56931232350589",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 1399.0,
+              "previousPrice": 1499.0,
+              "shippingCost": null,
+              "totalPrice": 1399.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "heybike-e5ddda2d1761",
+      "slug": "heybike-helio-f-limitierte-kunstler-edition",
+      "title": "Helio F – Limitierte Künstler-Edition",
+      "brand": "Heybike",
+      "model": null,
+      "category": "Deportes y aire libre",
+      "categories": [
+        "Deportes y aire libre"
+      ],
+      "description": "Dein Plus-Eins-Bike",
+      "image": "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Helio_F-_2_382e0b14-b3aa-42d8-b898-297d84ce3ce3.png?v=1783075291",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Helio_F-_2_382e0b14-b3aa-42d8-b898-297d84ce3ce3.png?v=1783075291",
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Helio_F-_3_777162c9-6559-493c-a008-583d30889d2d.png?v=1783075291",
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Helio_F-_1_7a5038e8-2aad-4e58-86e9-0b272a1dd46a.png?v=1783075291"
+      ],
+      "minPrice": 1399.0,
+      "maxPrice": 1399.0,
+      "variantCount": 3,
+      "secretScore": 8.1,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "heybike-helio-f-limitierte-kunstler-edition-56983496556925",
+          "title": "Helio F – Limitierte Künstler-Edition - Hedof Edition",
+          "label": "Hedof Edition",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Helio_F-_2_382e0b14-b3aa-42d8-b898-297d84ce3ce3.png?v=1783075291"
+          ],
+          "offers": [
+            {
+              "id": "heybike:56983496556925",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 1399.0,
+              "previousPrice": 1599.0,
+              "shippingCost": null,
+              "totalPrice": 1399.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        },
+        {
+          "id": "heybike-helio-f-limitierte-kunstler-edition-56983496589693",
+          "title": "Helio F – Limitierte Künstler-Edition - Mark Edition",
+          "label": "Mark Edition",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Helio_F-_3_777162c9-6559-493c-a008-583d30889d2d.png?v=1783075291"
+          ],
+          "offers": [
+            {
+              "id": "heybike:56983496589693",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 1399.0,
+              "previousPrice": 1599.0,
+              "shippingCost": null,
+              "totalPrice": 1399.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        },
+        {
+          "id": "heybike-helio-f-limitierte-kunstler-edition-56983703388541",
+          "title": "Helio F – Limitierte Künstler-Edition - Emi Edition",
+          "label": "Emi Edition",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Helio_F-_1_7a5038e8-2aad-4e58-86e9-0b272a1dd46a.png?v=1783075291"
+          ],
+          "offers": [
+            {
+              "id": "heybike:56983703388541",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 1399.0,
+              "previousPrice": 1599.0,
+              "shippingCost": null,
+              "totalPrice": 1399.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "heybike-a4729ceca224",
+      "slug": "heybike-helio-u",
+      "title": "Helio U",
+      "brand": "Heybike",
+      "model": null,
+      "category": "Deportes y aire libre",
+      "categories": [
+        "Deportes y aire libre"
+      ],
+      "description": "Ein leichtes, natürliches Urban-E-Bike für den Alltag",
+      "image": "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Helio_u-pink_63f83923-4bb3-47a7-a152-0cf40adf4374.png?v=1783075291",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Helio_u-pink_63f83923-4bb3-47a7-a152-0cf40adf4374.png?v=1783075291",
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Helio_u-white_200e7cfb-0e98-42da-87c1-cf3c808e0f75.png?v=1783075291",
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Helio_u-blue_67411939-ed0e-492c-82ab-1a8b79320088.png?v=1783075291"
+      ],
+      "minPrice": 1099.0,
+      "maxPrice": 1099.0,
+      "variantCount": 3,
+      "secretScore": 8.1,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "heybike-helio-u-57801159999869",
+          "title": "Helio U - Zartes Rosé / standard",
+          "label": "Zartes Rosé · standard",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Helio_u-pink_63f83923-4bb3-47a7-a152-0cf40adf4374.png?v=1783075291"
+          ],
+          "offers": [
+            {
+              "id": "heybike:57801159999869",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 1099.0,
+              "previousPrice": 1299.0,
+              "shippingCost": null,
+              "totalPrice": 1099.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        },
+        {
+          "id": "heybike-helio-u-57801160032637",
+          "title": "Helio U - Cremeweiß / standard",
+          "label": "Cremeweiß · standard",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Helio_u-white_200e7cfb-0e98-42da-87c1-cf3c808e0f75.png?v=1783075291"
+          ],
+          "offers": [
+            {
+              "id": "heybike:57801160032637",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 1099.0,
+              "previousPrice": 1299.0,
+              "shippingCost": null,
+              "totalPrice": 1099.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        },
+        {
+          "id": "heybike-helio-u-57801160065405",
+          "title": "Helio U - Gletscherblau / standard",
+          "label": "Gletscherblau · standard",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Helio_u-blue_67411939-ed0e-492c-82ab-1a8b79320088.png?v=1783075291"
+          ],
+          "offers": [
+            {
+              "id": "heybike:57801160065405",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 1099.0,
+              "previousPrice": 1299.0,
+              "shippingCost": null,
+              "totalPrice": 1099.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "heybike-d5ad6eb81552",
+      "slug": "heybike-helio-u-helio-f-combo",
+      "title": "Helio U + Helio F Combo",
+      "brand": "Heybike",
+      "model": null,
+      "category": "Deportes y aire libre",
+      "categories": [
+        "Deportes y aire libre"
+      ],
+      "description": "",
+      "image": "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Heliou_F_762f8e26-81d5-4d0d-92d9-69a0c8ec9be0.png?v=1772612616",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Heliou_F_762f8e26-81d5-4d0d-92d9-69a0c8ec9be0.png?v=1772612616",
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Heliou_F_a4cd71d2-5199-4126-a772-2220e9186c6b.png?v=1772612616",
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Heliou_F.png?v=1772612616",
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Heliou_F_7f2317b0-c15a-4db1-939b-cadae3df8632.png?v=1772612616",
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Heliou_F_fc5bbb26-c574-47c1-a7f0-2938357b2171.png?v=1772612617",
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Heliou_F_132dd72c-4a34-4ba4-894a-c885d56ae17e.png?v=1772612616"
+      ],
+      "minPrice": 2199.0,
+      "maxPrice": 2199.0,
+      "variantCount": 6,
+      "secretScore": 8.1,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "heybike-helio-u-helio-f-combo-57893369053565",
+          "title": "Helio U + Helio F Combo - Zartes Rosé / Anchor Red",
+          "label": "Zartes Rosé · Anchor Red",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Heliou_F_762f8e26-81d5-4d0d-92d9-69a0c8ec9be0.png?v=1772612616"
+          ],
+          "offers": [
+            {
+              "id": "heybike:57893369053565",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 2199.0,
+              "previousPrice": 2698.0,
+              "shippingCost": null,
+              "totalPrice": 2199.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        },
+        {
+          "id": "heybike-helio-u-helio-f-combo-57893369086333",
+          "title": "Helio U + Helio F Combo - Zartes Rosé / Racing Green",
+          "label": "Zartes Rosé · Racing Green",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Heliou_F_a4cd71d2-5199-4126-a772-2220e9186c6b.png?v=1772612616"
+          ],
+          "offers": [
+            {
+              "id": "heybike:57893369086333",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 2199.0,
+              "previousPrice": 2698.0,
+              "shippingCost": null,
+              "totalPrice": 2199.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        },
+        {
+          "id": "heybike-helio-u-helio-f-combo-57893369151869",
+          "title": "Helio U + Helio F Combo - Gletscherblau / Anchor Red",
+          "label": "Gletscherblau · Anchor Red",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Heliou_F.png?v=1772612616"
+          ],
+          "offers": [
+            {
+              "id": "heybike:57893369151869",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 2199.0,
+              "previousPrice": 2698.0,
+              "shippingCost": null,
+              "totalPrice": 2199.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        },
+        {
+          "id": "heybike-helio-u-helio-f-combo-57893369184637",
+          "title": "Helio U + Helio F Combo - Gletscherblau / Racing Green",
+          "label": "Gletscherblau · Racing Green",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Heliou_F_7f2317b0-c15a-4db1-939b-cadae3df8632.png?v=1772612616"
+          ],
+          "offers": [
+            {
+              "id": "heybike:57893369184637",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 2199.0,
+              "previousPrice": 2698.0,
+              "shippingCost": null,
+              "totalPrice": 2199.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        },
+        {
+          "id": "heybike-helio-u-helio-f-combo-57893371707773",
+          "title": "Helio U + Helio F Combo - Cremeweiß / Anchor Red",
+          "label": "Cremeweiß · Anchor Red",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Heliou_F_fc5bbb26-c574-47c1-a7f0-2938357b2171.png?v=1772612617"
+          ],
+          "offers": [
+            {
+              "id": "heybike:57893371707773",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 2199.0,
+              "previousPrice": 2698.0,
+              "shippingCost": null,
+              "totalPrice": 2199.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        },
+        {
+          "id": "heybike-helio-u-helio-f-combo-57893371740541",
+          "title": "Helio U + Helio F Combo - Cremeweiß / Racing Green",
+          "label": "Cremeweiß · Racing Green",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Heliou_F_132dd72c-4a34-4ba4-894a-c885d56ae17e.png?v=1772612616"
+          ],
+          "offers": [
+            {
+              "id": "heybike:57893371740541",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 2199.0,
+              "previousPrice": 2698.0,
+              "shippingCost": null,
+              "totalPrice": 2199.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "heybike-f992d013564e",
+      "slug": "heybike-helio-u-combo",
+      "title": "Helio U Combo",
+      "brand": "Heybike",
+      "model": null,
+      "category": "Deportes y aire libre",
+      "categories": [
+        "Deportes y aire libre"
+      ],
+      "description": "",
+      "image": "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Maskgroup-2.png?v=1772612120",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Maskgroup-2.png?v=1772612120",
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Maskgroup-1.png?v=1772612120",
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Maskgroup-4.png?v=1772612121",
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Maskgroup.png?v=1772612120",
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Maskgroup-3.png?v=1772612120"
+      ],
+      "minPrice": 1999.0,
+      "maxPrice": 1999.0,
+      "variantCount": 6,
+      "secretScore": 8.1,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "heybike-helio-u-combo-57893359321469",
+          "title": "Helio U Combo - Zartes Rosé / Zartes Rosé",
+          "label": "Zartes Rosé",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Maskgroup-2.png?v=1772612120"
+          ],
+          "offers": [
+            {
+              "id": "heybike:57893359321469",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 1999.0,
+              "previousPrice": 2598.0,
+              "shippingCost": null,
+              "totalPrice": 1999.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        },
+        {
+          "id": "heybike-helio-u-combo-57893359354237",
+          "title": "Helio U Combo - Zartes Rosé / Cremeweiß",
+          "label": "Zartes Rosé · Cremeweiß",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Maskgroup-2.png?v=1772612120"
+          ],
+          "offers": [
+            {
+              "id": "heybike:57893359354237",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 1999.0,
+              "previousPrice": 2598.0,
+              "shippingCost": null,
+              "totalPrice": 1999.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        },
+        {
+          "id": "heybike-helio-u-combo-57893359387005",
+          "title": "Helio U Combo - Cremeweiß / Cremeweiß",
+          "label": "Cremeweiß",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Maskgroup-1.png?v=1772612120"
+          ],
+          "offers": [
+            {
+              "id": "heybike:57893359387005",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 1999.0,
+              "previousPrice": 2598.0,
+              "shippingCost": null,
+              "totalPrice": 1999.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        },
+        {
+          "id": "heybike-helio-u-combo-57893359419773",
+          "title": "Helio U Combo - Gletscherblau / Zartes Rosé",
+          "label": "Gletscherblau · Zartes Rosé",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Maskgroup-4.png?v=1772612121"
+          ],
+          "offers": [
+            {
+              "id": "heybike:57893359419773",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 1999.0,
+              "previousPrice": 2598.0,
+              "shippingCost": null,
+              "totalPrice": 1999.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        },
+        {
+          "id": "heybike-helio-u-combo-57893359452541",
+          "title": "Helio U Combo - Gletscherblau / Cremeweiß",
+          "label": "Gletscherblau · Cremeweiß",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Maskgroup.png?v=1772612120"
+          ],
+          "offers": [
+            {
+              "id": "heybike:57893359452541",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 1999.0,
+              "previousPrice": 2598.0,
+              "shippingCost": null,
+              "totalPrice": 1999.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        },
+        {
+          "id": "heybike-helio-u-combo-57893359485309",
+          "title": "Helio U Combo - Gletscherblau / Gletscherblau",
+          "label": "Gletscherblau",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/Maskgroup-3.png?v=1772612120"
+          ],
+          "offers": [
+            {
+              "id": "heybike:57893359485309",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 1999.0,
+              "previousPrice": 2598.0,
+              "shippingCost": null,
+              "totalPrice": 1999.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "heybike-011462581245",
+      "slug": "heybike-helio-u-gepacktrager",
+      "title": "Helio U Gepäckträger",
+      "brand": "Heybike",
+      "model": null,
+      "category": "Deportes y aire libre",
+      "categories": [
+        "Deportes y aire libre"
+      ],
+      "description": "Der hintere Gepäckträger ist kompatibel mit dem Helio U. Er bietet ausreichend Platz für Gepäck und ist ideal für den täglichen Pendelverkehr oder Ausflüge.",
+      "image": "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/HelioU_2a65bf1d-424c-4b10-a5cc-688695fb46a3.png?v=1772417322",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/HelioU_2a65bf1d-424c-4b10-a5cc-688695fb46a3.png?v=1772417322"
+      ],
+      "minPrice": 79.0,
+      "maxPrice": 79.0,
+      "variantCount": 1,
+      "secretScore": 8.1,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "heybike-helio-u-gepacktrager-57879946592637",
+          "title": "Helio U Gepäckträger",
+          "label": "Modelo disponible",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/HelioU_2a65bf1d-424c-4b10-a5cc-688695fb46a3.png?v=1772417322"
+          ],
+          "offers": [
+            {
+              "id": "heybike:57879946592637",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 79.0,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 79.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "heybike-131f5fc7a119",
+      "slug": "heybike-heybike-ec-1",
+      "title": "Heybike EC 1",
+      "brand": "Heybike",
+      "model": null,
+      "category": "Deportes y aire libre",
+      "categories": [
+        "Deportes y aire libre"
+      ],
+      "description": "Erkunden Sie die Städte mit Heybike EC 1, einem leichten Elektrofahrrad für den Stadtverkehr. Es ist perfekt für müheloses Cruisen in der Stadt.",
+      "image": "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/EC1_a4740a2d-5174-4eca-8934-cbf3477b7fd8.png?v=1776223827",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/EC1_a4740a2d-5174-4eca-8934-cbf3477b7fd8.png?v=1776223827",
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/EC1_f39eb6d9-0da0-438d-918d-ca7d2f70c2ca.png?v=1776223827",
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/EC1_8dd42101-6462-4e3e-9eda-623a65549e73.png?v=1776223827"
+      ],
+      "minPrice": 1099.0,
+      "maxPrice": 1099.0,
+      "variantCount": 3,
+      "secretScore": 8.1,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "heybike-heybike-ec-1-47569977409821",
+          "title": "Heybike EC 1 - Schwarz / L - for 165 - 190 cm / Standard",
+          "label": "Schwarz · L - for 165 - 190 cm · Standard",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": "Standard",
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/EC1_a4740a2d-5174-4eca-8934-cbf3477b7fd8.png?v=1776223827"
+          ],
+          "offers": [
+            {
+              "id": "heybike:47569977409821",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 1099.0,
+              "previousPrice": 1699.0,
+              "shippingCost": null,
+              "totalPrice": 1099.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        },
+        {
+          "id": "heybike-heybike-ec-1-47569977475357",
+          "title": "Heybike EC 1 - Türkisblau / L - for 165 - 190 cm / Standard",
+          "label": "Türkisblau · L - for 165 - 190 cm · Standard",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": "Standard",
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/EC1_f39eb6d9-0da0-438d-918d-ca7d2f70c2ca.png?v=1776223827"
+          ],
+          "offers": [
+            {
+              "id": "heybike:47569977475357",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 1099.0,
+              "previousPrice": 1699.0,
+              "shippingCost": null,
+              "totalPrice": 1099.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        },
+        {
+          "id": "heybike-heybike-ec-1-47569977540893",
+          "title": "Heybike EC 1 - Buttrig Weiß / L - for 165 - 190 cm / Standard",
+          "label": "Buttrig Weiß · L - for 165 - 190 cm · Standard",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": "Standard",
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/EC1_8dd42101-6462-4e3e-9eda-623a65549e73.png?v=1776223827"
+          ],
+          "offers": [
+            {
+              "id": "heybike:47569977540893",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 1099.0,
+              "previousPrice": 1699.0,
+              "shippingCost": null,
+              "totalPrice": 1099.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "heybike-f64397d785f0",
+      "slug": "heybike-heybike-ec-1-st",
+      "title": "Heybike EC 1-ST",
+      "brand": "Heybike",
+      "model": null,
+      "category": "Deportes y aire libre",
+      "categories": [
+        "Deportes y aire libre"
+      ],
+      "description": "Erkunden Sie Stadtlandschaften mit Heybike EC 1-ST, einem E-Bike für Pendler, das für mühelose Fahrten konzipiert wurde. Perfekt für urbane Abenteuer.",
+      "image": "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/EC1_20ee7fb0-978d-495e-ab75-62aad7ad3d78.png?v=1776308446",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/EC1_20ee7fb0-978d-495e-ab75-62aad7ad3d78.png?v=1776308446",
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/EC1_e4e3769d-b26a-4a99-ac38-842a4f094e84.png?v=1776308446"
+      ],
+      "minPrice": 999.0,
+      "maxPrice": 1059.0,
+      "variantCount": 4,
+      "secretScore": 8.1,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "heybike-heybike-ec-1-st-47570000642333",
+          "title": "Heybike EC 1-ST - Türkisblau / standard",
+          "label": "Türkisblau · standard",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/EC1_20ee7fb0-978d-495e-ab75-62aad7ad3d78.png?v=1776308446"
+          ],
+          "offers": [
+            {
+              "id": "heybike:47570000642333",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 999.0,
+              "previousPrice": 1699.0,
+              "shippingCost": null,
+              "totalPrice": 999.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        },
+        {
+          "id": "heybike-heybike-ec-1-st-47570000675101",
+          "title": "Heybike EC 1-ST - Hellrosa / standard",
+          "label": "Hellrosa · standard",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/EC1_e4e3769d-b26a-4a99-ac38-842a4f094e84.png?v=1776308446"
+          ],
+          "offers": [
+            {
+              "id": "heybike:47570000675101",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 999.0,
+              "previousPrice": 1699.0,
+              "shippingCost": null,
+              "totalPrice": 999.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        },
+        {
+          "id": "heybike-heybike-ec-1-st-55446169289085",
+          "title": "Heybike EC 1-ST - Hellrosa / mit Korb",
+          "label": "Hellrosa · mit Korb",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/EC1_e4e3769d-b26a-4a99-ac38-842a4f094e84.png?v=1776308446"
+          ],
+          "offers": [
+            {
+              "id": "heybike:55446169289085",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 1059.0,
+              "previousPrice": 1699.0,
+              "shippingCost": null,
+              "totalPrice": 1059.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        },
+        {
+          "id": "heybike-heybike-ec-1-st-55446169321853",
+          "title": "Heybike EC 1-ST - Hellrosa / mit schwarzer Tasche",
+          "label": "Hellrosa · mit schwarzer Tasche",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/EC1_e4e3769d-b26a-4a99-ac38-842a4f094e84.png?v=1776308446"
+          ],
+          "offers": [
+            {
+              "id": "heybike:55446169321853",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 1059.0,
+              "previousPrice": 1699.0,
+              "shippingCost": null,
+              "totalPrice": 1059.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "heybike-28656c8e98f5",
+      "slug": "heybike-hinterer-korb-mit-bodenplatte",
+      "title": "Hinterer Korb (mit Bodenplatte)",
+      "brand": "Heybike",
+      "model": null,
+      "category": "Deportes y aire libre",
+      "categories": [
+        "Deportes y aire libre"
+      ],
+      "description": "Versand: Versand innerhalb von 3–5 Werktagen. Beschreibung: Ideal für Ausflüge, Picknicks, den Lebensmitteleinkauf und vieles mehr. Die Ausführung mit „Eisenboden“ zeichnet sich durch einen robusten Boden aus Metall aus, der dafür sorgt, dass Ihre Snacks sicher an ihrem Platz bleiben. Mit diesem stabilen Korb, der am Gepäckträger Ihres Fahrrads montiert wird, erweitern Sie Ihre Transportkapazität und gestalten Ihre Fahrten komfortabler. KompatibilitätKompatibel mit allen Modellen, die über einen Gepäckträger verfügen. Eigenschaften: 1. Länge: 46,5 cm2. Breite: 33 cm3. Höhe: 15 cm4. Befestigungsschrauben im Lieferumfang enthalten5. Einfache Montage und Demontage",
+      "image": "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/2_cfc63a8d-46ce-43b7-b9ae-5f78138b35ae_1.png?v=1783666932",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/2_cfc63a8d-46ce-43b7-b9ae-5f78138b35ae_1.png?v=1783666932",
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/4_273d8718-62cd-4983-bef3-1d616a38ffba_1.png?v=1783666932",
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/2_97e399fd-a3be-4490-bfed-978a68ea7e66.jpg?v=1783666930",
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/1_0c7d9ef0-de2e-467b-8e6f-d46e7c13f578.png?v=1783666931"
+      ],
+      "minPrice": 89.0,
+      "maxPrice": 89.0,
+      "variantCount": 1,
+      "secretScore": 8.1,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "heybike-hinterer-korb-mit-bodenplatte-58376115913085",
+          "title": "Hinterer Korb (mit Bodenplatte)",
+          "label": "Modelo disponible",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/2_cfc63a8d-46ce-43b7-b9ae-5f78138b35ae_1.png?v=1783666932",
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/4_273d8718-62cd-4983-bef3-1d616a38ffba_1.png?v=1783666932",
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/2_97e399fd-a3be-4490-bfed-978a68ea7e66.jpg?v=1783666930",
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/1_0c7d9ef0-de2e-467b-8e6f-d46e7c13f578.png?v=1783666931"
+          ],
+          "offers": [
+            {
+              "id": "heybike:58376115913085",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 89.0,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 89.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "heybike-2c959a1220f8",
+      "slug": "heybike-kabelschloss",
+      "title": "Kabelschloss",
+      "brand": "Heybike",
+      "model": null,
+      "category": "Deportes y aire libre",
+      "categories": [
+        "Deportes y aire libre"
+      ],
+      "description": "",
+      "image": "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/1_a341c072-69b6-4370-9792-316600838d80.png?v=1702366836",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/1_a341c072-69b6-4370-9792-316600838d80.png?v=1702366836"
+      ],
+      "minPrice": 39.0,
+      "maxPrice": 39.0,
+      "variantCount": 1,
+      "secretScore": 8.1,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "heybike-kabelschloss-47287904534813",
+          "title": "Kabelschloss",
+          "label": "Modelo disponible",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/1_a341c072-69b6-4370-9792-316600838d80.png?v=1702366836"
+          ],
+          "offers": [
+            {
+              "id": "heybike:47287904534813",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 39.0,
+              "previousPrice": 49.0,
+              "shippingCost": null,
+              "totalPrice": 39.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "heybike-52bcc24699f7",
+      "slug": "heybike-ladegerat",
+      "title": "Ladegerät",
+      "brand": "Heybike",
+      "model": null,
+      "category": "Deportes y aire libre",
+      "categories": [
+        "Deportes y aire libre"
+      ],
+      "description": "Unsere E-Bikes sind nicht nur umweltfreundlich und leistungsstark, sondern sie sind auch darauf ausgelegt, Ihr Leben so reibungslos wie möglich zu gestalten. Unser E-Bike-Ladegerät ist der zuverlässige Begleiter, auf den Sie sich bei jedem Abenteuer verlassen können.Dieses hochwertige Ladegerät wurde entwickelt, um Ihre E-Bike-Batterie schnell und effizient aufzuladen. Mit seiner kompakten Größe und dem benutzerfreundlichen Design ist es ideal für unterwegs. Egal, ob Sie Ihren Akku für die tägliche Fahrt zur Arbeit oder für ein aufregendes Wochenendabenteuer aufladen möchten, unser Ladegerät steht Ihnen stets zur Verfügung.Mit fortschrittlicher Technologie und einem intelligenten Ladesystem können Sie sicher sein, dass Ihr E-Bike immer einsatzbereit ist. Genießen Sie längere Fahrten, entdecken Sie neue Orte und erleben Sie die Freiheit der Elektromobilität, ohne sich Gedanken über die Akkuladung machen zu müssen.Unser E-Bike-Ladegerät - Ihr verlässlicher Partner für grenzenloses Radvergnügen. Laden Sie Ihren Weg in die Zukunft mit Energie und Stil auf.",
+      "image": "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/1_d4c39f51-d87d-4c72-a6c5-8de64e40d977.png?v=1702366472",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/1_d4c39f51-d87d-4c72-a6c5-8de64e40d977.png?v=1702366472",
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/2_9ccdccaf-4e89-4715-bf4c-1aaa9af9e1ae.png?v=1702366472"
+      ],
+      "minPrice": 49.0,
+      "maxPrice": 49.0,
+      "variantCount": 2,
+      "secretScore": 8.1,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "heybike-ladegerat-47288162910493",
+          "title": "Ladegerät - EC 1",
+          "label": "EC 1",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/1_d4c39f51-d87d-4c72-a6c5-8de64e40d977.png?v=1702366472"
+          ],
+          "offers": [
+            {
+              "id": "heybike:47288162910493",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 49.0,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 49.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        },
+        {
+          "id": "heybike-ladegerat-47288162943261",
+          "title": "Ladegerät - EC1-ST",
+          "label": "EC1-ST",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/2_9ccdccaf-4e89-4715-bf4c-1aaa9af9e1ae.png?v=1702366472"
+          ],
+          "offers": [
+            {
+              "id": "heybike:47288162943261",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 49.0,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 49.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "heybike-e3faaf29ddb3",
+      "slug": "heybike-schutzblech",
+      "title": "Schutzblech",
+      "brand": "Heybike",
+      "model": null,
+      "category": "Deportes y aire libre",
+      "categories": [
+        "Deportes y aire libre"
+      ],
+      "description": "Unser Schutzblech sorgt dafür, dass Ihr Fahrrad auch bei nassen Bedingungen sauber bleibt. Hergestellt aus robustem Aluminium, bietet es optimalen Schutz vor Spritzwasser und Schmutz. Es ist einfach zu montieren und passt perfekt zu Ihrem Fahrrad, ohne das Design zu beeinträchtigen. Ideal für Pendler und Freizeitradler, die Wert auf Sauberkeit und Komfort legen.",
+      "image": "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/700X500.png?v=1728554984",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/700X500.png?v=1728554984"
+      ],
+      "minPrice": 49.0,
+      "maxPrice": 49.0,
+      "variantCount": 1,
+      "secretScore": 8.1,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "heybike-schutzblech-49248006635805",
+          "title": "Schutzblech",
+          "label": "Modelo disponible",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0844/1380/8925/files/700X500.png?v=1728554984"
+          ],
+          "offers": [
+            {
+              "id": "heybike:49248006635805",
+              "merchantId": "heybike",
+              "merchantName": "Heybike",
+              "price": 49.0,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 49.0,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

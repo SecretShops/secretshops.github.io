@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "region": "lu",
+  "country": "LU",
+  "locale": "fr-LU",
+  "currency": "EUR",
+  "sources": [
+    {
+      "id": "impact-heybike-eur",
+      "path": "/data/catalog/shared/impact-heybike-eur.json",
+      "country": "LU",
+      "currency": "EUR",
+      "merchantId": "heybike",
+      "merchantName": "Heybike"
+    },
+    {
+      "id": "impact-dore-rose-eur",
+      "path": "/data/catalog/shared/impact-dore-rose-eur.json",
+      "country": "LU",
+      "currency": "EUR",
+      "merchantId": "dore-rose",
+      "merchantName": "Dore & Rose"
+    }
+  ]
+}

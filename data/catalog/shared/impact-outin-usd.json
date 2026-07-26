@@ -1,0 +1,1968 @@
+{
+  "schemaVersion": 3,
+  "generatedAt": "2026-07-26T21:30:00+02:00",
+  "families": [
+    {
+      "id": "outin-758d29479967",
+      "slug": "outin-barista-towel-set-2-pack",
+      "title": "Barista Towel Set (2-Pack)",
+      "brand": "OutIn",
+      "model": null,
+      "category": "Hogar y cocina",
+      "categories": [
+        "Hogar y cocina",
+        "Aventura y viajes"
+      ],
+      "description": "Highly Absorbent & Versatile: Dual-sided towel with a corn-grain side for absorption and a pearl-textured side for gentle polishing — effortlessly lifts coffee residue to keep espresso gear spotless. Durable & Reusable: Premium microfiber towels designed for repeated washes and long-term use. Fast Dry: Quick-drying design and built-in hanging loop for easy storage and freshness.",
+      "image": "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/3__1_16ceedd2-c0ed-4ee7-8c99-82fb587f1f6b.webp?v=1761029555",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/3__1_16ceedd2-c0ed-4ee7-8c99-82fb587f1f6b.webp?v=1761029555",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/3-04.webp?v=1761029555",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/3-02.webp?v=1761029555",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/3-03.webp?v=1761029555",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/2__1_1.webp?v=1763460463",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1_175f89d0-f22a-46c6-a855-c0f1199f3dbc.jpg?v=1763460463"
+      ],
+      "minPrice": 9.99,
+      "maxPrice": 9.99,
+      "variantCount": 1,
+      "secretScore": 7.9,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "outin-barista-towel-set-2-pack-47410291933401",
+          "title": "Barista Towel Set (2-Pack)",
+          "label": "Modelo disponible",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/3__1_16ceedd2-c0ed-4ee7-8c99-82fb587f1f6b.webp?v=1761029555",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/3-04.webp?v=1761029555",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/3-02.webp?v=1761029555",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/3-03.webp?v=1761029555",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/2__1_1.webp?v=1763460463",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1_175f89d0-f22a-46c6-a855-c0f1199f3dbc.jpg?v=1763460463"
+          ],
+          "offers": [
+            {
+              "id": "outin:47410291933401",
+              "merchantId": "outin",
+              "merchantName": "OutIn",
+              "price": 9.99,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 9.99,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "outin-64a5aaa3ae66",
+      "slug": "outin-customized-nano-portable-espresso-machine",
+      "title": "Customized Nano Portable Espresso Machine",
+      "brand": "OutIn",
+      "model": null,
+      "category": "Hogar y cocina",
+      "categories": [
+        "Hogar y cocina",
+        "Aventura y viajes"
+      ],
+      "description": "Lightweight Espresso Machine: Weighs Only 670g Rapid Heating Time: Heat Up in Just 200 seconds* Rich Crema: Achieves Up to 92°C/198°F at 20 Bars of Pressure for a Creamier Coffee Extended Battery Life: 3*2500mAh rechargeable battery delivers up to 5 brews starting with 50ml room temperature water (25°C / 77°F) or over 200 brews using hot water on a single charge. Professional Standards: European Certified Materials & Coffee Brewing Center Specifications Universal Charging: in 12V or 24V Car Charger and USB Charger( >10W) 2 in 1 Brewer: Compatible with Ground Coffee and Coffee Capsules *Results based on internal OutIn Lab testing. Individual performance may vary based on environmental conditions and usage. *When using OutIn Nano with the Fino grinder, start at grind level 2-1 for proper extraction and flavor, then adjust as needed based on your beans. *Please comply with global airline regulations. Carry the device in your carry-on luggage only and do not use it during flight.",
+      "image": "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/0901_nano_5__1.webp?v=1766421638",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/0901_nano_5__1.webp?v=1766421638",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/ai-_nano-12.png?v=1766387156",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/ai-_nana-8.png?v=1766387156",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/0901_nano_3__1.webp?v=1766421653",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/ai-_nano-1.png?v=1765970774",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/ai-_nano-2.png?v=1765970774",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/ai-_nano-3.png?v=1765970774",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/ai-_nano-4.png?v=1765970774"
+      ],
+      "minPrice": 162.99,
+      "maxPrice": 162.99,
+      "variantCount": 5,
+      "secretScore": 7.9,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "outin-customized-nano-portable-espresso-machine-47425633059033",
+          "title": "Customized Nano Portable Espresso Machine (OutIn Teal)",
+          "label": "Modelo disponible",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/0901_nano_5__1.webp?v=1766421638",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/ai-_nano-12.png?v=1766387156",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/ai-_nana-8.png?v=1766387156"
+          ],
+          "offers": [
+            {
+              "id": "outin:47425633059033",
+              "merchantId": "outin",
+              "merchantName": "OutIn",
+              "price": 162.99,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 162.99,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        },
+        {
+          "id": "outin-customized-nano-portable-espresso-machine-47425638007001",
+          "title": "Customized Nano Portable Espresso Machine (Space Grey)",
+          "label": "Modelo disponible",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/0901_nano_3__1.webp?v=1766421653",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/ai-_nano-1.png?v=1765970774",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/ai-_nano-2.png?v=1765970774",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/ai-_nano-3.png?v=1765970774",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/ai-_nano-4.png?v=1765970774",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/ai-_nano-6.png?v=1765970774"
+          ],
+          "offers": [
+            {
+              "id": "outin:47425638007001",
+              "merchantId": "outin",
+              "merchantName": "OutIn",
+              "price": 162.99,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 162.99,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        },
+        {
+          "id": "outin-customized-nano-portable-espresso-machine-47425639252185",
+          "title": "Customized Nano Portable Espresso Machine (Pearl White)",
+          "label": "Modelo disponible",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/0901_nano_1__1.webp?v=1766421691",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/ai-_nano-11.png?v=1766386365",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/ai-_nana-9.png?v=1766386365"
+          ],
+          "offers": [
+            {
+              "id": "outin:47425639252185",
+              "merchantId": "outin",
+              "merchantName": "OutIn",
+              "price": 162.99,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 162.99,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        },
+        {
+          "id": "outin-customized-nano-portable-espresso-machine-47425639710937",
+          "title": "Customized Nano Portable Espresso Machine (Fuchsia Pink)",
+          "label": "Modelo disponible",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/0901_nano_2__1.webp?v=1766421711",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/ai-_nano-13.png?v=1766386588",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/ai-_nana-10.png?v=1766386588"
+          ],
+          "offers": [
+            {
+              "id": "outin:47425639710937",
+              "merchantId": "outin",
+              "merchantName": "OutIn",
+              "price": 162.99,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 162.99,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        },
+        {
+          "id": "outin-customized-nano-portable-espresso-machine-47439806988505",
+          "title": "Customized Nano Portable Espresso Machine (Forest Green)",
+          "label": "Modelo disponible",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/0901_nano_4__1.webp?v=1766421673",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/ai-_nana-5.png?v=1765970970",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/ai-_nana-7.png?v=1766144270",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/920-06.webp?v=1766421674",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/portableespressomachine2023.7.5_3.webp?v=1766421677",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/products/forest_bda06e8c-78b7-4643-9a8b-f54173926336.png?v=1766421680"
+          ],
+          "offers": [
+            {
+              "id": "outin:47439806988505",
+              "merchantId": "outin",
+              "merchantName": "OutIn",
+              "price": 162.99,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 162.99,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "outin-4a08a0b6c2a6",
+      "slug": "outin-espresso-set",
+      "title": "Espresso Set",
+      "brand": "OutIn",
+      "model": null,
+      "category": "Hogar y cocina",
+      "categories": [
+        "Hogar y cocina",
+        "Aventura y viajes"
+      ],
+      "description": "Heat-Resistant Double-Walled 304 Steel: Constructed from food-grade 304 stainless steel with double-walled insulation. This design retains heat excellent for your coffee while keeping the exterior cool to the touch, preventing burns during espresso extraction. Stackable & Portable Design: Features a smart nestable design for space-saving storage in travel bags or cabinets. With a compact profile (62mm×60mm) and ultra-lightweight build (75g), it is ideal for both home use and outdoor adventures like camping. Brand-Coordinated Dual-Color Style: This mixed set includes two distinct cups—one Teal and one Grey—finished to perfectly match the OutIn aesthetic. It creates a cohesive, stylish look for your setup, whether you are at home or on the go. Sharing & Machine Compatibility: A 2-cup set designed for sharing moments. The precise 75ml capacity is calibrated to match the extraction output of the OutIn Nano & Mino, as well as most standard espresso machines.",
+      "image": "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/DSC09223.jpg?v=1764940838",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/DSC09223.jpg?v=1764940838",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1205-03_c3ba9089-a789-4f55-b4c1-61e817083019.jpg?v=1764940862",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20251208-111800.jpg?v=1765188904",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/02.jpg?v=1766425007",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1_452c2456-4cfe-4fb5-8e59-6fc7f42db79f.jpg?v=1765866899"
+      ],
+      "minPrice": 34.99,
+      "maxPrice": 34.99,
+      "variantCount": 1,
+      "secretScore": 7.9,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "outin-espresso-set-47574713860313",
+          "title": "Espresso Set",
+          "label": "Modelo disponible",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/DSC09223.jpg?v=1764940838",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1205-03_c3ba9089-a789-4f55-b4c1-61e817083019.jpg?v=1764940862",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20251208-111800.jpg?v=1765188904",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/02.jpg?v=1766425007",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1_452c2456-4cfe-4fb5-8e59-6fc7f42db79f.jpg?v=1765866899"
+          ],
+          "offers": [
+            {
+              "id": "outin:47574713860313",
+              "merchantId": "outin",
+              "merchantName": "OutIn",
+              "price": 34.99,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 34.99,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "outin-c640f34ea6c5",
+      "slug": "outin-eva-protective-case",
+      "title": "EVA Protective Case",
+      "brand": "OutIn",
+      "model": null,
+      "category": "Hogar y cocina",
+      "categories": [
+        "Hogar y cocina",
+        "Aventura y viajes"
+      ],
+      "description": "Top Tier Protection: Features a waterproof zipper and PU fabric that significantly reduce water infiltration, providing robust protection against light rain while safeguarding the machine from drops. Perfect OutIn Compatibility: Designed to fit machines such as Mino, Nano, or Fino (select one), with inner elastic bands ensuring a secure hold. Versatile Carrying Options: Comes with multiple handles for easy and convenient hand - carrying. Tactical Webbing Advantage: Elevates outdoor functionality, enabling effortless external attachment of various items. Dual Stylish Color Choices: Maple Brown features a warm, earthy shade that's neutral and dirt-resistant, ideal for those who prefer a classic, low-key aesthetic, while Sand Beige has a light, fresh tone that's trendy and lively, perfect for anyone who likes a bright, modern look. *Water Resistance: While the EVA Case offers excellent water resistance, it is designed to withstand light rain and can block approximately 99% of water intrusion. However, it's not fully waterproof, so please avoid heavy downpours.",
+      "image": "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1015-04.jpg?v=1784530251",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1015-04.jpg?v=1784530251"
+      ],
+      "minPrice": 49.99,
+      "maxPrice": 49.99,
+      "variantCount": 1,
+      "secretScore": 7.9,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "outin-eva-protective-case-47397132599513",
+          "title": "EVA Protective Case - Sand Beige",
+          "label": "Sand Beige",
+          "color": "Sand Beige",
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1015-04.jpg?v=1784530251"
+          ],
+          "offers": [
+            {
+              "id": "outin:47397132599513",
+              "merchantId": "outin",
+              "merchantName": "OutIn",
+              "price": 49.99,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 49.99,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "outin-bfacab7ad657",
+      "slug": "outin-eva-protective-case-plus",
+      "title": "EVA Protective Case Plus",
+      "brand": "OutIn",
+      "model": null,
+      "category": "Hogar y cocina",
+      "categories": [
+        "Hogar y cocina",
+        "Aventura y viajes"
+      ],
+      "description": "Masterful Capacity: The internal storage has been significantly upgraded to 5.5L. \"Tailor-Made\" for the entire Outin series (Mino, Nano, or Fino) Quad-layer rugged waterproof structure: Constructed with high-density EVA hard-shell technology, water-resistant* PU fabric, and sealed zipper. An all-around \"armor\" for your core devices. Flexible Interior: Built-in adjustable straps and flexible dividers support various layouts. Whether for a short business trip or deep-wilderness camping, the storage space evolves with your needs. Tactical Portability: Weighing ≈480g, it strikes the perfect balance between lightness and durability. The side features high-strength Tactical Webbing and a widened handle. Lifestyle Aesthetic: Maple Brown and Sand Beige, turning your storage case into a fashion statement that upgrades your coffee ritual. *Water Resistance: While the EVA Plus Case offers excellent water resistance, it is designed to withstand light rain and can block approximately 99% of water intrusion. However, it's not fully waterproof, so please avoid heavy downpours.",
+      "image": "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/EVA_Plus8.jpg?v=1778844733",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/EVA_Plus8.jpg?v=1778844733",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/EVA_Plus3.jpg?v=1778844172"
+      ],
+      "minPrice": 64.99,
+      "maxPrice": 64.99,
+      "variantCount": 2,
+      "secretScore": 7.9,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "outin-eva-protective-case-plus-48711722270937",
+          "title": "EVA Protective Case Plus - Maple Brown",
+          "label": "Maple Brown",
+          "color": "Maple Brown",
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/EVA_Plus8.jpg?v=1778844733"
+          ],
+          "offers": [
+            {
+              "id": "outin:48711722270937",
+              "merchantId": "outin",
+              "merchantName": "OutIn",
+              "price": 64.99,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 64.99,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        },
+        {
+          "id": "outin-eva-protective-case-plus-48711722303705",
+          "title": "EVA Protective Case Plus - Sand Beige",
+          "label": "Sand Beige",
+          "color": "Sand Beige",
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/EVA_Plus3.jpg?v=1778844172"
+          ],
+          "offers": [
+            {
+              "id": "outin:48711722303705",
+              "merchantId": "outin",
+              "merchantName": "OutIn",
+              "price": 64.99,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 64.99,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "outin-a70dafda8002",
+      "slug": "outin-flex-messenger",
+      "title": "Flex Messenger",
+      "brand": "OutIn",
+      "model": null,
+      "category": "Hogar y cocina",
+      "categories": [
+        "Hogar y cocina",
+        "Aventura y viajes"
+      ],
+      "description": "OutIn Machine Compatibility: Features 2 dedicated slots to securely hold OutIn machines like Nano, Fino, or Mino, ensuring perfect fit and protection. Multi - Scene Versatility: Adaptable for cross - body carry, car seat - back operation (as a coffee station), bike - front hanging (with reflective logo for safety), and luggage - rod attachment, meeting needs in every journey. Premium Nylon Fabric: 100% nylon material is water - repellent (water beads and slides off) and durable, making it ideal for outdoor and daily use. Lifestyle Integration: Includes an 11'' iPad compartment, key hook in the front pocket, and multiple external hooks for organizing essentials and hanging items freely. *Gear Pouch and coffee machine are shown for display purposes only and are not included with the Flex Messenger.",
+      "image": "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1107pg-07.jpg?v=1766422401",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1107pg-07.jpg?v=1766422401",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1107pg-04.jpg?v=1766422397"
+      ],
+      "minPrice": 99.99,
+      "maxPrice": 99.99,
+      "variantCount": 2,
+      "secretScore": 7.9,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "outin-flex-messenger-47468674089177",
+          "title": "Flex Messenger - Amber Brown",
+          "label": "Amber Brown",
+          "color": "Amber Brown",
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1107pg-07.jpg?v=1766422401"
+          ],
+          "offers": [
+            {
+              "id": "outin:47468674089177",
+              "merchantId": "outin",
+              "merchantName": "OutIn",
+              "price": 99.99,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 99.99,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        },
+        {
+          "id": "outin-flex-messenger-47468674121945",
+          "title": "Flex Messenger - Cypress Green",
+          "label": "Cypress Green",
+          "color": "Cypress Green",
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1107pg-04.jpg?v=1766422397"
+          ],
+          "offers": [
+            {
+              "id": "outin:47468674121945",
+              "merchantId": "outin",
+              "merchantName": "OutIn",
+              "price": 99.99,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 99.99,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "outin-80a0c7820053",
+      "slug": "outin-gear-pouch",
+      "title": "Gear Pouch",
+      "brand": "OutIn",
+      "model": null,
+      "category": "Hogar y cocina",
+      "categories": [
+        "Hogar y cocina",
+        "Aventura y viajes"
+      ],
+      "description": "OutIn Accessory Compatibility: Combinable storage for coffee capsules (up to 12) and OutIn machine accessories, meeting diverse organization needs. Premium Nylon Fabric: 100% nylon material is water - repellent (water beads and slides off) and durable, making it ideal for outdoor and daily use. Dual Carrying Methods: Supports handheld carry and attachment to other bags, offering flexible portability for on-the-go scenarios.",
+      "image": "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1107_pg-22.jpg?v=1766422410",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1107_pg-22.jpg?v=1766422410",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1-28.jpg?v=1766422412",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1107_pg-21.jpg?v=1766422413",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1107_pg-20.jpg?v=1766422415",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1-29.jpg?v=1766422416",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1-36.jpg?v=1766422418"
+      ],
+      "minPrice": 29.99,
+      "maxPrice": 29.99,
+      "variantCount": 1,
+      "secretScore": 7.9,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "outin-gear-pouch-47473019781337",
+          "title": "Gear Pouch",
+          "label": "Modelo disponible",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1107_pg-22.jpg?v=1766422410",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1-28.jpg?v=1766422412",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1107_pg-21.jpg?v=1766422413",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1107_pg-20.jpg?v=1766422415",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1-29.jpg?v=1766422416",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1-36.jpg?v=1766422418"
+          ],
+          "offers": [
+            {
+              "id": "outin:47473019781337",
+              "merchantId": "outin",
+              "merchantName": "OutIn",
+              "price": 29.99,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 29.99,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "outin-c4e408070a5a",
+      "slug": "outin-mino-portable-espresso-machine-rose-clay-x-bcrf",
+      "title": "Mino Portable Espresso Machine (Rose Clay) X BCRF",
+      "brand": "OutIn",
+      "model": null,
+      "category": "Hogar y cocina",
+      "categories": [
+        "Hogar y cocina",
+        "Aventura y viajes"
+      ],
+      "description": "Truly Pocket-Sized: φ67mm x 195mm, fits into backpacks or pockets, ideal for travel and outdoor use. Barista-Quality in Your Hand: Advanced 22-bar pump pressure delivers a rich, creamy espresso of professional quality. Quick Charge: Go from 20% to 80% in just 45 minutes, or fully charge in about 90 minutes. Fast and Precise Heating: 50ml room temperature water (25°C/77°F) self-heated to 199.9°F in 149 seconds*. Built for Adventure: IP67 splash water, and dust resistance* for worry-free use anywhere. Stable High-Altitude Extraction: Consistent brewing on mountain plateaus up to 5,000m. Built with Food-Safe, Adventure-Proof Materials: Made with food-safe stainless steel and BPA-free Tritan™ Cup, enjoy clean, satisfying coffee anywhere. *Results based on internal OutIn Lab testing. Individual performance may vary based on environmental conditions and usage. *Splash, water, and dust resistance are not permanent conditions and resistance might decrease as a result of normal wear. Liquid damage is not covered under warranty. *When using OutIn Mino with the Fino grinder, start at grind level 2-1 for proper extraction and flavor, then adjust as needed based on your beans. *Please comply with global airline regulations. Carry the device in your carry-on luggage only and do not use it during flight.",
+      "image": "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/2_48cbd31a-6fc1-4168-8d6b-08b5e775c04b.jpg?v=1771053753",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/2_48cbd31a-6fc1-4168-8d6b-08b5e775c04b.jpg?v=1771053753",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1-03_88781eda-a29b-441b-8734-86d696c28359.jpg?v=1771053753",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1-02_f8773951-bc57-42da-8c58-15b8e018fd5a.jpg?v=1771053753",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1-07_1.jpg?v=1771053753",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1-06_1.jpg?v=1771053753",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1-04_a81e63d4-1cb9-40e3-8ff7-43809e016377.jpg?v=1771053753"
+      ],
+      "minPrice": 199.99,
+      "maxPrice": 199.99,
+      "variantCount": 1,
+      "secretScore": 7.9,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "outin-mino-portable-espresso-machine-rose-clay-x-bcrf-47686468731097",
+          "title": "Mino Portable Espresso Machine (Rose Clay) X BCRF",
+          "label": "Modelo disponible",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/2_48cbd31a-6fc1-4168-8d6b-08b5e775c04b.jpg?v=1771053753",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1-03_88781eda-a29b-441b-8734-86d696c28359.jpg?v=1771053753",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1-02_f8773951-bc57-42da-8c58-15b8e018fd5a.jpg?v=1771053753",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1-07_1.jpg?v=1771053753",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1-06_1.jpg?v=1771053753",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1-04_a81e63d4-1cb9-40e3-8ff7-43809e016377.jpg?v=1771053753"
+          ],
+          "offers": [
+            {
+              "id": "outin:47686468731097",
+              "merchantId": "outin",
+              "merchantName": "OutIn",
+              "price": 199.99,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 199.99,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "outin-cb0f6e39ee39",
+      "slug": "outin-nano-portable-espresso-machine",
+      "title": "Nano Portable Espresso Machine",
+      "brand": "OutIn",
+      "model": null,
+      "category": "Hogar y cocina",
+      "categories": [
+        "Hogar y cocina",
+        "Aventura y viajes"
+      ],
+      "description": "Lightweight Espresso Machine: Weighs Only 670g Rapid Heating Time: Heat Up in Just 200 seconds* Rich Crema: Achieves Up to 92°C/198°F at 20 Bars of Pressure for a Creamier Coffee Extended Battery Life: 3*2500 mAh rechargeable battery delivers up to 5 brews starting with 50ml room temperature water (25°C / 77°F) or over 200 brews using hot water on a single charge. Professional Standards: European Certified Materials & Coffee Brewing Center Specifications Universal Charging: in 12V or 24V Car Charger and USB Charger( >10W) 2 in 1 Brewer: Compatible with Ground Coffee and Coffee Capsules *Results based on internal OutIn Lab testing. Individual performance may vary based on environmental conditions and usage. *When using OutIn Nano with the Fino grinder, start at grind level 2-1 for proper extraction and flavor, then adjust as needed based on your beans. *Please comply with global airline regulations. Carry the device in your carry-on luggage only and do not use it during flight.",
+      "image": "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/0901_nano_5__1.webp?v=1766421638",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/0901_nano_5__1.webp?v=1766421638",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/920-10_02162633-8cbd-4858-af38-9bfb4ddd829c.webp?v=1766421639",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/portableespressomachine2023.7.5_5.webp?v=1766421642",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/products/teal_0d64f848-e501-42fc-9d00-10e1844017eb.png?v=1766421644",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/products/outin-teal_25fa349d-19d9-4858-aff1-be65de9bf0c7.jpg?v=1766421645",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/products/nano-listing_cec601d5-39c8-44ae-9e77-226a2f109038.jpg?v=1766421647",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/0901_nano_3__1.webp?v=1766421653",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/920-09.webp?v=1766421655"
+      ],
+      "minPrice": 149.99,
+      "maxPrice": 149.99,
+      "variantCount": 5,
+      "secretScore": 7.9,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "outin-nano-portable-espresso-machine-43735057629401",
+          "title": "Nano Portable Espresso Machine (OutIn Teal)",
+          "label": "Modelo disponible",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/0901_nano_5__1.webp?v=1766421638",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/920-10_02162633-8cbd-4858-af38-9bfb4ddd829c.webp?v=1766421639",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/portableespressomachine2023.7.5_5.webp?v=1766421642",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/products/teal_0d64f848-e501-42fc-9d00-10e1844017eb.png?v=1766421644",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/products/outin-teal_25fa349d-19d9-4858-aff1-be65de9bf0c7.jpg?v=1766421645",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/products/nano-listing_cec601d5-39c8-44ae-9e77-226a2f109038.jpg?v=1766421647"
+          ],
+          "offers": [
+            {
+              "id": "outin:43735057629401",
+              "merchantId": "outin",
+              "merchantName": "OutIn",
+              "price": 149.99,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 149.99,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        },
+        {
+          "id": "outin-nano-portable-espresso-machine-43735060873433",
+          "title": "Nano Portable Espresso Machine (Space Grey)",
+          "label": "Modelo disponible",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/0901_nano_3__1.webp?v=1766421653",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/920-09.webp?v=1766421655",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/portableespressomachine2023.7.5_2.webp?v=1766421658",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/products/grey_a41dbc5e-90b3-4e5f-b04d-052b0f45963b.png?v=1766421660",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/products/space-grey_b5f5421f-c7a0-44cb-92d4-ad3d55ef5879.jpg?v=1766421661",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/products/nano-listing-grey-view_01bfe22a-eec7-44d4-9967-454fb7871b7e.jpg?v=1766421663"
+          ],
+          "offers": [
+            {
+              "id": "outin:43735060873433",
+              "merchantId": "outin",
+              "merchantName": "OutIn",
+              "price": 149.99,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 149.99,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        },
+        {
+          "id": "outin-nano-portable-espresso-machine-43735062020313",
+          "title": "Nano Portable Espresso Machine (Pearl White)",
+          "label": "Modelo disponible",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/0901_nano_1__1.webp?v=1766421691",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/920-08.webp?v=1766421693",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/portableespressomachine2023.7.5.webp?v=1766421696",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/products/pearl_1fe79121-5be4-477d-a80c-26079a797908.png?v=1766421697",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/products/pearl_cd136c7e-baa8-4e74-9f72-36fce9842fcd.jpg?v=1766421699",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/products/nano-listing-pearl-view_37eea5f3-eaea-4197-86e8-5b4d4f256ec7.jpg?v=1766421700"
+          ],
+          "offers": [
+            {
+              "id": "outin:43735062020313",
+              "merchantId": "outin",
+              "merchantName": "OutIn",
+              "price": 149.99,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 149.99,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        },
+        {
+          "id": "outin-nano-portable-espresso-machine-43735064183001",
+          "title": "Nano Portable Espresso Machine (Fuchsia Pink)",
+          "label": "Modelo disponible",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/0901_nano_2__1.webp?v=1766421711",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/920-07.webp?v=1766421713",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/portableespressomachine2023.7.5_4.webp?v=1766421716",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/products/red_517616f2-81d1-46b4-8688-7eb7180ff578.png?v=1766421717",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/products/crimson_9dca8da6-3a7b-4ff9-a139-90dc009139ae.jpg?v=1766421719",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/2_1_89c64af9-c53f-4e4d-80a7-0c0b7318096b.webp?v=1766421720"
+          ],
+          "offers": [
+            {
+              "id": "outin:43735064183001",
+              "merchantId": "outin",
+              "merchantName": "OutIn",
+              "price": 149.99,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 149.99,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        },
+        {
+          "id": "outin-nano-portable-espresso-machine-44588189483225",
+          "title": "Nano Portable Espresso Machine (Forest Green)",
+          "label": "Modelo disponible",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/0901_nano_4__1.webp?v=1766421673",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/920-06.webp?v=1766421674",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/portableespressomachine2023.7.5_3.webp?v=1766421677",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/products/forest_bda06e8c-78b7-4643-9a8b-f54173926336.png?v=1766421680",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/products/forest_3fa2eba1-01f7-46dc-8a00-b390dbc00813.jpg?v=1766421681",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/products/view_tiny_062b7390-f2de-418b-8df5-84cd7cfde615.jpg?v=1766421684"
+          ],
+          "offers": [
+            {
+              "id": "outin:44588189483225",
+              "merchantId": "outin",
+              "merchantName": "OutIn",
+              "price": 149.99,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 149.99,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "outin-1bf88c413fd7",
+      "slug": "outin-nano-portable-espresso-machine-rose-quartz-x-bcrf",
+      "title": "Nano Portable Espresso Machine (Rose Quartz) X BCRF",
+      "brand": "OutIn",
+      "model": null,
+      "category": "Hogar y cocina",
+      "categories": [
+        "Hogar y cocina",
+        "Aventura y viajes"
+      ],
+      "description": "Lightweight Espresso Machine: Weighs Only 670g Rapid Heating Time: Heat Up in Just 200 seconds* Rich Crema: Achieves Up to 92°C/198°F at 20 Bars of Pressure for a Creamier Coffee Extended Battery Life: 3*2500 mAh rechargeable battery delivers up to 5 brews starting with room temperature water (25°C / 77°F) or over 200 brews using hot water on a single charge. Professional Standards: European Certified Materials & Coffee Brewing Center Specifications Universal Charging: in 12V or 24V Car Charger and USB Charger( >10W) 2 in 1 Brewer: Compatible with Ground Coffee and Coffee Capsules *Results based on internal OutIn Lab testing. Individual performance may vary based on environmental conditions and usage. *When using OutIn Nano with the Fino grinder, start at grind level 2-1 for proper extraction and flavor, then adjust as needed based on your beans. *Please comply with global airline regulations. Carry the device in your carry-on luggage only and do not use it during flight.",
+      "image": "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20250321-145130.png?v=1766421905",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20250321-145130.png?v=1766421905",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/2_2a3c21c1-85e3-486d-982d-1f6a20127c66.webp?v=1766421906",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20241119-144752.webp?v=1766421910",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20241012-165122.webp?v=1766421913",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1_97ed56a5-2096-4b0c-a887-c340ba4b2862.webp?v=1766421915",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/2_8c399125-c0a1-48e8-9ec0-7a178f5d4763.webp?v=1766421917"
+      ],
+      "minPrice": 159.99,
+      "maxPrice": 159.99,
+      "variantCount": 1,
+      "secretScore": 7.9,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "outin-nano-portable-espresso-machine-rose-quartz-x-bcr-44858153500889",
+          "title": "Nano Portable Espresso Machine (Rose Quartz) X BCRF",
+          "label": "Modelo disponible",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20250321-145130.png?v=1766421905",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/2_2a3c21c1-85e3-486d-982d-1f6a20127c66.webp?v=1766421906",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20241119-144752.webp?v=1766421910",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20241012-165122.webp?v=1766421913",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1_97ed56a5-2096-4b0c-a887-c340ba4b2862.webp?v=1766421915",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/2_8c399125-c0a1-48e8-9ec0-7a178f5d4763.webp?v=1766421917"
+          ],
+          "offers": [
+            {
+              "id": "outin:44858153500889",
+              "merchantId": "outin",
+              "merchantName": "OutIn",
+              "price": 159.99,
+              "previousPrice": 188.99,
+              "shippingCost": null,
+              "totalPrice": 159.99,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "outin-7ead2475db3f",
+      "slug": "outin-nano-portable-espresso-machine-cup",
+      "title": "Nano Portable Espresso Machine Cup",
+      "brand": "OutIn",
+      "model": null,
+      "category": "Hogar y cocina",
+      "categories": [
+        "Hogar y cocina",
+        "Aventura y viajes"
+      ],
+      "description": "This Nano Portable Espresso Machine Cup is lightweight and convenient, making it a great choice for outdoor usage. Its materials abide by Food Grade safety standards and are crafted with BPA-free certification, providing users with a reliable and safe coffee-making experience. Perfect for trips, camping, and other outdoor adventures. *Nano Portable Electric Machine not included. Warmly Reminder: This espresso cup will come with NANO, you don't need to buy a kit separately if there is no extra need.",
+      "image": "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/6.png?v=1766421764",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/6.png?v=1766421764",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/outin_nano_espresso_cup_1.webp?v=1766421766",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/outin_nano_espresso_cup_2.webp?v=1766421769",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1_660bb901-775d-481a-b044-fe30bb474e30.png?v=1766421771",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/2.png?v=1766421773",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/3_e330e399-a7a1-4922-8b08-8f5d07e92dd2.png?v=1766421775"
+      ],
+      "minPrice": 16.99,
+      "maxPrice": 16.99,
+      "variantCount": 1,
+      "secretScore": 7.9,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "outin-nano-portable-espresso-machine-cup-44027824996569",
+          "title": "Nano Portable Espresso Machine Cup",
+          "label": "Modelo disponible",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/6.png?v=1766421764",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/outin_nano_espresso_cup_1.webp?v=1766421766",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/outin_nano_espresso_cup_2.webp?v=1766421769",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1_660bb901-775d-481a-b044-fe30bb474e30.png?v=1766421771",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/2.png?v=1766421773",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/3_e330e399-a7a1-4922-8b08-8f5d07e92dd2.png?v=1766421775"
+          ],
+          "offers": [
+            {
+              "id": "outin:44027824996569",
+              "merchantId": "outin",
+              "merchantName": "OutIn",
+              "price": 16.99,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 16.99,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "outin-8ae47125b3d9",
+      "slug": "outin-nano-portable-espresso-machine-filter-baskets-kit-6g-8g",
+      "title": "Nano Portable Espresso Machine Filter Baskets Kit (6g-8g)",
+      "brand": "OutIn",
+      "model": null,
+      "category": "Hogar y cocina",
+      "categories": [
+        "Hogar y cocina",
+        "Aventura y viajes"
+      ],
+      "description": "The Nano Portable Espresso Machine Filter Baskets Kit is designed to cater to the needs of ground coffee lovers who prefer the convenience of preparing multiple servings at once. It includes 5 Ground Coffee Filter Baskets and 1 Ground Coffee Spoon, making it an ideal companion for those who want to enjoy ground coffee without the hassle of using espresso pots or constantly cleaning and refilling the coffee machine filter basket. With this kit, you can savor the rich flavors of ground coffee while enjoying the convenience it offers. Ground Coffee Filter Basket: Made it a versatile tool for different brewing methods. It's designed to be easy to use, simply by adding the desired amount of coffee grounds in. Ground Coffee Spoon: Enhance your coffee brewing with the Ground Coffee Spoon for precise measuring and pressing freshly ground coffee. Warmly Reminder: Capsule Adapter, Ground Coffee Filter and Ground Coffee Spoon will come with NANO, you don't need to buy a kit separately if there is no extra need. * The accessories are only compatiable with OutIn Nano Espresso Machine.",
+      "image": "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/portable_espresso_machine_filter_basket1.webp?v=1766421781",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/portable_espresso_machine_filter_basket1.webp?v=1766421781",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/portable_espresso_machine_filter_basket.webp?v=1766421783",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/portable_espresso_machine_filter_basket2.webp?v=1766421785",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/portable_espresso_machine_filter_basket3.webp?v=1766421787",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/portable_espresso_machine_1.webp?v=1766421789",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/portable_espresso_machine_2_2dd33ae1-8599-423b-a644-0585cc325a29.webp?v=1766421791"
+      ],
+      "minPrice": 19.99,
+      "maxPrice": 19.99,
+      "variantCount": 1,
+      "secretScore": 7.9,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "outin-nano-portable-espresso-machine-filter-baskets-ki-44180530135257",
+          "title": "Nano Portable Espresso Machine Filter Baskets Kit (6g-8g)",
+          "label": "Modelo disponible",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/portable_espresso_machine_filter_basket1.webp?v=1766421781",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/portable_espresso_machine_filter_basket.webp?v=1766421783",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/portable_espresso_machine_filter_basket2.webp?v=1766421785",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/portable_espresso_machine_filter_basket3.webp?v=1766421787",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/portable_espresso_machine_1.webp?v=1766421789",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/portable_espresso_machine_2_2dd33ae1-8599-423b-a644-0585cc325a29.webp?v=1766421791"
+          ],
+          "offers": [
+            {
+              "id": "outin:44180530135257",
+              "merchantId": "outin",
+              "merchantName": "OutIn",
+              "price": 19.99,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 19.99,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "outin-50a385867166",
+      "slug": "outin-nano-portable-espresso-machine-set",
+      "title": "Nano Portable Espresso Machine Set",
+      "brand": "OutIn",
+      "model": null,
+      "category": "Hogar y cocina",
+      "categories": [
+        "Hogar y cocina",
+        "Aventura y viajes"
+      ],
+      "description": "Lightweight Espresso Machine: Weighs Only 670g Rapid Heating Time: Heat Up in Just 200 seconds* Rich Crema: Achieves Up to 92°C/198°F at 20 Bars of Pressure for a Creamier Coffee Extended Battery Life: 3*2500 mAh rechargeable battery delivers up to 5 brews starting with 50ml room temperature water (25°C / 77°F) or over 200 brews using hot water on a single charge*. Professional Standards: European Certified Materials & Coffee Brewing Center Specifications Universal Charging: in 12V or 24V Car Charger and USB Charger( >10W) 2 in 1 Brewer: Compatible with Ground Coffee and Coffee Capsules *Results based on internal OutIn Lab testing. Individual performance may vary based on environmental conditions and usage. *When using OutIn Nano with the Fino grinder, start at grind level 2-1 for proper extraction and flavor, then adjust as needed based on your beans. *Please comply with global airline regulations. Carry the device in your carry-on luggage only and do not use it during flight.",
+      "image": "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20250321-145122.webp?v=1766421836",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20250321-145122.webp?v=1766421836",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/portable_espresso_machine_ob_04.webp?v=1766421838",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/9d17f0c21a78b43e63fcd4316b689d57.webp?v=1766421841",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/OceanBlue_4.webp?v=1766421842",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/OceanBlue_5.webp?v=1766421843",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/OceanBlue_7.webp?v=1766421845"
+      ],
+      "minPrice": 199.99,
+      "maxPrice": 199.99,
+      "variantCount": 1,
+      "secretScore": 7.9,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "outin-nano-portable-espresso-machine-set-44852460126425",
+          "title": "Nano Portable Espresso Machine Set (Ocean Blue)",
+          "label": "Modelo disponible",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20250321-145122.webp?v=1766421836",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/portable_espresso_machine_ob_04.webp?v=1766421838",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/9d17f0c21a78b43e63fcd4316b689d57.webp?v=1766421841",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/OceanBlue_4.webp?v=1766421842",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/OceanBlue_5.webp?v=1766421843",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/OceanBlue_7.webp?v=1766421845"
+          ],
+          "offers": [
+            {
+              "id": "outin:44852460126425",
+              "merchantId": "outin",
+              "merchantName": "OutIn",
+              "price": 199.99,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 199.99,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "outin-61a33795811c",
+      "slug": "outin-outin-fino-portable-electric-coffee-grinder",
+      "title": "OutIn Fino Portable Electric Coffee Grinder",
+      "brand": "OutIn",
+      "model": null,
+      "category": "Hogar y cocina",
+      "categories": [
+        "Hogar y cocina",
+        "Aventura y viajes"
+      ],
+      "description": "Precision Grinding, Perfect Consistency: Exclusive patented technology ensures uniform grind size for every bean, every time. Precision Without Limits: An external rotation dial combines 28 clear grind levels with stepless micro-adjustment, giving you total control from espresso to French press - no reset required. Smarter Bean Loading: Load, lock, and clean in seconds with the ergonomic rotating bean hopper - right to fill, left to open. Upgraded to 22.2% Faster Grinding: Experience the next level of performance - grind 18g of medium-roast coffee beans 22.2% faster with full power, ready for your next perfect espresso. Grab-and-Go: 690g compact cordless design with detachable grind catch for your outdoor. Fast Charging Battery: OutIn Fino's lithium battery supports fast charging with 1 hour of charging time. Effortless Grinding Experience: Experience one-touch control and patented consistency technology that delivers flawlessly even grounds, without the fuss. *Actual grinding time may vary slightly depending on temperature, humidity, roast level, and bean type *For optimal performance with OutIn Nano or Mino, the Fino grinder requires a grind size setting of 2-1 or higher. This ensures proper extraction and flavor profile for your coffee. *Please comply with global airline regulations. Carry the device in your carry-on luggage only and do not use it during flight.",
+      "image": "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/16.jpg?v=1783505678",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/16.jpg?v=1783505678"
+      ],
+      "minPrice": 199.99,
+      "maxPrice": 199.99,
+      "variantCount": 1,
+      "secretScore": 7.9,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "outin-outin-fino-portable-electric-coffee-grinder-46077045211353",
+          "title": "OutIn Fino Portable Electric Coffee Grinder - Sandstone White",
+          "label": "Sandstone White",
+          "color": "Sandstone White",
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/16.jpg?v=1783505678"
+          ],
+          "offers": [
+            {
+              "id": "outin:46077045211353",
+              "merchantId": "outin",
+              "merchantName": "OutIn",
+              "price": 199.99,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 199.99,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "outin-ecfdcabb231a",
+      "slug": "outin-outin-foldable-coffee-spoon",
+      "title": "OutIn Foldable Coffee Spoon",
+      "brand": "OutIn",
+      "model": null,
+      "category": "Hogar y cocina",
+      "categories": [
+        "Hogar y cocina",
+        "Aventura y viajes"
+      ],
+      "description": "High-Quality Material: Food-grade 304 stainless steel (SUS304). Superior Craftsmanship: Smooth-textured surface, static-free design to prevent powder residue. Ergonomic Shape: Optimized for scooping and pouring coffee grounds, adapts to the curves of various containers. Precision-measured design—one level scoop ≈ 3g of coffee. Portable & Functional: Foldable and compact for easy carrying. Features a hole at the handle end for convenient hanging.",
+      "image": "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/a7fdd2bfbfe6d9eebbf06d827443e8b0_b982b8f4-a1b2-4003-8815-e5eaf3c5d34e.webp?v=1766422148",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/a7fdd2bfbfe6d9eebbf06d827443e8b0_b982b8f4-a1b2-4003-8815-e5eaf3c5d34e.webp?v=1766422148"
+      ],
+      "minPrice": 9.99,
+      "maxPrice": 9.99,
+      "variantCount": 1,
+      "secretScore": 7.9,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "outin-outin-foldable-coffee-spoon-46558212915417",
+          "title": "OutIn Foldable Coffee Spoon",
+          "label": "Modelo disponible",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/a7fdd2bfbfe6d9eebbf06d827443e8b0_b982b8f4-a1b2-4003-8815-e5eaf3c5d34e.webp?v=1766422148"
+          ],
+          "offers": [
+            {
+              "id": "outin:46558212915417",
+              "merchantId": "outin",
+              "merchantName": "OutIn",
+              "price": 9.99,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 9.99,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "outin-2a2a51eab5f9",
+      "slug": "outin-outin-foldable-coffee-stand",
+      "title": "OutIn Foldable Coffee Stand",
+      "brand": "OutIn",
+      "model": null,
+      "category": "Hogar y cocina",
+      "categories": [
+        "Hogar y cocina",
+        "Aventura y viajes"
+      ],
+      "description": "Ultra-Portable Foldable Design: Tree-leg structure folds down compactly, easily stored in a pouch or clipped to a backpack. Precision Aluminum Unibody Design: Machined from a single block of aluminum and finished with anodization, this seamless unibody construction achieves the perfect balance of strength, lightness, and elegance. Clip-On Carabiner for Carrying: Comes with a detachable carabiner, allowing you to conveniently clip the folded stand to bags, belts, or outdoor gear. Stable Triangular Support: Tripod geometry provides excellent balance and stability across different surfaces, from tabletops to campgrounds. Broad Compatibility: Designed to fit OutIn Mino, OutIn Nano, standard drippers, and conical pour-over funnels; user should check fitability before use.",
+      "image": "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20251021-104319.jpg?v=1766422365",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20251021-104319.jpg?v=1766422365",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20251021-104301.jpg?v=1766422366",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20251021-152149.jpg?v=1766422368",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20251021-104323.jpg?v=1766422370",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20251021-104306.jpg?v=1766422371",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20251021-185921.jpg?v=1766422374"
+      ],
+      "minPrice": 49.99,
+      "maxPrice": 49.99,
+      "variantCount": 1,
+      "secretScore": 7.9,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "outin-outin-foldable-coffee-stand-47409277960409",
+          "title": "OutIn Foldable Coffee Stand",
+          "label": "Modelo disponible",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20251021-104319.jpg?v=1766422365",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20251021-104301.jpg?v=1766422366",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20251021-152149.jpg?v=1766422368",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20251021-104323.jpg?v=1766422370",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20251021-104306.jpg?v=1766422371",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20251021-185921.jpg?v=1766422374"
+          ],
+          "offers": [
+            {
+              "id": "outin:47409277960409",
+              "merchantId": "outin",
+              "merchantName": "OutIn",
+              "price": 49.99,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 49.99,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "outin-4692db3e0dbf",
+      "slug": "outin-outin-lattogo",
+      "title": "OutIn LattoGo",
+      "brand": "OutIn",
+      "model": null,
+      "category": "Hogar y cocina",
+      "categories": [
+        "Hogar y cocina",
+        "Aventura y viajes"
+      ],
+      "description": "Frothing Whisk for Latte Art-Quality Foam: Equipped with a whisk featuring a dense mesh screen with reinforced ribs (replacing traditional springs), effortlessly creates dense, stable, barista-quality foam ideal for latte art. Bottom-Reaching Design for Easy Use & Cleaning: The frothing whisk with a raised tip enables bottom-reaching use, allowing beginners to make high-quality foam effortlessly. The detachable whisk shaft facilitates easy cleaning. Multifunctional Smart Silicone Ring: Semi-secures the frother to the container for labor-saving frothing; air intake is adjustable by altering the frother's angle. Serves as a horizontal stand after use to prevent contamination of the whisk and surfaces. Ergonomic Design with Dual Independent Buttons: Features a well-balanced center of gravity and comfortable grip. Dual physical buttons (power/gear) prevent misoperation; one-click shutdown avoids scalding from splashes. Suitable for left/right-handed use, even for intuitive operation. Eco-Friendly & Safe Recyclable Materials: Crafted from recyclable aluminum alloy; Tritan™ frother head and 304 stainless steel shaft for safety & durability. *Please comply with global airline regulations. Carry the device in your carry-on luggage only and do not use it during flight.",
+      "image": "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20260421-161043.jpg?v=1776759930",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20260421-161043.jpg?v=1776759930",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/3_dca1bbea-5ecd-4b3e-bd71-2e6987a4f15b.jpg?v=1776759930",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/2_f5fa13fe-55e7-437a-ac34-110f793d82f1.jpg?v=1776759930",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/4_d5cb9d64-73f0-4717-b057-15e0275b54eb.jpg?v=1776759930",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/outin8297.jpg?v=1776759930",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/outin8242.jpg?v=1776759930"
+      ],
+      "minPrice": 49.99,
+      "maxPrice": 49.99,
+      "variantCount": 1,
+      "secretScore": 7.9,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "outin-outin-lattogo-47465377497305",
+          "title": "OutIn LattoGo - Starburst Silver",
+          "label": "Starburst Silver",
+          "color": "Starburst Silver",
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20260421-161043.jpg?v=1776759930",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/3_dca1bbea-5ecd-4b3e-bd71-2e6987a4f15b.jpg?v=1776759930",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/2_f5fa13fe-55e7-437a-ac34-110f793d82f1.jpg?v=1776759930",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/4_d5cb9d64-73f0-4717-b057-15e0275b54eb.jpg?v=1776759930",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/outin8297.jpg?v=1776759930",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/outin8242.jpg?v=1776759930"
+          ],
+          "offers": [
+            {
+              "id": "outin:47465377497305",
+              "merchantId": "outin",
+              "merchantName": "OutIn",
+              "price": 49.99,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 49.99,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "outin-c1a47b94a892",
+      "slug": "outin-outin-mino-portable-electric-espresso-machine",
+      "title": "OutIn Mino Portable Electric Espresso Machine",
+      "brand": "OutIn",
+      "model": null,
+      "category": "Hogar y cocina",
+      "categories": [
+        "Hogar y cocina",
+        "Aventura y viajes"
+      ],
+      "description": "Truly Pocket-Sized: φ67mm x 195mm, fits into backpacks or pockets, ideal for travel and outdoor use. Barista-Quality in Your Hand: Advanced 22-bar pump pressure delivers a rich, creamy espresso of professional quality. Quick Charge: Go from 20% to 80% in just 45 minutes, or fully charge in about 90 minutes. Fast and Precise Heating: 50ml room temperature water (25°C/77°F) self-heated to 199.9°F in 149 seconds*. Built for Adventure: IP67 splash water, and dust resistance* for worry-free use anywhere. Stable High-Altitude Extraction: Consistent brewing on mountain plateaus up to 5,000m. Built with Food-Safe, Adventure-Proof Materials: Made with food-safe stainless steel and BPA-free Tritan™ Cup, enjoy clean, satisfying coffee anywhere. *Results based on internal OutIn Lab testing. Individual performance may vary based on environmental conditions and usage. *Splash, water, and dust resistance are not permanent conditions and resistance might decrease as a result of normal wear. Liquid damage is not covered under warranty. *When using OutIn Mino with the Fino grinder, start at grind level 2-1 for proper extraction and flavor, then adjust as needed based on your beans. *Please comply with global airline regulations. Carry the device in your carry-on luggage only and do not use it during flight.",
+      "image": "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/0420_mino_gallery-09.jpg?v=1776760689",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/0420_mino_gallery-09.jpg?v=1776760689",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/0420_mino_gallery-13.jpg?v=1776760278",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1-03_1c85948b-96fc-43e1-9742-73b10a4e85e1.jpg?v=1783578603"
+      ],
+      "minPrice": 199.99,
+      "maxPrice": 199.99,
+      "variantCount": 3,
+      "secretScore": 7.9,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "outin-outin-mino-portable-electric-espresso-machine-46644002980057",
+          "title": "OutIn Mino Portable Electric Espresso Machine - Sandstone White",
+          "label": "Sandstone White",
+          "color": "Sandstone White",
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/0420_mino_gallery-09.jpg?v=1776760689"
+          ],
+          "offers": [
+            {
+              "id": "outin:46644002980057",
+              "merchantId": "outin",
+              "merchantName": "OutIn",
+              "price": 199.99,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 199.99,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        },
+        {
+          "id": "outin-outin-mino-portable-electric-espresso-machine-46644006781145",
+          "title": "OutIn Mino Portable Electric Espresso Machine - Moss Green",
+          "label": "Moss Green",
+          "color": "Moss Green",
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/0420_mino_gallery-13.jpg?v=1776760278"
+          ],
+          "offers": [
+            {
+              "id": "outin:46644006781145",
+              "merchantId": "outin",
+              "merchantName": "OutIn",
+              "price": 199.99,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 199.99,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        },
+        {
+          "id": "outin-outin-mino-portable-electric-espresso-machine-48912936304857",
+          "title": "OutIn Mino Portable Electric Espresso Machine - Rose Clay",
+          "label": "Rose Clay",
+          "color": "Rose Clay",
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1-03_1c85948b-96fc-43e1-9742-73b10a4e85e1.jpg?v=1783578603"
+          ],
+          "offers": [
+            {
+              "id": "outin:48912936304857",
+              "merchantId": "outin",
+              "merchantName": "OutIn",
+              "price": 199.99,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 199.99,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "outin-dd211aefac29",
+      "slug": "outin-outin-mino-traveler-gift-set",
+      "title": "OutIn Mino Traveler Gift Set",
+      "brand": "OutIn",
+      "model": null,
+      "category": "Hogar y cocina",
+      "categories": [
+        "Hogar y cocina",
+        "Aventura y viajes"
+      ],
+      "description": "Fully equipped for light travel: φ67mm compact portable espresso machine and aluminum folding stand, paired with a 480g lightweight EVA Plus case. Professional coffee flavor restoration without the wait: Up to 22-bar high-pressure extraction. Self-heated to a precise up to 93.3°C (200°F) golden temperature and you can enjoy a cup of steaming hot espresso in as little as 3 minutes*. Worry-free exploration: IP67 protection maintains stable extraction even in high-altitude environments at 5000 meters. Pure and safe: BPA-free Baby-grade Tritan™ material. High-temperature extraction remains pure and odorless, protecting every sip of pure flavor. Ultra-fast charging: Charges from 20% to 80% in nearly 45 minutes; full charge in approximately 90 minutes. Ensuring an uninterrupted mobile coffee experience. Customizable spatial layout: Aluminum stand and lightweight EVA Plus bag securely protect the coffee machine. *Results based on internal OutIn Lab testing. Individual performance may vary based on environmental conditions and usage. *Splash, water, and dust resistance are not permanent conditions and resistance might decrease as a result of normal wear. Liquid damage is not covered under warranty. *When using OutIn Mino with the Fino grinder, start at grind level 2-1 for proper extraction and flavor, then adjust as needed based on your beans. *Please comply with global airline regulations. Carry the device in your carry-on luggage only and do not use it during flight.",
+      "image": "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/Mino-2.jpg?v=1779787725",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/Mino-2.jpg?v=1779787725",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/Mino-10.jpg?v=1779889017",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/Mino-1.jpg?v=1779787725",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/Mino-4.jpg?v=1779787725",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/Mino-3.jpg?v=1779787725",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/Mino-6.jpg?v=1779787725"
+      ],
+      "minPrice": 249.99,
+      "maxPrice": 249.99,
+      "variantCount": 1,
+      "secretScore": 7.9,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "outin-outin-mino-traveler-gift-set-48750154744025",
+          "title": "OutIn Mino Traveler Gift Set",
+          "label": "Modelo disponible",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/Mino-2.jpg?v=1779787725",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/Mino-10.jpg?v=1779889017",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/Mino-1.jpg?v=1779787725",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/Mino-4.jpg?v=1779787725",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/Mino-3.jpg?v=1779787725",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/Mino-6.jpg?v=1779787725"
+          ],
+          "offers": [
+            {
+              "id": "outin:48750154744025",
+              "merchantId": "outin",
+              "merchantName": "OutIn",
+              "price": 249.99,
+              "previousPrice": 314.98,
+              "shippingCost": null,
+              "totalPrice": 249.99,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "outin-7ce042f51d94",
+      "slug": "outin-outin-nano-lotus-gift-set",
+      "title": "OutIn Nano Lotus Gift Set",
+      "brand": "OutIn",
+      "model": null,
+      "category": "Hogar y cocina",
+      "categories": [
+        "Hogar y cocina",
+        "Aventura y viajes"
+      ],
+      "description": "Enjoy Great-Tasting Coffee Anywhere: Weighing only 670g, this compact and lightweight espresso maker offers convenient coffee enjoyment wherever you are. Brew More, Charge Less: 3*2500mAh rechargeable battery delivers up to 5 brews starting with 50ml room temperature water (25°C / 77°F) or over 200 brews using hot water on a single charge. Creamy, Authentic Flavor: Featuring 20 bars of pressure and achieving up to 92°C/198°F, each cup develops a satisfying crema and authentic flavor. Reliable and Durable Design: Made with European-certified materials to professional standards, it ensures safe operation and consistent flavor. Flexible Charging Options: Easily recharge in various situations—like in the car using a 12V/24V socket, or at home with a common USB charger (10W or above). Use Ground Coffee or Capsules: Choose between your preferred ground coffee or the convenience of capsules, all with one compact machine. *Results based on internal OutIn Lab testing. Individual performance may vary based on environmental conditions and usage. *When Use Ground Coffee or Capsules Fino grinder, start at grind level 2-1 for proper extraction and flavor, then adjust as needed based on your beans. *Please comply with global airline regulations. Carry the device in your carry-on luggage only and do not use it during flight.",
+      "image": "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1-02_1_b6b3fafc-b76b-4700-97f9-af885a720e93.jpg?v=1773899706",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1-02_1_b6b3fafc-b76b-4700-97f9-af885a720e93.jpg?v=1773899706",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/Lotus_Front.jpg?v=1773899706",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1-03_fb77aeec-f2a0-4e80-951b-051809eb3f24.jpg?v=1773899706",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1-04_5f611ce4-ed66-43d6-8ea0-86a1b8fa4e5e.jpg?v=1773899706",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1-05_2ce38c76-a3df-4236-9bf6-c8edde54a1fc.jpg?v=1773899706",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/Product_page_Banner_mobile_rec.jpg?v=1774255971"
+      ],
+      "minPrice": 199.99,
+      "maxPrice": 199.99,
+      "variantCount": 1,
+      "secretScore": 7.9,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "outin-outin-nano-lotus-gift-set-48437192130777",
+          "title": "OutIn Nano Lotus Gift Set",
+          "label": "Modelo disponible",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1-02_1_b6b3fafc-b76b-4700-97f9-af885a720e93.jpg?v=1773899706",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/Lotus_Front.jpg?v=1773899706",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1-03_fb77aeec-f2a0-4e80-951b-051809eb3f24.jpg?v=1773899706",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1-04_5f611ce4-ed66-43d6-8ea0-86a1b8fa4e5e.jpg?v=1773899706",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1-05_2ce38c76-a3df-4236-9bf6-c8edde54a1fc.jpg?v=1773899706",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/Product_page_Banner_mobile_rec.jpg?v=1774255971"
+          ],
+          "offers": [
+            {
+              "id": "outin:48437192130777",
+              "merchantId": "outin",
+              "merchantName": "OutIn",
+              "price": 199.99,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 199.99,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "outin-8669885260c1",
+      "slug": "outin-outin-rebrew-espresso-cup",
+      "title": "OutIn Rebrew Espresso Cup",
+      "brand": "OutIn",
+      "model": null,
+      "category": "Hogar y cocina",
+      "categories": [
+        "Hogar y cocina",
+        "Aventura y viajes"
+      ],
+      "description": "Eco-Conscious Materials: Crafted with 10% recycled coffee grounds and a recycled PET lanyard, redefining waste. Lightweight & Convenient: Weighs only 49g; compact yet sturdy, featuring a convenient lanyard for easy carrying. Temperature-Resistant: Built to withstand extreme temperatures from -20°C to 120°C (-4°F to 248°F), suitable for both hot and cold beverages. Food-Grade Safety: Made from BPA-free, food-grade melamine resin, ensuring safety for everyday use and easy cleaning. Versatile Use: Works seamlessly with the OutIn Nano for espresso brewing and makes it easy to share your coffee on the go. Please note: OutIn Rebrew Espresso Cup only. OutIn Nano Machine and other accessories are not included.",
+      "image": "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20250819-181753.webp?v=1766422227",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20250819-181753.webp?v=1766422227",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20250819-181800.webp?v=1766422229",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/4_d71cc8a9-88e9-4c01-8d1f-6a1558606fad.webp?v=1766422232",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/3_b8d19b89-29dc-458a-a18f-12c8eeaef596.webp?v=1766422234",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/a7fdd2bfbfe6d9eebbf06d827443e8b0_d08d2e81-521d-442a-bbbc-f1d700fc98f3.webp?v=1766422236",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/2_cdd8ba29-e012-4aaf-8438-a490eab7d07b.webp?v=1766422238"
+      ],
+      "minPrice": 14.99,
+      "maxPrice": 14.99,
+      "variantCount": 1,
+      "secretScore": 7.9,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "outin-outin-rebrew-espresso-cup-46875879997657",
+          "title": "OutIn Rebrew Espresso Cup",
+          "label": "Modelo disponible",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20250819-181753.webp?v=1766422227",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20250819-181800.webp?v=1766422229",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/4_d71cc8a9-88e9-4c01-8d1f-6a1558606fad.webp?v=1766422232",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/3_b8d19b89-29dc-458a-a18f-12c8eeaef596.webp?v=1766422234",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/a7fdd2bfbfe6d9eebbf06d827443e8b0_d08d2e81-521d-442a-bbbc-f1d700fc98f3.webp?v=1766422236",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/2_cdd8ba29-e012-4aaf-8438-a490eab7d07b.webp?v=1766422238"
+          ],
+          "offers": [
+            {
+              "id": "outin:46875879997657",
+              "merchantId": "outin",
+              "merchantName": "OutIn",
+              "price": 14.99,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 14.99,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "outin-ebee53c20ba8",
+      "slug": "outin-outin-silicone-coffee-mat",
+      "title": "OutIn Silicone Coffee Mat",
+      "brand": "OutIn",
+      "model": null,
+      "category": "Hogar y cocina",
+      "categories": [
+        "Hogar y cocina",
+        "Aventura y viajes"
+      ],
+      "description": "Waterproof & Heatproof: Designed to withstand spills and boiling temperature (-20°C~150°C), OutIn Silicone Coffee Mat provides ultimate protection for your desktop. Easy to Clean: Made with anti-static processed material, Outln Silicone Coffee Mat prevents ground coffee from sticking and allows for effortless cleanup. Durable & Slip-Resistant: A secure, slip-proof surface for your coffee gear. Foldable & Portable: Easy to store and carry - perfect for home, office, and travel. User-Friendly: Matte surface with geometric patterns gives a soft touch and improves water drainage. Premium Food-Grade Material: Crafted from environmentally friendly, food-grade silicone for safety, durability, and sustainability.",
+      "image": "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1_cf0cae01-f127-44c5-9981-0eaa40423d8b.webp?v=1766422127",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1_cf0cae01-f127-44c5-9981-0eaa40423d8b.webp?v=1766422127",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/5_3dc26c88-97da-4599-88f6-8da162bbf292.webp?v=1766422130",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/6_dd584e28-87ad-4d9d-8ccf-027e9f5a7230.webp?v=1766422131",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1_dda8b126-e431-4207-a8bb-c1c72d94ded4.webp?v=1766422134",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/2_4d4cdaec-0068-47b1-a0dc-fbdd602d3a4d.webp?v=1766422136",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/3_f0610c75-00ed-4696-bebf-4774ee713b84.webp?v=1766422137"
+      ],
+      "minPrice": 19.99,
+      "maxPrice": 19.99,
+      "variantCount": 1,
+      "secretScore": 7.9,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "outin-outin-silicone-coffee-mat-46510974566617",
+          "title": "OutIn Silicone Coffee Mat",
+          "label": "Modelo disponible",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1_cf0cae01-f127-44c5-9981-0eaa40423d8b.webp?v=1766422127",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/5_3dc26c88-97da-4599-88f6-8da162bbf292.webp?v=1766422130",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/6_dd584e28-87ad-4d9d-8ccf-027e9f5a7230.webp?v=1766422131",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1_dda8b126-e431-4207-a8bb-c1c72d94ded4.webp?v=1766422134",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/2_4d4cdaec-0068-47b1-a0dc-fbdd602d3a4d.webp?v=1766422136",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/3_f0610c75-00ed-4696-bebf-4774ee713b84.webp?v=1766422137"
+          ],
+          "offers": [
+            {
+              "id": "outin:46510974566617",
+              "merchantId": "outin",
+              "merchantName": "OutIn",
+              "price": 19.99,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 19.99,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "outin-f989a3a89d74",
+      "slug": "outin-outin-travel-tumbler",
+      "title": "OutIn Travel Tumbler",
+      "brand": "OutIn",
+      "model": null,
+      "category": "Hogar y cocina",
+      "categories": [
+        "Hogar y cocina",
+        "Aventura y viajes"
+      ],
+      "description": "Keep Drinks Hot or Cold for Hours: Double-wall vacuum insulation maintains the ideal temperature, keeping drinks warm for up to 6 hours or cold for 12. Whether it’s your morning coffee or a refreshing iced tea, enjoy it just the way you like it. Pure Taste, Every Sip: Crafted with an ultra-dense 316L stainless steel interior, the tumbler resists odors and metallic aftertastes—preserving the original flavor of coffee, tea, or infusions. Every sip is clean, fresh, and true to taste. Made for Life on the Move: Compact and lightweight, the OutIn Travel Tumbler fits seamlessly into your everyday carry. Perfect for your commute, outdoor adventures, or simply staying hydrated at your desk. Durable and Safe: The 316L stainless steel interior resists corrosion and scratches, ensuring worry-free sipping every time. *Under test conditions of 26°C (78.8°F) room temperature, the Travel Tumbler maintained water at an initial 95.5°C (203.9°F) for six hours, with a final recorded temperature of approximately 44°C (111.2°F). *Please Note: Travel Tumbler is NOT recommended for use in dishwashers or microwaves.",
+      "image": "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/0901_-08.webp?v=1766422246",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/0901_-08.webp?v=1766422246",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1-02.png?v=1770288234",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/0901_-09.webp?v=1770288234",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/0901_-13.webp?v=1770288234",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/0901_-12.webp?v=1770288234",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20250919-153105.webp?v=1770288234"
+      ],
+      "minPrice": 39.99,
+      "maxPrice": 39.99,
+      "variantCount": 1,
+      "secretScore": 7.9,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "outin-outin-travel-tumbler-47255396221145",
+          "title": "OutIn Travel Tumbler - Sand White",
+          "label": "Sand White",
+          "color": "Sand White",
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/0901_-08.webp?v=1766422246",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1-02.png?v=1770288234",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/0901_-09.webp?v=1770288234",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/0901_-13.webp?v=1770288234",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/0901_-12.webp?v=1770288234",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20250919-153105.webp?v=1770288234"
+          ],
+          "offers": [
+            {
+              "id": "outin:47255396221145",
+              "merchantId": "outin",
+              "merchantName": "OutIn",
+              "price": 39.99,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 39.99,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "outin-277611316a02",
+      "slug": "outin-sling-pocket",
+      "title": "Sling Pocket",
+      "brand": "OutIn",
+      "model": null,
+      "category": "Hogar y cocina",
+      "categories": [
+        "Hogar y cocina",
+        "Aventura y viajes"
+      ],
+      "description": "Multiple wearing styles make this sling pocket a must-have for people in outdoor activity who need ready access to their phones but need their hands free for other things. With magnetic buckle, you can quick release the strap with one gentle pull, and can not unlock the rope in other wrong way. Universal Fit: Designed to fit seamlessly with Nano, Fino, and Mino. Lightweight & Durable: Ultra-light nylon, perfect for outdoor use and highly durable. Magnetic Quick Release Buckle: Secure, easy to detach, with premium metal finish. Tactical Webbing: Hooks for hanging various accessories. Water-Resistant: Keeps your gear dry with water-repellent fabric. *Please note: This product is for the sling pocket only. The machine and cup shown in the photo are not included.",
+      "image": "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20251011-191936.webp?v=1766422297",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20251011-191936.webp?v=1766422297",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20251011-191941.webp?v=1766422302",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20251011-191946.webp?v=1766422308",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20251011-191956.webp?v=1766422313",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20251011-191929.webp?v=1766422319",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20251021-100149.jpg?v=1766422320"
+      ],
+      "minPrice": 29.99,
+      "maxPrice": 29.99,
+      "variantCount": 1,
+      "secretScore": 7.9,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "outin-sling-pocket-47368913027289",
+          "title": "Sling Pocket (Canyon Green)",
+          "label": "Modelo disponible",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20251011-191936.webp?v=1766422297",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20251011-191941.webp?v=1766422302",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20251011-191946.webp?v=1766422308",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20251011-191956.webp?v=1766422313",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20251011-191929.webp?v=1766422319",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/20251021-100149.jpg?v=1766422320"
+          ],
+          "offers": [
+            {
+              "id": "outin:47368913027289",
+              "merchantId": "outin",
+              "merchantName": "OutIn",
+              "price": 29.99,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 29.99,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "outin-176aeffebc82",
+      "slug": "outin-traveler-espresso-gift-set",
+      "title": "Traveler Espresso Gift Set",
+      "brand": "OutIn",
+      "model": null,
+      "category": "Hogar y cocina",
+      "categories": [
+        "Hogar y cocina",
+        "Aventura y viajes"
+      ],
+      "description": "Light Weight: Weighted Less than 700 g Fast Heating: Only 200 seconds* to Heat Up Rich Crema: Up to 92°C/198°F through 20 Bars Pressure with Richer Crema Coffee Extended Battery Life: 3*2500 mAh rechargeable battery delivers up to 5 brews starting with room temperature water (25°C / 77°F) or over 200 brews using hot water on a single charge. Pro-level Standards: European Certified Materials & Coffee Brewing Center Standards Universal Charging: in 12V or 24V Car Charger and USB Charger( >10W) 2 in 1 Coffee Method: Feature with Ground Coffee and Coffee Capsules Comes with 1 Nano Protective Case Coffee Capsules (display only) are NOT included. *Results based on internal OutIn Lab testing. Individual performance may vary based on environmental conditions and usage. *When using OutIn Nano with the Fino grinder, start at grind level 2-1 for proper extraction and flavor, then adjust as needed based on your beans. *Please comply with global airline regulations. Carry the device in your carry-on luggage only and do not use it during flight.",
+      "image": "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/0901_nano_6__1.webp?v=1766421866",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/0901_nano_6__1.webp?v=1766421866",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/2_c75013c6-bbac-4e0b-b3e4-4bdb057f51bf.png?v=1766421869",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/3_c61dd562-54c4-4432-b936-98b790b31e06.png?v=1766421872",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1_2792de55-233d-4ef3-bc81-3a20b8de6db5.png?v=1766421874",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/4_0ada45cc-1145-4de0-94ee-898cee96f678.png?v=1766421877",
+        "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/7_f3ceb4ff-d2b4-44fb-bfa8-23316839c5e0.png?v=1766421879"
+      ],
+      "minPrice": 189.99,
+      "maxPrice": 189.99,
+      "variantCount": 1,
+      "secretScore": 7.9,
+      "source": "impact",
+      "createdAt": "2026-07-26",
+      "variants": [
+        {
+          "id": "outin-traveler-espresso-gift-set-44777646391513",
+          "title": "Traveler Espresso Gift Set (Forest Green)",
+          "label": "Modelo disponible",
+          "color": null,
+          "size": null,
+          "orientation": null,
+          "dimensions": null,
+          "material": null,
+          "capacity": null,
+          "configuration": null,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/0901_nano_6__1.webp?v=1766421866",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/2_c75013c6-bbac-4e0b-b3e4-4bdb057f51bf.png?v=1766421869",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/3_c61dd562-54c4-4432-b936-98b790b31e06.png?v=1766421872",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/1_2792de55-233d-4ef3-bc81-3a20b8de6db5.png?v=1766421874",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/4_0ada45cc-1145-4de0-94ee-898cee96f678.png?v=1766421877",
+            "https://cdn.shopify.com/s/files/1/0663/6319/5609/files/7_f3ceb4ff-d2b4-44fb-bfa8-23316839c5e0.png?v=1766421879"
+          ],
+          "offers": [
+            {
+              "id": "outin:44777646391513",
+              "merchantId": "outin",
+              "merchantName": "OutIn",
+              "price": 189.99,
+              "previousPrice": null,
+              "shippingCost": null,
+              "totalPrice": 189.99,
+              "availability": "in_stock",
+              "condition": "new",
+              "deliveryTime": null,
+              "updatedAt": "2026-07-26T21:30:00+02:00"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,273 @@
+{
+  "generatedAt": "2026-07-26T21:30:00+02:00",
+  "duplicateFeeds": [
+    {
+      "file": "Imported-Shopify-Catalog_IR (11).txt.gz",
+      "duplicateOf": "Imported-Shopify-Catalog_IR (10).txt.gz"
+    }
+  ],
+  "feeds": {
+    "heybike": {
+      "input_rows": 187,
+      "valid_rows": 60,
+      "families": 21,
+      "links": 47,
+      "excluded": {
+        "stock": 26,
+        "manufacturer": 101
+      }
+    },
+    "outin": {
+      "input_rows": 326,
+      "valid_rows": 42,
+      "families": 25,
+      "links": 37,
+      "excluded": {
+        "stock": 27,
+        "technical": 10,
+        "manufacturer": 247
+      }
+    },
+    "pixar": {
+      "input_rows": 268,
+      "valid_rows": 158,
+      "families": 63,
+      "links": 149,
+      "excluded": {
+        "manufacturer": 99,
+        "stock": 11
+      }
+    },
+    "dore-rose": {
+      "input_rows": 1438,
+      "valid_rows": 1136,
+      "families": 75,
+      "links": 917,
+      "excluded": {
+        "stock": 279,
+        "url_or_image": 1,
+        "technical": 22
+      }
+    }
+  },
+  "regions": {
+    "es": {
+      "country": "ES",
+      "status": "published",
+      "currency": "EUR",
+      "newSources": [
+        "impact-heybike-eur",
+        "impact-pixar-eur",
+        "impact-dore-rose-eur"
+      ],
+      "newFamilies": 159,
+      "totalLinks": 1939
+    },
+    "pt": {
+      "country": "PT",
+      "status": "published",
+      "currency": "EUR",
+      "newSources": [
+        "impact-heybike-eur",
+        "impact-pixar-eur",
+        "impact-dore-rose-eur"
+      ],
+      "newFamilies": 159,
+      "totalLinks": 1473
+    },
+    "us": {
+      "country": "US",
+      "status": "draft",
+      "currency": "USD",
+      "newSources": [
+        "impact-outin-usd"
+      ],
+      "newFamilies": 25,
+      "totalLinks": 1063
+    },
+    "fr": {
+      "country": "FR",
+      "status": "draft",
+      "currency": "EUR",
+      "newSources": [
+        "impact-heybike-eur",
+        "impact-pixar-eur",
+        "impact-dore-rose-eur"
+      ],
+      "newFamilies": 159,
+      "totalLinks": 1113
+    },
+    "de": {
+      "country": "DE",
+      "status": "draft",
+      "currency": "EUR",
+      "newSources": [
+        "impact-heybike-eur",
+        "impact-pixar-eur",
+        "impact-dore-rose-eur"
+      ],
+      "newFamilies": 159,
+      "totalLinks": 1113
+    },
+    "it": {
+      "country": "IT",
+      "status": "draft",
+      "currency": "EUR",
+      "newSources": [
+        "impact-heybike-eur",
+        "impact-pixar-eur",
+        "impact-dore-rose-eur"
+      ],
+      "newFamilies": 159,
+      "totalLinks": 1113
+    },
+    "at": {
+      "country": "AT",
+      "status": "draft",
+      "currency": "EUR",
+      "newSources": [
+        "impact-heybike-eur",
+        "impact-pixar-eur"
+      ],
+      "newFamilies": 84,
+      "totalLinks": 196
+    },
+    "be": {
+      "country": "BE",
+      "status": "draft",
+      "currency": "EUR",
+      "newSources": [
+        "impact-heybike-eur",
+        "impact-pixar-eur",
+        "impact-dore-rose-eur"
+      ],
+      "newFamilies": 159,
+      "totalLinks": 1113
+    },
+    "ie": {
+      "country": "IE",
+      "status": "draft",
+      "currency": "EUR",
+      "newSources": [
+        "impact-heybike-eur",
+        "impact-pixar-eur"
+      ],
+      "newFamilies": 84,
+      "totalLinks": 196
+    },
+    "nl": {
+      "country": "NL",
+      "status": "draft",
+      "currency": "EUR",
+      "newSources": [
+        "impact-heybike-eur",
+        "impact-pixar-eur",
+        "impact-dore-rose-eur"
+      ],
+      "newFamilies": 159,
+      "totalLinks": 1113
+    },
+    "fi": {
+      "country": "FI",
+      "status": "draft",
+      "currency": "EUR",
+      "newSources": [
+        "impact-heybike-eur",
+        "impact-dore-rose-eur"
+      ],
+      "newFamilies": 96,
+      "totalLinks": 964
+    },
+    "sk": {
+      "country": "SK",
+      "status": "draft",
+      "currency": "EUR",
+      "newSources": [
+        "impact-heybike-eur"
+      ],
+      "newFamilies": 21,
+      "totalLinks": 47
+    },
+    "lv": {
+      "country": "LV",
+      "status": "draft",
+      "currency": "EUR",
+      "newSources": [
+        "impact-heybike-eur"
+      ],
+      "newFamilies": 21,
+      "totalLinks": 47
+    },
+    "lt": {
+      "country": "LT",
+      "status": "draft",
+      "currency": "EUR",
+      "newSources": [
+        "impact-heybike-eur"
+      ],
+      "newFamilies": 21,
+      "totalLinks": 47
+    },
+    "lu": {
+      "country": "LU",
+      "status": "draft",
+      "currency": "EUR",
+      "newSources": [
+        "impact-heybike-eur",
+        "impact-dore-rose-eur"
+      ],
+      "newFamilies": 96,
+      "totalLinks": 964
+    },
+    "ee": {
+      "country": "EE",
+      "status": "draft",
+      "currency": "EUR",
+      "newSources": [
+        "impact-heybike-eur"
+      ],
+      "newFamilies": 21,
+      "totalLinks": 47
+    },
+    "si": {
+      "country": "SI",
+      "status": "draft",
+      "currency": "EUR",
+      "newSources": [
+        "impact-heybike-eur"
+      ],
+      "newFamilies": 21,
+      "totalLinks": 47
+    },
+    "hr": {
+      "country": "HR",
+      "status": "draft",
+      "currency": "EUR",
+      "newSources": [
+        "impact-heybike-eur"
+      ],
+      "newFamilies": 21,
+      "totalLinks": 47
+    },
+    "mc": {
+      "country": "MC",
+      "status": "draft",
+      "currency": "EUR",
+      "newSources": [
+        "impact-dore-rose-eur"
+      ],
+      "newFamilies": 75,
+      "totalLinks": 917
+    },
+    "gr": {
+      "country": "GR",
+      "status": "draft",
+      "currency": "EUR",
+      "newSources": [
+        "impact-dore-rose-eur"
+      ],
+      "newFamilies": 75,
+      "totalLinks": 917
+    }
+  }
+}

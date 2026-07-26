@@ -36,6 +36,14 @@
       "currency": "USD",
       "merchantId": "italist",
       "merchantName": "Italist"
+    },
+    {
+      "id": "impact-outin-usd",
+      "path": "/data/catalog/shared/impact-outin-usd.json",
+      "country": "US",
+      "currency": "USD",
+      "merchantId": "outin",
+      "merchantName": "OutIn"
     }
   ]
 }

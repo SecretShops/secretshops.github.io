@@ -1,0 +1,5 @@
+﻿feed,moneda,filas,filas_validas,familias,enlaces,exclusiones
+heybike,EUR,187,60,21,47,"{""stock"": 26, ""manufacturer"": 101}"
+outin,USD,326,42,25,37,"{""stock"": 27, ""technical"": 10, ""manufacturer"": 247}"
+pixar,EUR,268,158,63,149,"{""manufacturer"": 99, ""stock"": 11}"
+dore-rose,EUR,1438,1136,75,917,"{""stock"": 279, ""url_or_image"": 1, ""technical"": 22}"

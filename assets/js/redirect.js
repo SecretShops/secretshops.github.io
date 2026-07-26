@@ -14,7 +14,11 @@ const IMPACT_RULES = [
   { host: "hewi.pxf.io", path: "/c/7518894/3904894/53088", source: "CATF_33842", landing: /(^|\.)hardlyeverwornit\.com$/i, countries: ["GB"] },
   { host: "vivienhair.sjv.io", path: "/c/7518894/3858868/51252", source: "CATF_32690", landing: /(^|\.)vivienhair\.com$/i, countries: ["US", "VE"] },
   { host: "go.sjv.io", path: "/c/7518894/3933983/54011", source: "CATF_34508", landing: /(^|\.)xteink\.com$/i, countries: ["US"] },
-  { host: "plantifique.sjv.io", path: "/c/7518894/3942357/54380", source: "CATF_34614", landing: /(^|\.)plantifique\.com$/i, countries: ["US"] }
+  { host: "plantifique.sjv.io", path: "/c/7518894/3942357/54380", source: "CATF_34614", landing: /(^|\.)plantifique\.com$/i, countries: ["US"] },
+  { host: "heybikeeu.sjv.io", path: "/c/7518894/3806125/49281", source: "CATF_31506", landing: /(^|\.)eu\.heybike\.com$/i, countries: ["AT", "BE", "HR", "EE", "FI", "FR", "DE", "IE", "IT", "LV", "LT", "LU", "NL", "PT", "SK", "SI", "ES"] },
+  { host: "pixar.sjv.io", path: "/c/7518894/3971350/55246", source: "CATF_35357", landing: /(^|\.)pixarbikes\.com$/i, countries: ["AT", "BE", "FR", "DE", "IE", "IT", "NL", "PT", "ES"] },
+  { host: "doreroseeu.sjv.io", path: "/c/7518894/3947787/54473", source: "CATF_34681", landing: /(^|\.)doreandrose\.com$/i, countries: ["BE", "FI", "FR", "DE", "GR", "IT", "LU", "MC", "NL", "PT", "ES"] },
+  { host: "outininc.pxf.io", path: "/c/7518894/3830920/49942", source: "CATF_31985", landing: /(^|\.)outin\.com$/i, countries: ["US"] }
 ];
 
 function fail(text) {

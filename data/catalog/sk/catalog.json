@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "region": "sk",
+  "country": "SK",
+  "locale": "sk-SK",
+  "currency": "EUR",
+  "sources": [
+    {
+      "id": "impact-heybike-eur",
+      "path": "/data/catalog/shared/impact-heybike-eur.json",
+      "country": "SK",
+      "currency": "EUR",
+      "merchantId": "heybike",
+      "merchantName": "Heybike"
+    }
+  ]
+}
