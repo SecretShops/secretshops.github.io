@@ -1,21 +1,21 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-25T17:24:03.121Z",
+  "generatedAt": "2026-07-26T10:53:49.062Z",
   "merchantId": "shokz-es",
   "sourceFile": "shokz-impact-api.tsv",
   "dryRun": false,
   "totals": {
     "feedRows": 174,
-    "acceptedRows": 50,
-    "rejectedRows": 124,
+    "acceptedRows": 49,
+    "rejectedRows": 125,
     "expectedFamilies": 23,
     "productsBefore": 3351,
-    "productsAfter": 3351,
+    "productsAfter": 3350,
     "offersBefore": 3351,
-    "offersAfter": 3351
+    "offersAfter": 3350
   },
   "skipReasons": {
-    "not_in_stock": 62,
+    "not_in_stock": 63,
     "internal_campaign": 27,
     "invalid_price": 2,
     "parent_row": 15,
