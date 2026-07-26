@@ -1,101 +1,101 @@
 {
   "1005007297859160": {
     "status": "failed",
-    "attempts": 1,
-    "last_attempt_at": "2026-07-18T18:50:00+00:00",
+    "attempts": 2,
+    "last_attempt_at": "2026-07-26T11:10:58.528373+00:00",
     "last_error": "No se obtuvo un título o una imagen válidos",
-    "retry_after": "2026-07-25T18:50:00+00:00"
+    "retry_after": "2026-08-09T11:10:58.528373+00:00"
   },
   "1005008494720248": {
     "status": "failed",
-    "attempts": 1,
-    "last_attempt_at": "2026-07-18T18:50:00+00:00",
+    "attempts": 2,
+    "last_attempt_at": "2026-07-26T11:11:09.623046+00:00",
     "last_error": "No se obtuvo un título o una imagen válidos",
-    "retry_after": "2026-07-25T18:50:00+00:00"
+    "retry_after": "2026-08-09T11:11:09.623046+00:00"
   },
   "1005006631009309": {
     "status": "failed",
-    "attempts": 1,
-    "last_attempt_at": "2026-07-18T18:50:00+00:00",
+    "attempts": 2,
+    "last_attempt_at": "2026-07-26T11:11:19.433098+00:00",
     "last_error": "No se obtuvo un título o una imagen válidos",
-    "retry_after": "2026-07-25T18:50:00+00:00"
+    "retry_after": "2026-08-09T11:11:19.433098+00:00"
   },
   "1005008124464069": {
     "status": "failed",
-    "attempts": 1,
-    "last_attempt_at": "2026-07-18T18:50:00+00:00",
+    "attempts": 2,
+    "last_attempt_at": "2026-07-26T11:11:29.000881+00:00",
     "last_error": "No se obtuvo un título o una imagen válidos",
-    "retry_after": "2026-07-25T18:50:00+00:00"
+    "retry_after": "2026-08-09T11:11:29.000881+00:00"
   },
   "1005005788179268": {
     "status": "failed",
-    "attempts": 1,
-    "last_attempt_at": "2026-07-18T18:50:00+00:00",
+    "attempts": 2,
+    "last_attempt_at": "2026-07-26T11:11:37.270079+00:00",
     "last_error": "No se obtuvo un título o una imagen válidos",
-    "retry_after": "2026-07-25T18:50:00+00:00"
+    "retry_after": "2026-08-09T11:11:37.270079+00:00"
   },
   "1005007661508886": {
-    "status": "failed",
-    "attempts": 1,
-    "last_attempt_at": "2026-07-18T18:50:00+00:00",
-    "last_error": "No se obtuvo un título o una imagen válidos",
-    "retry_after": "2026-07-25T18:50:00+00:00"
+    "status": "success",
+    "attempts": 2,
+    "last_attempt_at": "2026-07-26T11:11:45.110491+00:00",
+    "last_error": "",
+    "retry_after": null
   },
   "1005007914556601": {
     "status": "failed",
-    "attempts": 1,
-    "last_attempt_at": "2026-07-18T18:50:00+00:00",
+    "attempts": 2,
+    "last_attempt_at": "2026-07-26T11:11:52.451887+00:00",
     "last_error": "No se obtuvo un título o una imagen válidos",
-    "retry_after": "2026-07-25T18:50:00+00:00"
+    "retry_after": "2026-08-09T11:11:52.451887+00:00"
   },
   "1005007901992686": {
-    "status": "failed",
-    "attempts": 1,
-    "last_attempt_at": "2026-07-18T18:50:00+00:00",
-    "last_error": "No se obtuvo un título o una imagen válidos",
-    "retry_after": "2026-07-25T18:50:00+00:00"
+    "status": "success",
+    "attempts": 2,
+    "last_attempt_at": "2026-07-26T11:12:03.570731+00:00",
+    "last_error": "",
+    "retry_after": null
   },
   "1005007382183099": {
     "status": "failed",
-    "attempts": 1,
-    "last_attempt_at": "2026-07-18T18:50:00+00:00",
+    "attempts": 2,
+    "last_attempt_at": "2026-07-26T11:12:09.978394+00:00",
     "last_error": "No se obtuvo un título o una imagen válidos",
-    "retry_after": "2026-07-25T18:50:00+00:00"
+    "retry_after": "2026-08-09T11:12:09.978394+00:00"
   },
   "1005008635835302": {
-    "status": "failed",
-    "attempts": 1,
-    "last_attempt_at": "2026-07-18T18:50:00+00:00",
-    "last_error": "No se obtuvo un título o una imagen válidos",
-    "retry_after": "2026-07-25T18:50:00+00:00"
+    "status": "success",
+    "attempts": 2,
+    "last_attempt_at": "2026-07-26T11:12:18.315568+00:00",
+    "last_error": "",
+    "retry_after": null
   },
   "1005010154776229": {
-    "status": "failed",
-    "attempts": 1,
-    "last_attempt_at": "2026-07-18T18:50:00+00:00",
-    "last_error": "No se obtuvo un título o una imagen válidos",
-    "retry_after": "2026-07-25T18:50:00+00:00"
+    "status": "success",
+    "attempts": 2,
+    "last_attempt_at": "2026-07-26T11:12:25.462243+00:00",
+    "last_error": "",
+    "retry_after": null
   },
   "1005007530634321": {
     "status": "failed",
-    "attempts": 1,
-    "last_attempt_at": "2026-07-18T18:50:00+00:00",
+    "attempts": 2,
+    "last_attempt_at": "2026-07-26T11:12:31.883262+00:00",
     "last_error": "No se obtuvo un título o una imagen válidos",
-    "retry_after": "2026-07-25T18:50:00+00:00"
+    "retry_after": "2026-08-09T11:12:31.883262+00:00"
   },
   "1005008438225768": {
-    "status": "failed",
-    "attempts": 1,
-    "last_attempt_at": "2026-07-18T18:50:00+00:00",
-    "last_error": "No se obtuvo un título o una imagen válidos",
-    "retry_after": "2026-07-25T18:50:00+00:00"
+    "status": "success",
+    "attempts": 2,
+    "last_attempt_at": "2026-07-26T11:12:41.018607+00:00",
+    "last_error": "",
+    "retry_after": null
   },
   "1005007910321700": {
-    "status": "failed",
-    "attempts": 1,
-    "last_attempt_at": "2026-07-18T18:50:00+00:00",
-    "last_error": "No se obtuvo un título o una imagen válidos",
-    "retry_after": "2026-07-25T18:50:00+00:00"
+    "status": "success",
+    "attempts": 2,
+    "last_attempt_at": "2026-07-26T11:12:46.528394+00:00",
+    "last_error": "",
+    "retry_after": null
   },
   "1005006407076332": {
     "status": "failed",
@@ -106,45 +106,45 @@
   },
   "1005006437076332": {
     "status": "failed",
-    "attempts": 1,
-    "last_attempt_at": "2026-07-19T10:44:48.253534+00:00",
+    "attempts": 2,
+    "last_attempt_at": "2026-07-26T11:12:52.578260+00:00",
     "last_error": "No se obtuvo un título o una imagen válidos",
-    "retry_after": "2026-07-26T10:44:48.253534+00:00"
+    "retry_after": "2026-08-09T11:12:52.578260+00:00"
   },
   "1005008830636767": {
-    "status": "failed",
-    "attempts": 1,
-    "last_attempt_at": "2026-07-19T10:44:49.562616+00:00",
-    "last_error": "No se obtuvo un título o una imagen válidos",
-    "retry_after": "2026-07-26T10:44:49.562616+00:00"
+    "status": "success",
+    "attempts": 2,
+    "last_attempt_at": "2026-07-26T11:13:02.588524+00:00",
+    "last_error": "",
+    "retry_after": null
   },
   "1903089759": {
     "status": "failed",
-    "attempts": 1,
-    "last_attempt_at": "2026-07-19T10:44:50.807328+00:00",
+    "attempts": 2,
+    "last_attempt_at": "2026-07-26T11:13:08.753772+00:00",
     "last_error": "No se obtuvo un título o una imagen válidos",
-    "retry_after": "2026-07-26T10:44:50.807328+00:00"
+    "retry_after": "2026-08-09T11:13:08.753772+00:00"
   },
   "1005005909340324": {
-    "status": "failed",
-    "attempts": 1,
-    "last_attempt_at": "2026-07-19T10:44:52.049995+00:00",
-    "last_error": "No se obtuvo un título o una imagen válidos",
-    "retry_after": "2026-07-26T10:44:52.049995+00:00"
+    "status": "success",
+    "attempts": 2,
+    "last_attempt_at": "2026-07-26T11:13:18.745165+00:00",
+    "last_error": "",
+    "retry_after": null
   },
   "1005005507287645": {
     "status": "failed",
-    "attempts": 1,
-    "last_attempt_at": "2026-07-19T10:44:53.282782+00:00",
+    "attempts": 2,
+    "last_attempt_at": "2026-07-26T11:13:25.003414+00:00",
     "last_error": "No se obtuvo un título o una imagen válidos",
-    "retry_after": "2026-07-26T10:44:53.282782+00:00"
+    "retry_after": "2026-08-09T11:13:25.003414+00:00"
   },
   "1005009734420129": {
     "status": "failed",
-    "attempts": 1,
-    "last_attempt_at": "2026-07-19T10:45:05.735397+00:00",
+    "attempts": 2,
+    "last_attempt_at": "2026-07-26T11:13:33.593022+00:00",
     "last_error": "No se obtuvo un título o una imagen válidos",
-    "retry_after": "2026-07-26T10:45:05.735397+00:00"
+    "retry_after": "2026-08-09T11:13:33.593022+00:00"
   },
   "1005009881248536": {
     "status": "failed",
