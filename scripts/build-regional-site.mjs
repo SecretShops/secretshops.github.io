@@ -7,6 +7,7 @@ import {
   rm,
   writeFile
 } from "node:fs/promises";
+import { createHash } from "node:crypto";
 import { dirname, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
@@ -52,6 +53,34 @@ function truncateWords(value, maximumLength) {
   const clipped = text.slice(0, Math.max(1, maximumLength - 3));
   const boundary = clipped.lastIndexOf(" ");
   return `${(boundary > maximumLength * 0.65 ? clipped.slice(0, boundary) : clipped).trim()}...`;
+}
+
+function cleanProductText(value) {
+  return String(value || "")
+    .replace(
+      /^\s*\d{1,2}\s+de\s+[\p{L}]{3,12}\.?\s*-\s*\d{1,2}\s+de\s+[\p{L}]{3,12}\.?\s*/iu,
+      ""
+    )
+    .replace(
+      /^\s*\d{1,2}\s+de\s+[\p{L}]{3,12}\.?\s*[-–—.:]\s*/iu,
+      ""
+    )
+    .replace(/,(?=[\p{L}])/gu, ", ")
+    .replace(/,(?=\d+\s+[\p{L}])/gu, ", ")
+    .replace(/;(?=[\p{L}])/gu, "; ")
+    .replace(/\s*\(\.\s+/gu, ". ")
+    .replace(/\s+/g, " ")
+    .replace(/\s*\(\s*$/u, "")
+    .replace(/[\s|/–—-]+$/u, "")
+    .trim();
+}
+
+function sha256(value) {
+  return createHash("sha256").update(value).digest("hex");
+}
+
+function validDate(value) {
+  return /^\d{4}-\d{2}-\d{2}$/.test(String(value || ""));
 }
 
 function localPath(publicPath) {
@@ -153,32 +182,77 @@ function latestDate(sources) {
   return new Date(timestamp).toISOString().slice(0, 10);
 }
 
-function productJsonLd(config, region, family, canonical) {
-  const numericOffers = family.offers.filter((offer) => offerTotal(offer) !== null);
-  const values = numericOffers.map(offerTotal);
-  const product = {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    name: family.title,
-    image: family.images.slice(0, 6).map((image) => absoluteImage(config.domain, image)),
-    description: family.description || undefined,
-    sku: family.id,
-    category: family.primaryGroup,
-    brand: family.brand ? { "@type": "Brand", name: family.brand } : undefined,
-    url: canonical
-  };
-  if (values.length) {
-    product.offers = {
-      "@type": "AggregateOffer",
-      priceCurrency: region.currency,
-      lowPrice: Math.min(...values),
-      highPrice: Math.max(...values),
-      offerCount: numericOffers.length,
-      availability: "https://schema.org/InStock",
-      url: canonical
-    };
+function productStructuredData(config, region, family, canonical, title, description) {
+  const pricedOffers = family.offers
+    .map((offer) => ({ offer, price: Number(offer?.price) }))
+    .filter(({ price }) => Number.isFinite(price) && price > 0);
+  const prices = pricedOffers.map(({ price }) => price);
+  const breadcrumbId = `${canonical}#breadcrumb`;
+  const pageId = `${canonical}#webpage`;
+  const graph = [
+    {
+      "@type": "WebPage",
+      "@id": pageId,
+      url: canonical,
+      name: title,
+      description,
+      inLanguage: region.locale,
+      breadcrumb: { "@id": breadcrumbId }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": breadcrumbId,
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: `SecretShop ${region.name}`,
+          item: `${config.domain}${region.basePath}`
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: title,
+          item: canonical
+        }
+      ]
+    }
+  ];
+
+  if (prices.length && family.variantCount === 1) {
+    const productId = `${canonical}#product`;
+    graph[0].mainEntity = { "@id": productId };
+    graph.push({
+      "@type": "Product",
+      "@id": productId,
+      name: title,
+      image: family.images.slice(0, 6).map((image) => absoluteImage(config.domain, image)),
+      description,
+      sku: family.id,
+      category: family.primaryGroup,
+      brand: family.brand && !/^(?:selecci[oó]n|gen[eé]ric[oa]|sin marca|unknown|n\/?a)$/iu.test(family.brand)
+        ? { "@type": "Brand", name: family.brand }
+        : undefined,
+      url: canonical,
+      mainEntityOfPage: { "@id": pageId },
+      offers: {
+        "@type": "AggregateOffer",
+        priceCurrency: region.currency,
+        lowPrice: Math.min(...prices),
+        highPrice: Math.max(...prices),
+        offerCount: pricedOffers.length,
+        availability: pricedOffers.some(({ offer }) => offer.availability === "in_stock")
+          ? "https://schema.org/InStock"
+          : undefined,
+        url: canonical
+      }
+    });
   }
-  return product;
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": graph
+  };
 }
 
 function offerMarkup(region, offer, index) {
@@ -200,20 +274,29 @@ function offerMarkup(region, offer, index) {
 }
 
 function productPage(config, region, family, canonical) {
+  const title = cleanProductText(family.title) || "Producto";
+  const cleanedDescription = cleanProductText(family.description);
   const description = String(
-    family.description ||
-    `Compara las opciones y ofertas disponibles de ${family.title} antes de visitar la tienda.`
+    cleanedDescription ||
+    `Compara las opciones y ofertas disponibles de ${title} antes de visitar la tienda.`
   ).slice(0, 1800);
   const metaDescription = truncateWords(description, 155);
-  const pageTitle = `${truncateWords(family.title, 64)} | SecretShop`;
-  const socialTitle = `${truncateWords(family.title, 90)} | SecretShop`;
+  const pageTitle = `${truncateWords(title, 64)} | SecretShop`;
+  const socialTitle = `${truncateWords(title, 90)} | SecretShop`;
   const image = absoluteImage(config.domain, family.image);
   const variants = family.variants.slice(0, 20);
   const offers = [...family.offers]
     .filter((offer) => offer.country === region.countryCode)
     .sort((left, right) => (offerTotal(left) ?? Infinity) - (offerTotal(right) ?? Infinity));
   const hiddenVariants = Math.max(0, family.variants.length - variants.length);
-  const jsonLd = productJsonLd(config, region, family, canonical);
+  const structuredData = productStructuredData(
+    config,
+    region,
+    family,
+    canonical,
+    title,
+    description
+  );
 
   return `<!doctype html>
 <html lang="${html(region.locale)}" data-theme="light" data-region="${html(region.id)}">
@@ -228,11 +311,12 @@ function productPage(config, region, family, canonical) {
   <meta property="og:description" content="${html(metaDescription)}">
   <meta property="og:url" content="${html(canonical)}">
   <meta property="og:image" content="${html(image)}">
+  <meta property="og:image:alt" content="${html(title)}">
   <title>${html(pageTitle)}</title>
   <link rel="canonical" href="${html(canonical)}">
   <link rel="icon" href="/assets/brand/secretshop-logo-compact.png" type="image/png">
   <link rel="stylesheet" href="/assets/css/app.css">
-  <script type="application/ld+json">${jsonScript(jsonLd)}</script>
+  <script type="application/ld+json">${jsonScript(structuredData)}</script>
   <script>
     (() => {
       try {
@@ -269,16 +353,16 @@ function productPage(config, region, family, canonical) {
         <span aria-hidden="true">/</span>
         <a href="${html(region.basePath)}?categoria=${encodeURIComponent(family.primaryGroup)}#catalogo">${html(family.primaryGroup)}</a>
         <span aria-hidden="true">/</span>
-        <span aria-current="page">${html(family.title)}</span>
+        <span aria-current="page">${html(title)}</span>
       </nav>
 
       <article class="standalone-product">
         <div class="standalone-product-media">
-          <img src="${html(publicAssetUrl(family.image))}" alt="${html(family.title)}" width="720" height="720">
+          <img src="${html(publicAssetUrl(family.image))}" alt="${html(title)}" width="720" height="720">
         </div>
         <div class="standalone-product-content">
           <p class="eyebrow">${html(family.primaryGroup)} · ${html(region.name)}</p>
-          <h1>${html(family.title)}</h1>
+          <h1>${html(title)}</h1>
           <div class="detail-summary">
             <span class="score">SecretScore ${family.secretScore.toFixed(1)}</span>
             <span>${family.variantCount} ${family.variantCount === 1 ? "opción" : "opciones"}</span>
@@ -496,10 +580,6 @@ await writeText(
   selectorPage(config, publicRegions)
 );
 
-const globalLastmod = buildResults
-  .map((entry) => entry.lastmod)
-  .sort()
-  .at(-1) || new Date().toISOString().slice(0, 10);
 const globalPaths = [
   config.selectorPath,
   "/metodologia.html",
@@ -511,14 +591,46 @@ const globalPaths = [
   "/guias/elegir-sofa.html",
   "/guias/compra-segura.html"
 ];
+const seoStatePath = resolve(root, "data/config/seo-state.json");
+let previousSeoState = { schemaVersion: 1, pages: {} };
+if (await exists(seoStatePath)) {
+  try {
+    previousSeoState = await readJson(seoStatePath);
+  } catch {
+    previousSeoState = { schemaVersion: 1, pages: {} };
+  }
+}
+const today = new Date().toISOString().slice(0, 10);
+const nextSeoPages = {};
+const globalEntries = [];
+for (const publicPath of globalPaths) {
+  const sourcePath = publicPath.endsWith("/")
+    ? localPath(`${publicPath}index.html`)
+    : localPath(publicPath);
+  const content = await readFile(sourcePath, "utf8");
+  const digest = sha256(content);
+  const previous = previousSeoState?.pages?.[publicPath];
+  const lastmod = previous?.sha256 === digest && validDate(previous?.lastmod)
+    ? previous.lastmod
+    : today;
+  nextSeoPages[publicPath] = { sha256: digest, lastmod };
+  globalEntries.push({ loc: `${config.domain}${publicPath}`, lastmod });
+}
+await writeText(
+  seoStatePath,
+  `${JSON.stringify({
+    schemaVersion: 1,
+    generatedAt: new Date().toISOString(),
+    pages: nextSeoPages
+  }, null, 2)}\n`
+);
+const globalLastmod = globalEntries
+  .map((entry) => entry.lastmod)
+  .sort()
+  .at(-1) || today;
 await writeText(
   resolve(root, "sitemap-global.xml"),
-  sitemapUrlset(
-    globalPaths.map((path) => ({
-      loc: `${config.domain}${path}`,
-      lastmod: globalLastmod
-    }))
-  )
+  sitemapUrlset(globalEntries)
 );
 await writeText(
   resolve(root, "sitemap.xml"),

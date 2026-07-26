@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-25T20:28:45.517Z",
+  "pages": {
+    "/paises/": {
+      "sha256": "2cc143a39bf9c85ed228d226d34b89f0d2cb5463bf5f8b47859e4ba0244fd783",
+      "lastmod": "2026-07-25"
+    },
+    "/metodologia.html": {
+      "sha256": "b55587acad63c6328098aefb9fbddd2048fe023abb736ef28d30fdf30dc5bd8f",
+      "lastmod": "2026-07-25"
+    },
+    "/afiliacion.html": {
+      "sha256": "a23d502cc9a36c6b31e2cd1bb03033b1e6cd549338fb5bd51cd78bf4427d8b6a",
+      "lastmod": "2026-07-25"
+    },
+    "/privacidad.html": {
+      "sha256": "6ea42c7e8b39b62fcf099cb2054839d70082d532e5e3160bf3f551ed1e5a3a8c",
+      "lastmod": "2026-07-25"
+    },
+    "/aviso-legal.html": {
+      "sha256": "119e36b083f3f7b81da6aae75fb60074efa6fd076b6bdd9d5da7f73293197bc3",
+      "lastmod": "2026-07-25"
+    },
+    "/guias/": {
+      "sha256": "c2a31c30975dddb3cce2076c3620e0046f1622cf1349c14145c4d114ef3c3592",
+      "lastmod": "2026-07-25"
+    },
+    "/guias/comparar-precios.html": {
+      "sha256": "dcc1e222cfdcda37918d6558e7c11327176540ee88426a3f8a677e90bea67f08",
+      "lastmod": "2026-07-25"
+    },
+    "/guias/elegir-sofa.html": {
+      "sha256": "a437cbbed85394c34269a6cda924fa6f985fa9c3750d13756c6cc8d7cb255ee0",
+      "lastmod": "2026-07-25"
+    },
+    "/guias/compra-segura.html": {
+      "sha256": "e74413704c76a0d6b4d6c4b343431fe014de2ca3642e4e8aa3df4a725e007ea2",
+      "lastmod": "2026-07-25"
+    }
+  }
+}

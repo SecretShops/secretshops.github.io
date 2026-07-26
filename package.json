@@ -12,13 +12,14 @@
     "validate:catalog": "node scripts/validate-catalog.mjs && node scripts/audit-affiliate-links.mjs",
     "validate:regions": "node scripts/validate-regions.mjs",
     "validate:site": "node scripts/check-site.mjs",
-    "quality": "npm run build:catalog && npm test && npm run validate:catalog && npm run validate:regions && npm run validate:site",
+    "quality": "npm run build:catalog && npm test && npm run validate:catalog && npm run validate:regions && npm run validate:seo && npm run validate:site",
     "quality:full": "npm run quality && npm run test:browser",
     "amazon:links": "node scripts/build-amazon-links.mjs",
     "amazon:import:dry": "node scripts/import-amazon-products.mjs --dry-run",
     "amazon:import": "node scripts/import-amazon-products.mjs && npm run quality",
     "impact:shokz:dry": "node scripts/import-impact-shokz.mjs --dry-run",
-    "impact:shokz:import": "node scripts/import-impact-shokz.mjs"
+    "impact:shokz:import": "node scripts/import-impact-shokz.mjs",
+    "validate:seo": "node scripts/validate-seo.mjs"
   },
   "engines": {
     "node": "^20.19.0 || >=22.12.0",

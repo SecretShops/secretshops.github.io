@@ -1,32 +1,26 @@
-AJUSTE DE REINTENTOS · ALIEXPRESS MÉXICO
+SECRETShop — PARCHE SEO SIN ARCHIVOS GENERADOS
 
-Este paquete corrige el problema por el que cada ejecución volvía a gastar
-la cuota en los mismos productos fallidos.
+Este paquete evita conflictos con los catálogos y fichas que actualiza la API de Impact.
 
-Sustituye o añade exactamente estos tres archivos:
+ORDEN:
+1. En GitHub Desktop, pulsa "Abort merge".
+2. Actualiza main con "Fetch origin" / "Pull origin".
+3. Copia sobre el repositorio únicamente el contenido de esta carpeta.
+4. Confirma que solo cambian estos archivos:
+   - index.html
+   - package.json
+   - scripts/build-regional-site.mjs
+   - scripts/validate-seo.mjs
+   - tests/seo-contract.test.mjs
+   - docs/SEO-SEARCH-CONSOLE.md
+   - data/config/seo-state.json
+5. Haz commit y push.
+6. Ejecuta Actions > Actualizar catálogo Shokz desde Impact V4 > Run workflow,
+   marcando force=true, para reconstruir y validar todas las fichas y sitemaps.
 
-1. scripts/update_aliexpress_mx_metadata.py
-2. .github/workflows/complete-aliexpress-mx-metadata.yml
-3. data/aliexpress-mx-attempts.json
-
-IMPORTANTE
-No sustituyas ni elimines:
-data/aliexpress-mx-metadata-cache.json
-
-Ese archivo contiene los cinco productos que ya se completaron.
-
-NUEVO COMPORTAMIENTO
-- Primero procesa productos nunca consultados.
-- Los fallos se aplazan 7 días.
-- Los fallos posteriores esperan 14, 30 y 60 días.
-- Cada producto conserva el número de intentos y el último error.
-- El progreso se guarda después de cada consulta.
-- El workflow guarda también el historial de intentos.
-
-Después de subir los tres archivos:
-1. Commit to main.
-2. Push origin.
-3. Ejecuta de nuevo «Completar catálogo AliExpress México».
-
-La siguiente ejecución debería avanzar hacia productos todavía no consultados,
-en lugar de repetir los 15 fallos de la primera ejecución.
+NO COPIAR NI RESOLVER MANUALMENTE:
+- data/catalog/**
+- producto/**
+- sitemap*.xml
+- data/config/regions-build-report.json
+Esos archivos se regeneran automáticamente con los datos actuales.
