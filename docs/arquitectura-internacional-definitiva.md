@@ -1,17 +1,18 @@
 # Arquitectura internacional definitiva de SecretShop
 
-Fecha: 25 de julio de 2026
+Actualizado: 27 de julio de 2026
 
 ## Decisión aplicada
 
 SecretShop utiliza un solo dominio y una versión comercial aislada por país:
 
 - `https://getsecretshop.com/` → España.
+- `https://getsecretshop.com/pt/` → Portugal.
 - `https://getsecretshop.com/mx/` → México cuando esté preparado.
 - `https://getsecretshop.com/co/` → Colombia cuando esté preparado.
 - `https://getsecretshop.com/paises/` → selector internacional.
 
-España permanece en la raíz para conservar las URL actuales. México y Colombia están configurados como `draft`: sus fuentes se pueden depurar y validar, pero el generador no crea sus portadas, fichas ni sitemaps.
+España permanece en la raíz para conservar las URL actuales. Portugal está publicado en `/pt/` con interfaz portuguesa y catálogo propio. México, Colombia y los demás mercados no aprobados están configurados como `draft`: sus fuentes se pueden depurar y validar, pero el generador no crea sus portadas, fichas, directorios ni sitemaps.
 
 ## Fuente única de configuración
 
@@ -39,6 +40,9 @@ data/
     ├── es/
     │   ├── catalog.json
     │   └── affiliate-links.json
+    ├── pt/
+    │   ├── catalog.json
+    │   └── affiliate-links.json
     ├── mx/
     │   ├── catalog.json
     │   └── affiliate-links.json
@@ -61,6 +65,7 @@ Favoritos, historial, búsquedas y comparador usan claves separadas:
 
 ```text
 secretshop:es:favorites:v2
+secretshop:pt:favorites:v2
 secretshop:mx:favorites:v2
 secretshop:co:favorites:v2
 ```
@@ -92,13 +97,18 @@ La arquitectura sustituye las fichas basadas únicamente en `#/producto/...` por
 
 ```text
 /producto/<slug-estable>/
+/categorias/<slug-estable>/
+/tiendas/<slug-estable>/
+/pt/producto/<slug-estable>/
+/pt/categorias/<slug-estable>/
+/pt/tiendas/<slug-estable>/
 ```
 
-Cada ficha española tiene:
+Cada ficha publicada tiene:
 
 - canonical absoluto propio;
 - metadatos Open Graph;
-- datos estructurados `Product`;
+- datos estructurados `WebPage` y `BreadcrumbList`, y `Product` cuando corresponde;
 - enlaces internos rastreables;
 - presencia en `sitemap-es.xml`.
 
@@ -110,8 +120,8 @@ Cada ficha española tiene:
 
 1. divide los enlaces autorizados por país;
 2. genera `/paises/`;
-3. genera fichas de producto para regiones publicadas;
-4. genera `sitemap-global.xml`, `sitemap-es.xml` y el índice `sitemap.xml`;
+3. genera portadas, directorios de categorías y tiendas y fichas de producto para regiones publicadas;
+4. genera `sitemap-global.xml`, un sitemap por región publicada y el índice `sitemap.xml`;
 5. escribe `data/config/regions-build-report.json`.
 
 `npm run quality` reconstruye catálogos, genera la capa regional, ejecuta pruebas y valida catálogo, regiones, enlaces y referencias locales.

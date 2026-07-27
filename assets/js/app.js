@@ -19,15 +19,26 @@ import {
   uniqueStrings
 } from "./catalog-core.js";
 import {
+  categoryDirectoryPath,
+  categoryPath,
   offerRedirectPath,
   productPath,
   publicAssetUrl,
   regionStorageKeys,
   resolveActiveRegion,
+  storeDirectoryPath,
+  storePath,
   validateRegionConfig
 } from "./region-core.js";
+import {
+  applyStaticLocale,
+  createTranslator,
+  localizeCategory
+} from "./i18n.js";
 
 const REGIONS_URL = "/data/config/regions.json";
+const TAXONOMY_URL = "/data/catalog/category-taxonomy.json";
+const STORE_BRANDING_URL = "/data/config/store-branding.json";
 const LEGACY_STORAGE_KEYS = {
   favorites: "secretshop:favorites:v1",
   recent: "secretshop:recent:v1",
@@ -39,13 +50,17 @@ const LEGACY_STORAGE_KEYS = {
 const PAGE_SIZE = 24;
 const MAX_COMPARE = 4;
 const MAIN_CATEGORIES = ["Tecnología", "Moda", "Hogar", "Belleza y cuidado"];
+const COLLECTION_CATEGORY_IDS = new Set(["featured", "viral", "under-10"]);
 const HERO_ROTATION_MS = 12_000;
 const DEALS_ROTATION_MS = 18_000;
 let activeRegion = null;
 let regionsConfig = null;
 let catalogSources = [];
+let categoryTaxonomy = [];
+let storeBranding = new Map();
 let storageKeys = null;
 let formatter = new Intl.NumberFormat("es-ES");
+let t = createTranslator("es-ES");
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
@@ -72,16 +87,24 @@ function writeStoredArray(key, values) {
 function initialState() {
   const params = new URLSearchParams(location.search);
   const legacy = activeRegion.id === regionsConfig.defaultRegion ? LEGACY_STORAGE_KEYS : {};
+  const initialCategory = document.body.dataset.initialCategory || params.get("categoria");
+  const initialStore = document.body.dataset.initialStore || params.get("tienda");
+  const minimumPrice = Number(params.get("precio_min"));
+  const maximumPrice = Number(params.get("precio_max"));
   return {
     query: String(params.get("q") || "").slice(0, 120),
-    category: params.get("categoria") || "all",
+    category: initialCategory || "all",
     country: activeRegion.countryCode,
-    store: params.get("tienda") || "all",
+    store: initialStore || "all",
     sort: params.get("orden") || "relevance",
-    minimumPrice: null,
-    maximumPrice: null,
-    discountOnly: false,
-    multipleVariants: false,
+    minimumPrice: params.has("precio_min") && Number.isFinite(minimumPrice)
+      ? Math.max(0, minimumPrice)
+      : null,
+    maximumPrice: params.has("precio_max") && Number.isFinite(maximumPrice)
+      ? Math.max(0, maximumPrice)
+      : null,
+    discountOnly: params.get("descuento") === "1",
+    multipleVariants: params.get("variantes") === "1",
     visible: PAGE_SIZE,
     favorites: new Set(readStoredArray(storageKeys.favorites, legacy.favorites)),
     recent: readStoredArray(storageKeys.recent, legacy.recent),
@@ -100,11 +123,15 @@ let state = null;
 let families = [];
 let familyById = new Map();
 let familyByProductPath = new Map();
+let categoryByPath = new Map();
+let storeByPath = new Map();
 let catalogWarnings = [];
 let inputTimer = null;
 let heroRotationTimer = null;
 let dealsRotationTimer = null;
 let heroRotationOffset = 0;
+let catalogResultCount = 0;
+let catalogObserver = null;
 
 function currentFilters(overrides = {}) {
   return {
@@ -201,6 +228,22 @@ async function loadCatalog() {
   familyByProductPath = new Map(
     families.map((family) => [productPath(family, activeRegion), family.id])
   );
+  categoryByPath = new Map(
+    uniqueStrings(families.flatMap((family) => [
+      ...(family.categories || []),
+      ...(family.groups || [])
+    ])).map((category) => [
+      normalizeRoute(categoryPath(category, activeRegion)),
+      category
+    ])
+  );
+  storeByPath = new Map(
+    uniqueStrings(families.flatMap((family) => family.stores || []))
+      .map((store) => [
+        normalizeRoute(storePath(store, activeRegion)),
+        store
+      ])
+  );
   catalogWarnings = [...merged.warnings, ...failed];
 
   state.favorites = new Set(
@@ -227,11 +270,25 @@ function persistPersonalState() {
 function updateUrl() {
   const params = new URLSearchParams();
   if (state.query) params.set("q", state.query);
-  if (state.category !== "all") params.set("categoria", state.category);
-  if (state.store !== "all") params.set("tienda", state.store);
+  if (state.category !== "all" && state.store !== "all") {
+    params.set("tienda", state.store);
+  }
   if (state.sort !== "relevance") params.set("orden", state.sort);
+  if (Number.isFinite(state.minimumPrice)) params.set("precio_min", String(state.minimumPrice));
+  if (Number.isFinite(state.maximumPrice)) params.set("precio_max", String(state.maximumPrice));
+  if (state.discountOnly) params.set("descuento", "1");
+  if (state.multipleVariants) params.set("variantes", "1");
   const query = params.toString();
-  const next = `${activeRegion.basePath}${query ? `?${query}` : ""}`;
+  const base = state.category !== "all"
+    ? categoryPath(state.category, activeRegion)
+    : state.store !== "all"
+      ? storePath(state.store, activeRegion)
+      : document.body.dataset.pageKind === "categories"
+        ? categoryDirectoryPath(activeRegion)
+        : document.body.dataset.pageKind === "stores"
+          ? storeDirectoryPath(activeRegion)
+          : activeRegion.basePath;
+  const next = `${base}${query ? `?${query}` : ""}`;
   history.replaceState(history.state, "", next);
 }
 
@@ -247,8 +304,8 @@ function renderCatalogStatus(stats) {
   status.classList.toggle("is-warning", catalogWarnings.length > 0);
   status.classList.toggle("is-ready", catalogWarnings.length === 0);
   status.textContent = catalogWarnings.length
-    ? `${formatter.format(stats.families)} productos · catálogo parcial`
-    : `${formatter.format(stats.families)} productos disponibles`;
+    ? t("catalogPartial", { count: formatter.format(stats.families) })
+    : t("productsAvailable", { count: formatter.format(stats.families) });
 }
 
 function renderMetrics(stats) {
@@ -273,7 +330,7 @@ function familyPriceMarkup(family, offer) {
       : "";
   return `
     <div class="price-line">
-      <span>${family.minPrice === null ? "" : "Desde"}</span>
+      <span>${family.minPrice === null ? "" : t("from")}</span>
       <strong>${escapeHtml(current)}</strong>
       ${previousMarkup}
     </div>`;
@@ -285,11 +342,11 @@ function productCardMarkup(family, options = {}) {
   const compared = state.compare.includes(family.id);
   const discount = discountPercent(offer);
   const optionText = family.variantCount === 1
-    ? "1 opción"
-    : `${formatter.format(family.variantCount)} opciones`;
+    ? t("oneOption")
+    : t("options", { count: formatter.format(family.variantCount) });
   const storeText = family.stores.length === 1
-    ? "Oferta en 1 tienda"
-    : `Ofertas en ${formatter.format(family.stores.length)} tiendas`;
+    ? t("oneStoreOffer")
+    : t("storeOffers", { count: formatter.format(family.stores.length) });
   const loading = options.eager ? "eager" : "lazy";
 
   return `
@@ -302,7 +359,7 @@ function productCardMarkup(family, options = {}) {
           class="card-icon-button ${favorite ? "is-active" : ""}"
           type="button"
           data-toggle-favorite="${escapeHtml(family.id)}"
-          aria-label="${favorite ? "Quitar de favoritos" : "Añadir a favoritos"}"
+          aria-label="${favorite ? t("removeFavorite") : t("addFavorite")}"
           aria-pressed="${favorite}"
         >${favorite ? "♥" : "♡"}</button>
         <img
@@ -314,23 +371,23 @@ function productCardMarkup(family, options = {}) {
         >
       </div>
       <div class="product-body">
-        <p class="product-meta">${escapeHtml(family.primaryGroup)} · ${escapeHtml(family.brand)}</p>
+        <p class="product-meta">${escapeHtml(localizeCategory(family.primaryGroup, activeRegion.locale))} · ${escapeHtml(family.brand)}</p>
         <h3>${escapeHtml(family.title)}</h3>
         <div class="card-score-row">
-          <span class="score" title="Puntuación orientativa de calidad de la ficha">SecretScore ${family.secretScore.toFixed(1)}</span>
+          <span class="score" title="${escapeHtml(t("scoreTitle"))}">SecretScore ${family.secretScore.toFixed(1)}</span>
           <span class="variant-count">${escapeHtml(optionText)}</span>
         </div>
         ${familyPriceMarkup(family, offer)}
         <p class="store-line"><span class="availability-dot"></span>${escapeHtml(storeText)}</p>
         <div class="product-actions">
           <a class="product-open" href="${escapeHtml(familyHref(family))}" data-open-family="${escapeHtml(family.id)}">
-            ${family.offerCount > 1 ? "Comparar precios" : "Ver oferta"}
+            ${family.offerCount > 1 ? t("comparePrices") : t("viewOffer")}
           </a>
           <button
             class="compare-toggle ${compared ? "is-active" : ""}"
             type="button"
             data-toggle-compare="${escapeHtml(family.id)}"
-            aria-label="${compared ? "Quitar del comparador" : "Añadir al comparador"}"
+            aria-label="${compared ? t("removeCompare") : t("addCompare")}"
             aria-pressed="${compared}"
           >⇄</button>
         </div>
@@ -358,8 +415,8 @@ function renderHero({ animate = false } = {}) {
     container.innerHTML = mosaic.map((family) => {
       const offer = bestOffer(family);
       const optionLabel = family.variantCount === 1
-        ? "1 opción"
-        : `${formatter.format(family.variantCount)} opciones`;
+        ? t("oneOption")
+        : t("options", { count: formatter.format(family.variantCount) });
       return `
         <a class="mosaic-card" href="${escapeHtml(familyHref(family))}" data-open-family="${escapeHtml(family.id)}">
           <img src="${escapeHtml(publicAssetUrl(family.image))}" alt="${escapeHtml(family.title)}" width="500" height="500" loading="eager">
@@ -389,24 +446,121 @@ function categoryImage(categoryName) {
   return candidates[0]?.image || fallback[0]?.image || "";
 }
 
+function normalizedLabel(value) {
+  return String(value || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .trim();
+}
+
+function familyMatchesCategory(family, categoryName) {
+  const target = normalizedLabel(categoryName);
+  return [...family.categories, ...family.groups]
+    .some((value) => normalizedLabel(value) === target);
+}
+
+function categoryProductCount(categoryName) {
+  return families.filter((family) => familyMatchesCategory(family, categoryName)).length;
+}
+
+function categoryEntries() {
+  const entries = [];
+  const used = new Set();
+  for (const category of categoryTaxonomy
+    .filter((entry) => entry.parent === null && !COLLECTION_CATEGORY_IDS.has(entry.id))
+    .sort((left, right) => (left.order || 999) - (right.order || 999))) {
+    const count = categoryProductCount(category.label);
+    if (!count) continue;
+    entries.push({ ...category, name: category.label, count });
+    used.add(normalizedLabel(category.label));
+  }
+
+  for (const group of categoryStats(families)) {
+    const key = normalizedLabel(group.name);
+    if (
+      !group.count ||
+      used.has(key) ||
+      ["virales", "menos de 10", "destacados"].includes(key)
+    ) {
+      continue;
+    }
+    entries.push({
+      id: `group-${key.replace(/\s+/g, "-")}`,
+      name: group.name,
+      label: group.name,
+      count: group.count,
+      icon: group.icon,
+      order: 1000 + entries.length
+    });
+    used.add(key);
+  }
+
+  return entries.sort((left, right) =>
+    right.count - left.count ||
+    (left.order || 999) - (right.order || 999) ||
+    left.name.localeCompare(right.name, activeRegion.locale)
+  );
+}
+
+function subcategoryEntries(categoryName) {
+  const selected = normalizedLabel(categoryName);
+  const parentAliases = new Set([selected]);
+  if (selected === "deportes") parentAliases.add("deporte");
+  if (selected === "casa") parentAliases.add("hogar");
+
+  let labels = categoryTaxonomy
+    .filter((entry) => entry.parent && parentAliases.has(normalizedLabel(entry.parent)))
+    .sort((left, right) => (left.order || 999) - (right.order || 999))
+    .map((entry) => entry.label);
+
+  const matchingFamilies = families.filter((family) => familyMatchesCategory(family, categoryName));
+  if (labels.length === 0 || selected === "moda") {
+    const counts = new Map();
+    for (const family of matchingFamilies) {
+      for (const raw of family.categories) {
+        const key = normalizedLabel(raw);
+        if (!key || key === selected) continue;
+        counts.set(raw, (counts.get(raw) || 0) + 1);
+      }
+    }
+    labels = uniqueStrings([
+      ...labels,
+      ...[...counts.entries()]
+        .sort((left, right) => right[1] - left[1])
+        .map(([name]) => name)
+    ]);
+  }
+
+  return labels
+    .map((name) => ({ name, count: categoryProductCount(name) }))
+    .filter((entry) => entry.count > 0)
+    .slice(0, 14);
+}
+
+function categoryCardMarkup(category, options = {}) {
+  const image = categoryImage(category.name);
+  const href = categoryPath(category.name, activeRegion);
+  return `
+    <a class="category-card ${options.compact ? "is-compact" : ""}" href="${escapeHtml(href)}" data-set-category="${escapeHtml(category.name)}">
+      <span class="category-visual" aria-hidden="true">
+        ${image ? `<img src="${escapeHtml(publicAssetUrl(image))}" alt="" loading="lazy">` : `<span class="category-icon">${escapeHtml(category.icon || "＋")}</span>`}
+      </span>
+      <span class="category-copy">
+        <strong>${escapeHtml(localizeCategory(category.name, activeRegion.locale))}</strong>
+        <small>${escapeHtml(t("productsCount", { count: formatter.format(category.count) }))}</small>
+      </span>
+      <span class="category-arrow" aria-hidden="true">→</span>
+    </a>`;
+}
+
 function renderCategories() {
   const allStats = new Map(categoryStats(families).map((category) => [category.name, category]));
   const categories = MAIN_CATEGORIES
     .map((name) => allStats.get(name))
     .filter(Boolean);
   $("[data-category-grid]").innerHTML = categories.map((category) => {
-    const image = categoryImage(category.name);
-    return `
-      <button class="category-card" type="button" data-set-category="${escapeHtml(category.name)}">
-        <span class="category-visual" aria-hidden="true">
-          ${image ? `<img src="${escapeHtml(publicAssetUrl(image))}" alt="" loading="lazy">` : `<span class="category-icon">${escapeHtml(category.icon)}</span>`}
-        </span>
-        <span class="category-copy">
-          <strong>${escapeHtml(category.name)}</strong>
-          <small>${formatter.format(category.count)} productos</small>
-        </span>
-        <span class="category-arrow" aria-hidden="true">→</span>
-      </button>`;
+    return categoryCardMarkup(category);
   }).join("");
 }
 
@@ -422,7 +576,7 @@ function renderHighlights() {
   const used = new Set(dealFamilies.map((family) => family.id));
   const featuredFamilies = selectDiverseFamilies(
     topScored(source.filter((family) => !used.has(family.id)), 32),
-    4
+    10
   );
   $("[data-deals-carousel]").innerHTML = dealFamilies
     .map((family) => productCardMarkup(family))
@@ -432,44 +586,143 @@ function renderHighlights() {
     .join("");
 }
 
-function renderStores() {
+function storeEntries() {
   const entries = new Map();
   for (const family of families) {
-    for (const store of family.stores) {
-      const current = entries.get(store) || { products: new Set() };
+    for (const offer of family.offers) {
+      const id = offer.merchantId || normalizedLabel(offer.merchantName).replace(/\s+/g, "-");
+      const current = entries.get(id) || {
+        id,
+        name: offer.merchantName,
+        products: new Set(),
+        offers: 0
+      };
       current.products.add(family.id);
-      entries.set(store, current);
+      current.offers += 1;
+      entries.set(id, current);
     }
   }
+  return [...entries.values()]
+    .map((entry) => ({
+      ...entry,
+      ...(storeBranding.get(entry.id) || {})
+    }))
+    .sort((left, right) =>
+      right.products.size - left.products.size ||
+      left.name.localeCompare(right.name, activeRegion.locale)
+    );
+}
 
-  $("[data-store-grid]").innerHTML = [...entries.entries()]
-    .sort((left, right) => right[1].products.size - left[1].products.size)
-    .map(([store, data]) => `
-      <button class="store-card" type="button" data-set-store="${escapeHtml(store)}">
-        <span class="store-mark" aria-hidden="true">${escapeHtml(store.slice(0, 2).toUpperCase())}</span>
+function storeLogoMarkup(store) {
+  if (store.logo) {
+    return `
+      <span class="store-mark has-logo" aria-hidden="true">
+        <img src="${escapeHtml(publicAssetUrl(store.logo))}" alt="" loading="lazy">
+      </span>`;
+  }
+  return `<span class="store-mark" aria-hidden="true">${escapeHtml(store.name.slice(0, 2).toUpperCase())}</span>`;
+}
+
+function storeCardMarkup(store) {
+  return `
+      <a class="store-card" href="${escapeHtml(storePath(store.name, activeRegion))}" data-set-store="${escapeHtml(store.name)}">
+        ${storeLogoMarkup(store)}
         <span class="store-copy">
-          <strong>${escapeHtml(store)}</strong>
-          <span>${formatter.format(data.products.size)} productos</span>
+          <strong>${escapeHtml(store.name)}</strong>
+          <span>${escapeHtml(t("productsCount", { count: formatter.format(store.products.size) }))}</span>
         </span>
         <span class="store-arrow" aria-hidden="true">→</span>
-      </button>`).join("");
+      </a>`;
+}
+
+function renderStores() {
+  $("[data-store-grid]").innerHTML = storeEntries()
+    .map(storeCardMarkup)
+    .join("");
+}
+
+function renderNavigationMenus() {
+  const categories = categoryEntries().slice(0, 10);
+  const stores = storeEntries();
+  const categoryMenu = $("[data-nav-categories]");
+  const storeMenu = $("[data-nav-stores]");
+  const favoritePreview = $("[data-nav-favorites-preview]");
+
+  if (categoryMenu) {
+    categoryMenu.innerHTML = `
+      <div class="nav-link-list">
+        ${categories.map((category) => `
+          <a href="${escapeHtml(categoryPath(category.name, activeRegion))}" data-set-category="${escapeHtml(category.name)}">
+            <span>${escapeHtml(localizeCategory(category.name, activeRegion.locale))}</span>
+            <small>${formatter.format(category.count)}</small>
+          </a>`).join("")}
+      </div>
+      <a class="nav-view-all" href="${escapeHtml(categoryDirectoryPath(activeRegion))}">
+        ${escapeHtml(t("viewAllCategories"))} <span aria-hidden="true">→</span>
+      </a>`;
+  }
+  if (storeMenu) {
+    storeMenu.innerHTML = `
+      <div class="nav-link-list store-nav-list">
+        ${stores.map((store) => `
+          <a href="${escapeHtml(storePath(store.name, activeRegion))}" data-set-store="${escapeHtml(store.name)}">
+            ${storeLogoMarkup(store)}
+            <span>${escapeHtml(store.name)}</span>
+            <small>${formatter.format(store.products.size)}</small>
+          </a>`).join("")}
+      </div>
+      <a class="nav-view-all" href="${escapeHtml(storeDirectoryPath(activeRegion))}">
+        ${escapeHtml(t("viewAllStores"))} <span aria-hidden="true">→</span>
+      </a>`;
+  }
+  if (favoritePreview) {
+    const selected = [...state.favorites]
+      .map((id) => familyById.get(id))
+      .filter(Boolean)
+      .slice(0, 3);
+    favoritePreview.innerHTML = selected.length
+      ? selected.map((family) => `
+          <button type="button" class="nav-product-preview" data-open-family="${escapeHtml(family.id)}">
+            <img src="${escapeHtml(publicAssetUrl(family.image))}" alt="">
+            <span>${escapeHtml(family.title)}</span>
+          </button>`).join("")
+      : `<p>${escapeHtml(t("favoritesEmpty"))}</p>`;
+  }
+  $$("[data-region-categories]").forEach((link) => {
+    link.href = categoryDirectoryPath(activeRegion);
+  });
+  $$("[data-region-stores]").forEach((link) => {
+    link.href = storeDirectoryPath(activeRegion);
+  });
+  $$("[data-region-offers]").forEach((link) => {
+    link.href = `${activeRegion.basePath}#ofertas`;
+  });
+  $$("[data-region-guides]").forEach((link) => {
+    link.href = "/guias/";
+  });
 }
 
 function renderFilterOptions() {
   const options = filterOptions(families);
   const categorySelect = $("[data-filter-category]");
-  categorySelect.innerHTML = `
-    <option value="all">Todas las categorías</option>
-    <optgroup label="Categorías principales">
-      ${options.categoryGroups.map((category) => `<option value="${escapeHtml(category)}">${escapeHtml(category)}</option>`).join("")}
+  const categoryMarkup = `
+    <option value="all">${escapeHtml(t("allCategories"))}</option>
+    <optgroup label="${escapeHtml(t("mainCategories"))}">
+      ${options.categoryGroups.map((category) => `<option value="${escapeHtml(category)}">${escapeHtml(localizeCategory(category, activeRegion.locale))}</option>`).join("")}
     </optgroup>
-    <optgroup label="Subcategorías">
-      ${options.rawCategories.map((category) => `<option value="${escapeHtml(category)}">${escapeHtml(category)}</option>`).join("")}
+    <optgroup label="${escapeHtml(t("subcategories"))}">
+      ${options.rawCategories.map((category) => `<option value="${escapeHtml(category)}">${escapeHtml(localizeCategory(category, activeRegion.locale))}</option>`).join("")}
     </optgroup>`;
+  categorySelect.innerHTML = categoryMarkup;
+  const modalCategory = $("[data-modal-filter-category]");
+  if (modalCategory) modalCategory.innerHTML = categoryMarkup;
 
-  $("[data-filter-store]").innerHTML = `
-    <option value="all">Todas las tiendas</option>
+  const storeMarkup = `
+    <option value="all">${escapeHtml(t("allStores"))}</option>
     ${options.stores.map((store) => `<option value="${escapeHtml(store)}">${escapeHtml(store)}</option>`).join("")}`;
+  $("[data-filter-store]").innerHTML = storeMarkup;
+  const modalStore = $("[data-modal-filter-store]");
+  if (modalStore) modalStore.innerHTML = storeMarkup;
 
   if (![...categorySelect.options].some((option) => option.value === state.category)) {
     state.category = "all";
@@ -484,6 +737,9 @@ function syncFilterControls() {
   $("[data-filter-category]").value = state.category;
   $("[data-filter-store]").value = state.store;
   $("[data-sort]").value = state.sort;
+  if ($("[data-modal-filter-category]")) $("[data-modal-filter-category]").value = state.category;
+  if ($("[data-modal-filter-store]")) $("[data-modal-filter-store]").value = state.store;
+  if ($("[data-modal-sort]")) $("[data-modal-sort]").value = state.sort;
   $("[data-price-min]").value = state.minimumPrice ?? "";
   $("[data-price-max]").value = state.maximumPrice ?? "";
   $("[data-discount-only]").checked = state.discountOnly;
@@ -492,13 +748,13 @@ function syncFilterControls() {
 
 function activeFilterEntries() {
   return [
-    state.query ? { key: "query", label: `Búsqueda: ${state.query}` } : null,
-    state.category !== "all" ? { key: "category", label: state.category } : null,
+    state.query ? { key: "query", label: t("searchFilter", { query: state.query }) } : null,
+    state.category !== "all" ? { key: "category", label: localizeCategory(state.category, activeRegion.locale) } : null,
     state.store !== "all" ? { key: "store", label: state.store } : null,
-    Number.isFinite(state.minimumPrice) ? { key: "minimumPrice", label: `Desde ${state.minimumPrice}` } : null,
-    Number.isFinite(state.maximumPrice) ? { key: "maximumPrice", label: `Hasta ${state.maximumPrice}` } : null,
-    state.discountOnly ? { key: "discountOnly", label: "Con descuento" } : null,
-    state.multipleVariants ? { key: "multipleVariants", label: "Varias opciones" } : null
+    Number.isFinite(state.minimumPrice) ? { key: "minimumPrice", label: t("priceFrom", { price: state.minimumPrice }) } : null,
+    Number.isFinite(state.maximumPrice) ? { key: "maximumPrice", label: t("priceTo", { price: state.maximumPrice }) } : null,
+    state.discountOnly ? { key: "discountOnly", label: t("withDiscount") } : null,
+    state.multipleVariants ? { key: "multipleVariants", label: t("multipleOptions") } : null
   ].filter(Boolean);
 }
 
@@ -507,7 +763,7 @@ function renderActiveFilters() {
   $("[data-active-filters]").innerHTML = entries.map((entry) => `
     <span class="active-filter">
       ${escapeHtml(entry.label)}
-      <button type="button" data-remove-filter="${escapeHtml(entry.key)}" aria-label="Quitar filtro ${escapeHtml(entry.label)}">×</button>
+      <button type="button" data-remove-filter="${escapeHtml(entry.key)}" aria-label="${escapeHtml(t("removeFilter", { label: entry.label }))}">×</button>
     </span>`).join("");
   $("[data-clear-filters]").hidden = entries.length === 0;
   const advancedCount = [
@@ -532,16 +788,129 @@ function renderCategoryGuide() {
   container.hidden = false;
   container.innerHTML = `
     <div>
-      <p class="eyebrow">Consejo por categoría</p>
-      <h3>${escapeHtml(guide.title)}</h3>
-      <p>${escapeHtml(guide.intro)}</p>
+      <p class="eyebrow">${escapeHtml(t("categoryAdvice"))}</p>
+      <h3>${escapeHtml(activeRegion.locale.startsWith("pt") ? localizeCategory(state.category, activeRegion.locale) : guide.title)}</h3>
+      <p>${escapeHtml(activeRegion.locale.startsWith("pt") ? t("categoryDirectoryText") : guide.intro)}</p>
     </div>
-    <ul>${guide.points.map((point) => `<li>${escapeHtml(point)}</li>`).join("")}</ul>`;
+    ${activeRegion.locale.startsWith("pt") ? "" : `<ul>${guide.points.map((point) => `<li>${escapeHtml(point)}</li>`).join("")}</ul>`}`;
+}
+
+function renderContextHighlights(sourceFamilies) {
+  const dealsSection = $("[data-context-deals-section]");
+  const scoreSection = $("[data-context-score-section]");
+  const dealsContainer = $("[data-context-deals]");
+  const scoreContainer = $("[data-context-score]");
+  if (!dealsSection || !scoreSection || !dealsContainer || !scoreContainer) return;
+
+  const visual = sourceFamilies.filter(hasPresentationImage);
+  const source = visual.length >= 8 ? visual : sourceFamilies;
+  const deals = selectDiverseFamilies(topDeals(source, 32), 10);
+  const used = new Set(deals.map((family) => family.id));
+  const scores = selectDiverseFamilies(
+    topScored(source.filter((family) => !used.has(family.id)), 32),
+    10
+  );
+  dealsSection.hidden = deals.length === 0;
+  scoreSection.hidden = scores.length === 0;
+  dealsContainer.innerHTML = deals.map((family) => productCardMarkup(family)).join("");
+  scoreContainer.innerHTML = scores.map((family) => productCardMarkup(family)).join("");
+}
+
+function renderDirectoryView() {
+  const panel = $("[data-directory-panel]");
+  const catalogSection = $("#catalogo");
+  if (!panel || !catalogSection) return;
+  const requestedKind = document.body.dataset.pageKind || "home";
+  const kind = state.category !== "all"
+    ? "category"
+    : state.store !== "all"
+      ? "store"
+      : requestedKind;
+  const directoryView = ["categories", "category", "stores", "store"].includes(kind);
+  document.body.classList.toggle("is-directory-view", directoryView);
+  $$("[data-home-only]").forEach((section) => {
+    section.hidden = directoryView;
+  });
+  panel.hidden = !directoryView;
+  catalogSection.hidden = kind === "categories" || kind === "stores";
+
+  const eyebrow = $("[data-directory-eyebrow]");
+  const title = $("[data-directory-title]");
+  const text = $("[data-directory-text]");
+  const categoryGrid = $("[data-category-directory-grid]");
+  const subcategorySection = $("[data-subcategory-section]");
+  const subcategoryGrid = $("[data-subcategory-grid]");
+  const storeGrid = $("[data-store-directory-grid]");
+  const storeHero = $("[data-store-hero]");
+  const catalogTitle = $("[data-catalog-title]");
+
+  categoryGrid.hidden = true;
+  subcategorySection.hidden = true;
+  storeGrid.hidden = true;
+  storeHero.hidden = true;
+  $("[data-context-deals-section]").hidden = true;
+  $("[data-context-score-section]").hidden = true;
+  if (catalogTitle) catalogTitle.textContent = kind === "home"
+    ? (activeRegion.locale.startsWith("pt") ? "Encontre a sua próxima compra" : "Encuentra tu próxima compra")
+    : t("moreProducts");
+
+  if (!directoryView) return;
+
+  if (kind === "categories") {
+    eyebrow.textContent = t("categories");
+    title.textContent = t("categoryDirectoryTitle");
+    text.textContent = t("categoryDirectoryText");
+    categoryGrid.hidden = false;
+    categoryGrid.innerHTML = categoryEntries().map(categoryCardMarkup).join("");
+    return;
+  }
+
+  if (kind === "stores") {
+    eyebrow.textContent = t("stores");
+    title.textContent = t("storeDirectoryTitle");
+    text.textContent = t("storeDirectoryText");
+    storeGrid.hidden = false;
+    storeGrid.innerHTML = storeEntries().map(storeCardMarkup).join("");
+    return;
+  }
+
+  if (kind === "category") {
+    const selected = localizeCategory(state.category, activeRegion.locale);
+    const count = categoryProductCount(state.category);
+    eyebrow.textContent = t("categories");
+    title.textContent = selected;
+    text.textContent = t("productsCount", { count: formatter.format(count) });
+    const subcategories = subcategoryEntries(state.category);
+    subcategorySection.hidden = false;
+    const subtitle = $("[data-subcategory-title]");
+    if (subtitle) subtitle.textContent = subcategories.length
+      ? t("exploreSubcategories")
+      : t("noSubcategories");
+    subcategoryGrid.innerHTML = subcategories
+      .map((entry) => categoryCardMarkup(entry, { compact: true }))
+      .join("");
+    renderContextHighlights(
+      families.filter((family) => familyMatchesCategory(family, state.category))
+    );
+    return;
+  }
+
+  const selectedStore = storeEntries().find((entry) => entry.name === state.store);
+  eyebrow.textContent = t("stores");
+  title.textContent = state.store;
+  text.textContent = selectedStore
+    ? t("productsCount", { count: formatter.format(selectedStore.products.size) })
+    : "";
+  storeHero.hidden = false;
+  storeHero.innerHTML = selectedStore
+    ? `${storeLogoMarkup(selectedStore)}<div><strong>${escapeHtml(selectedStore.name)}</strong><span>${escapeHtml(t("storeProductsTitle", { store: selectedStore.name }))}</span></div>`
+    : "";
 }
 
 function renderCatalog({ updateHistory = true } = {}) {
   const results = filterAndSortFamilies(families, currentFilters());
   const visible = results.slice(0, state.visible);
+  catalogResultCount = results.length;
   const grid = $("[data-catalog-grid]");
   grid.setAttribute("aria-busy", "false");
   grid.innerHTML = visible.length
@@ -549,20 +918,24 @@ function renderCatalog({ updateHistory = true } = {}) {
     : `
       <div class="empty-state">
         <div>
-          <h3>No hemos encontrado coincidencias</h3>
-          <p>Prueba otra palabra o elimina algún filtro.</p>
-          <button class="button secondary" type="button" data-clear-filters>Limpiar filtros</button>
+          <h3>${escapeHtml(t("noMatches"))}</h3>
+          <p>${escapeHtml(t("tryAnother"))}</p>
+          <button class="button secondary" type="button" data-clear-filters>${escapeHtml(t("clearFilters"))}</button>
         </div>
       </div>`;
 
   const summary = $("[data-results-summary]");
-  summary.textContent = `${formatter.format(results.length)} ${results.length === 1 ? "producto" : "productos"} en ${activeRegion.name}`;
-
-  const loadMore = $("[data-load-more]");
-  loadMore.hidden = visible.length >= results.length;
-  loadMore.textContent = `Mostrar más productos (${formatter.format(results.length - visible.length)})`;
+  summary.textContent = results.length === 1
+    ? t("oneResult", { region: activeRegion.name })
+    : t("results", { count: formatter.format(results.length), region: activeRegion.name });
+  const sentinel = $("[data-catalog-sentinel]");
+  if (sentinel) {
+    sentinel.hidden = visible.length >= results.length;
+    sentinel.setAttribute("aria-label", t("catalogLoadMore"));
+  }
   renderActiveFilters();
   renderCategoryGuide();
+  renderDirectoryView();
   syncFilterControls();
   if (updateHistory) updateUrl();
 }
@@ -587,6 +960,7 @@ function renderCompareTray() {
 function renderPersonalizedViews() {
   renderFavoriteCount();
   renderCompareTray();
+  renderNavigationMenus();
 }
 
 function refreshCardsAndCatalog() {
@@ -602,6 +976,14 @@ function setQuery(query, options = {}) {
   renderCatalog();
   if (options.save && state.query.length >= 2) saveSearch(state.query);
   if (options.scroll) $("#catalogo").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function scrollToCurrentView() {
+  const directoryOnly = ["categories", "stores"].includes(document.body.dataset.pageKind);
+  const target = directoryOnly
+    ? $("[data-directory-panel]")
+    : $("#catalogo");
+  target?.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 function saveSearch(query) {
@@ -622,9 +1004,15 @@ function setCategory(category, scroll = true) {
   state.discountOnly = false;
   state.multipleVariants = false;
   state.visible = PAGE_SIZE;
+  document.body.dataset.pageKind = state.category === "all" ? "categories" : "category";
+  delete document.body.dataset.initialStore;
+  document.body.dataset.initialCategory = state.category === "all" ? "" : state.category;
   syncSearchInputs();
-  renderCatalog();
-  if (scroll) $("#catalogo").scrollIntoView({ behavior: "smooth", block: "start" });
+  renderCatalog({ updateHistory: false });
+  history.pushState({}, "", state.category === "all"
+    ? categoryDirectoryPath(activeRegion)
+    : categoryPath(state.category, activeRegion));
+  if (scroll) scrollToCurrentView();
 }
 
 function setStore(store, scroll = true) {
@@ -636,9 +1024,15 @@ function setStore(store, scroll = true) {
   state.discountOnly = false;
   state.multipleVariants = false;
   state.visible = PAGE_SIZE;
+  document.body.dataset.pageKind = state.store === "all" ? "stores" : "store";
+  delete document.body.dataset.initialCategory;
+  document.body.dataset.initialStore = state.store === "all" ? "" : state.store;
   syncSearchInputs();
-  renderCatalog();
-  if (scroll) $("#catalogo").scrollIntoView({ behavior: "smooth", block: "start" });
+  renderCatalog({ updateHistory: false });
+  history.pushState({}, "", state.store === "all"
+    ? storeDirectoryPath(activeRegion)
+    : storePath(state.store, activeRegion));
+  if (scroll) scrollToCurrentView();
 }
 
 function setCollection(collection) {
@@ -663,6 +1057,9 @@ function clearFilters() {
   state.discountOnly = false;
   state.multipleVariants = false;
   state.visible = PAGE_SIZE;
+  document.body.dataset.pageKind = "home";
+  delete document.body.dataset.initialCategory;
+  delete document.body.dataset.initialStore;
   syncSearchInputs();
   renderCatalog();
 }
@@ -678,6 +1075,15 @@ function removeFilter(key) {
     multipleVariants: false
   };
   if (Object.hasOwn(resets, key)) state[key] = resets[key];
+  if (key === "category" || key === "store") {
+    document.body.dataset.pageKind = state.category !== "all"
+      ? "category"
+      : state.store !== "all"
+        ? "store"
+        : "home";
+    delete document.body.dataset.initialCategory;
+    delete document.body.dataset.initialStore;
+  }
   state.visible = PAGE_SIZE;
   syncSearchInputs();
   renderCatalog();
@@ -688,10 +1094,10 @@ function toggleFavorite(familyId) {
   if (!family) return;
   if (state.favorites.has(familyId)) {
     state.favorites.delete(familyId);
-    showToast("Producto eliminado de favoritos.");
+    showToast(t("favoriteRemoved"));
   } else {
     state.favorites.add(familyId);
-    showToast("Producto guardado en favoritos.");
+    showToast(t("favoriteAdded"));
   }
   persistPersonalState();
   refreshCardsAndCatalog();
@@ -703,11 +1109,11 @@ function toggleCompare(familyId) {
   if (state.compare.includes(familyId)) {
     state.compare = state.compare.filter((id) => id !== familyId);
   } else if (state.compare.length >= MAX_COMPARE) {
-    showToast(`Puedes comparar hasta ${MAX_COMPARE} productos a la vez.`);
+    showToast(t("compareMaximum", { count: MAX_COMPARE }));
     return;
   } else {
     state.compare.push(familyId);
-    showToast("Producto añadido al comparador.");
+    showToast(t("compareAdded"));
   }
   persistPersonalState();
   refreshCardsAndCatalog();
@@ -724,39 +1130,39 @@ function rememberViewed(familyId) {
 
 function availabilityLabel(value) {
   const labels = {
-    in_stock: "En stock",
-    preorder: "Reserva",
-    unknown: "Confirmar en tienda"
+    in_stock: t("inStock"),
+    preorder: t("preorder"),
+    unknown: t("confirmStore")
   };
-  return labels[value] || "Disponible";
+  return labels[value] || t("available");
 }
 
 function shippingLabel(offer) {
-  if (offer.shippingCost === 0) return "Gratis";
+  if (offer.shippingCost === 0) return t("free");
   if (Number.isFinite(offer.shippingCost)) {
     return formatMoney(offer.shippingCost, offer.currency, offer.country);
   }
-  return "Consultar";
+  return t("consult");
 }
 
 function shippingDetailLabel(offer) {
   const label = shippingLabel(offer);
-  return label === "Consultar" ? "Envío a confirmar" : `${label} de envío`;
+  return label === t("consult") ? t("shippingConfirm") : t("shipping", { value: label });
 }
 
 function bestPriceNote(offer, index) {
-  return index === 0 && offerTotal(offer) !== null ? "Mejor precio detectado" : "";
+  return index === 0 && offerTotal(offer) !== null ? t("bestPrice") : "";
 }
 
 function variantAttributes(variant) {
   return [
-    ["Color", variant.color],
-    ["Tamaño", variant.size],
-    ["Orientación", variant.orientation],
-    ["Medidas", variant.dimensions],
-    ["Material", variant.material],
-    ["Capacidad", variant.capacity],
-    ["Configuración", variant.configuration]
+    [t("color"), variant.color],
+    [t("size"), variant.size],
+    [t("orientation"), variant.orientation],
+    [t("dimensions"), variant.dimensions],
+    [t("material"), variant.material],
+    [t("capacity"), variant.capacity],
+    [t("configuration"), variant.configuration]
   ].filter(([, value]) => value);
 }
 
@@ -768,7 +1174,7 @@ function offerRowMarkup(offer, index) {
       <td>${escapeHtml(displayOfferPrice(offer))}</td>
       <td>${escapeHtml(shippingLabel(offer))}</td>
       <td>${escapeHtml(availabilityLabel(offer.availability))}</td>
-      <td><a class="offer-link" href="${escapeHtml(href)}" target="_blank" rel="nofollow sponsored noopener" data-outbound-offer="${escapeHtml(offer.id)}">Ver oferta</a></td>
+      <td><a class="offer-link" href="${escapeHtml(href)}" target="_blank" rel="nofollow sponsored noopener" data-outbound-offer="${escapeHtml(offer.id)}">${escapeHtml(t("viewOffer"))}</a></td>
     </tr>`;
 }
 
@@ -782,9 +1188,9 @@ function offerCardMarkup(offer, index) {
       </div>
       <div>
         <strong>${escapeHtml(displayOfferPrice(offer))}</strong>
-        <small>${escapeHtml(shippingLabel(offer))} de envío</small>
+        <small>${escapeHtml(t("shipping", { value: shippingLabel(offer) }))}</small>
       </div>
-      <a class="offer-link" href="${escapeHtml(href)}" target="_blank" rel="nofollow sponsored noopener" data-outbound-offer="${escapeHtml(offer.id)}">Ver oferta en la tienda</a>
+      <a class="offer-link" href="${escapeHtml(href)}" target="_blank" rel="nofollow sponsored noopener" data-outbound-offer="${escapeHtml(offer.id)}">${escapeHtml(t("viewStoreOffer"))}</a>
     </article>`;
 }
 
@@ -811,34 +1217,34 @@ function renderProductDialog(familyId, preferredVariantId = null) {
   const content = $("[data-product-content]");
 
   content.innerHTML = `
-    <button class="modal-close product-close" type="button" data-close-product aria-label="Cerrar">×</button>
+    <button class="modal-close product-close" type="button" data-close-product aria-label="${escapeHtml(t("close"))}">×</button>
     <article class="product-detail">
       <div class="detail-media">
         <div class="detail-main-image">
-          <button type="button" data-open-image="${escapeHtml(state.selectedImage)}" aria-label="Ampliar imagen">
+          <button type="button" data-open-image="${escapeHtml(state.selectedImage)}" aria-label="${escapeHtml(t("enlargeImage"))}">
             <img src="${escapeHtml(publicAssetUrl(state.selectedImage))}" alt="${escapeHtml(family.title)}">
           </button>
         </div>
         ${images.length > 1 ? `
-          <div class="gallery-thumbs" aria-label="Galería del producto">
+          <div class="gallery-thumbs" aria-label="${escapeHtml(t("productGallery"))}">
             ${images.map((image, index) => `
-              <button class="${image === state.selectedImage ? "is-active" : ""}" type="button" data-select-image="${escapeHtml(image)}" aria-label="Mostrar imagen ${index + 1}">
+              <button class="${image === state.selectedImage ? "is-active" : ""}" type="button" data-select-image="${escapeHtml(image)}" aria-label="${escapeHtml(t("showImage", { count: index + 1 }))}">
                 <img src="${escapeHtml(publicAssetUrl(image))}" alt="" loading="lazy">
               </button>`).join("")}
           </div>` : ""}
       </div>
       <div class="detail-content">
         <div class="detail-topbar">
-          <span class="breadcrumbs">Inicio / ${escapeHtml(family.primaryGroup)} / ${escapeHtml(family.brand)}</span>
+          <span class="breadcrumbs">${escapeHtml(t("home"))} / ${escapeHtml(localizeCategory(family.primaryGroup, activeRegion.locale))} / ${escapeHtml(family.brand)}</span>
           <div class="detail-actions">
-            <button type="button" data-toggle-favorite="${escapeHtml(family.id)}">${favorite ? "♥ Guardado" : "♡ Favorito"}</button>
-            <button type="button" data-toggle-compare="${escapeHtml(family.id)}">${compared ? "✓ Comparando" : "⇄ Comparar"}</button>
+            <button type="button" data-toggle-favorite="${escapeHtml(family.id)}">${favorite ? `♥ ${escapeHtml(t("saved"))}` : `♡ ${escapeHtml(t("favorite"))}`}</button>
+            <button type="button" data-toggle-compare="${escapeHtml(family.id)}">${compared ? `✓ ${escapeHtml(t("comparing"))}` : `⇄ ${escapeHtml(t("compare"))}`}</button>
           </div>
         </div>
         <h2 id="product-title">${escapeHtml(family.title)}</h2>
         <div class="detail-summary">
           <span class="score">SecretScore ${family.secretScore.toFixed(1)}</span>
-          <span>${formatter.format(family.variantCount)} ${family.variantCount === 1 ? "opción" : "opciones"}</span>
+          <span>${escapeHtml(family.variantCount === 1 ? t("oneOption") : t("options", { count: formatter.format(family.variantCount) }))}</span>
           <span>${escapeHtml(activeRegion.name)}</span>
         </div>
         ${variant.title !== family.title ? `<p class="detail-variant-title">${escapeHtml(variant.title)}</p>` : ""}
@@ -846,8 +1252,8 @@ function renderProductDialog(familyId, preferredVariantId = null) {
 
         <section class="detail-section" aria-labelledby="variants-title">
           <div class="detail-section-head">
-            <h3 id="variants-title">Elige la opción exacta</h3>
-            <span>${formatter.format(family.variantCount)} ${family.variantCount === 1 ? "disponible" : "disponibles"}</span>
+            <h3 id="variants-title">${escapeHtml(t("exactOption"))}</h3>
+            <span>${formatter.format(family.variantCount)} ${escapeHtml(family.variantCount === 1 ? t("availableSingular") : t("availablePlural"))}</span>
           </div>
           <div class="variant-list">
             ${family.variants.map((item, index) => `
@@ -857,14 +1263,14 @@ function renderProductDialog(familyId, preferredVariantId = null) {
                 data-select-variant="${escapeHtml(item.id)}"
                 ${index >= 10 ? "hidden" : ""}
               >${escapeHtml(item.label)}</button>`).join("")}
-            ${hiddenVariantCount ? `<button class="variant-chip" type="button" data-show-all-variants>Ver ${hiddenVariantCount} más</button>` : ""}
+            ${hiddenVariantCount ? `<button class="variant-chip" type="button" data-show-all-variants>${escapeHtml(t("viewMore", { count: hiddenVariantCount }))}</button>` : ""}
           </div>
         </section>
 
         <section class="detail-section" aria-labelledby="offers-title">
           <div class="detail-section-head">
-            <h3 id="offers-title">${offers.length === 1 ? "Oferta disponible" : "Compara ofertas"}</h3>
-            <span>${offers.length} ${offers.length === 1 ? "tienda" : "ofertas"}</span>
+            <h3 id="offers-title">${escapeHtml(offers.length === 1 ? t("oneAvailableOffer") : t("compareOffers"))}</h3>
+            <span>${escapeHtml(offers.length === 1 ? t("oneStore") : t("offerCount", { count: offers.length }))}</span>
           </div>
           ${offers.length === 1 ? `
             <div class="offer-highlight">
@@ -873,21 +1279,21 @@ function renderProductDialog(familyId, preferredVariantId = null) {
                 <strong class="offer-main-price">${escapeHtml(displayOfferPrice(best))}</strong>
                 <small>${escapeHtml(shippingDetailLabel(best))} · ${escapeHtml(availabilityLabel(best.availability))}</small>
               </div>
-              <a class="offer-link" href="${escapeHtml(offerRedirectPath(activeRegion.id, best.id))}" target="_blank" rel="nofollow sponsored noopener" data-outbound-offer="${escapeHtml(best.id)}">Ver oferta</a>
+              <a class="offer-link" href="${escapeHtml(offerRedirectPath(activeRegion.id, best.id))}" target="_blank" rel="nofollow sponsored noopener" data-outbound-offer="${escapeHtml(best.id)}">${escapeHtml(t("viewOffer"))}</a>
             </div>` : `
             <div class="offer-table-wrap">
               <table class="offer-table">
-                <thead><tr><th>Tienda</th><th>Precio</th><th>Envío</th><th>Disponibilidad</th><th>Acción</th></tr></thead>
+                <thead><tr><th>${escapeHtml(t("store"))}</th><th>${escapeHtml(t("price"))}</th><th>${escapeHtml(t("shippingColumn"))}</th><th>${escapeHtml(t("availability"))}</th><th>${escapeHtml(t("action"))}</th></tr></thead>
                 <tbody>${offers.map(offerRowMarkup).join("")}</tbody>
               </table>
             </div>
             <div class="offer-cards">${offers.map(offerCardMarkup).join("")}</div>`}
-          <p class="detail-disclosure">El precio, el envío y la disponibilidad definitivos se confirman en la tienda. El enlace puede generar una comisión sin coste adicional.</p>
+          <p class="detail-disclosure">${escapeHtml(t("storePriceDisclosure"))}</p>
         </section>
 
         ${attributes.length ? `
           <section class="detail-section" aria-labelledby="attributes-title">
-            <div class="detail-section-head"><h3 id="attributes-title">Características de esta opción</h3></div>
+            <div class="detail-section-head"><h3 id="attributes-title">${escapeHtml(t("optionFeatures"))}</h3></div>
             <dl class="attribute-grid">
               ${attributes.map(([label, value]) => `<div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`).join("")}
             </dl>
@@ -895,7 +1301,7 @@ function renderProductDialog(familyId, preferredVariantId = null) {
 
         ${related.length ? `
           <section class="detail-section" aria-labelledby="related-title">
-            <div class="detail-section-head"><h3 id="related-title">Alternativas similares</h3><span>No se consideran el mismo producto</span></div>
+            <div class="detail-section-head"><h3 id="related-title">${escapeHtml(t("similarAlternatives"))}</h3><span>${escapeHtml(t("notSameProduct"))}</span></div>
             <div class="detail-related">
               ${related.map((item) => `
                 <a href="${escapeHtml(familyHref(item))}" data-open-family="${escapeHtml(item.id)}">
@@ -907,8 +1313,8 @@ function renderProductDialog(familyId, preferredVariantId = null) {
       </div>
     </article>
     <div class="image-viewer" data-image-viewer hidden>
-      <button type="button" data-close-image aria-label="Cerrar imagen ampliada">×</button>
-      <img src="${escapeHtml(publicAssetUrl(state.selectedImage))}" alt="${escapeHtml(family.title)} ampliado">
+      <button type="button" data-close-image aria-label="${escapeHtml(t("closeExpandedImage"))}">×</button>
+      <img src="${escapeHtml(publicAssetUrl(state.selectedImage))}" alt="${escapeHtml(t("enlarged", { title: family.title }))}">
     </div>`;
 }
 
@@ -946,24 +1352,76 @@ function normalizeRoute(pathname) {
   return value === "/" ? "/" : `${value.replace(/\/+$/, "")}/`;
 }
 
-function handleProductRoute() {
-  const familyId = familyByProductPath.get(normalizeRoute(location.pathname));
+function handleRouteChange() {
+  const pathname = normalizeRoute(location.pathname);
+  const familyId = familyByProductPath.get(pathname);
   if (!familyId) {
     if ($("#product-dialog")?.open) closeProduct({ clearRoute: false });
-    return;
-  }
-  if (familyById.has(familyId)) {
+  } else if (familyById.has(familyId)) {
     if (!$("#product-dialog")?.open || state.selectedFamilyId !== familyId) {
       openProduct(familyId, { route: false });
     }
-  } else showToast("Ese producto ya no está disponible.");
+    return;
+  } else {
+    showToast(t("productUnavailable"));
+    return;
+  }
+
+  let pageKind = null;
+  let category = "all";
+  let store = "all";
+  if (pathname === normalizeRoute(categoryDirectoryPath(activeRegion))) {
+    pageKind = "categories";
+  } else if (categoryByPath.has(pathname)) {
+    pageKind = "category";
+    category = categoryByPath.get(pathname);
+  } else if (pathname === normalizeRoute(storeDirectoryPath(activeRegion))) {
+    pageKind = "stores";
+  } else if (storeByPath.has(pathname)) {
+    pageKind = "store";
+    store = storeByPath.get(pathname);
+  } else if (pathname === normalizeRoute(activeRegion.basePath)) {
+    pageKind = "home";
+  }
+  if (!pageKind) return;
+
+  const params = new URLSearchParams(location.search);
+  const minimum = Number(params.get("precio_min"));
+  const maximum = Number(params.get("precio_max"));
+  const validStores = new Set(storeByPath.values());
+  const queryStore = params.get("tienda");
+  state.query = String(params.get("q") || "").slice(0, 120);
+  state.category = category;
+  state.store = category !== "all" && validStores.has(queryStore)
+    ? queryStore
+    : store;
+  state.sort = ["relevance", "score-desc", "price-asc", "discount-desc", "variants-desc"]
+    .includes(params.get("orden"))
+    ? params.get("orden")
+    : "relevance";
+  state.minimumPrice = params.has("precio_min") && Number.isFinite(minimum)
+    ? Math.max(0, minimum)
+    : null;
+  state.maximumPrice = params.has("precio_max") && Number.isFinite(maximum)
+    ? Math.max(0, maximum)
+    : null;
+  state.discountOnly = params.get("descuento") === "1";
+  state.multipleVariants = params.get("variantes") === "1";
+  state.visible = PAGE_SIZE;
+  document.body.dataset.pageKind = pageKind;
+  if (category !== "all") document.body.dataset.initialCategory = category;
+  else delete document.body.dataset.initialCategory;
+  if (store !== "all") document.body.dataset.initialStore = store;
+  else delete document.body.dataset.initialStore;
+  syncSearchInputs();
+  renderCatalog({ updateHistory: false });
 }
 
 function renderComparison() {
   const selected = state.compare.map((id) => familyById.get(id)).filter(Boolean);
   const content = $("[data-compare-content]");
   if (selected.length === 0) {
-    content.innerHTML = `<div class="saved-empty"><div><h3>El comparador está vacío</h3><p>Añade hasta cuatro productos desde sus tarjetas.</p></div></div>`;
+    content.innerHTML = `<div class="saved-empty"><div><h3>${escapeHtml(t("comparatorEmpty"))}</h3><p>${escapeHtml(t("comparatorHelp"))}</p></div></div>`;
     return;
   }
   const cells = (valueForFamily) =>
@@ -973,24 +1431,24 @@ function renderComparison() {
       <table class="comparison-table">
         <thead>
           <tr>
-            <th>Producto</th>
+            <th>${escapeHtml(t("productType"))}</th>
             ${selected.map((family) => `
               <td>
                 <div class="compare-product-head">
                   <img src="${escapeHtml(publicAssetUrl(family.image))}" alt="">
                   <strong>${escapeHtml(family.title)}</strong>
-                  <button type="button" data-toggle-compare="${escapeHtml(family.id)}">Quitar</button>
+                  <button type="button" data-toggle-compare="${escapeHtml(family.id)}">${escapeHtml(t("remove"))}</button>
                 </div>
               </td>`).join("")}
           </tr>
         </thead>
         <tbody>
-          <tr><th>Categoría</th>${cells((family) => escapeHtml(family.primaryGroup))}</tr>
+          <tr><th>${escapeHtml(t("category"))}</th>${cells((family) => escapeHtml(localizeCategory(family.primaryGroup, activeRegion.locale)))}</tr>
           <tr><th>SecretScore</th>${cells((family) => `<span class="score">${family.secretScore.toFixed(1)}</span>`)}</tr>
-          <tr><th>Precio</th>${cells((family) => escapeHtml(displayOfferPrice(bestOffer(family, activeRegion.countryCode))))}</tr>
-          <tr><th>Opciones</th>${cells((family) => formatter.format(family.variantCount))}</tr>
-          <tr><th>Tiendas</th>${cells((family) => escapeHtml(family.stores.join(", ")))}</tr>
-          <tr><th>Ver detalle</th>${cells((family) => `<a class="button secondary" href="${escapeHtml(familyHref(family))}" data-open-family="${escapeHtml(family.id)}">Abrir</a>`)}</tr>
+          <tr><th>${escapeHtml(t("price"))}</th>${cells((family) => escapeHtml(displayOfferPrice(bestOffer(family, activeRegion.countryCode))))}</tr>
+          <tr><th>${escapeHtml(t("optionsLabel"))}</th>${cells((family) => formatter.format(family.variantCount))}</tr>
+          <tr><th>${escapeHtml(t("storesLabel"))}</th>${cells((family) => escapeHtml(family.stores.join(", ")))}</tr>
+          <tr><th>${escapeHtml(t("viewDetail"))}</th>${cells((family) => `<a class="button secondary" href="${escapeHtml(familyHref(family))}" data-open-family="${escapeHtml(family.id)}">${escapeHtml(t("open"))}</a>`)}</tr>
         </tbody>
       </table>
     </div>
@@ -1005,14 +1463,14 @@ function renderComparison() {
             </div>
           </div>
           <dl>
-            <div><dt>Categoría</dt><dd>${escapeHtml(family.primaryGroup)}</dd></div>
-            <div><dt>Precio</dt><dd>${escapeHtml(displayOfferPrice(bestOffer(family, activeRegion.countryCode)))}</dd></div>
-            <div><dt>Opciones</dt><dd>${formatter.format(family.variantCount)}</dd></div>
-            <div><dt>Tiendas</dt><dd>${escapeHtml(family.stores.join(", "))}</dd></div>
+            <div><dt>${escapeHtml(t("category"))}</dt><dd>${escapeHtml(localizeCategory(family.primaryGroup, activeRegion.locale))}</dd></div>
+            <div><dt>${escapeHtml(t("price"))}</dt><dd>${escapeHtml(displayOfferPrice(bestOffer(family, activeRegion.countryCode)))}</dd></div>
+            <div><dt>${escapeHtml(t("optionsLabel"))}</dt><dd>${formatter.format(family.variantCount)}</dd></div>
+            <div><dt>${escapeHtml(t("storesLabel"))}</dt><dd>${escapeHtml(family.stores.join(", "))}</dd></div>
           </dl>
           <div class="comparison-card-actions">
-            <a class="button secondary" href="${escapeHtml(familyHref(family))}" data-open-family="${escapeHtml(family.id)}">Abrir ficha</a>
-            <button class="comparison-remove" type="button" data-toggle-compare="${escapeHtml(family.id)}">Quitar</button>
+            <a class="button secondary" href="${escapeHtml(familyHref(family))}" data-open-family="${escapeHtml(family.id)}">${escapeHtml(t("openCard"))}</a>
+            <button class="comparison-remove" type="button" data-toggle-compare="${escapeHtml(family.id)}">${escapeHtml(t("remove"))}</button>
           </div>
         </article>`).join("")}
     </div>`;
@@ -1035,7 +1493,7 @@ function renderSavedContent() {
   if (state.savedTab === "searches") {
     content.innerHTML = state.searches.length
       ? `<div class="search-history-list">${state.searches.map((query) => `<button type="button" data-use-search="${escapeHtml(query)}">${escapeHtml(query)}</button>`).join("")}</div>`
-      : `<div class="saved-empty"><div><h3>Aún no hay búsquedas guardadas</h3><p>Las últimas búsquedas quedan solo en este dispositivo.</p></div></div>`;
+      : `<div class="saved-empty"><div><h3>${escapeHtml(t("searchesEmptyTitle"))}</h3><p>${escapeHtml(t("searchesEmptyText"))}</p></div></div>`;
     return;
   }
 
@@ -1049,14 +1507,14 @@ function renderSavedContent() {
           <img src="${escapeHtml(publicAssetUrl(family.image))}" alt="">
           <div>
             <strong>${escapeHtml(family.title)}</strong>
-            <small>${escapeHtml(family.primaryGroup)} · ${escapeHtml(displayOfferPrice(bestOffer(family)))}</small>
+            <small>${escapeHtml(localizeCategory(family.primaryGroup, activeRegion.locale))} · ${escapeHtml(displayOfferPrice(bestOffer(family)))}</small>
           </div>
           <div class="saved-item-actions">
-            <button type="button" data-open-family="${escapeHtml(family.id)}" aria-label="Abrir ${escapeHtml(family.title)}">→</button>
-            ${state.savedTab === "favorites" ? `<button class="saved-remove" type="button" data-remove-favorite="${escapeHtml(family.id)}" aria-label="Eliminar ${escapeHtml(family.title)} de favoritos">×</button>` : ""}
+            <button type="button" data-open-family="${escapeHtml(family.id)}" aria-label="${escapeHtml(t("openProduct", { title: family.title }))}">→</button>
+            ${state.savedTab === "favorites" ? `<button class="saved-remove" type="button" data-remove-favorite="${escapeHtml(family.id)}" aria-label="${escapeHtml(t("removeSavedProduct", { title: family.title }))}">×</button>` : ""}
           </div>
         </article>`).join("")}</div>`
-    : `<div class="saved-empty"><div><h3>${state.savedTab === "favorites" ? "No has guardado favoritos" : "Aún no hay productos recientes"}</h3><p>Explora el catálogo y vuelve aquí cuando quieras.</p></div></div>`;
+    : `<div class="saved-empty"><div><h3>${escapeHtml(state.savedTab === "favorites" ? t("favoritesEmpty") : t("recentEmpty"))}</h3><p>${escapeHtml(t("savedEmptyText"))}</p></div></div>`;
 }
 
 function openSaved() {
@@ -1086,7 +1544,7 @@ function renderSuggestions(input) {
         <strong>${escapeHtml(suggestion.label)}</strong>
         <small>${escapeHtml(suggestion.meta)}</small>
       </span>
-      <span class="suggestion-type">${suggestion.type === "product" ? "Producto" : "Categoría"}</span>
+      <span class="suggestion-type">${escapeHtml(suggestion.type === "product" ? t("productType") : t("categoryType"))}</span>
     </button>`).join("");
 }
 
@@ -1135,10 +1593,10 @@ function toggleTheme() {
 function renderThemeControls() {
   const dark = document.documentElement.dataset.theme === "dark";
   $$("[data-theme-toggle]").forEach((button) => {
-    button.setAttribute("aria-label", dark ? "Activar modo claro" : "Activar modo oscuro");
+    button.setAttribute("aria-label", dark ? t("activateLight") : t("activateDark"));
   });
   $$("[data-theme-label]").forEach((label) => {
-    label.textContent = dark ? "Claro" : "Oscuro";
+    label.textContent = dark ? t("light") : t("dark");
   });
   $$("[data-theme-icon]").forEach((icon) => {
     icon.textContent = dark ? "☀" : "◐";
@@ -1154,14 +1612,22 @@ function applyAdvancedFilters(event) {
   const hasMinimum = $("[data-price-min]").value !== "" && Number.isFinite(minimum);
   const hasMaximum = $("[data-price-max]").value !== "" && Number.isFinite(maximum);
   if (hasMinimum && hasMaximum && minimum > maximum) {
-    showToast("El precio mínimo no puede superar al máximo.");
+    showToast(t("invalidPriceRange"));
     return;
   }
   state.minimumPrice = hasMinimum ? Math.max(0, minimum) : null;
   state.maximumPrice = hasMaximum ? Math.max(0, maximum) : null;
+  state.category = $("[data-modal-filter-category]")?.value || state.category;
+  state.store = $("[data-modal-filter-store]")?.value || state.store;
+  state.sort = $("[data-modal-sort]")?.value || state.sort;
   state.discountOnly = $("[data-discount-only]").checked;
   state.multipleVariants = $("[data-multiple-variants]").checked;
   state.visible = PAGE_SIZE;
+  document.body.dataset.pageKind = state.category !== "all"
+    ? "category"
+    : state.store !== "all"
+      ? "store"
+      : "home";
   closeDialog($("#filters-dialog"));
   renderCatalog();
 }
@@ -1172,6 +1638,30 @@ function resetAdvancedFilters() {
   state.discountOnly = false;
   state.multipleVariants = false;
   syncFilterControls();
+}
+
+function closePinnedMenus(except = null) {
+  $$("[data-nav-menu].is-pinned").forEach((menu) => {
+    if (menu === except) return;
+    menu.classList.remove("is-pinned");
+    $("[data-pin-menu]", menu)?.setAttribute("aria-expanded", "false");
+  });
+}
+
+function togglePinnedMenu(trigger) {
+  const menu = trigger.closest("[data-nav-menu]");
+  if (!menu) return;
+  const next = !menu.classList.contains("is-pinned");
+  closePinnedMenus(menu);
+  menu.classList.toggle("is-pinned", next);
+  trigger.setAttribute("aria-expanded", String(next));
+}
+
+function focusCatalogSearch() {
+  const input = $("#hero-search") || $("#header-search");
+  if (!input) return;
+  input.scrollIntoView({ behavior: "smooth", block: "center" });
+  window.setTimeout(() => input.focus(), 250);
 }
 
 function wireEvents() {
@@ -1202,14 +1692,26 @@ function wireEvents() {
 
   document.addEventListener("change", (event) => {
     if (event.target.matches("[data-filter-category]")) {
-      state.category = event.target.value;
-      state.visible = PAGE_SIZE;
-      renderCatalog();
+      if (event.target.value === "all") {
+        state.category = "all";
+        state.visible = PAGE_SIZE;
+        document.body.dataset.pageKind = state.store === "all" ? "home" : "store";
+        delete document.body.dataset.initialCategory;
+        renderCatalog();
+      } else {
+        setCategory(event.target.value, false);
+      }
     }
     if (event.target.matches("[data-filter-store]")) {
-      state.store = event.target.value;
-      state.visible = PAGE_SIZE;
-      renderCatalog();
+      if (event.target.value === "all") {
+        state.store = "all";
+        state.visible = PAGE_SIZE;
+        document.body.dataset.pageKind = state.category === "all" ? "home" : "category";
+        delete document.body.dataset.initialStore;
+        renderCatalog();
+      } else {
+        setStore(event.target.value, false);
+      }
     }
     if (event.target.matches("[data-sort]")) {
       state.sort = event.target.value;
@@ -1232,9 +1734,17 @@ function wireEvents() {
         closeSuggestions();
       }
     }
+    if (event.key === "Escape") closePinnedMenus();
   });
 
   document.addEventListener("click", (event) => {
+    const pinMenu = event.target.closest("[data-pin-menu]");
+    if (pinMenu) {
+      event.preventDefault();
+      togglePinnedMenu(pinMenu);
+      return;
+    }
+
     const suggestion = event.target.closest("[data-suggestion-index]");
     if (suggestion) {
       chooseSuggestion(Number(suggestion.dataset.suggestionIndex));
@@ -1266,6 +1776,7 @@ function wireEvents() {
 
     const category = event.target.closest("[data-set-category]");
     if (category) {
+      event.preventDefault();
       setCategory(category.dataset.setCategory);
       return;
     }
@@ -1278,6 +1789,7 @@ function wireEvents() {
 
     const store = event.target.closest("[data-set-store]");
     if (store) {
+      event.preventDefault();
       setStore(store.dataset.setStore);
       return;
     }
@@ -1306,16 +1818,13 @@ function wireEvents() {
       return;
     }
 
-    if (event.target.closest("[data-load-more]")) {
-      state.visible += PAGE_SIZE;
-      renderCatalog();
-      return;
-    }
-
     const previousCarousel = event.target.closest("[data-carousel-prev]");
     const nextCarousel = event.target.closest("[data-carousel-next]");
     if (previousCarousel || nextCarousel) {
-      const carousel = $("[data-deals-carousel]");
+      const key = (previousCarousel || nextCarousel).dataset.carouselPrev ||
+        (previousCarousel || nextCarousel).dataset.carouselNext;
+      const carousel = $(`[data-carousel-key="${CSS.escape(key)}"]`);
+      if (!carousel) return;
       carousel.scrollBy({
         left: (nextCarousel ? 1 : -1) * Math.max(260, carousel.clientWidth * 0.75),
         behavior: "smooth"
@@ -1352,6 +1861,10 @@ function wireEvents() {
     }
     if (event.target.closest("[data-theme-toggle]")) {
       toggleTheme();
+      return;
+    }
+    if (event.target.closest("[data-focus-search]")) {
+      focusCatalogSearch();
       return;
     }
     if (event.target.closest("[data-menu-toggle]")) {
@@ -1439,6 +1952,7 @@ function wireEvents() {
     ) {
       closeSuggestions();
     }
+    if (!event.target.closest("[data-nav-menu]")) closePinnedMenus();
 
     const menuLink = event.target.closest("#menu-dialog a");
     if (menuLink) closeDialog($("#menu-dialog"));
@@ -1457,11 +1971,24 @@ function wireEvents() {
     }
   }, true);
 
-  window.addEventListener("popstate", handleProductRoute);
+  window.addEventListener("popstate", handleRouteChange);
 }
 
 function motionAllowed() {
   return !window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+}
+
+function wireInfiniteCatalog() {
+  catalogObserver?.disconnect();
+  const sentinel = $("[data-catalog-sentinel]");
+  if (!sentinel || !("IntersectionObserver" in window)) return;
+  catalogObserver = new IntersectionObserver((entries) => {
+    if (!entries.some((entry) => entry.isIntersecting)) return;
+    if (state.visible >= catalogResultCount) return;
+    state.visible = Math.min(catalogResultCount, state.visible + PAGE_SIZE);
+    renderCatalog({ updateHistory: false });
+  }, { rootMargin: "500px 0px" });
+  catalogObserver.observe(sentinel);
 }
 
 function stopHeroRotation() {
@@ -1531,7 +2058,8 @@ function renderInitial(stats) {
   syncSearchInputs();
   renderThemeControls();
   renderCatalog({ updateHistory: false });
-  handleProductRoute();
+  handleRouteChange();
+  wireInfiniteCatalog();
   wireControlledRotations();
 }
 
@@ -1545,13 +2073,24 @@ async function fetchJson(url, label) {
 }
 
 async function initializeRegion() {
-  regionsConfig = validateRegionConfig(
-    await fetchJson(REGIONS_URL, "Configuración regional")
-  );
+  const [regionsPayload, taxonomyPayload, brandingPayload] = await Promise.all([
+    fetchJson(REGIONS_URL, "Configuración regional"),
+    fetchJson(TAXONOMY_URL, "Taxonomía de categorías"),
+    fetchJson(STORE_BRANDING_URL, "Identidad visual de tiendas")
+  ]);
+  regionsConfig = validateRegionConfig(regionsPayload);
   activeRegion = resolveActiveRegion(
     regionsConfig,
     document.documentElement.dataset.region,
     location.pathname
+  );
+  t = createTranslator(activeRegion.locale);
+  applyStaticLocale(activeRegion.locale);
+  categoryTaxonomy = Array.isArray(taxonomyPayload?.categories)
+    ? taxonomyPayload.categories
+    : [];
+  storeBranding = new Map(
+    (brandingPayload?.stores || []).map((store) => [store.id, store])
   );
   const manifest = await fetchJson(activeRegion.catalogManifest, `Catálogo ${activeRegion.id}`);
   if (
@@ -1584,6 +2123,7 @@ async function initializeRegion() {
   $$("[data-region-home]").forEach((link) => {
     link.href = activeRegion.basePath;
   });
+  if (!document.body.dataset.pageKind) document.body.dataset.pageKind = "home";
 }
 
 async function start() {
@@ -1595,7 +2135,7 @@ async function start() {
   } catch (error) {
     const status = $("[data-catalog-status]");
     if (status) {
-      status.textContent = "Catálogo no disponible";
+      status.textContent = t("catalogUnavailable");
       status.classList.add("is-warning");
     }
     const grid = $("[data-catalog-grid]");
@@ -1604,8 +2144,8 @@ async function start() {
       grid.innerHTML = `
         <div class="empty-state">
           <div>
-            <h3>No se pudo cargar el catálogo</h3>
-            <p>Actualiza la página en unos instantes. El resto de la información sigue disponible.</p>
+            <h3>${escapeHtml(t("loadErrorTitle"))}</h3>
+            <p>${escapeHtml(t("loadErrorText"))}</p>
           </div>
         </div>`;
     }

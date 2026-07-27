@@ -94,6 +94,13 @@ try {
   const initialCards = await desktop.locator("[data-catalog-grid] .product-card").count();
   if (initialCards !== 24) failures.push(`desktop: se esperaban 24 tarjetas iniciales y hay ${initialCards}`);
 
+  await desktop.getByRole("button", { name: "Categorías", exact: true }).click();
+  await desktop.locator("[data-nav-categories] a").first().waitFor();
+  if (!(await desktop.locator("[data-nav-categories]").isVisible())) {
+    failures.push("desktop: el menú de categorías no se fija al hacer clic");
+  }
+  await desktop.keyboard.press("Escape");
+
   const searchTarget = (await desktop.locator("[data-catalog-grid] .product-card h3").first().textContent())?.trim();
   if (!searchTarget) throw new Error("desktop: no se pudo obtener un producto para probar la búsqueda");
   await desktop.locator("#header-search").fill(searchTarget);
@@ -121,7 +128,8 @@ try {
     failures.push("desktop: cerrar la ficha no restaura la portada regional");
   }
 
-  await desktop.locator("[data-clear-filters]").first().click();
+  await desktop.locator(".nav-filter-menu [data-pin-menu]").click();
+  await desktop.locator(".header-filter-dropdown [data-clear-filters]").click();
   await desktop.locator("[data-catalog-grid] .product-card").first().waitFor();
   await desktop.locator("[data-catalog-grid] [data-toggle-favorite]").first().click();
   const favoriteCount = await desktop.locator("[data-favorite-count]").first().textContent();
@@ -185,6 +193,24 @@ try {
     getComputedStyle(node).gridTemplateColumns.split(" ").length
   );
   if (columns !== 2) failures.push(`mobile: la cuadrícula usa ${columns} columnas`);
+  if (!(await mobile.locator(".mobile-bottom-nav").isVisible())) {
+    failures.push("mobile: la navegación inferior no es visible");
+  }
+  const mobileBottomActions = await mobile.locator(".mobile-bottom-nav > *").count();
+  if (mobileBottomActions !== 5) {
+    failures.push(`mobile: la navegación inferior contiene ${mobileBottomActions} acciones`);
+  }
+  const scoreScrollable = await mobile.locator("[data-featured-grid]").evaluate((node) =>
+    node.scrollWidth > node.clientWidth
+  );
+  if (!scoreScrollable) failures.push("mobile: SecretScore no permite desplazamiento horizontal");
+
+  await mobile.locator("[data-catalog-sentinel]").scrollIntoViewIfNeeded();
+  await mobile.waitForFunction(() =>
+    document.querySelectorAll("[data-catalog-grid] .product-card").length > 24
+  );
+  const expandedCards = await mobile.locator("[data-catalog-grid] .product-card").count();
+  if (expandedCards <= 24) failures.push("mobile: el catálogo infinito no cargó más productos");
 
   await mobile.locator("[data-catalog-grid] [data-toggle-compare]").nth(0).click();
   await mobile.locator("[data-catalog-grid] [data-toggle-compare]").nth(1).click();
@@ -241,6 +267,31 @@ try {
     failures.push(
       `arquitectura: selector ${selectorSerious.map((violation) => `${violation.id}(${violation.nodes.length})`).join(", ")}`
     );
+  }
+
+  await architecture.goto(new URL("/categorias/", baseUrl).href, { waitUntil: "domcontentloaded" });
+  await architecture.locator("[data-category-directory-grid] .category-card").first().waitFor();
+  if (await architecture.locator("#catalogo").isVisible()) {
+    failures.push("arquitectura: el directorio de categorías muestra el catálogo genérico");
+  }
+  await architecture.locator("[data-category-directory-grid] .category-card").first().click();
+  await architecture.locator("[data-subcategory-section]").waitFor();
+  if (!new URL(architecture.url()).pathname.startsWith("/categorias/")) {
+    failures.push("arquitectura: la categoría no usa una ruta real");
+  }
+
+  await architecture.goto(new URL("/tiendas/muebles-style-spain/", baseUrl).href, { waitUntil: "domcontentloaded" });
+  await architecture.locator("[data-store-hero]").waitFor();
+  const storeOverflow = await architecture.evaluate(() =>
+    document.documentElement.scrollWidth > window.innerWidth
+  );
+  if (storeOverflow) failures.push("arquitectura: Muebles Style provoca desbordamiento horizontal");
+
+  await architecture.goto(new URL("/pt/", baseUrl).href, { waitUntil: "domcontentloaded" });
+  await architecture.locator("[data-catalog-grid] .product-card").first().waitFor();
+  const portugueseLabels = await architecture.locator(".mobile-bottom-nav").textContent();
+  if (!portugueseLabels?.includes("Categorias") || !portugueseLabels.includes("Lojas")) {
+    failures.push("arquitectura: la interfaz portuguesa conserva etiquetas españolas");
   }
 
   await architecture.goto(new URL(productPathname, baseUrl).href, { waitUntil: "domcontentloaded" });

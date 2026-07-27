@@ -16,12 +16,21 @@ import {
   offerTotal
 } from "../assets/js/catalog-core.js";
 import {
+  categoryDirectoryPath,
+  categoryPath,
   normalizeBasePath,
   productPath,
   publicAssetUrl,
   publishedRegions,
+  storeDirectoryPath,
+  storePath,
   validateRegionConfig
 } from "../assets/js/region-core.js";
+import {
+  createTranslator,
+  localizeCategory,
+  translateStaticHtml
+} from "../assets/js/i18n.js";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const generatedMarker = "_GENERATED_BY_SECRETSHOP.txt";
@@ -261,7 +270,10 @@ function productStructuredData(config, region, family, canonical, title, descrip
 }
 
 function offerMarkup(region, offer, index) {
-  const note = index === 0 ? '<span class="score">Opción destacada</span>' : "";
+  const t = createTranslator(region.locale);
+  const note = index === 0
+    ? `<span class="score">${html(t("highlightedOption"))}</span>`
+    : "";
   return `
               <article class="standalone-offer">
                 <div>
@@ -274,16 +286,19 @@ function offerMarkup(region, offer, index) {
                   href="/go.html?region=${encodeURIComponent(region.id)}&amp;offer=${encodeURIComponent(offer.id)}"
                   target="_blank"
                   rel="nofollow sponsored noopener"
-                >Ver oferta en la tienda</a>
+                >${html(t("viewStoreOffer"))}</a>
               </article>`;
 }
 
 function productPage(config, region, family, canonical) {
-  const title = cleanProductText(family.title) || "Producto";
+  const t = createTranslator(region.locale);
+  const title = cleanProductText(family.title) || t("productType");
   const cleanedDescription = cleanProductText(family.description);
   const description = String(
     cleanedDescription ||
-    `Compara las opciones y ofertas disponibles de ${title} antes de visitar la tienda.`
+    (region.locale.startsWith("pt")
+      ? `Compare as opções e ofertas disponíveis de ${title} antes de visitar a loja.`
+      : `Compara las opciones y ofertas disponibles de ${title} antes de visitar la tienda.`)
   ).slice(0, 1800);
   const metaDescription = truncateWords(description, 155);
   const pageTitle = `${truncateWords(title, 64)} | SecretShop`;
@@ -333,30 +348,30 @@ function productPage(config, region, family, canonical) {
   </script>
 </head>
 <body>
-  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+  <a class="skip-link" href="#contenido">${html(region.locale.startsWith("pt") ? "Saltar para o conteúdo" : "Saltar al contenido")}</a>
   <header class="content-header">
     <div class="shell">
-      <a class="brand" href="${html(region.basePath)}" aria-label="SecretShop, inicio">
+      <a class="brand" href="${html(region.basePath)}" aria-label="${html(t("homeAria"))}">
         <img src="/assets/brand/secretshop-logo-compact.png" alt="" width="42" height="42">
         <span>SecretShop</span>
       </a>
       <div class="content-actions">
-        <a class="region-selector" href="${html(config.selectorPath)}" aria-label="Cambiar país">
+        <a class="region-selector" href="${html(config.selectorPath)}" aria-label="${html(t("changeCountry"))}">
           <span aria-hidden="true">${html(region.flag)}</span>
           <span>${html(region.name)}</span>
         </a>
-        <button class="button secondary" type="button" data-theme-toggle>◐ Modo oscuro</button>
-        <a class="button primary" href="${html(region.basePath)}#catalogo">Volver al catálogo</a>
+        <button class="button secondary" type="button" data-theme-toggle>◐ ${html(t("darkMode"))}</button>
+        <a class="button primary" href="${html(region.basePath)}#catalogo">${html(t("backToCatalog"))}</a>
       </div>
     </div>
   </header>
 
   <main id="contenido" class="standalone-product-page">
     <div class="shell">
-      <nav class="standalone-breadcrumbs" aria-label="Migas de pan">
-        <a href="${html(region.basePath)}">Inicio</a>
+      <nav class="standalone-breadcrumbs" aria-label="${html(t("breadcrumbLabel"))}">
+        <a href="${html(region.basePath)}">${html(t("home"))}</a>
         <span aria-hidden="true">/</span>
-        <a href="${html(region.basePath)}?categoria=${encodeURIComponent(family.primaryGroup)}#catalogo">${html(family.primaryGroup)}</a>
+        <a href="${html(categoryPath(family.primaryGroup, region))}">${html(localizeCategory(family.primaryGroup, region.locale))}</a>
         <span aria-hidden="true">/</span>
         <span aria-current="page">${html(title)}</span>
       </nav>
@@ -366,35 +381,35 @@ function productPage(config, region, family, canonical) {
           <img src="${html(publicAssetUrl(family.image))}" alt="${html(title)}" width="720" height="720">
         </div>
         <div class="standalone-product-content">
-          <p class="eyebrow">${html(family.primaryGroup)} · ${html(region.name)}</p>
+          <p class="eyebrow">${html(localizeCategory(family.primaryGroup, region.locale))} · ${html(region.name)}</p>
           <h1>${html(title)}</h1>
           <div class="detail-summary">
             <span class="score">SecretScore ${family.secretScore.toFixed(1)}</span>
-            <span>${family.variantCount} ${family.variantCount === 1 ? "opción" : "opciones"}</span>
-            <span>${family.stores.length} ${family.stores.length === 1 ? "tienda" : "tiendas"}</span>
+            <span>${html(family.variantCount === 1 ? t("oneOption") : t("options", { count: family.variantCount }))}</span>
+            <span>${html(family.stores.length === 1 ? t("oneStore") : t("storesCount", { count: family.stores.length }))}</span>
           </div>
           <p class="detail-description">${html(description)}</p>
 
           <section class="detail-section" aria-labelledby="opciones">
             <div class="detail-section-head">
-              <h2 id="opciones">Opciones identificadas</h2>
-              <span>${family.variantCount} en total</span>
+              <h2 id="opciones">${html(t("identifiedOptions"))}</h2>
+              <span>${html(t("availableInTotal", { count: family.variantCount }))}</span>
             </div>
             <div class="variant-list">
               ${variants.map((variant) => `<span class="variant-chip">${html(variant.label)}</span>`).join("\n              ")}
-              ${hiddenVariants ? `<span class="variant-chip">+${hiddenVariants} opciones más</span>` : ""}
+              ${hiddenVariants ? `<span class="variant-chip">${html(t("optionsMore", { count: hiddenVariants }))}</span>` : ""}
             </div>
           </section>
 
           <section class="detail-section" aria-labelledby="ofertas">
             <div class="detail-section-head">
-              <h2 id="ofertas">${offers.length === 1 ? "Oferta disponible" : "Ofertas disponibles"}</h2>
-              <span>${offers.length} para ${html(region.name)}</span>
+              <h2 id="ofertas">${html(offers.length === 1 ? t("oneAvailableOffer") : t("availableOffers"))}</h2>
+              <span>${html(t("totalForRegion", { count: offers.length, region: region.name }))}</span>
             </div>
             <div class="standalone-offers">
               ${offers.map((offer, index) => offerMarkup(region, offer, index)).join("\n")}
             </div>
-            <p class="detail-disclosure">El precio, el envío y la disponibilidad definitivos se confirman en la tienda. El enlace puede generar una comisión sin coste adicional.</p>
+            <p class="detail-disclosure">${html(t("storePriceDisclosure"))}</p>
           </section>
         </div>
       </article>
@@ -404,7 +419,7 @@ function productPage(config, region, family, canonical) {
   <footer class="site-footer">
     <div class="shell footer-bottom">
       <span>© <span data-current-year></span> SecretShop</span>
-      <span><a href="/metodologia.html">Metodología</a> · <a href="/afiliacion.html">Afiliación</a> · <a href="/privacidad.html">Privacidad</a></span>
+      <span><a href="/metodologia.html">${html(t("methodology"))}</a> · <a href="/afiliacion.html">${html(t("affiliation"))}</a> · <a href="/privacidad.html">${html(t("privacy"))}</a></span>
     </div>
   </footer>
   <script type="module" src="/assets/js/static.js"></script>
@@ -487,7 +502,7 @@ ${cards}
 
 function regionalHome(template, config, region) {
   const base = normalizeBasePath(region.basePath);
-  return template
+  const output = template
     .replace(/<html lang="[^"]+" data-theme="light" data-region="[^"]+">/, `<html lang="${region.locale}" data-theme="light" data-region="${region.id}">`)
     .replace(
       /<meta\s+name="description"\s+content="[\s\S]*?"\s*>/,
@@ -506,7 +521,129 @@ function regionalHome(template, config, region) {
       `<meta property="og:description" content="${html(region.description)}">`
     )
     .replaceAll('href="/#', `href="${base}#`)
-    .replaceAll('href="/" data-region-home', `href="${base}" data-region-home`);
+    .replaceAll('href="/" data-region-home', `href="${base}" data-region-home`)
+    .replace(
+      /(<span\b[^>]*\bdata-region-name[^>]*>)[^<]*(<\/span>)/g,
+      `$1${html(region.name)}$2`
+    )
+    .replace(
+      /(<span\b[^>]*\bdata-region-flag[^>]*>)[^<]*(<\/span>)/g,
+      `$1${html(region.flag)}$2`
+    )
+    .replace('"inLanguage": "es-ES"', `"inLanguage": "${region.locale}"`);
+  return translateStaticHtml(output, region.locale);
+}
+
+function navigationStructuredData(config, region, canonical, title, description, breadcrumbs) {
+  const breadcrumbId = `${canonical}#breadcrumb`;
+  const pageId = `${canonical}#webpage`;
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": pageId,
+        url: canonical,
+        name: title,
+        description,
+        inLanguage: region.locale,
+        breadcrumb: { "@id": breadcrumbId }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": breadcrumbId,
+        itemListElement: breadcrumbs.map((entry, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name: entry.name,
+          item: `${config.domain}${entry.path}`
+        }))
+      }
+    ]
+  };
+}
+
+function navigationPage(
+  template,
+  config,
+  region,
+  {
+    canonicalPath,
+    description,
+    initialCategory = null,
+    initialStore = null,
+    kind,
+    title,
+    breadcrumbs
+  }
+) {
+  const canonical = `${config.domain}${canonicalPath}`;
+  const structuredData = navigationStructuredData(
+    config,
+    region,
+    canonical,
+    title,
+    description,
+    breadcrumbs
+  );
+  const bodyAttributes = [
+    `data-page-kind="${html(kind)}"`,
+    initialCategory ? `data-initial-category="${html(initialCategory)}"` : "",
+    initialStore ? `data-initial-store="${html(initialStore)}"` : ""
+  ].filter(Boolean).join(" ");
+  const localizedTemplate = regionalHome(template, config, region);
+  assert(
+    localizedTemplate.includes('<body data-page-kind="home">'),
+    `${region.id}: no se ha encontrado el marcador de página en la plantilla`
+  );
+
+  return localizedTemplate
+    .replace(
+      /<meta\s+name="description"\s+content="[\s\S]*?"\s*>/,
+      `<meta name="description" content="${html(description)}">`
+    )
+    .replace(/<title>[^<]+<\/title>/, `<title>${html(title)}</title>`)
+    .replace(/<link rel="canonical" href="[^"]+">/, `<link rel="canonical" href="${html(canonical)}">`)
+    .replace(
+      /<link rel="alternate" hreflang="[^"]+" href="[^"]+">/,
+      `<link rel="alternate" hreflang="${html(region.locale)}" href="${html(canonical)}">`
+    )
+    .replace(/<meta property="og:url" content="[^"]+">/, `<meta property="og:url" content="${html(canonical)}">`)
+    .replace(/<meta property="og:title" content="[^"]+">/, `<meta property="og:title" content="${html(title)}">`)
+    .replace(
+      /<meta\s+property="og:description"\s+content="[\s\S]*?"\s*>/,
+      `<meta property="og:description" content="${html(description)}">`
+    )
+    .replace(
+      '<body data-page-kind="home">',
+      `<body ${bodyAttributes}>`
+    )
+    .replace(
+      "</head>",
+      `  <script type="application/ld+json">${jsonScript(structuredData)}</script>\n</head>`
+    );
+}
+
+function categoryLabels(catalog) {
+  const labels = new Set();
+  for (const family of catalog.families) {
+    for (const value of [...(family.categories || []), ...(family.groups || [])]) {
+      const label = String(value || "").trim();
+      if (label) labels.add(label);
+    }
+  }
+  return [...labels].sort((left, right) => left.localeCompare(right, "es"));
+}
+
+function activeStores(catalog) {
+  const stores = new Map();
+  for (const family of catalog.families) {
+    for (const offer of family.offers || []) {
+      const name = String(offer.merchantName || "").trim();
+      if (name) stores.set(name, name);
+    }
+  }
+  return [...stores.values()].sort((left, right) => left.localeCompare(right));
 }
 
 function sitemapUrlset(entries) {
@@ -534,9 +671,16 @@ const buildResults = [];
 
 for (const region of publicRegions) {
   const catalog = await loadRegionCatalog(region);
+  const t = createTranslator(region.locale);
   const productDirectory = localPath(`${region.basePath}producto/`);
+  const categoryDirectory = localPath(categoryDirectoryPath(region));
+  const storeDirectory = localPath(storeDirectoryPath(region));
   await resetGeneratedDirectory(productDirectory);
+  await resetGeneratedDirectory(categoryDirectory);
+  await resetGeneratedDirectory(storeDirectory);
   const routeSet = new Set();
+  const categoryRouteSet = new Set();
+  const storeRouteSet = new Set();
 
   for (const family of catalog.families) {
     const route = productPath(family, region);
@@ -546,6 +690,93 @@ for (const region of publicRegions) {
     await writeText(
       resolve(localPath(route), "index.html"),
       productPage(config, region, family, canonical)
+    );
+  }
+
+  const categoryDirectoryRoute = categoryDirectoryPath(region);
+  const categoryDirectoryTitle = `${t("categoryDirectoryTitle")} | SecretShop ${region.name}`;
+  const categoryDirectoryDescription = t("categoryDirectoryText");
+  await writeText(
+    resolve(categoryDirectory, "index.html"),
+    navigationPage(rootTemplate, config, region, {
+      canonicalPath: categoryDirectoryRoute,
+      description: categoryDirectoryDescription,
+      kind: "categories",
+      title: categoryDirectoryTitle,
+      breadcrumbs: [
+        { name: `SecretShop ${region.name}`, path: region.basePath },
+        { name: t("categoryDirectoryTitle"), path: categoryDirectoryRoute }
+      ]
+    })
+  );
+  categoryRouteSet.add(categoryDirectoryRoute);
+
+  for (const category of categoryLabels(catalog)) {
+    const route = categoryPath(category, region);
+    assert(!categoryRouteSet.has(route), `${region.id}: ruta de categoría duplicada ${route}`);
+    categoryRouteSet.add(route);
+    const localizedCategory = localizeCategory(category, region.locale);
+    const title = `${localizedCategory} | SecretShop ${region.name}`;
+    const description = region.locale.startsWith("pt")
+      ? `Explore produtos, opções e ofertas de ${localizedCategory} disponíveis para Portugal.`
+      : `Explora productos, opciones y ofertas de ${localizedCategory} disponibles para ${region.name}.`;
+    await writeText(
+      resolve(localPath(route), "index.html"),
+      navigationPage(rootTemplate, config, region, {
+        canonicalPath: route,
+        description,
+        initialCategory: category,
+        kind: "category",
+        title,
+        breadcrumbs: [
+          { name: `SecretShop ${region.name}`, path: region.basePath },
+          { name: t("categoryDirectoryTitle"), path: categoryDirectoryRoute },
+          { name: localizedCategory, path: route }
+        ]
+      })
+    );
+  }
+
+  const storeDirectoryRoute = storeDirectoryPath(region);
+  const storeDirectoryTitle = `${t("storeDirectoryTitle")} | SecretShop ${region.name}`;
+  const storeDirectoryDescription = t("storeDirectoryText");
+  await writeText(
+    resolve(storeDirectory, "index.html"),
+    navigationPage(rootTemplate, config, region, {
+      canonicalPath: storeDirectoryRoute,
+      description: storeDirectoryDescription,
+      kind: "stores",
+      title: storeDirectoryTitle,
+      breadcrumbs: [
+        { name: `SecretShop ${region.name}`, path: region.basePath },
+        { name: t("storeDirectoryTitle"), path: storeDirectoryRoute }
+      ]
+    })
+  );
+  storeRouteSet.add(storeDirectoryRoute);
+
+  for (const store of activeStores(catalog)) {
+    const route = storePath(store, region);
+    assert(!storeRouteSet.has(route), `${region.id}: ruta de tienda duplicada ${route}`);
+    storeRouteSet.add(route);
+    const title = `${store} | SecretShop ${region.name}`;
+    const description = region.locale.startsWith("pt")
+      ? `Compare os produtos e ofertas disponíveis na ${store} para Portugal.`
+      : `Compara los productos y ofertas disponibles en ${store} para ${region.name}.`;
+    await writeText(
+      resolve(localPath(route), "index.html"),
+      navigationPage(rootTemplate, config, region, {
+        canonicalPath: route,
+        description,
+        initialStore: store,
+        kind: "store",
+        title,
+        breadcrumbs: [
+          { name: `SecretShop ${region.name}`, path: region.basePath },
+          { name: t("storeDirectoryTitle"), path: storeDirectoryRoute },
+          { name: store, path: route }
+        ]
+      })
     );
   }
 
@@ -559,6 +790,14 @@ for (const region of publicRegions) {
   const lastmod = latestDate(catalog.sources);
   const sitemapEntries = [
     { loc: `${config.domain}${region.basePath}`, lastmod },
+    ...[...categoryRouteSet].map((route) => ({
+      loc: `${config.domain}${route}`,
+      lastmod
+    })),
+    ...[...storeRouteSet].map((route) => ({
+      loc: `${config.domain}${route}`,
+      lastmod
+    })),
     ...catalog.families.map((family) => ({
       loc: `${config.domain}${productPath(family, region)}`,
       lastmod
@@ -576,6 +815,8 @@ for (const region of publicRegions) {
     variants: catalog.stats.variants,
     offers: catalog.stats.offers,
     productPages: routeSet.size,
+    categoryPages: categoryRouteSet.size,
+    storePages: storeRouteSet.size,
     lastmod
   });
 }
@@ -659,5 +900,5 @@ await writeText(
 );
 
 console.log(
-  `Arquitectura regional generada: ${buildResults.map((entry) => `${entry.region}=${entry.productPages} fichas`).join(", ")}; ${publicRegions.length} región publicada.`
+  `Arquitectura regional generada: ${buildResults.map((entry) => `${entry.region}=${entry.productPages} fichas, ${entry.categoryPages} categorías, ${entry.storePages} tiendas`).join("; ")}; ${publicRegions.length} regiones publicadas.`
 );
