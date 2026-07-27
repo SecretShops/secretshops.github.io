@@ -1,0 +1,50 @@
+{
+  "status": "PASS",
+  "scenario": "awin-es-piloto",
+  "sourcesBefore": 7,
+  "sourcesAfter": 8,
+  "pilotFamilies": 757,
+  "pilotOffers": 964,
+  "publicFamilyIdPrefix": "ss-es-",
+  "spainLinksBefore": 9601,
+  "pixarLinksRemoved": 1,
+  "pilotLinksAdded": 964,
+  "spainLinksAfter": 10564,
+  "pixarOffersBefore": 149,
+  "pixarOffersAfter": 148,
+  "merchantsBefore": 24,
+  "merchantsAfter": 40,
+  "categoriesBefore": 32,
+  "categoriesAfter": 42,
+  "collisions": 0,
+  "retainedNotPublished": [
+    "awin-es-recomendado",
+    "awin-es-completo",
+    "awin-es-salud-revision",
+    "impact-casecess-usd"
+  ],
+  "validation": {
+    "qualityRuns": 2,
+    "unitTestsPassed": 51,
+    "catalog": "PASS: 40 merchants, 7251 productos y 42 categorías",
+    "affiliateLinks": "PASS: 8116/8116 canónicos y 24570/24570 asignaciones regionales; 0 incidencias",
+    "regions": "PASS: ES 3520 familias/10564 ofertas/3520 fichas; PT 278 familias/1472 ofertas/278 fichas",
+    "seo": "PASS: 3811 páginas; 3809 URLs en sitemaps; Analytics sin duplicados",
+    "site": "PASS: 3811 páginas HTML; 43 archivos JavaScript; 0 referencias locales rotas",
+    "browser": "PASS: escritorio, móvil, selector regional, ficha SEO, búsqueda, favoritos, comparador, tema y accesibilidad"
+  },
+  "resolvedConflict": {
+    "file": "scripts/build-regional-site.mjs",
+    "change": "La limpieza de directorios generados usa reintentos ante ENOTEMPTY.",
+    "result": "Dos reconstrucciones consecutivas producen 3520 fichas ES y 278 PT sin restaurar la ficha PIXAR retirada."
+  },
+  "repositoryDelta": {
+    "unchangedFiles": 3439,
+    "changedFiles": 42,
+    "addedFiles": 759,
+    "deletedFiles": [
+      "producto/pixar-price-difference-adjustment-voucher--pixar-bd0755e54c98/index.html",
+      "pt/producto/pixar-price-difference-adjustment-voucher--pixar-bd0755e54c98/index.html"
+    ]
+  }
+}

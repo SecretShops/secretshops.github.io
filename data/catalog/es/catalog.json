@@ -58,6 +58,12 @@
       "currency": "EUR",
       "merchantId": "dore-rose",
       "merchantName": "Dore & Rose"
+    },
+    {
+      "id": "awin-es-piloto",
+      "path": "/data/catalog/shared/awin-es-piloto.json",
+      "country": "ES",
+      "currency": "EUR"
     }
   ]
 }

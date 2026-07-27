@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-07-26T20:27:36.827Z",
+  "generatedAt": "2026-07-27T14:42:17.332Z",
   "summary": {
     "canonicalOffers": 7251,
     "canonicalByNetwork": {
@@ -15,8 +15,8 @@
     },
     "canonicalPublishedOffers": 8116,
     "canonicalPublishedLinks": 8116,
-    "regionalOfferAssignments": 23615,
-    "regionalLinkAssignments": 23615,
+    "regionalOfferAssignments": 24570,
+    "regionalLinkAssignments": 24570,
     "awinCanonicalLinks": 5865,
     "aliexpressCanonicalLinks": 865,
     "amazonCanonicalLinks": 191,
@@ -28,8 +28,8 @@
     "es": {
       "status": "published",
       "country": "ES",
-      "offers": 9601,
-      "links": 9601,
+      "offers": 10564,
+      "links": 10564,
       "invalid": 0
     },
     "mx": {
@@ -49,8 +49,8 @@
     "pt": {
       "status": "published",
       "country": "PT",
-      "offers": 1473,
-      "links": 1473,
+      "offers": 1472,
+      "links": 1472,
       "invalid": 0
     },
     "ve": {
@@ -77,50 +77,50 @@
     "fr": {
       "status": "draft",
       "country": "FR",
-      "offers": 1113,
-      "links": 1113,
+      "offers": 1112,
+      "links": 1112,
       "invalid": 0
     },
     "de": {
       "status": "draft",
       "country": "DE",
-      "offers": 1113,
-      "links": 1113,
+      "offers": 1112,
+      "links": 1112,
       "invalid": 0
     },
     "it": {
       "status": "draft",
       "country": "IT",
-      "offers": 1113,
-      "links": 1113,
+      "offers": 1112,
+      "links": 1112,
       "invalid": 0
     },
     "at": {
       "status": "draft",
       "country": "AT",
-      "offers": 196,
-      "links": 196,
+      "offers": 195,
+      "links": 195,
       "invalid": 0
     },
     "be": {
       "status": "draft",
       "country": "BE",
-      "offers": 1113,
-      "links": 1113,
+      "offers": 1112,
+      "links": 1112,
       "invalid": 0
     },
     "ie": {
       "status": "draft",
       "country": "IE",
-      "offers": 196,
-      "links": 196,
+      "offers": 195,
+      "links": 195,
       "invalid": 0
     },
     "nl": {
       "status": "draft",
       "country": "NL",
-      "offers": 1113,
-      "links": 1113,
+      "offers": 1112,
+      "links": 1112,
       "invalid": 0
     },
     "fi": {

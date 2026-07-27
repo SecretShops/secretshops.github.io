@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-07-22",
+  "updatedAt": "2026-07-27",
   "merchants": [
     {
       "id": "amazon-es",
@@ -252,6 +252,285 @@
       "preparedCountries": [
         "PT"
       ]
+    },
+    {
+      "id": "omara-jewelry-es",
+      "name": "Omara Jewelry (ES)",
+      "country": "ES",
+      "status": "approved",
+      "network": "awin",
+      "awinAdvertiserId": "127695",
+      "feedExpected": true,
+      "feedId": null,
+      "feedIds": [
+        "115887",
+        "115881",
+        "115885"
+      ],
+      "catalogMode": "retail",
+      "landingDomains": [
+        "omara.es"
+      ],
+      "statusUpdatedAt": "2026-07-27",
+      "publicationStatus": "prepared_large_staged"
+    },
+    {
+      "id": "365rider-es",
+      "name": "365Rider",
+      "country": "ES",
+      "status": "approved",
+      "network": "awin",
+      "awinAdvertiserId": "26763",
+      "feedExpected": true,
+      "feedId": "71453",
+      "feedIds": null,
+      "catalogMode": "retail",
+      "landingDomains": [
+        "www.365rider.com"
+      ],
+      "statusUpdatedAt": "2026-07-27",
+      "publicationStatus": "prepared_recommended"
+    },
+    {
+      "id": "wakkap-es",
+      "name": "Wakkap Es",
+      "country": "ES",
+      "status": "approved",
+      "network": "awin",
+      "awinAdvertiserId": "17091",
+      "feedExpected": true,
+      "feedId": "39575",
+      "feedIds": null,
+      "catalogMode": "retail",
+      "landingDomains": [
+        "wakkap.com"
+      ],
+      "statusUpdatedAt": "2026-07-27",
+      "publicationStatus": "prepared_large_staged"
+    },
+    {
+      "id": "clarel-es",
+      "name": "Clarel",
+      "country": "ES",
+      "status": "approved",
+      "network": "awin",
+      "awinAdvertiserId": "84669",
+      "feedExpected": true,
+      "feedId": "95374",
+      "feedIds": null,
+      "catalogMode": "retail",
+      "landingDomains": [
+        "www.clarel.es"
+      ],
+      "statusUpdatedAt": "2026-07-27",
+      "publicationStatus": "prepared_large_staged"
+    },
+    {
+      "id": "la-drogueria-es",
+      "name": "La Drogueria de Percon",
+      "country": "ES",
+      "status": "approved",
+      "network": "awin",
+      "awinAdvertiserId": "63006",
+      "feedExpected": true,
+      "feedId": "115855",
+      "feedIds": null,
+      "catalogMode": "retail",
+      "landingDomains": [
+        "ladrogueria.com"
+      ],
+      "statusUpdatedAt": "2026-07-27",
+      "publicationStatus": "prepared_recommended"
+    },
+    {
+      "id": "deubaxxl-es",
+      "name": "DeubaXXL ES",
+      "country": "ES",
+      "status": "approved",
+      "network": "awin",
+      "awinAdvertiserId": "24018",
+      "feedExpected": true,
+      "feedId": "57049",
+      "feedIds": null,
+      "catalogMode": "retail",
+      "landingDomains": [
+        "deubaxxl.es"
+      ],
+      "statusUpdatedAt": "2026-07-27",
+      "publicationStatus": "prepared_recommended"
+    },
+    {
+      "id": "zwilling-es",
+      "name": "Zwilling ES",
+      "country": "ES",
+      "status": "approved",
+      "network": "awin",
+      "awinAdvertiserId": "13077",
+      "feedExpected": true,
+      "feedId": "110537",
+      "feedIds": null,
+      "catalogMode": "retail",
+      "landingDomains": [
+        "www.zwilling.com"
+      ],
+      "statusUpdatedAt": "2026-07-27",
+      "publicationStatus": "prepared_recommended"
+    },
+    {
+      "id": "nasopia-es",
+      "name": "Nasopia ES",
+      "country": "ES",
+      "status": "approved",
+      "network": "awin",
+      "awinAdvertiserId": "112314",
+      "feedExpected": true,
+      "feedId": "109096",
+      "feedIds": null,
+      "catalogMode": "retail",
+      "landingDomains": [
+        "nasopia.com"
+      ],
+      "statusUpdatedAt": "2026-07-27",
+      "publicationStatus": "prepared_recommended"
+    },
+    {
+      "id": "revolution-soft-es",
+      "name": "Revolution Soft",
+      "country": "ES",
+      "status": "approved",
+      "network": "awin",
+      "awinAdvertiserId": "51891",
+      "feedExpected": true,
+      "feedId": "85464",
+      "feedIds": null,
+      "catalogMode": "retail",
+      "landingDomains": [
+        "revolutionsoft.net"
+      ],
+      "statusUpdatedAt": "2026-07-27",
+      "publicationStatus": "prepared_recommended"
+    },
+    {
+      "id": "homo-naturals-es",
+      "name": "HOMO NATURALS",
+      "country": "ES",
+      "status": "approved",
+      "network": "awin",
+      "awinAdvertiserId": "58623",
+      "feedExpected": true,
+      "feedId": "87441",
+      "feedIds": null,
+      "catalogMode": "retail",
+      "landingDomains": [
+        "www.homonaturals.com"
+      ],
+      "statusUpdatedAt": "2026-07-27",
+      "publicationStatus": "prepared_recommended"
+    },
+    {
+      "id": "munecas-llorens-es",
+      "name": "Muñecas Llorens (ES)",
+      "country": "ES",
+      "status": "approved",
+      "network": "awin",
+      "awinAdvertiserId": "107237",
+      "feedExpected": true,
+      "feedId": "98483",
+      "feedIds": null,
+      "catalogMode": "retail",
+      "landingDomains": [
+        "llorensdolls.com"
+      ],
+      "statusUpdatedAt": "2026-07-27",
+      "publicationStatus": "prepared_recommended"
+    },
+    {
+      "id": "isinwheel-es",
+      "name": "isinwheel.ES",
+      "country": "ES",
+      "status": "approved",
+      "network": "awin",
+      "awinAdvertiserId": "59763",
+      "feedExpected": true,
+      "feedId": "97023",
+      "feedIds": null,
+      "catalogMode": "retail",
+      "landingDomains": [
+        "www.isinwheel.es"
+      ],
+      "statusUpdatedAt": "2026-07-27",
+      "publicationStatus": "prepared_recommended"
+    },
+    {
+      "id": "sinocare-es",
+      "name": "Sinocare",
+      "country": "ES",
+      "status": "approved",
+      "network": "awin",
+      "awinAdvertiserId": "114180",
+      "feedExpected": true,
+      "feedId": "100983",
+      "feedIds": null,
+      "catalogMode": "retail",
+      "landingDomains": [
+        "en.sinocare.com"
+      ],
+      "statusUpdatedAt": "2026-07-27",
+      "publicationStatus": "held_editorial_health_review"
+    },
+    {
+      "id": "vegairoa-es",
+      "name": "Vegairoa",
+      "country": "ES",
+      "status": "approved",
+      "network": "awin",
+      "awinAdvertiserId": "55601",
+      "feedExpected": true,
+      "feedId": "86879",
+      "feedIds": null,
+      "catalogMode": "retail",
+      "landingDomains": [
+        "www.vegairoaprofesional.com"
+      ],
+      "statusUpdatedAt": "2026-07-27",
+      "publicationStatus": "prepared_recommended"
+    },
+    {
+      "id": "hivital-es",
+      "name": "HIVITAL",
+      "country": "ES",
+      "status": "approved",
+      "network": "awin",
+      "awinAdvertiserId": "20039",
+      "feedExpected": true,
+      "feedId": "45599",
+      "feedIds": null,
+      "catalogMode": "retail",
+      "landingDomains": [
+        "www.hivital.com"
+      ],
+      "statusUpdatedAt": "2026-07-27",
+      "publicationStatus": "held_editorial_health_review"
+    },
+    {
+      "id": "casecess",
+      "name": "CASECESS",
+      "country": "US",
+      "status": "approved",
+      "network": "impact",
+      "impactTrackingHost": "casecess.pxf.io",
+      "impactPublisherId": "7518894",
+      "impactCampaignId": "3757273",
+      "impactCreativeId": "47158",
+      "impactCatalogSource": "CATF_30305",
+      "landingDomains": [
+        "www.casecess.com"
+      ],
+      "feedExpected": true,
+      "catalogMode": "retail",
+      "currency": "USD",
+      "statusUpdatedAt": "2026-07-27",
+      "publicationStatus": "prepared_for_usd_region_not_es"
     }
   ]
 }

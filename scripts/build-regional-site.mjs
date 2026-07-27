@@ -116,7 +116,12 @@ async function resetGeneratedDirectory(path) {
       await exists(marker),
       `Se ha rechazado borrar ${relative(root, path)} porque no parece un directorio generado`
     );
-    await rm(path, { recursive: true, force: true });
+    await rm(path, {
+      recursive: true,
+      force: true,
+      maxRetries: 10,
+      retryDelay: 100
+    });
   }
   await mkdir(path, { recursive: true });
   await writeText(

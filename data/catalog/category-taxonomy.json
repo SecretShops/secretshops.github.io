@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-07-22",
+  "updatedAt": "2026-07-27",
   "categories": [
     {
       "id": "featured",
@@ -225,6 +225,76 @@
       "parent": "Deporte",
       "showOnHome": false,
       "order": 122
+    },
+    {
+      "id": "women-jewelry",
+      "label": "Joyería",
+      "parent": "Accesorios mujer",
+      "showOnHome": false,
+      "order": 101
+    },
+    {
+      "id": "technology-gaming",
+      "label": "Videojuegos",
+      "parent": "Tecnología",
+      "showOnHome": false,
+      "order": 41
+    },
+    {
+      "id": "technology-software",
+      "label": "Software",
+      "parent": "Tecnología",
+      "showOnHome": false,
+      "order": 42
+    },
+    {
+      "id": "toys",
+      "label": "Juguetes",
+      "parent": null,
+      "showOnHome": true,
+      "order": 125
+    },
+    {
+      "id": "health",
+      "label": "Salud y bienestar",
+      "parent": null,
+      "showOnHome": false,
+      "order": 126
+    },
+    {
+      "id": "sport-cycling",
+      "label": "Ciclismo",
+      "parent": "Deporte",
+      "showOnHome": false,
+      "order": 123
+    },
+    {
+      "id": "sport-electric-mobility",
+      "label": "Movilidad eléctrica",
+      "parent": "Deporte",
+      "showOnHome": false,
+      "order": 124
+    },
+    {
+      "id": "beauty-perfume",
+      "label": "Perfumería",
+      "parent": "Belleza y cuidado",
+      "showOnHome": false,
+      "order": 111
+    },
+    {
+      "id": "beauty-hair",
+      "label": "Cuidado del cabello",
+      "parent": "Belleza y cuidado",
+      "showOnHome": false,
+      "order": 112
+    },
+    {
+      "id": "home-cleaning",
+      "label": "Limpieza del hogar",
+      "parent": "Hogar",
+      "showOnHome": false,
+      "order": 62
     }
   ],
   "genericRules": [
