@@ -1,46 +1,47 @@
 {
   "schemaVersion": 1,
-  "name": "SecretShop-parche-categorias-movil-2026-07-27",
+  "name": "SecretShop-parche-categorias-movil-v2-2026-07-27",
   "createdAt": "2026-07-27",
-  "type": "minimal-unified-diff",
+  "type": "incremental-unified-diff",
+  "requires": "SecretShop-parche-categorias-movil-2026-07-27",
   "repositoryOperations": {
     "modify": [
       {
         "path": "assets/css/app.css",
-        "beforeSha256": "f3e7f9a95778ce07bc9e2062bfcd5ceb1b1a86183f5af2add45bf78546029de6",
-        "afterSha256": "fb76503ba45e88298369d9375f910db340087fd285dbffe0ce2beb26df8584a9",
-        "beforeBytes": 75744,
-        "afterBytes": 77900
+        "beforeSha256": "fb76503ba45e88298369d9375f910db340087fd285dbffe0ce2beb26df8584a9",
+        "afterSha256": "51dbaa11690313f7b789c96f5824782cf26486be455029a2094d033bd6a6fc05",
+        "beforeBytes": 77900,
+        "afterBytes": 78176
       },
       {
         "path": "assets/js/app.js",
-        "beforeSha256": "8e0310f151d96744ad7ebeb9f38aeca898c5514056f36453e14fbc29fed3443c",
-        "afterSha256": "60f951ac69ee3f69daaee0a72bc4416bfd39fcc1ed08a1fe8a5d51f09041a31c",
-        "beforeBytes": 80573,
-        "afterBytes": 81293
+        "beforeSha256": "60f951ac69ee3f69daaee0a72bc4416bfd39fcc1ed08a1fe8a5d51f09041a31c",
+        "afterSha256": "bf47164158884f97ff8a7042d585e5201a2cd08291c5474e277fbc56fdcfff40",
+        "beforeBytes": 81293,
+        "afterBytes": 81796
       },
       {
         "path": "tests/browser-smoke.mjs",
-        "beforeSha256": "c67a4b954b8d45cdb4c5e62420278fbdf52dc98869c4ee1dc326a6139b2fa0bc",
-        "afterSha256": "8f15f0ba851a56b87ba32c1f175b9e42e68fc6992f0ee9dc4c052d80396bbc9b",
-        "beforeBytes": 15704,
-        "afterBytes": 19736
+        "beforeSha256": "8f15f0ba851a56b87ba32c1f175b9e42e68fc6992f0ee9dc4c052d80396bbc9b",
+        "afterSha256": "b787a951427218ba465c9fb27851572689d112a48c3fbfa6c2ae32c12c1e8513",
+        "beforeBytes": 19736,
+        "afterBytes": 22914
       },
       {
         "path": "tests/ui-contract.test.mjs",
-        "beforeSha256": "24c2e1a7b4f1c06c4991bc54ed7eaae28da6136017fcdae838324961f0844120",
-        "afterSha256": "ad95061fed59e45a7474742d79b98888853a402062916e228a53db79d70fc000",
-        "beforeBytes": 6135,
-        "afterBytes": 7055
+        "beforeSha256": "ad95061fed59e45a7474742d79b98888853a402062916e228a53db79d70fc000",
+        "afterSha256": "2792dbe2e5f19a8a6068c40192fcf21c34df8cdf4e9f5004fdb79a6cb1a3a80f",
+        "beforeBytes": 7055,
+        "afterBytes": 7362
       }
     ],
     "add": [],
     "delete": []
   },
   "patch": {
-    "path": "SecretShop-categorias-movil.patch",
-    "sha256": "de24917c60d3f77fb8ffc15e5e5229fe01de201d5da22a745327b001053ec079",
-    "bytes": 15473,
+    "path": "SecretShop-categorias-movil-v2-incremental.patch",
+    "sha256": "6dfa15d48165c1b0845c9f3ecd211a3c6b200bd3b11eaafe26e099dc60d53e93",
+    "bytes": 11138,
     "applyCheckPassed": true,
     "applyResultMatchedPreparedFiles": true
   },
@@ -84,8 +85,17 @@
       "failed": 0
     },
     "browserSmokePassed": true,
+    "mobileSearchPassed": true,
     "qualityPipelinePassed": true,
-    "previousCategoriesCovered": "27/27",
+    "viewports": [
+      "320x568",
+      "375x812",
+      "390x844",
+      "430x932",
+      "768x1024",
+      "1180x820",
+      "1366x1024 touch"
+    ],
     "repositoryDiff": {
       "modified": 4,
       "added": 0,

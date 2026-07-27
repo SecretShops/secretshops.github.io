@@ -1678,10 +1678,30 @@ function togglePinnedMenu(trigger) {
 }
 
 function focusCatalogSearch() {
-  const input = $("#hero-search") || $("#header-search");
+  const visibleSearchInput = () =>
+    [$("#hero-search"), $("#header-search")]
+      .find((candidate) => candidate && candidate.getClientRects().length > 0);
+
+  let input = visibleSearchInput();
+  if (!input) {
+    state.category = "all";
+    state.store = "all";
+    state.visible = PAGE_SIZE;
+    document.body.dataset.pageKind = "home";
+    delete document.body.dataset.initialCategory;
+    delete document.body.dataset.initialStore;
+    syncSearchInputs();
+    renderCatalog();
+    input = visibleSearchInput();
+  }
   if (!input) return;
+
+  try {
+    input.focus({ preventScroll: true });
+  } catch {
+    input.focus();
+  }
   input.scrollIntoView({ behavior: "smooth", block: "center" });
-  window.setTimeout(() => input.focus(), 250);
 }
 
 function wireEvents() {

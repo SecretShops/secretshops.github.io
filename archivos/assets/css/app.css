@@ -4403,33 +4403,41 @@ dialog {
   }
 }
 
-@media (max-width: 380px) {
+@media (max-width: 1180px), (hover: none) and (pointer: coarse) {
   body[data-page-kind="categories"] .category-directory-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
+    gap: 10px;
   }
 
   body[data-page-kind="categories"] .category-directory-grid .category-card {
-    min-height: 166px;
-    grid-template-columns: 1fr;
-    align-content: start;
-    gap: 8px;
-    padding: 9px;
+    min-height: 96px;
+    grid-template-columns: 76px minmax(0, 1fr) auto;
+    grid-template-rows: none;
+    align-content: center;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px 10px 10px;
   }
 
   body[data-page-kind="categories"] .category-directory-grid .category-visual {
-    width: 100%;
-    height: 84px;
+    width: 76px;
+    height: 76px;
   }
 
   body[data-page-kind="categories"] .category-directory-grid .category-copy {
-    width: 100%;
-    padding-right: 18px;
+    width: auto;
+    padding-right: 0;
+  }
+
+  body[data-page-kind="categories"] .category-directory-grid .category-card strong {
+    overflow: visible;
+    overflow-wrap: anywhere;
+    text-overflow: clip;
+    white-space: normal;
   }
 
   body[data-page-kind="categories"] .category-directory-grid .category-arrow {
-    position: absolute;
-    right: 10px;
-    bottom: 10px;
+    position: static;
   }
 }
 

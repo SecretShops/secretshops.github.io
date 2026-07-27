@@ -138,8 +138,12 @@ test("mantiene las categorías móviles legibles, jerarquizadas y accesibles", (
   }
   assert.ok(app.includes('"Moda y accesorios"'));
   assert.ok(app.includes("function productCountLabel"));
+  assert.ok(app.includes("candidate.getClientRects().length > 0"));
+  assert.ok(app.includes("input.focus({ preventScroll: true })"));
   assert.ok(app.includes('setAttribute("aria-current", "page")'));
   assert.ok(css.includes('body[data-page-kind="categories"] .category-directory-grid .category-card'));
+  assert.ok(css.includes('@media (max-width: 1180px), (hover: none) and (pointer: coarse)'));
+  assert.ok(css.includes("grid-template-columns: 76px minmax(0, 1fr) auto"));
   assert.ok(css.includes('body[data-page-kind="category"] .subcategory-grid'));
   assert.ok(css.includes("grid-auto-flow: column"));
   assert.ok(css.includes('body[data-page-kind="category"] [data-context-deals-section]'));

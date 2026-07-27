@@ -254,8 +254,10 @@ try {
     failures.push("mobile categorías: la navegación inferior no identifica la sección activa");
   }
   const mobileCategoryLayout = await mobile.evaluate(() => {
+    const grid = document.querySelector("[data-category-directory-grid]");
     const labels = [...document.querySelectorAll("[data-category-directory-grid] .category-card strong")];
     return {
+      columns: grid ? getComputedStyle(grid).gridTemplateColumns.split(" ").length : 0,
       clipped: labels.some((label) =>
         label.clientWidth < 35 ||
         label.scrollWidth > label.clientWidth + 1 ||
@@ -264,6 +266,9 @@ try {
       overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth
     };
   });
+  if (mobileCategoryLayout.columns !== 1) {
+    failures.push(`mobile categorías: el directorio usa ${mobileCategoryLayout.columns} columnas en vez de una`);
+  }
   if (mobileCategoryLayout.clipped) {
     failures.push("mobile categorías: hay nombres recortados a 390 px");
   }
@@ -271,6 +276,23 @@ try {
     failures.push("mobile categorías: el directorio provoca desbordamiento horizontal");
   }
 
+  await mobile.locator("[data-focus-search]").click();
+  await mobile.locator("#hero-search").waitFor({ state: "visible" });
+  const mobileSearchFocused = await mobile.locator("#hero-search").evaluate((input) =>
+    document.activeElement === input
+  );
+  if (!mobileSearchFocused) {
+    failures.push("mobile buscar: el botón no enfoca el campo visible");
+  }
+  await mobile.locator("#hero-search").fill(searchTarget);
+  await mobile.locator(".hero-search").press("Enter");
+  await mobile.locator("[data-catalog-grid] .product-card").first().waitFor();
+  if (!(await mobile.locator("#catalogo").isVisible())) {
+    failures.push("mobile buscar: los resultados no aparecen después de enviar la búsqueda");
+  }
+
+  await mobile.goto(new URL("/categorias/", baseUrl).href, { waitUntil: "domcontentloaded" });
+  await mobile.locator("[data-category-directory-grid] .category-card").first().waitFor();
   await mobile.locator('[data-category-directory-grid] [data-set-category="Moda"]').click();
   await mobile.locator("[data-subcategory-section]").waitFor();
   const subcategoryScrollable = await mobile.locator("[data-subcategory-grid]").evaluate((node) =>
@@ -297,33 +319,74 @@ try {
   }
   await mobile.close();
 
-  const narrowMobile = await browser.newPage({ viewport: { width: 360, height: 800 }, isMobile: true });
-  await inspectPage(narrowMobile, "mobile 360");
-  await isolateExternalImages(narrowMobile);
-  await narrowMobile.goto(new URL("/categorias/", baseUrl).href, { waitUntil: "domcontentloaded" });
-  await narrowMobile.locator("[data-category-directory-grid] .category-card").first().waitFor();
-  const narrowCategoryLayout = await narrowMobile.evaluate(() => {
-    const labels = [...document.querySelectorAll("[data-category-directory-grid] .category-card strong")];
-    return {
-      count: labels.length,
-      clipped: labels.some((label) =>
-        label.clientWidth < 35 ||
-        label.scrollWidth > label.clientWidth + 1 ||
-        label.scrollHeight > label.clientHeight + 1
-      ),
-      overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth
-    };
-  });
-  if (narrowCategoryLayout.count !== 9) {
-    failures.push(`mobile 360: se esperaban 9 categorías principales y hay ${narrowCategoryLayout.count}`);
+  const categoryDevices = [
+    { label: "móvil 320", width: 320, height: 568, deviceScaleFactor: 2 },
+    { label: "iPhone 13 mini", width: 375, height: 812, deviceScaleFactor: 3 },
+    { label: "móvil grande", width: 430, height: 932, deviceScaleFactor: 3 },
+    { label: "tablet vertical", width: 768, height: 1024, deviceScaleFactor: 2 },
+    { label: "tablet horizontal", width: 1180, height: 820, deviceScaleFactor: 2 },
+    { label: "tablet táctil ancha", width: 1366, height: 1024, deviceScaleFactor: 2 }
+  ];
+
+  for (const device of categoryDevices) {
+    const devicePage = await browser.newPage({
+      viewport: { width: device.width, height: device.height },
+      deviceScaleFactor: device.deviceScaleFactor,
+      hasTouch: true,
+      isMobile: true
+    });
+    await inspectPage(devicePage, device.label);
+    await isolateExternalImages(devicePage);
+    await devicePage.goto(new URL("/categorias/", baseUrl).href, { waitUntil: "domcontentloaded" });
+    await devicePage.locator("[data-category-directory-grid] .category-card").first().waitFor();
+    const categoryLayout = await devicePage.evaluate(() => {
+      const grid = document.querySelector("[data-category-directory-grid]");
+      const cards = [...document.querySelectorAll("[data-category-directory-grid] .category-card")];
+      const labels = cards.map((card) => card.querySelector("strong")).filter(Boolean);
+      const cardRects = cards.map((card) => card.getBoundingClientRect());
+      const viewportWidth = document.documentElement.clientWidth;
+      const gridRect = grid?.getBoundingClientRect();
+      return {
+        count: cards.length,
+        columns: grid ? getComputedStyle(grid).gridTemplateColumns.split(" ").length : 0,
+        clipped: labels.some((label) =>
+          label.clientWidth < 35 ||
+          label.scrollWidth > label.clientWidth + 1 ||
+          label.scrollHeight > label.clientHeight + 1
+        ),
+        orderedDown: cardRects.every((rect, index) =>
+          index === 0 || rect.top > cardRects[index - 1].top
+        ),
+        overflow:
+          !gridRect ||
+          gridRect.left < -1 ||
+          gridRect.right > viewportWidth + 1 ||
+          cardRects.some((rect) => rect.left < -1 || rect.right > viewportWidth + 1),
+        overflowing: cards
+          .filter((node) => {
+            const rect = node.getBoundingClientRect();
+            return rect.left < -1 || rect.right > viewportWidth + 1;
+          })
+          .slice(0, 5)
+          .map((node) => `${node.tagName.toLowerCase()}.${String(node.className || "").trim().replace(/\s+/g, ".")}`)
+      };
+    });
+    if (categoryLayout.count !== 9) {
+      failures.push(`${device.label}: se esperaban 9 categorías principales y hay ${categoryLayout.count}`);
+    }
+    if (categoryLayout.columns !== 1 || !categoryLayout.orderedDown) {
+      failures.push(`${device.label}: las categorías no aparecen en una única columna vertical`);
+    }
+    if (categoryLayout.clipped) {
+      failures.push(`${device.label}: los nombres de categoría quedan recortados`);
+    }
+    if (categoryLayout.overflow) {
+      failures.push(
+        `${device.label}: el directorio provoca desbordamiento horizontal (${categoryLayout.overflowing.join(", ")})`
+      );
+    }
+    await devicePage.close();
   }
-  if (narrowCategoryLayout.clipped) {
-    failures.push("mobile 360: los nombres de categoría quedan recortados");
-  }
-  if (narrowCategoryLayout.overflow) {
-    failures.push("mobile 360: el directorio provoca desbordamiento horizontal");
-  }
-  await narrowMobile.close();
 
   const architecture = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   await inspectPage(architecture, "arquitectura");
