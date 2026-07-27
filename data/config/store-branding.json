@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-07-27",
+  "stores": [
+    {
+      "id": "365rider-es",
+      "name": "365Rider",
+      "domain": "www.365rider.com",
+      "logo": "/assets/brands/stores/365rider.svg"
+    },
+    {
+      "id": "aliexpress",
+      "name": "AliExpress",
+      "domain": "www.aliexpress.com",
+      "logo": "/assets/brands/stores/aliexpress.ico"
+    },
+    {
+      "id": "amazon-es",
+      "name": "Amazon ES",
+      "domain": "www.amazon.es",
+      "logo": "/assets/brands/stores/amazon.ico"
+    },
+    {
+      "id": "bikila-es",
+      "name": "BIKILA ES",
+      "domain": "bikila.com",
+      "logo": "/assets/brands/stores/bikila.png"
+    },
+    {
+      "id": "coach",
+      "name": "Coach",
+      "domain": "es.coach.com",
+      "logo": "/assets/brands/stores/coach.png"
+    },
+    {
+      "id": "dore-rose",
+      "name": "Dore & Rose",
+      "domain": "doreandrose.com",
+      "logo": "/assets/brands/stores/dore-rose.png"
+    },
+    {
+      "id": "heybike",
+      "name": "Heybike",
+      "domain": "eu.heybike.com",
+      "logo": "/assets/brands/stores/heybike.svg"
+    },
+    {
+      "id": "homo-naturals-es",
+      "name": "HOMO NATURALS",
+      "domain": "www.homonaturals.com",
+      "logo": "/assets/brands/stores/homo-naturals.png"
+    },
+    {
+      "id": "isinwheel-es",
+      "name": "isinwheel.ES",
+      "domain": "www.isinwheel.es",
+      "logo": "/assets/brands/stores/isinwheel.png"
+    },
+    {
+      "id": "italist",
+      "name": "Italist",
+      "domain": "italist.com",
+      "logo": "/assets/brands/stores/italist.png"
+    },
+    {
+      "id": "lounge-eu",
+      "name": "Lounge EU",
+      "domain": "eu.lounge.com",
+      "logo": "/assets/brands/stores/lounge.png"
+    },
+    {
+      "id": "muebles-style-spain",
+      "name": "Muebles Style Spain",
+      "domain": "www.muebles-style.es",
+      "logo": "/assets/brands/stores/muebles-style.png"
+    },
+    {
+      "id": "munecas-llorens-es",
+      "name": "Muñecas Llorens (ES)",
+      "domain": "llorensdolls.com",
+      "logo": "/assets/brands/stores/munecas-llorens.gif"
+    },
+    {
+      "id": "nasopia-es",
+      "name": "Nasopia ES",
+      "domain": "nasopia.com",
+      "logo": "/assets/brands/stores/nasopia.png"
+    },
+    {
+      "id": "pixar",
+      "name": "PIXAR Bikes",
+      "domain": "pixarbikes.com",
+      "logo": "/assets/brands/stores/pixar.png"
+    },
+    {
+      "id": "revolution-soft-es",
+      "name": "Revolution Soft",
+      "domain": "revolutionsoft.net",
+      "logo": "/assets/brands/stores/revolution-soft.webp"
+    },
+    {
+      "id": "shokz-es",
+      "name": "SHOKZ ES",
+      "domain": "es.shokz.com",
+      "logo": "/assets/brands/stores/shokz.png"
+    },
+    {
+      "id": "vegairoa-es",
+      "name": "Vegairoa",
+      "domain": "www.vegairoaprofesional.com",
+      "logo": "/assets/brands/stores/vegairoa.svg"
+    }
+  ]
+}

@@ -120,6 +120,24 @@ export function productPath(family, region) {
   return `${basePath}producto/${title}--${identifier}/`.replace(/\/+/g, "/");
 }
 
+export function categoryDirectoryPath(region) {
+  const basePath = normalizeBasePath(region?.basePath);
+  return `${basePath}categorias/`.replace(/\/+/g, "/");
+}
+
+export function categoryPath(category, region) {
+  return `${categoryDirectoryPath(region)}${slugifyRoute(category, 72)}/`;
+}
+
+export function storeDirectoryPath(region) {
+  const basePath = normalizeBasePath(region?.basePath);
+  return `${basePath}tiendas/`.replace(/\/+/g, "/");
+}
+
+export function storePath(store, region) {
+  return `${storeDirectoryPath(region)}${slugifyRoute(store, 72)}/`;
+}
+
 export function publicAssetUrl(value) {
   const url = String(value || "").trim();
   if (url.startsWith("./")) return `/${url.slice(2)}`;

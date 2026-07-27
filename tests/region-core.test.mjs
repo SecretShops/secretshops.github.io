@@ -3,11 +3,15 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import {
+  categoryDirectoryPath,
+  categoryPath,
   offerRedirectPath,
   productPath,
   publishedRegions,
   regionStorageKeys,
   resolveActiveRegion,
+  storeDirectoryPath,
+  storePath,
   validateRegionConfig
 } from "../assets/js/region-core.js";
 
@@ -49,4 +53,13 @@ test("genera rutas de producto reales y enlaces comerciales regionales", () => {
     offerRedirectPath("es", "amazon-es:B0ABC12345"),
     "/go.html?region=es&offer=amazon-es%3AB0ABC12345"
   );
+});
+
+test("genera directorios regionales estables para categorías y tiendas", () => {
+  const spain = config.regions.find((region) => region.id === "es");
+  const portugal = config.regions.find((region) => region.id === "pt");
+  assert.equal(categoryDirectoryPath(spain), "/categorias/");
+  assert.equal(categoryPath("Belleza y cuidado", spain), "/categorias/belleza-y-cuidado/");
+  assert.equal(storeDirectoryPath(portugal), "/pt/tiendas/");
+  assert.equal(storePath("Dore & Rose", portugal), "/pt/tiendas/dore-rose/");
 });

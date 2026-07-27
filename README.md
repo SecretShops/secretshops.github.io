@@ -1,15 +1,18 @@
 # SecretShop
 
-Comparador estático y multirregional de productos físicos. España está publicada en la raíz del dominio; México y Colombia permanecen preparados como borradores hasta que sus catálogos y programas regionales superen la validación de publicación. La interfaz organiza el catálogo como **familia → variante → oferta**, separa los productos parecidos y protege los enlaces comerciales mediante un redirector regional con lista cerrada de destinos.
+Comparador estático y multirregional de productos físicos. España está publicada en la raíz del dominio y Portugal en `/pt/`; el resto de mercados permanece en borrador hasta superar la validación regional. La interfaz organiza el catálogo como **familia → variante → oferta**, separa los productos parecidos y protege los enlaces comerciales mediante un redirector regional con lista cerrada de destinos.
 
 ## Estructura
 
 - `index.html`: portada modular, búsqueda, filtros, fichas, favoritos, historial y comparador.
 - `paises/`: selector internacional generado; solo incluye regiones con estado `published`.
 - `producto/`: fichas estáticas e indexables del mercado español.
+- `categorias/` y `tiendas/`: directorios y páginas indexables del mercado español.
+- `pt/`: portada, categorías, tiendas y fichas del catálogo portugués, con interfaz en portugués.
 - `assets/`: identidad, estilos, tipografía local y JavaScript de la interfaz.
 - `data/config/regions.json`: fuente única para países, estado, locale, moneda, rutas y archivos regionales.
-- `data/catalog/es|mx|co/`: manifiesto y resolución de enlaces separados por región.
+- `data/config/store-branding.json`: identidad visual local de las tiendas activas.
+- `data/catalog/es|pt|mx|co/`: manifiesto y resolución de enlaces separados por región.
 - `data/catalog/`: catálogos generados y catálogo canónico de importación.
 - `data/sources/`: selecciones editoriales con imágenes locales.
 - `guias/`: guías de compra indexables.
@@ -55,13 +58,14 @@ Este comando:
 1. transforma `products.json` y `offers.json` en familias y variantes;
 2. prepara los catálogos de marketplace sin cambiar el estado de publicación de ningún país;
 3. genera índices de enlaces autorizados separados por región;
-4. genera `/paises/`, las fichas indexables y los sitemaps únicamente para regiones `published`.
+4. genera `/paises/`, las portadas, directorios de categorías y tiendas, fichas indexables y sitemaps únicamente para regiones `published`.
 
 Los JSON de catálogo contienen identificadores de oferta, no URLs afiliadas directas. `go.html` exige región y oferta, verifica que la región esté publicada, rechaza ofertas de otro país y solo acepta destinos HTTPS de los dominios expresamente admitidos.
 
 ## Arquitectura internacional
 
 - `https://getsecretshop.com/` → España (`published`).
+- `https://getsecretshop.com/pt/` → Portugal (`published`, interfaz en portugués).
 - `https://getsecretshop.com/mx/` → México (`draft`; la carpeta pública no se genera).
 - `https://getsecretshop.com/co/` → Colombia (`draft`; la carpeta pública no se genera).
 - `https://getsecretshop.com/paises/` → selector con regiones publicadas.

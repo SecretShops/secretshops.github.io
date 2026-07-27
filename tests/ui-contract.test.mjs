@@ -4,12 +4,15 @@ import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 
 const root = resolve(import.meta.dirname, "..");
-const [html, css, app, regionCore, regions] = await Promise.all([
+const [html, css, app, i18n, regionCore, regions, storeBranding, portugalHome] = await Promise.all([
   readFile(resolve(root, "index.html"), "utf8"),
   readFile(resolve(root, "assets/css/app.css"), "utf8"),
   readFile(resolve(root, "assets/js/app.js"), "utf8"),
+  readFile(resolve(root, "assets/js/i18n.js"), "utf8"),
   readFile(resolve(root, "assets/js/region-core.js"), "utf8"),
-  readFile(resolve(root, "data/config/regions.json"), "utf8")
+  readFile(resolve(root, "data/config/regions.json"), "utf8"),
+  readFile(resolve(root, "data/config/store-branding.json"), "utf8"),
+  readFile(resolve(root, "pt/index.html"), "utf8")
 ]);
 
 test("conserva la dirección visual y el texto aprobados", () => {
@@ -80,7 +83,7 @@ test("no conserva la aplicación antigua ni menciones públicas indebidas", () =
 test("aplica la actualización de diseño y dominio", () => {
   assert.ok(html.includes('<link rel="canonical" href="https://getsecretshop.com/">'));
   assert.ok(html.includes('class="primary-nav"'));
-  assert.ok(html.includes('class="nav-catalog"'));
+  assert.match(html, /class="[^"]*\bnav-catalog\b[^"]*"/);
   assert.ok(html.includes('data-set-collection="deals"'));
   assert.ok(html.includes('data-category-grid'));
   assert.ok(css.includes('.category-visual'));
@@ -91,6 +94,50 @@ test("aplica la actualización de diseño y dominio", () => {
   assert.ok(app.includes('HERO_ROTATION_MS'));
   assert.ok(app.includes('DEALS_ROTATION_MS'));
   assert.equal(html.includes('secretshops.github.io'), false);
+});
+
+test("incluye navegación avanzada, directorios e infinito móvil", () => {
+  for (const marker of [
+    "data-nav-categories",
+    "data-nav-stores",
+    "data-nav-favorites-preview",
+    "data-directory-panel",
+    "data-category-directory-grid",
+    "data-store-directory-grid",
+    "data-catalog-sentinel",
+    "mobile-bottom-nav",
+    "data-modal-filter-category",
+    "data-modal-filter-store"
+  ]) {
+    assert.ok(html.includes(marker), marker);
+  }
+  assert.equal(html.includes("data-load-more"), false);
+  assert.ok(app.includes("IntersectionObserver"));
+  assert.ok(app.includes("categoryDirectoryPath(activeRegion)"));
+  assert.ok(app.includes("storeDirectoryPath(activeRegion)"));
+  assert.ok(regionCore.includes("export function categoryPath"));
+  assert.ok(regionCore.includes("export function storePath"));
+  assert.ok(css.includes(".score-carousel"));
+  assert.ok(css.includes(".mobile-bottom-nav"));
+});
+
+test("Portugal conserva los datos y traduce la interfaz", () => {
+  assert.ok(i18n.includes("translateStaticHtml"));
+  assert.ok(portugalHome.includes('lang="pt-PT"'));
+  assert.ok(portugalHome.includes("Todas as categorias"));
+  assert.ok(portugalHome.includes("Todas as lojas"));
+  assert.ok(portugalHome.includes("Navegação móvel"));
+  assert.equal(portugalHome.includes("Ver todas las categorías"), false);
+  assert.equal(portugalHome.includes("Cargando más productos"), false);
+});
+
+test("las tiendas activas tienen identidad visual local", () => {
+  const branding = JSON.parse(storeBranding);
+  assert.equal(branding.schemaVersion, 1);
+  assert.equal(branding.stores.length, 18);
+  assert.ok(branding.stores.every((store) =>
+    store.domain && store.logo.startsWith("/assets/brands/stores/")
+  ));
 });
 
 test("todos los diálogos tienen nombre accesible", () => {

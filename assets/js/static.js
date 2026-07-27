@@ -1,12 +1,14 @@
 import "./cloudflare-analytics.js";
+import { createTranslator } from "./i18n.js";
 
 const key = "secretshop:theme:v1";
+const t = createTranslator(document.documentElement.lang);
 
 function renderTheme() {
   const dark = document.documentElement.dataset.theme === "dark";
   document.querySelectorAll("[data-theme-toggle]").forEach((button) => {
-    button.textContent = dark ? "☀ Modo claro" : "◐ Modo oscuro";
-    button.setAttribute("aria-label", dark ? "Activar modo claro" : "Activar modo oscuro");
+    button.textContent = dark ? `☀ ${t("light")}` : `◐ ${t("darkMode")}`;
+    button.setAttribute("aria-label", dark ? t("activateLight") : t("activateDark"));
   });
   const meta = document.querySelector('meta[name="theme-color"]');
   if (meta) meta.content = dark ? "#09181c" : "#f7f2e8";

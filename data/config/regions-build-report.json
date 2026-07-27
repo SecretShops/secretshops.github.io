@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-27T16:02:41.747Z",
+  "generatedAt": "2026-07-27T17:48:00.536Z",
   "publishedRegions": [
     "es",
     "pt"
@@ -42,6 +42,8 @@
       "variants": 10488,
       "offers": 10564,
       "productPages": 3520,
+      "categoryPages": 46,
+      "storePages": 19,
       "lastmod": "2026-07-27"
     },
     {
@@ -52,6 +54,8 @@
       "variants": 1472,
       "offers": 1472,
       "productPages": 278,
+      "categoryPages": 10,
+      "storePages": 5,
       "lastmod": "2026-07-27"
     }
   ]
