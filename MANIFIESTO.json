@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "name": "SecretShop-parche-categorias-movil-2026-07-27",
+  "createdAt": "2026-07-27",
+  "type": "minimal-unified-diff",
+  "repositoryOperations": {
+    "modify": [
+      {
+        "path": "assets/css/app.css",
+        "beforeSha256": "f3e7f9a95778ce07bc9e2062bfcd5ceb1b1a86183f5af2add45bf78546029de6",
+        "afterSha256": "fb76503ba45e88298369d9375f910db340087fd285dbffe0ce2beb26df8584a9",
+        "beforeBytes": 75744,
+        "afterBytes": 77900
+      },
+      {
+        "path": "assets/js/app.js",
+        "beforeSha256": "8e0310f151d96744ad7ebeb9f38aeca898c5514056f36453e14fbc29fed3443c",
+        "afterSha256": "60f951ac69ee3f69daaee0a72bc4416bfd39fcc1ed08a1fe8a5d51f09041a31c",
+        "beforeBytes": 80573,
+        "afterBytes": 81293
+      },
+      {
+        "path": "tests/browser-smoke.mjs",
+        "beforeSha256": "c67a4b954b8d45cdb4c5e62420278fbdf52dc98869c4ee1dc326a6139b2fa0bc",
+        "afterSha256": "8f15f0ba851a56b87ba32c1f175b9e42e68fc6992f0ee9dc4c052d80396bbc9b",
+        "beforeBytes": 15704,
+        "afterBytes": 19736
+      },
+      {
+        "path": "tests/ui-contract.test.mjs",
+        "beforeSha256": "24c2e1a7b4f1c06c4991bc54ed7eaae28da6136017fcdae838324961f0844120",
+        "afterSha256": "ad95061fed59e45a7474742d79b98888853a402062916e228a53db79d70fc000",
+        "beforeBytes": 6135,
+        "afterBytes": 7055
+      }
+    ],
+    "add": [],
+    "delete": []
+  },
+  "patch": {
+    "path": "SecretShop-categorias-movil.patch",
+    "sha256": "de24917c60d3f77fb8ffc15e5e5229fe01de201d5da22a745327b001053ec079",
+    "bytes": 15473,
+    "applyCheckPassed": true,
+    "applyResultMatchedPreparedFiles": true
+  },
+  "protectedFilesUnchanged": [
+    {
+      "path": "data/catalog/products.json",
+      "sha256": "0fcc881464714333e25d32f1402e07f4fd890b557b0cb487e29db8bcc7a1f05d"
+    },
+    {
+      "path": "data/catalog/offers.json",
+      "sha256": "f519bec02844e71c46ebb24949d504ae8e21cf0323ce8c5ca25132f3c08be529"
+    },
+    {
+      "path": "data/catalog/merchants.json",
+      "sha256": "7d99558bb0dbb2b0ee1719bf9369882c6d24af4df8927ced22035ed5ae8b3c69"
+    },
+    {
+      "path": "data/config/regions.json",
+      "sha256": "f0f32049c85f4330a79ce0af9a5cd0039b6be86e389ccd46e9ade2f92ad37163"
+    },
+    {
+      "path": "data/catalog/es/catalog.json",
+      "sha256": "406f0afa954cde15d1b4df4165ac804c7495d295c409332e0d887b14053cf875"
+    },
+    {
+      "path": "data/catalog/pt/catalog.json",
+      "sha256": "087a22a15d41eb86937426fa6041b9fd09f78737deec47234162bbccafa92de5"
+    },
+    {
+      "path": "index.html",
+      "sha256": "d77a4aa73e785234d3ade29ab7ca7daaa1c060fb60fa5f890fbed9ba81b363fc"
+    },
+    {
+      "path": "scripts/build-regional-site.mjs",
+      "sha256": "634491f8ab5a30cbfb39e04fcedea8dbed76ac0ca0ae4695a287537a38138d5e"
+    }
+  ],
+  "verification": {
+    "unitAndContractTests": {
+      "passed": 56,
+      "failed": 0
+    },
+    "browserSmokePassed": true,
+    "qualityPipelinePassed": true,
+    "previousCategoriesCovered": "27/27",
+    "repositoryDiff": {
+      "modified": 4,
+      "added": 0,
+      "deleted": 0
+    }
+  }
+}
