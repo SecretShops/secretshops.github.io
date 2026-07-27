@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-07-27T14:42:17.332Z",
+  "generatedAt": "2026-07-27T16:02:44.191Z",
   "summary": {
     "canonicalOffers": 7251,
     "canonicalByNetwork": {
@@ -13,12 +13,12 @@
       "amazon": 191,
       "impact": 1195
     },
-    "canonicalPublishedOffers": 8116,
-    "canonicalPublishedLinks": 8116,
-    "regionalOfferAssignments": 24570,
-    "regionalLinkAssignments": 24570,
+    "canonicalPublishedOffers": 8118,
+    "canonicalPublishedLinks": 8118,
+    "regionalOfferAssignments": 24572,
+    "regionalLinkAssignments": 24572,
     "awinCanonicalLinks": 5865,
-    "aliexpressCanonicalLinks": 865,
+    "aliexpressCanonicalLinks": 867,
     "amazonCanonicalLinks": 191,
     "impactCanonicalLinks": 1195,
     "findings": 0,
@@ -35,8 +35,8 @@
     "mx": {
       "status": "draft",
       "country": "MX",
-      "offers": 249,
-      "links": 249,
+      "offers": 251,
+      "links": 251,
       "invalid": 0
     },
     "co": {

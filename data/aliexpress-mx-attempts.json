@@ -148,73 +148,73 @@
   },
   "1005009881248536": {
     "status": "failed",
-    "attempts": 1,
-    "last_attempt_at": "2026-07-19T10:45:14.523753+00:00",
+    "attempts": 2,
+    "last_attempt_at": "2026-07-27T16:00:04.756951+00:00",
     "last_error": "No se obtuvo un título o una imagen válidos",
-    "retry_after": "2026-07-26T10:45:14.523753+00:00"
+    "retry_after": "2026-08-10T16:00:04.756951+00:00"
   },
   "1005005943671094": {
     "status": "failed",
-    "attempts": 1,
-    "last_attempt_at": "2026-07-19T10:45:23.814010+00:00",
+    "attempts": 2,
+    "last_attempt_at": "2026-07-27T16:00:16.029173+00:00",
     "last_error": "No se obtuvo un título o una imagen válidos",
-    "retry_after": "2026-07-26T10:45:23.814010+00:00"
+    "retry_after": "2026-08-10T16:00:16.029173+00:00"
   },
   "1005005968706771": {
     "status": "failed",
-    "attempts": 1,
-    "last_attempt_at": "2026-07-19T10:45:35.403071+00:00",
-    "last_error": "HTTP Error 408: Request Timeout",
-    "retry_after": "2026-07-26T10:45:35.403071+00:00"
+    "attempts": 2,
+    "last_attempt_at": "2026-07-27T16:00:24.399571+00:00",
+    "last_error": "No se obtuvo un título o una imagen válidos",
+    "retry_after": "2026-08-10T16:00:24.399571+00:00"
   },
   "1005006894901387": {
     "status": "failed",
-    "attempts": 1,
-    "last_attempt_at": "2026-07-19T10:46:04.952180+00:00",
+    "attempts": 2,
+    "last_attempt_at": "2026-07-27T16:00:35.148566+00:00",
     "last_error": "No se obtuvo un título o una imagen válidos",
-    "retry_after": "2026-07-26T10:46:04.952180+00:00"
+    "retry_after": "2026-08-10T16:00:35.148566+00:00"
   },
   "1005007597439198": {
-    "status": "failed",
-    "attempts": 1,
-    "last_attempt_at": "2026-07-19T10:46:15.900099+00:00",
-    "last_error": "No se obtuvo un título o una imagen válidos",
-    "retry_after": "2026-07-26T10:46:15.900099+00:00"
+    "status": "success",
+    "attempts": 2,
+    "last_attempt_at": "2026-07-27T16:00:47.628731+00:00",
+    "last_error": "",
+    "retry_after": null
   },
   "1005006428188946": {
     "status": "failed",
-    "attempts": 1,
-    "last_attempt_at": "2026-07-19T10:46:27.235571+00:00",
+    "attempts": 2,
+    "last_attempt_at": "2026-07-27T16:00:54.838681+00:00",
     "last_error": "No se obtuvo un título o una imagen válidos",
-    "retry_after": "2026-07-26T10:46:27.235571+00:00"
+    "retry_after": "2026-08-10T16:00:54.838681+00:00"
   },
   "1005008281134342": {
     "status": "failed",
-    "attempts": 1,
-    "last_attempt_at": "2026-07-19T10:46:38.304725+00:00",
-    "last_error": "HTTP Error 400: Bad Request",
-    "retry_after": "2026-07-26T10:46:38.304725+00:00"
+    "attempts": 2,
+    "last_attempt_at": "2026-07-27T16:01:08.423411+00:00",
+    "last_error": "No se obtuvo un título o una imagen válidos",
+    "retry_after": "2026-08-10T16:01:08.423411+00:00"
   },
   "1005006608356666": {
     "status": "failed",
-    "attempts": 1,
-    "last_attempt_at": "2026-07-19T10:46:45.581240+00:00",
-    "last_error": "No se obtuvo un título o una imagen válidos",
-    "retry_after": "2026-07-26T10:46:45.581240+00:00"
+    "attempts": 2,
+    "last_attempt_at": "2026-07-27T16:01:17.524705+00:00",
+    "last_error": "HTTP Error 400: Bad Request",
+    "retry_after": "2026-08-10T16:01:17.524705+00:00"
   },
   "1005008060435016": {
     "status": "failed",
-    "attempts": 1,
-    "last_attempt_at": "2026-07-19T10:46:55.698606+00:00",
+    "attempts": 2,
+    "last_attempt_at": "2026-07-27T16:01:24.580742+00:00",
     "last_error": "No se obtuvo un título o una imagen válidos",
-    "retry_after": "2026-07-26T10:46:55.698606+00:00"
+    "retry_after": "2026-08-10T16:01:24.580742+00:00"
   },
   "1005007448914445": {
     "status": "failed",
-    "attempts": 1,
-    "last_attempt_at": "2026-07-19T10:47:05.433306+00:00",
+    "attempts": 2,
+    "last_attempt_at": "2026-07-27T16:01:32.808944+00:00",
     "last_error": "No se obtuvo un título o una imagen válidos",
-    "retry_after": "2026-07-26T10:47:05.433306+00:00"
+    "retry_after": "2026-08-10T16:01:32.808944+00:00"
   },
   "1005006363108582": {
     "status": "success",
@@ -225,38 +225,38 @@
   },
   "1005006635539774": {
     "status": "failed",
-    "attempts": 1,
-    "last_attempt_at": "2026-07-19T10:47:23.876708+00:00",
-    "last_error": "HTTP Error 408: Request Timeout",
-    "retry_after": "2026-07-26T10:47:23.876708+00:00"
+    "attempts": 2,
+    "last_attempt_at": "2026-07-27T16:01:44.156306+00:00",
+    "last_error": "No se obtuvo un título o una imagen válidos",
+    "retry_after": "2026-08-10T16:01:44.156306+00:00"
   },
   "1005010794463186": {
-    "status": "failed",
-    "attempts": 1,
-    "last_attempt_at": "2026-07-19T10:47:53.489507+00:00",
-    "last_error": "HTTP Error 408: Request Timeout",
-    "retry_after": "2026-07-26T10:47:53.489507+00:00"
+    "status": "success",
+    "attempts": 2,
+    "last_attempt_at": "2026-07-27T16:01:55.212180+00:00",
+    "last_error": "",
+    "retry_after": null
   },
   "1005010601624925": {
     "status": "failed",
-    "attempts": 1,
-    "last_attempt_at": "2026-07-19T10:48:23.010080+00:00",
+    "attempts": 2,
+    "last_attempt_at": "2026-07-27T16:02:03.019778+00:00",
     "last_error": "No se obtuvo un título o una imagen válidos",
-    "retry_after": "2026-07-26T10:48:23.010080+00:00"
+    "retry_after": "2026-08-10T16:02:03.019778+00:00"
   },
   "1005009014707202": {
     "status": "failed",
-    "attempts": 1,
-    "last_attempt_at": "2026-07-19T11:00:17.353555+00:00",
+    "attempts": 2,
+    "last_attempt_at": "2026-07-27T16:02:14.841927+00:00",
     "last_error": "No se obtuvo un título o una imagen válidos",
-    "retry_after": "2026-07-26T11:00:17.353555+00:00"
+    "retry_after": "2026-08-10T16:02:14.841927+00:00"
   },
   "1005006513437185": {
     "status": "failed",
-    "attempts": 1,
-    "last_attempt_at": "2026-07-19T11:00:27.892615+00:00",
-    "last_error": "HTTP Error 408: Request Timeout",
-    "retry_after": "2026-07-26T11:00:27.892615+00:00"
+    "attempts": 2,
+    "last_attempt_at": "2026-07-27T16:02:24.580374+00:00",
+    "last_error": "No se obtuvo un título o una imagen válidos",
+    "retry_after": "2026-08-10T16:02:24.580374+00:00"
   },
   "1005008492202456": {
     "status": "failed",
@@ -1072,38 +1072,38 @@
   },
   "1005007296821194": {
     "status": "failed",
-    "attempts": 1,
-    "last_attempt_at": "2026-07-19T15:55:19.748227+00:00",
+    "attempts": 2,
+    "last_attempt_at": "2026-07-27T15:59:09.862986+00:00",
     "last_error": "No se obtuvo un título o una imagen válidos",
-    "retry_after": "2026-07-26T15:55:19.748227+00:00"
+    "retry_after": "2026-08-10T15:59:09.862986+00:00"
   },
   "1005010128533688": {
     "status": "failed",
-    "attempts": 1,
-    "last_attempt_at": "2026-07-19T15:55:28.423331+00:00",
+    "attempts": 2,
+    "last_attempt_at": "2026-07-27T15:59:21.629266+00:00",
     "last_error": "No se obtuvo un título o una imagen válidos",
-    "retry_after": "2026-07-26T15:55:28.423331+00:00"
+    "retry_after": "2026-08-10T15:59:21.629266+00:00"
   },
   "1005010347094641": {
     "status": "failed",
-    "attempts": 1,
-    "last_attempt_at": "2026-07-19T15:55:39.096555+00:00",
+    "attempts": 2,
+    "last_attempt_at": "2026-07-27T15:59:33.345069+00:00",
     "last_error": "No se obtuvo un título o una imagen válidos",
-    "retry_after": "2026-07-26T15:55:39.096555+00:00"
+    "retry_after": "2026-08-10T15:59:33.345069+00:00"
   },
   "1005010661032861": {
     "status": "failed",
-    "attempts": 1,
-    "last_attempt_at": "2026-07-19T15:55:47.608351+00:00",
+    "attempts": 2,
+    "last_attempt_at": "2026-07-27T15:59:44.052938+00:00",
     "last_error": "No se obtuvo un título o una imagen válidos",
-    "retry_after": "2026-07-26T15:55:47.608351+00:00"
+    "retry_after": "2026-08-10T15:59:44.052938+00:00"
   },
   "1005006737907603": {
     "status": "failed",
-    "attempts": 1,
-    "last_attempt_at": "2026-07-19T15:55:58.527102+00:00",
+    "attempts": 2,
+    "last_attempt_at": "2026-07-27T15:59:53.746060+00:00",
     "last_error": "No se obtuvo un título o una imagen válidos",
-    "retry_after": "2026-07-26T15:55:58.527102+00:00"
+    "retry_after": "2026-08-10T15:59:53.746060+00:00"
   },
   "1005010567441252": {
     "status": "success",
