@@ -50,7 +50,17 @@ const LEGACY_STORAGE_KEYS = {
 const PAGE_SIZE = 24;
 const MAX_COMPARE = 4;
 const MAIN_CATEGORIES = ["Tecnología", "Moda", "Hogar", "Belleza y cuidado"];
-const COLLECTION_CATEGORY_IDS = new Set(["featured", "viral", "under-10"]);
+const DIRECTORY_CATEGORIES = [
+  "Tecnología",
+  "Moda",
+  "Hogar",
+  "Belleza y cuidado",
+  "Deportes",
+  "Familia y ocio",
+  "Aventura y viajes",
+  "Motor",
+  "Mascotas"
+];
 const HERO_ROTATION_MS = 12_000;
 const DEALS_ROTATION_MS = 18_000;
 let activeRegion = null;
@@ -464,43 +474,41 @@ function categoryProductCount(categoryName) {
   return families.filter((family) => familyMatchesCategory(family, categoryName)).length;
 }
 
+function productCountLabel(count) {
+  const normalizedCount = Number(count) || 0;
+  if (normalizedCount === 1) {
+    return activeRegion.locale.startsWith("pt") ? "1 produto" : "1 producto";
+  }
+  return t("productsCount", { count: formatter.format(normalizedCount) });
+}
+
 function categoryEntries() {
-  const entries = [];
-  const used = new Set();
-  for (const category of categoryTaxonomy
-    .filter((entry) => entry.parent === null && !COLLECTION_CATEGORY_IDS.has(entry.id))
-    .sort((left, right) => (left.order || 999) - (right.order || 999))) {
-    const count = categoryProductCount(category.label);
-    if (!count) continue;
-    entries.push({ ...category, name: category.label, count });
-    used.add(normalizedLabel(category.label));
-  }
-
-  for (const group of categoryStats(families)) {
-    const key = normalizedLabel(group.name);
-    if (
-      !group.count ||
-      used.has(key) ||
-      ["virales", "menos de 10", "destacados"].includes(key)
-    ) {
-      continue;
-    }
-    entries.push({
-      id: `group-${key.replace(/\s+/g, "-")}`,
-      name: group.name,
-      label: group.name,
-      count: group.count,
-      icon: group.icon,
-      order: 1000 + entries.length
-    });
-    used.add(key);
-  }
-
-  return entries.sort((left, right) =>
-    right.count - left.count ||
-    (left.order || 999) - (right.order || 999) ||
-    left.name.localeCompare(right.name, activeRegion.locale)
+  const taxonomyByLabel = new Map(
+    categoryTaxonomy.map((entry) => [normalizedLabel(entry.label), entry])
   );
+  const statsByName = new Map(
+    categoryStats(families).map((entry) => [normalizedLabel(entry.name), entry])
+  );
+
+  return DIRECTORY_CATEGORIES
+    .map((name, order) => {
+      const count = categoryProductCount(name);
+      if (!count) return null;
+      const key = normalizedLabel(name);
+      const taxonomy = taxonomyByLabel.get(key);
+      const stats = statsByName.get(key);
+      return {
+        ...(taxonomy || {}),
+        ...(stats || {}),
+        id: taxonomy?.id || `directory-${key.replace(/\s+/g, "-")}`,
+        name,
+        label: name,
+        count,
+        icon: taxonomy?.icon || stats?.icon || "＋",
+        order
+      };
+    })
+    .filter(Boolean);
 }
 
 function subcategoryEntries(categoryName) {
@@ -524,7 +532,11 @@ function subcategoryEntries(categoryName) {
         counts.set(raw, (counts.get(raw) || 0) + 1);
       }
     }
+    const priorityLabels = selected === "moda"
+      ? ["Moda mujer", "Moda hombre", "Accesorios mujer", "Accesorios hombre", "Moda y accesorios"]
+      : [];
     labels = uniqueStrings([
+      ...priorityLabels,
       ...labels,
       ...[...counts.entries()]
         .sort((left, right) => right[1] - left[1])
@@ -548,7 +560,7 @@ function categoryCardMarkup(category, options = {}) {
       </span>
       <span class="category-copy">
         <strong>${escapeHtml(localizeCategory(category.name, activeRegion.locale))}</strong>
-        <small>${escapeHtml(t("productsCount", { count: formatter.format(category.count) }))}</small>
+        <small>${escapeHtml(productCountLabel(category.count))}</small>
       </span>
       <span class="category-arrow" aria-hidden="true">→</span>
     </a>`;
@@ -629,7 +641,7 @@ function storeCardMarkup(store) {
         ${storeLogoMarkup(store)}
         <span class="store-copy">
           <strong>${escapeHtml(store.name)}</strong>
-          <span>${escapeHtml(t("productsCount", { count: formatter.format(store.products.size) }))}</span>
+          <span>${escapeHtml(productCountLabel(store.products.size))}</span>
         </span>
         <span class="store-arrow" aria-hidden="true">→</span>
       </a>`;
@@ -827,6 +839,14 @@ function renderDirectoryView() {
       ? "store"
       : requestedKind;
   const directoryView = ["categories", "category", "stores", "store"].includes(kind);
+  const categoryNavigationActive = kind === "categories" || kind === "category";
+  const storeNavigationActive = kind === "stores" || kind === "store";
+  const categoryNavigation = $(".mobile-bottom-nav [data-region-categories]");
+  const storeNavigation = $(".mobile-bottom-nav [data-region-stores]");
+  if (categoryNavigationActive) categoryNavigation?.setAttribute("aria-current", "page");
+  else categoryNavigation?.removeAttribute("aria-current");
+  if (storeNavigationActive) storeNavigation?.setAttribute("aria-current", "page");
+  else storeNavigation?.removeAttribute("aria-current");
   document.body.classList.toggle("is-directory-view", directoryView);
   $$("[data-home-only]").forEach((section) => {
     section.hidden = directoryView;
@@ -879,7 +899,7 @@ function renderDirectoryView() {
     const count = categoryProductCount(state.category);
     eyebrow.textContent = t("categories");
     title.textContent = selected;
-    text.textContent = t("productsCount", { count: formatter.format(count) });
+    text.textContent = productCountLabel(count);
     const subcategories = subcategoryEntries(state.category);
     subcategorySection.hidden = false;
     const subtitle = $("[data-subcategory-title]");
@@ -899,7 +919,7 @@ function renderDirectoryView() {
   eyebrow.textContent = t("stores");
   title.textContent = state.store;
   text.textContent = selectedStore
-    ? t("productsCount", { count: formatter.format(selectedStore.products.size) })
+    ? productCountLabel(selectedStore.products.size)
     : "";
   storeHero.hidden = false;
   storeHero.innerHTML = selectedStore
@@ -1658,10 +1678,30 @@ function togglePinnedMenu(trigger) {
 }
 
 function focusCatalogSearch() {
-  const input = $("#hero-search") || $("#header-search");
+  const visibleSearchInput = () =>
+    [$("#hero-search"), $("#header-search")]
+      .find((candidate) => candidate && candidate.getClientRects().length > 0);
+
+  let input = visibleSearchInput();
+  if (!input) {
+    state.category = "all";
+    state.store = "all";
+    state.visible = PAGE_SIZE;
+    document.body.dataset.pageKind = "home";
+    delete document.body.dataset.initialCategory;
+    delete document.body.dataset.initialStore;
+    syncSearchInputs();
+    renderCatalog();
+    input = visibleSearchInput();
+  }
   if (!input) return;
+
+  try {
+    input.focus({ preventScroll: true });
+  } catch {
+    input.focus();
+  }
   input.scrollIntoView({ behavior: "smooth", block: "center" });
-  window.setTimeout(() => input.focus(), 250);
 }
 
 function wireEvents() {
