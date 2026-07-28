@@ -8,8 +8,8 @@ on:
         required: false
         type: boolean
         default: false
-  schedule:
-    - cron: "37 05 * * *"
+  # La programación diaria se centraliza en actualizar-impact.yml.
+  # Este workflow queda disponible únicamente como recuperación manual de Shokz.
 
 permissions:
   contents: write

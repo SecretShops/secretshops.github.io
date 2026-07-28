@@ -18,7 +18,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: actualizar-catalogos-awin-main
+  group: actualizar-catalogos-main
   cancel-in-progress: false
 
 jobs:

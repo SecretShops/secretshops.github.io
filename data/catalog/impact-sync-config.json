@@ -1,0 +1,390 @@
+{
+  "schemaVersion": 1,
+  "publisherId": "7518894",
+  "mode": "existing_products_only",
+  "queryBatchSize": 150,
+  "catalogs": [
+    {
+      "id": "shokz-es",
+      "merchantId": "shokz-es",
+      "merchantName": "SHOKZ ES",
+      "catalogId": "31438",
+      "campaignId": "3800995",
+      "catalogSource": "CATF_31438",
+      "currencies": [
+        "EUR"
+      ],
+      "regions": [
+        "es"
+      ],
+      "trackingHosts": [
+        "shokzes.pxf.io"
+      ],
+      "landingDomains": [
+        "es.shokz.com"
+      ],
+      "directFallbackWhenDeeplinkingDisabled": true
+    },
+    {
+      "id": "lounge-eu",
+      "merchantId": "lounge-eu",
+      "merchantName": "Lounge EU",
+      "catalogId": "35417",
+      "campaignId": "3973367",
+      "catalogSource": "CATF_35417",
+      "currencies": [
+        "EUR"
+      ],
+      "regions": [
+        "es",
+        "pt"
+      ],
+      "trackingHosts": [
+        "loungeeu.sjv.io"
+      ],
+      "landingDomains": [
+        "eu.lounge.com"
+      ],
+      "lookupFile": "data/sources/lounge-eu/lounge-eu-variantes-disponibles.csv",
+      "lookupIdColumn": "variant_sku",
+      "lookupParentColumn": "parent_sku",
+      "directFallbackWhenDeeplinkingDisabled": true
+    },
+    {
+      "id": "casecess-us",
+      "merchantId": "casecess",
+      "merchantName": "CASECESS",
+      "catalogId": "30305",
+      "campaignId": "3757273",
+      "catalogSource": "CATF_30305",
+      "currencies": [
+        "USD"
+      ],
+      "regions": [
+        "us"
+      ],
+      "trackingHosts": [
+        "casecess.pxf.io"
+      ],
+      "landingDomains": [
+        "casecess.com",
+        "www.casecess.com"
+      ],
+      "directFallbackWhenDeeplinkingDisabled": true
+    },
+    {
+      "id": "coach-es",
+      "merchantId": "coach",
+      "merchantName": "Coach",
+      "catalogId": "34935",
+      "campaignId": "3956002",
+      "catalogSource": "CATF_34935",
+      "currencies": [
+        "EUR"
+      ],
+      "regions": [
+        "es"
+      ],
+      "trackingHosts": [
+        "coacheu.pxf.io"
+      ],
+      "landingDomains": [
+        "es.coach.com"
+      ],
+      "directFallbackWhenDeeplinkingDisabled": true
+    },
+    {
+      "id": "italist-eur",
+      "merchantId": "italist",
+      "merchantName": "Italist",
+      "catalogId": "34671",
+      "campaignId": "3947549",
+      "catalogSource": "CATF_34671",
+      "currencies": [
+        "EUR"
+      ],
+      "regions": [
+        "es",
+        "pt"
+      ],
+      "trackingHosts": [
+        "italistinc.pxf.io"
+      ],
+      "landingDomains": [
+        "r114wg-zn.myshopify.com"
+      ],
+      "directFallbackWhenDeeplinkingDisabled": true
+    },
+    {
+      "id": "italist-usd",
+      "merchantId": "italist",
+      "merchantName": "Italist",
+      "catalogId": "33797",
+      "campaignId": "3902447",
+      "catalogSource": "CATF_33797",
+      "currencies": [
+        "USD"
+      ],
+      "regions": [
+        "us",
+        "ve"
+      ],
+      "trackingHosts": [
+        "italistinc.pxf.io"
+      ],
+      "landingDomains": [
+        "italist.com"
+      ],
+      "directFallbackWhenDeeplinkingDisabled": true
+    },
+    {
+      "id": "hewi-gb",
+      "merchantId": "hewi",
+      "merchantName": "HEWI",
+      "catalogId": "33842",
+      "campaignId": "3904894",
+      "catalogSource": "CATF_33842",
+      "currencies": [
+        "GBP"
+      ],
+      "regions": [
+        "gb"
+      ],
+      "trackingHosts": [
+        "hewi.pxf.io"
+      ],
+      "landingDomains": [
+        "hardlyeverwornit.com"
+      ],
+      "directFallbackWhenDeeplinkingDisabled": true
+    },
+    {
+      "id": "vivien-hair-usd",
+      "merchantId": "vivien-hair",
+      "merchantName": "Vivien Hair",
+      "catalogId": "32690",
+      "campaignId": "3858868",
+      "catalogSource": "CATF_32690",
+      "currencies": [
+        "USD"
+      ],
+      "regions": [
+        "us",
+        "ve"
+      ],
+      "trackingHosts": [
+        "vivienhair.sjv.io"
+      ],
+      "landingDomains": [
+        "vivienhair.com"
+      ],
+      "directFallbackWhenDeeplinkingDisabled": true
+    },
+    {
+      "id": "xteink-us",
+      "merchantId": "xteink",
+      "merchantName": "Xteink",
+      "catalogId": "34508",
+      "campaignId": "3933983",
+      "catalogSource": "CATF_34508",
+      "currencies": [
+        "USD"
+      ],
+      "regions": [
+        "us"
+      ],
+      "trackingHosts": [
+        "go.sjv.io"
+      ],
+      "landingDomains": [
+        "xteink.com",
+        "www.xteink.com"
+      ],
+      "directFallbackWhenDeeplinkingDisabled": true
+    },
+    {
+      "id": "plantifique-us",
+      "merchantId": "plantifique",
+      "merchantName": "Plantifique",
+      "catalogId": "34614",
+      "campaignId": "3942357",
+      "catalogSource": "CATF_34614",
+      "currencies": [
+        "USD"
+      ],
+      "regions": [
+        "us"
+      ],
+      "trackingHosts": [
+        "plantifique.sjv.io"
+      ],
+      "landingDomains": [
+        "plantifique.com"
+      ],
+      "directFallbackWhenDeeplinkingDisabled": true
+    },
+    {
+      "id": "heybike-eur",
+      "merchantId": "heybike",
+      "merchantName": "Heybike",
+      "catalogId": "31506",
+      "campaignId": "3806125",
+      "catalogSource": "CATF_31506",
+      "currencies": [
+        "EUR"
+      ],
+      "regions": [
+        "at",
+        "be",
+        "hr",
+        "ee",
+        "fi",
+        "fr",
+        "de",
+        "ie",
+        "it",
+        "lv",
+        "lt",
+        "lu",
+        "nl",
+        "pt",
+        "sk",
+        "si",
+        "es"
+      ],
+      "trackingHosts": [
+        "heybikeeu.sjv.io"
+      ],
+      "landingDomains": [
+        "eu.heybike.com"
+      ],
+      "directFallbackWhenDeeplinkingDisabled": true
+    },
+    {
+      "id": "pixar-eur",
+      "merchantId": "pixar",
+      "merchantName": "PIXAR Bikes",
+      "catalogId": "35357",
+      "campaignId": "3971350",
+      "catalogSource": "CATF_35357",
+      "currencies": [
+        "EUR"
+      ],
+      "regions": [
+        "at",
+        "be",
+        "fr",
+        "de",
+        "ie",
+        "it",
+        "nl",
+        "pt",
+        "es"
+      ],
+      "trackingHosts": [
+        "pixar.sjv.io"
+      ],
+      "landingDomains": [
+        "pixarbikes.com",
+        "de.pixarbikes.com"
+      ],
+      "directFallbackWhenDeeplinkingDisabled": true
+    },
+    {
+      "id": "dore-rose-eur",
+      "merchantId": "dore-rose",
+      "merchantName": "Dore & Rose",
+      "catalogId": "34681",
+      "campaignId": "3947787",
+      "catalogSource": "CATF_34681",
+      "currencies": [
+        "EUR"
+      ],
+      "regions": [
+        "be",
+        "fi",
+        "fr",
+        "de",
+        "gr",
+        "it",
+        "lu",
+        "mc",
+        "nl",
+        "pt",
+        "es"
+      ],
+      "trackingHosts": [
+        "doreroseeu.sjv.io"
+      ],
+      "landingDomains": [
+        "doreandrose.com"
+      ],
+      "directFallbackWhenDeeplinkingDisabled": true
+    },
+    {
+      "id": "outin-us",
+      "merchantId": "outin",
+      "merchantName": "OutIn",
+      "catalogId": "31985",
+      "campaignId": "3830920",
+      "catalogSource": "CATF_31985",
+      "currencies": [
+        "USD"
+      ],
+      "regions": [
+        "us"
+      ],
+      "trackingHosts": [
+        "outininc.pxf.io"
+      ],
+      "landingDomains": [
+        "outin.com"
+      ],
+      "directFallbackWhenDeeplinkingDisabled": true
+    },
+    {
+      "id": "lenovo-es-553883",
+      "merchantId": "lenovo-es-553883",
+      "merchantName": "Lenovo ES",
+      "catalogId": "4182",
+      "campaignId": "553883",
+      "catalogSource": "CATF_4182",
+      "currencies": [
+        "EUR"
+      ],
+      "regions": [
+        "es"
+      ],
+      "trackingHosts": [
+        "lenovo.evyy.net"
+      ],
+      "landingDomains": [
+        "lenovo.com",
+        "www.lenovo.com"
+      ],
+      "directFallbackWhenDeeplinkingDisabled": true
+    },
+    {
+      "id": "lenovo-es-665754",
+      "merchantId": "lenovo-es-665754",
+      "merchantName": "Lenovo ES",
+      "catalogId": "5021",
+      "campaignId": "665754",
+      "catalogSource": "CATF_5021",
+      "currencies": [
+        "EUR"
+      ],
+      "regions": [
+        "es"
+      ],
+      "trackingHosts": [
+        "lenovo.evyy.net"
+      ],
+      "landingDomains": [
+        "lenovo.com",
+        "www.lenovo.com"
+      ],
+      "directFallbackWhenDeeplinkingDisabled": true
+    }
+  ]
+}

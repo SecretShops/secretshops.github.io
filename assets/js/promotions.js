@@ -16,7 +16,10 @@ import {
 } from "./region-core.js";
 
 const REGIONS_URL = "/data/config/regions.json";
-const PROMOTIONS_URL = "/data/promotions/awin.json";
+const PROMOTIONS_URLS = [
+  "/data/promotions/awin.json",
+  "/data/promotions/impact.json"
+];
 const PLACEHOLDER = "/assets/brand/product-placeholder.svg";
 const themeKey = "secretshop:theme:v1";
 
@@ -144,9 +147,11 @@ function showToast(message) {
 }
 
 async function init() {
-  const [configPayload, promotionsPayload] = await Promise.all([
+  const [configPayload, promotionPayloads] = await Promise.all([
     fetchJson(REGIONS_URL, "Países"),
-    fetchJson(PROMOTIONS_URL, "Promociones")
+    Promise.all(
+      PROMOTIONS_URLS.map((path) => fetchJson(path, "Promociones"))
+    )
   ]);
   const config = validateRegionConfig(configPayload);
   const query = new URLSearchParams(location.search);
@@ -168,11 +173,13 @@ async function init() {
   applyStaticLocale(region.locale);
 
   const now = Date.now();
-  const promotions = (promotionsPayload.promotions || []).filter((promotion) =>
+  const promotions = promotionPayloads
+    .flatMap((payload) => payload.promotions || [])
+    .filter((promotion) =>
     promotion.regions?.includes(region.id) &&
     (!promotion.startAt || Date.parse(promotion.startAt) <= now) &&
     (!promotion.endAt || Date.parse(promotion.endAt) >= now)
-  );
+    );
   const codes = promotions.filter((promotion) => promotion.code);
   const withoutCodes = promotions.filter((promotion) => !promotion.code);
   document.querySelector("[data-promotion-code-count]").textContent = String(codes.length);

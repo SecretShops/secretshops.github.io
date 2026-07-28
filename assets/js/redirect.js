@@ -5,12 +5,17 @@ import {
 
 const AMAZON_ASSOCIATE_TAG = "christian0ddd-21";
 const AWIN_PUBLISHER_ID = "2996453";
+const IMPACT_PUBLISHER_ID = "7518894";
 const REGIONS_URL = "/data/config/regions.json";
-const PROMOTIONS_URL = "/data/promotions/awin.json";
+const PROMOTIONS_URLS = [
+  "/data/promotions/awin.json",
+  "/data/promotions/impact.json"
+];
 
 const IMPACT_RULES = [
   { host: "shokzes.pxf.io", path: "/c/7518894/3800995/48345", source: "CATF_31438", landing: /(^|\.)es\.shokz\.com$/i, countries: ["ES"] },
-  { host: "loungeeu.sjv.io", path: "/c/7518894/3973367/54841", source: "CATF_35417", landing: /(^|\.)eu\.lounge\.com$/i, countries: ["ES"] },
+  { host: "loungeeu.sjv.io", path: "/c/7518894/3973367/54841", source: "CATF_35417", landing: /(^|\.)eu\.lounge\.com$/i, countries: ["ES", "PT"] },
+  { host: "casecess.pxf.io", path: "/c/7518894/3757273/47158", source: "CATF_30305", landing: /(^|\.)casecess\.com$/i, countries: ["US"] },
   { host: "coacheu.pxf.io", path: "/c/7518894/3956002/52133", source: "CATF_34935", landing: /(^|\.)es\.coach\.com$/i, countries: ["ES"] },
   { host: "italistinc.pxf.io", path: "/c/7518894/3947549/53066", source: "CATF_34671", landing: /(^|\.)r114wg-zn\.myshopify\.com$/i, countries: ["ES", "PT"] },
   { host: "italistinc.pxf.io", path: "/c/7518894/3902447/53066", source: "CATF_33797", landing: /(^|\.)italist\.com$/i, countries: ["US", "VE"] },
@@ -37,12 +42,26 @@ function fail(text) {
   loader.hidden = true;
 }
 
-function impactRule(url) {
+function impactRule(url, { allowProgramLink = false } = {}) {
   return IMPACT_RULES.find((rule) => {
-    if (url.hostname.toLowerCase() !== rule.host || url.pathname !== rule.path) return false;
-    if (!url.searchParams.get("prodsku") || url.searchParams.get("intsrc") !== rule.source) return false;
+    if (url.hostname.toLowerCase() !== rule.host) return false;
+    const expected = rule.path.match(/^\/c\/(\d+)\/(\d+)\/\d+$/);
+    const actual = url.pathname.match(/^\/c\/(\d+)\/(\d+)\/(\d+)\/?$/);
+    if (
+      !expected ||
+      !actual ||
+      actual[1] !== expected[1] ||
+      actual[2] !== expected[2]
+    ) {
+      return false;
+    }
+    const prodsku = url.searchParams.get("prodsku");
+    const source = url.searchParams.get("intsrc");
+    const landingValue = url.searchParams.get("u");
+    if (!prodsku && !source && !landingValue) return allowProgramLink;
+    if (!prodsku || source !== rule.source || !landingValue) return false;
     try {
-      const landing = new URL(url.searchParams.get("u"));
+      const landing = new URL(landingValue);
       return landing.protocol === "https:" && rule.landing.test(landing.hostname);
     } catch {
       return false;
@@ -50,7 +69,12 @@ function impactRule(url) {
   }) || null;
 }
 
-export function allowedDestination(value) {
+function directImpactRule(url) {
+  if (url.protocol !== "https:" || url.pathname === "/") return null;
+  return IMPACT_RULES.find((rule) => rule.landing.test(url.hostname)) || null;
+}
+
+export function allowedDestination(value, options = {}) {
   try {
     const url = new URL(value);
     if (url.protocol !== "https:") return null;
@@ -63,7 +87,12 @@ export function allowedDestination(value) {
       Boolean(awinPublisher && awinAdvertiser && awinDestination);
     const aliexpress = /^s\.click\.aliexpress\.com$/i.test(url.hostname);
     const amazon = /^(?:www\.)?amazon\.es$/i.test(url.hostname) && /^\/dp\/[A-Z0-9]{10}\/ref=nosim\/?$/i.test(url.pathname) && url.searchParams.get("tag") === AMAZON_ASSOCIATE_TAG;
-    return awin || aliexpress || amazon || impactRule(url) ? url.href : null;
+    const impact = impactRule(url, {
+      allowProgramLink: options.allowImpactProgramLink === true
+    });
+    const directImpact =
+      options.allowDirectImpactProduct !== false && directImpactRule(url);
+    return awin || aliexpress || amazon || impact || directImpact ? url.href : null;
   } catch {
     return null;
   }
@@ -71,7 +100,7 @@ export function allowedDestination(value) {
 
 export function promotionMatchesRegion(entry, region, now = new Date()) {
   if (
-    entry?.network !== "awin" ||
+    !["awin", "impact"].includes(entry?.network) ||
     !region ||
     region.status !== "published" ||
     !Array.isArray(entry.regions) ||
@@ -83,9 +112,23 @@ export function promotionMatchesRegion(entry, region, now = new Date()) {
   if (!Number.isFinite(timestamp)) return false;
   if (entry.startAt && Date.parse(entry.startAt) > timestamp) return false;
   if (entry.endAt && Date.parse(entry.endAt) < timestamp) return false;
-  const destination = allowedDestination(entry.trackingUrl);
+  const destination = allowedDestination(entry.trackingUrl, {
+    allowImpactProgramLink: entry.network === "impact",
+    allowDirectImpactProduct: false
+  });
   if (!destination) return false;
   const url = new URL(destination);
+  if (entry.network === "impact") {
+    const rule = impactRule(url, { allowProgramLink: true });
+    const path = url.pathname.match(/^\/c\/(\d+)\/(\d+)\/\d+\/?$/);
+    return Boolean(
+      rule &&
+      path &&
+      path[1] === IMPACT_PUBLISHER_ID &&
+      path[2] === String(entry.campaignId || "") &&
+      rule.countries.includes(region.countryCode)
+    );
+  }
   const publisher = url.searchParams.get("a") || url.searchParams.get("awinaffid");
   const advertiser = url.searchParams.get("m") || url.searchParams.get("awinmid");
   return (
@@ -102,6 +145,8 @@ export function destinationAllowedForCountry(value, countryCode) {
   if (/(^|\.)amazon\.es$/i.test(url.hostname) && country !== "ES") return null;
   const rule = impactRule(url);
   if (rule && !rule.countries.includes(country)) return null;
+  const directRule = directImpactRule(url);
+  if (directRule && !directRule.countries.includes(country)) return null;
   return destination;
 }
 
@@ -123,6 +168,13 @@ async function fetchJson(url, label) {
   });
   if (!response.ok) throw new Error(`${label}: respuesta ${response.status}`);
   return response.json();
+}
+
+async function fetchPromotions() {
+  const payloads = await Promise.all(
+    PROMOTIONS_URLS.map((url) => fetchJson(url, "Promociones verificadas"))
+  );
+  return payloads.flatMap((payload) => payload?.promotions || []);
 }
 
 async function redirect() {
@@ -148,11 +200,14 @@ async function redirect() {
     const back = document.querySelector("[data-redirect-back]");
     if (back) back.href = region.basePath;
     if (promotionId) {
-      const payload = await fetchJson(PROMOTIONS_URL, "Promociones verificadas");
-      const entry = (payload?.promotions || []).find(
+      const promotions = await fetchPromotions();
+      const entry = promotions.find(
         (promotion) => promotion.id === promotionId
       );
-      const destination = allowedDestination(entry?.trackingUrl);
+      const destination = allowedDestination(entry?.trackingUrl, {
+        allowImpactProgramLink: entry?.network === "impact",
+        allowDirectImpactProduct: false
+      });
       if (!destination || !promotionMatchesRegion(entry, region)) {
         fail("La promoción no está vigente para este país o su enlace no supera la verificación.");
         return;

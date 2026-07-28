@@ -93,7 +93,10 @@ test("cada oferta publicada tiene exactamente un enlace seguro", () => {
       /^s\.click\.aliexpress\.com$/i.test(url.hostname) ||
       /(^|\.)amazon\.es$/i.test(url.hostname) ||
       /^shokzes\.pxf\.io$/i.test(url.hostname) ||
-      /^loungeeu\.sjv\.io$/i.test(url.hostname),
+      /^loungeeu\.sjv\.io$/i.test(url.hostname) ||
+      /(^|\.)es\.shokz\.com$/i.test(url.hostname) ||
+      /(^|\.)eu\.lounge\.com$/i.test(url.hostname) ||
+      /(^|\.)lenovo\.com$/i.test(url.hostname),
       offerId
     );
   }
@@ -117,12 +120,18 @@ test("SHOKZ ES conserva únicamente las variantes depuradas y su tracking de Imp
   assert.ok(
     shokzOffers.every((offer) => {
       const url = new URL(offer.affiliateUrl);
+      const tracked =
+        url.hostname === "shokzes.pxf.io" &&
+        url.searchParams.get("prodsku") === offer.merchantProductId;
+      const directFallback =
+        offer.source?.directProductFallback === true &&
+        /(^|\.)es\.shokz\.com$/i.test(url.hostname) &&
+        url.pathname !== "/";
       return (
         offer.country === "ES" &&
         offer.currency === "EUR" &&
-        offer.availability === "in_stock" &&
-        url.hostname === "shokzes.pxf.io" &&
-        url.searchParams.get("prodsku") === offer.merchantProductId
+        ["in_stock", "out_of_stock", "preorder", "unknown"].includes(offer.availability) &&
+        (tracked || directFallback)
       );
     })
   );

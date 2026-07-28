@@ -5,7 +5,7 @@ import { dirname, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { destinationAllowedForCountry } from "../assets/js/redirect.js";
 import { validateAmazonAffiliateUrl } from "./lib/amazon-associates-core.mjs";
-import { parseImpactAffiliateUrl } from "./lib/impact-affiliate-core.mjs";
+import { parseImpactOfferUrl } from "./lib/impact-affiliate-core.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const catalogDir = resolve(root, "data/catalog");
@@ -79,14 +79,14 @@ function validateConfiguredImpactLink(entry, offerId) {
   const canonicalOffer = canonicalOffers.get(offerId);
   const productSku = impactProductId(offerId, entry.merchantId, canonicalOffer);
   if (!productSku) return false;
-  return Boolean(parseImpactAffiliateUrl(entry.url, {
+  return Boolean(parseImpactOfferUrl(entry.url, {
     trackingHost: merchant.impactTrackingHost,
     publisherId: merchant.impactPublisherId,
     campaignId: merchant.impactCampaignId,
-    creativeId: merchant.impactCreativeId,
     catalogSource: merchant.impactCatalogSource,
     productSku,
-    landingDomains: merchant.landingDomains
+    landingDomains: merchant.landingDomains,
+    allowDirectProductFallback: merchant.impactDirectProductFallback === true
   }));
 }
 
@@ -138,14 +138,14 @@ for (const offer of offersPayload.offers) {
     }
   } else if (network === "impact") {
     canonicalCounts.impact += 1;
-    const valid = parseImpactAffiliateUrl(offer.affiliateUrl, {
+    const valid = parseImpactOfferUrl(offer.affiliateUrl, {
       trackingHost: merchant.impactTrackingHost,
       publisherId: merchant.impactPublisherId,
       campaignId: merchant.impactCampaignId,
-      creativeId: merchant.impactCreativeId,
       catalogSource: merchant.impactCatalogSource,
       productSku: offer.merchantProductId,
-      landingDomains: merchant.landingDomains
+      landingDomains: merchant.landingDomains,
+      allowDirectProductFallback: merchant.impactDirectProductFallback === true
     });
     if (valid) validCanonicalCounts.impact += 1;
     else findings.push({ offerId: offer.id, reason: "invalid_canonical_impact_link" });
@@ -178,14 +178,14 @@ for (const [id, entry] of canonicalLinkEntries) {
   if (merchant?.network === "amazon-associates") {
     valid = Boolean(validateAmazonAffiliateUrl(entry.url, merchant.associateTag));
   } else if (merchant?.network === "impact") {
-    valid = Boolean(parseImpactAffiliateUrl(entry.url, {
+    valid = Boolean(parseImpactOfferUrl(entry.url, {
       trackingHost: merchant.impactTrackingHost,
       publisherId: merchant.impactPublisherId,
       campaignId: merchant.impactCampaignId,
-      creativeId: merchant.impactCreativeId,
       catalogSource: merchant.impactCatalogSource,
       productSku: canonicalOffer?.merchantProductId,
-      landingDomains: merchant.landingDomains
+      landingDomains: merchant.landingDomains,
+      allowDirectProductFallback: merchant.impactDirectProductFallback === true
     }));
   } else {
     valid = validateAwin(entry.url, merchant?.awinAdvertiserId) || validateAliExpress(entry.url);

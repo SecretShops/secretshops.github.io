@@ -121,9 +121,12 @@ test("incluye navegación avanzada, directorios e infinito móvil", () => {
   assert.ok(regionCore.includes("export function storePath"));
   assert.ok(css.includes(".score-carousel"));
   assert.ok(css.includes(".mobile-bottom-nav"));
+  assert.ok(css.includes("grid-auto-flow: row"));
   assert.ok(html.includes("data-nav-regions"));
   assert.ok(html.includes("region-dropdown"));
   assert.ok(html.includes("data-region-promotions"));
+  assert.ok(html.includes("data-focus-search"));
+  assert.ok(app.includes("function focusCatalogSearch()"));
   assert.ok(app.includes("upgradeRegionalNavigation"));
   assert.ok(app.includes("publishedRegions(regionsConfig)"));
 });
@@ -172,6 +175,8 @@ test("la página de promociones solo copia códigos reales y usa el redirector",
   assert.ok(promotionsJs.includes("promotion.code"));
   assert.ok(promotionsJs.includes("data-copy-code"));
   assert.ok(promotionsJs.includes("promotionRedirectPath"));
+  assert.ok(promotionsJs.includes("/data/promotions/awin.json"));
+  assert.ok(promotionsJs.includes("/data/promotions/impact.json"));
   assert.ok(regionCore.includes("export function promotionRedirectPath"));
 });
 

@@ -42,9 +42,20 @@ test("acepta únicamente los destinos afiliados previstos", () => {
   );
   assert.equal(
     allowedDestination(
-      "https://loungeeu.sjv.io/c/7518894/3973367/54841?prodsku=123&u=https%3A%2F%2Feu.lounge.com%2Fproducts%2Fexample&intsrc=CATF_35417"
+      "https://loungeeu.sjv.io/c/7518894/3973367/99999?prodsku=123&u=https%3A%2F%2Feu.lounge.com%2Fproducts%2Fexample&intsrc=CATF_35417"
     ),
-    "https://loungeeu.sjv.io/c/7518894/3973367/54841?prodsku=123&u=https%3A%2F%2Feu.lounge.com%2Fproducts%2Fexample&intsrc=CATF_35417"
+    "https://loungeeu.sjv.io/c/7518894/3973367/99999?prodsku=123&u=https%3A%2F%2Feu.lounge.com%2Fproducts%2Fexample&intsrc=CATF_35417"
+  );
+  assert.equal(
+    allowedDestination("https://eu.lounge.com/products/example"),
+    "https://eu.lounge.com/products/example"
+  );
+  assert.equal(
+    allowedDestination(
+      "https://loungeeu.sjv.io/c/7518894/3973367/99999",
+      { allowImpactProgramLink: true }
+    ),
+    "https://loungeeu.sjv.io/c/7518894/3973367/99999"
   );
   assert.equal(
     allowedDestination(
@@ -73,6 +84,8 @@ test("rechaza protocolos, hosts, rutas y parámetros inseguros", () => {
     "https://shokzes.pxf.io/c/999/3800995/48345?prodsku=123&u=https%3A%2F%2Fes.shokz.com%2Fproducts%2Fopenrun&intsrc=CATF_31438",
     "https://shokzes.pxf.io/c/7518894/3800995/48345?prodsku=123&u=https%3A%2F%2Fevil.example%2Fproducto&intsrc=CATF_31438",
     "https://shokzes.pxf.io/c/7518894/3800995/48345?prodsku=123&u=https%3A%2F%2Fes.shokz.com%2Fproducts%2Fopenrun&intsrc=OTRO",
+    "https://eu.lounge.com/",
+    "https://eu.lounge.com.ejemplo.test/products/example",
     "https://example.com/producto",
     "javascript:alert(1)",
     ""
@@ -118,4 +131,27 @@ test("las promociones exigen anunciante, publisher, vigencia y país exactos", (
     false
   );
   assert.equal(promotionMatchesRegion(promotion, mexicoDraft), false);
+
+  const impact = {
+    id: "impact:promotion:3973367:77",
+    network: "impact",
+    advertiserId: "1234",
+    campaignId: "3973367",
+    regions: ["es"],
+    startAt: "2026-07-01T00:00:00.000Z",
+    endAt: "2026-08-01T00:00:00.000Z",
+    trackingUrl: "https://loungeeu.sjv.io/c/7518894/3973367/99999"
+  };
+  assert.equal(
+    promotionMatchesRegion(impact, spain, new Date("2026-07-28T09:00:00Z")),
+    true
+  );
+  assert.equal(
+    promotionMatchesRegion(
+      { ...impact, campaignId: "OTRO" },
+      spain,
+      new Date("2026-07-28T09:00:00Z")
+    ),
+    false
+  );
 });

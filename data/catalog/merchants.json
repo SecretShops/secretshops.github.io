@@ -25,6 +25,7 @@
       "impactCampaignId": "3800995",
       "impactCreativeId": "48345",
       "impactCatalogSource": "CATF_31438",
+      "impactDirectProductFallback": true,
       "landingDomains": [
         "es.shokz.com"
       ],
@@ -241,6 +242,7 @@
       "impactCampaignId": "3973367",
       "impactCreativeId": "54841",
       "impactCatalogSource": "CATF_35417",
+      "impactDirectProductFallback": true,
       "landingDomains": [
         "eu.lounge.com"
       ],
@@ -591,6 +593,7 @@
       "impactCampaignId": "3757273",
       "impactCreativeId": "47158",
       "impactCatalogSource": "CATF_30305",
+      "impactDirectProductFallback": true,
       "landingDomains": [
         "www.casecess.com"
       ],
@@ -802,6 +805,7 @@
       "impactCampaignId": "553883",
       "impactCreativeId": "3831",
       "impactCatalogSource": "CATF_4182",
+      "impactDirectProductFallback": true,
       "landingDomains": [
         "www.lenovo.com",
         "lenovo.com"
@@ -830,6 +834,7 @@
       "impactCampaignId": "665754",
       "impactCreativeId": "3831",
       "impactCatalogSource": "CATF_5021",
+      "impactDirectProductFallback": true,
       "landingDomains": [
         "www.lenovo.com",
         "lenovo.com"

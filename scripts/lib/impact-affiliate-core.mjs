@@ -65,3 +65,33 @@ export function parseImpactAffiliateUrl(value, options = {}) {
 export function validateImpactAffiliateUrl(value, options = {}) {
   return parseImpactAffiliateUrl(value, options)?.href ?? null;
 }
+
+export function parseImpactDirectProductUrl(value, options = {}) {
+  try {
+    const url = new URL(value);
+    if (url.protocol !== "https:" || url.pathname === "/") return null;
+    const landingDomains = Array.isArray(options.landingDomains)
+      ? options.landingDomains.filter(Boolean)
+      : [];
+    if (
+      !options.allowDirectProductFallback ||
+      !landingDomains.some((domain) => hostMatches(url.hostname, domain))
+    ) {
+      return null;
+    }
+    url.hash = "";
+    return {
+      href: url.href,
+      landingUrl: url.href,
+      kind: "direct_product"
+    };
+  } catch {
+    return null;
+  }
+}
+
+export function parseImpactOfferUrl(value, options = {}) {
+  const tracked = parseImpactAffiliateUrl(value, options);
+  if (tracked) return { ...tracked, kind: "tracked_product" };
+  return parseImpactDirectProductUrl(value, options);
+}

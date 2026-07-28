@@ -5,7 +5,7 @@ import { dirname, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { destinationAllowedForCountry } from "../assets/js/redirect.js";
 import { validateAmazonAffiliateUrl } from "./lib/amazon-associates-core.mjs";
-import { parseImpactAffiliateUrl } from "./lib/impact-affiliate-core.mjs";
+import { parseImpactOfferUrl } from "./lib/impact-affiliate-core.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -69,14 +69,14 @@ function validateCanonicalUrl(value, offerId, merchant, productSku = null) {
     return valid;
   }
   if (network === "impact") {
-    const valid = parseImpactAffiliateUrl(url.href, {
+    const valid = parseImpactOfferUrl(url.href, {
       trackingHost: merchant.impactTrackingHost,
       publisherId: merchant.impactPublisherId,
       campaignId: merchant.impactCampaignId,
-      creativeId: merchant.impactCreativeId,
       catalogSource: merchant.impactCatalogSource,
       productSku,
-      landingDomains: merchant.landingDomains
+      landingDomains: merchant.landingDomains,
+      allowDirectProductFallback: merchant.impactDirectProductFallback === true
     });
     if (!valid) throw new Error(`${offerId}: enlace de Impact inválido`);
     return valid.href;

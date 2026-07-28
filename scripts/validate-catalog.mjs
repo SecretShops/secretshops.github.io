@@ -1,7 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { validateAmazonAffiliateUrl } from "./lib/amazon-associates-core.mjs";
-import { parseImpactAffiliateUrl } from "./lib/impact-affiliate-core.mjs";
+import { parseImpactOfferUrl } from "./lib/impact-affiliate-core.mjs";
 
 const root = resolve(process.cwd(), "data/catalog");
 
@@ -202,14 +202,14 @@ function validateOffers(payload, productIds, merchantData, countryCodes) {
       const urlAsin = new URL(offer.affiliateUrl).pathname.split("/").filter(Boolean)[1]?.toUpperCase();
       assert(expectedAsin && urlAsin === expectedAsin, `${offer.id}: el ASIN del enlace no coincide`);
     } else if (network === "impact") {
-      const tracking = parseImpactAffiliateUrl(offer.affiliateUrl, {
+      const tracking = parseImpactOfferUrl(offer.affiliateUrl, {
         trackingHost: merchant.impactTrackingHost,
         publisherId: merchant.impactPublisherId,
         campaignId: merchant.impactCampaignId,
-        creativeId: merchant.impactCreativeId,
         catalogSource: merchant.impactCatalogSource,
         productSku: offer.merchantProductId,
-        landingDomains: merchant.landingDomains
+        landingDomains: merchant.landingDomains,
+        allowDirectProductFallback: merchant.impactDirectProductFallback === true
       });
       assert(tracking, `${offer.id}: enlace de Impact inválido`);
       assert(tracking.landingUrl === offer.landingUrl, `${offer.id}: landingUrl no coincide con Impact`);

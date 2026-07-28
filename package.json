@@ -20,6 +20,7 @@
     "amazon:import": "node scripts/import-amazon-products.mjs && npm run quality",
     "impact:shokz:dry": "node scripts/import-impact-shokz.mjs --dry-run",
     "impact:shokz:import": "node scripts/import-impact-shokz.mjs",
+    "impact:refresh": "node scripts/refresh-impact.mjs",
     "validate:seo": "node scripts/validate-seo.mjs",
     "awin:import": "node scripts/import-awin.mjs",
     "awin:refresh": "node scripts/refresh-awin-catalogs.mjs",
