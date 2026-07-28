@@ -31,6 +31,7 @@ test("la política de privacidad explica GA4 y permite cambiar la decisión", ()
   assert.ok(privacy.includes("Google Analytics 4"));
   assert.ok(privacy.includes("data-analytics-consent-settings"));
   assert.ok(privacy.includes("data-analytics-consent-status"));
+  assert.ok(analytics.includes("bottom: calc(76px + env(safe-area-inset-bottom))"));
 });
 
 test("se registran búsquedas y clics de afiliación sin enviar destinos externos", () => {

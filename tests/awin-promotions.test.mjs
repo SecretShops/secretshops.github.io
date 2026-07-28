@@ -4,6 +4,12 @@ import {
   normalizeAwinPromotion,
   validateAwinPromotionUrl
 } from "../scripts/lib/awin-promotions-core.mjs";
+import {
+  AwinOffersError,
+  downloadOfferBatches,
+  mergePromotionsWithHeld,
+  requestPage
+} from "../scripts/refresh-awin-promotions.mjs";
 
 const context = {
   publisherId: "2996453",
@@ -66,5 +72,91 @@ test("publica únicamente promociones activas, asociadas y válidas para el paí
       regions: { all: true }
     }, context),
     null
+  );
+});
+
+test("reintenta los errores temporales y divide la consulta en anunciantes manejables", async () => {
+  const requests = [];
+  const sleeps = [];
+  const payload = { promotions: [], pagination: { totalPages: 1 } };
+  const fetchImpl = async (url, options) => {
+    requests.push({ url: String(url), body: JSON.parse(options.body) });
+    if (requests.length < 3) {
+      return new Response("Awin no disponible", { status: 500 });
+    }
+    return Response.json(payload);
+  };
+
+  assert.deepEqual(
+    await requestPage({
+      token: "oauth-prueba",
+      publisherId: "2996453",
+      advertiserIds: [84669, 112796],
+      page: 1,
+      fetchImpl,
+      sleepImpl: async (milliseconds) => sleeps.push(milliseconds)
+    }),
+    payload
+  );
+  assert.equal(requests.length, 3);
+  assert.deepEqual(sleeps, [1_000, 3_000]);
+  assert.deepEqual(requests[0].body.filters.advertiserIds, [84669, 112796]);
+  assert.equal("regionCodes" in requests[0].body.filters, false);
+  assert.match(requests[0].url, /accessToken=oauth-prueba/);
+});
+
+test("un error de autenticación sigue bloqueando la actualización", async () => {
+  await assert.rejects(
+    requestPage({
+      token: "oauth-invalido",
+      publisherId: "2996453",
+      advertiserIds: [84669],
+      page: 1,
+      fetchImpl: async () => new Response("No autorizado", { status: 401 }),
+      sleepImpl: async () => {}
+    }),
+    (error) =>
+      error instanceof AwinOffersError &&
+      error.status === 401 &&
+      error.retryable === false
+  );
+});
+
+test("conserva solo las promociones anteriores de los lotes que Awin no pudo servir", async () => {
+  const warnings = [];
+  const result = await downloadOfferBatches({
+    token: "oauth-prueba",
+    publisherId: "2996453",
+    advertiserIds: [1, 2, 3, 4, 5, 6],
+    batchSize: 3,
+    requestPageImpl: async ({ advertiserIds }) => {
+      if (advertiserIds.includes(4)) {
+        throw new AwinOffersError("Offers API: respuesta HTTP 500", {
+          status: 500,
+          retryable: true
+        });
+      }
+      return {
+        promotions: [{ promotionId: 100, advertiserId: 1 }],
+        pagination: { totalPages: 1 }
+      };
+    },
+    onWarning: (message) => warnings.push(message)
+  });
+
+  assert.deepEqual(result.heldAdvertiserIds, ["4", "5", "6"]);
+  assert.equal(result.completedBatches, 1);
+  assert.equal(warnings.length, 1);
+  const merged = mergePromotionsWithHeld(
+    [{ id: "awin:100", advertiserId: "1" }],
+    [
+      { id: "awin:vieja-exitosa", advertiserId: "1" },
+      { id: "awin:retenida", advertiserId: "4" }
+    ],
+    result.heldAdvertiserIds
+  );
+  assert.deepEqual(
+    merged.map((promotion) => promotion.id).sort(),
+    ["awin:100", "awin:retenida"]
   );
 });

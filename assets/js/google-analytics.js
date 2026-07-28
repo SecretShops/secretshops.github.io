@@ -209,6 +209,11 @@ function installConsentStyles() {
       outline: 3px solid var(--primary, #705b00);
       outline-offset: 3px;
     }
+    @media (max-width: 820px) {
+      .ss-ga4-consent {
+        bottom: calc(76px + env(safe-area-inset-bottom));
+      }
+    }
     @media (max-width: 660px) {
       .ss-ga4-consent__panel {
         grid-template-columns: 1fr;

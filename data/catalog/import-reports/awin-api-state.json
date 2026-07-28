@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "publisherId": "2996453",
+  "updatedAt": "2026-07-28T16:30:08.646Z",
+  "feeds": {
+    "63006:115855": {
+      "merchantId": "la-drogueria-es",
+      "advertiserId": "63006",
+      "feedId": "115855",
+      "lastImported": "2026-07-28 07:02:39",
+      "sha256": "231b611fd974b55cc40a16515483b3891cf592f4bbbb9a4d6576feccdb491441",
+      "feedRows": 4467,
+      "acceptedRows": 4467,
+      "matchedExistingProducts": 121,
+      "updatedAt": "2026-07-28T16:30:08.646Z"
+    },
+    "122118:112474": {
+      "merchantId": "muebles-style-spain",
+      "advertiserId": "122118",
+      "feedId": "112474",
+      "lastImported": "2026-07-28 12:02:54",
+      "sha256": "b0d5b768cbda580790d04a5b69102821b36f8cc39af0d151bd636e384c15cfdb",
+      "feedRows": 3107,
+      "acceptedRows": 3107,
+      "matchedExistingProducts": 3106,
+      "updatedAt": "2026-07-28T16:30:08.646Z"
+    },
+    "127695:115881": {
+      "merchantId": "omara-jewelry-es",
+      "advertiserId": "127695",
+      "feedId": "115881",
+      "lastImported": "2026-07-26 21:02:00",
+      "sha256": "2fe18ebf01fb9a870fa960b563a8e76acf9713c20452a52626ce7f551b89db8f",
+      "feedRows": 3949,
+      "acceptedRows": 3949,
+      "matchedExistingProducts": 36,
+      "updatedAt": "2026-07-28T16:30:08.646Z"
+    },
+    "127695:115885": {
+      "merchantId": "omara-jewelry-es",
+      "advertiserId": "127695",
+      "feedId": "115885",
+      "lastImported": "2026-07-25 21:01:37",
+      "sha256": "96aaa1472afbdb3900162757bf4698bddde13bc70cccbaabd145f3d4cd4f54ee",
+      "feedRows": 2210,
+      "acceptedRows": 2210,
+      "matchedExistingProducts": 84,
+      "updatedAt": "2026-07-28T16:30:08.646Z"
+    },
+    "109918:99305": {
+      "merchantId": "paj-gps-es-pt",
+      "advertiserId": "109918",
+      "feedId": "99305",
+      "lastImported": "2026-06-30 14:16:17",
+      "sha256": "b3c70c84d024787cba048c4adb95a14d99cf7bbc6fab44aab32fc86f842521e5",
+      "feedRows": 18,
+      "acceptedRows": 18,
+      "matchedExistingProducts": 14,
+      "updatedAt": "2026-07-28T16:30:08.646Z"
+    },
+    "51891:85464": {
+      "merchantId": "revolution-soft-es",
+      "advertiserId": "51891",
+      "feedId": "85464",
+      "lastImported": "2026-05-15 15:13:20",
+      "sha256": "8027552da9626a00e9d9452630a1ded1d2bc7d0d84bf10e57225707d954e5a4d",
+      "feedRows": 264,
+      "acceptedRows": 264,
+      "matchedExistingProducts": 263,
+      "updatedAt": "2026-07-28T16:30:08.646Z"
+    },
+    "115363:110267": {
+      "merchantId": "trotec-iberic-es-pt",
+      "advertiserId": "115363",
+      "feedId": "110267",
+      "lastImported": "2026-07-28 07:02:07",
+      "sha256": "929d5b4d52e0575f505a26e9595d34c1c9e5f6ce1e15f83217a832bb3c7a5338",
+      "feedRows": 1074,
+      "acceptedRows": 1074,
+      "matchedExistingProducts": 120,
+      "updatedAt": "2026-07-28T16:30:08.646Z"
+    }
+  }
+}
