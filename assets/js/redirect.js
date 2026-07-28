@@ -31,6 +31,20 @@ const IMPACT_RULES = [
   { host: "lenovo.evyy.net", path: "/c/7518894/665754/3831", source: "CATF_5021", landing: /(^|\.)lenovo\.com$/i, countries: ["ES"] }
 ];
 
+/*
+ * Fallback temporal de ofertas.
+ *
+ * Lounge actualizó CATF_35417 el 28/07/2026 con deep links que Impact
+ * rechaza como "malformed". Mientras la marca corrige la campaña, todas
+ * sus ofertas usan el enlace base válido para conservar el seguimiento.
+ *
+ * Eliminar la entrada "lounge-eu" cuando Lounge confirme que los deep
+ * links de producto vuelven a funcionar.
+ */
+const OFFER_PROGRAM_FALLBACKS = Object.freeze({
+  "lounge-eu": "https://loungeeu.sjv.io/c/7518894/3973367/54841"
+});
+
 function fail(text) {
   const title = document.querySelector("[data-redirect-title]");
   const message = document.querySelector("[data-redirect-message]");
@@ -96,6 +110,25 @@ export function allowedDestination(value, options = {}) {
   } catch {
     return null;
   }
+}
+
+function offerProgramFallback(entry, region) {
+  if (!entry || !region || region.status !== "published") return null;
+  if (String(entry.country || "").toUpperCase() !== region.countryCode) return null;
+
+  const fallbackUrl = OFFER_PROGRAM_FALLBACKS[String(entry.merchantId || "")];
+  if (!fallbackUrl) return null;
+
+  const destination = allowedDestination(fallbackUrl, {
+    allowImpactProgramLink: true,
+    allowDirectImpactProduct: false
+  });
+  if (!destination) return null;
+
+  const rule = impactRule(new URL(destination), { allowProgramLink: true });
+  if (!rule || !rule.countries.includes(region.countryCode)) return null;
+
+  return destination;
 }
 
 export function promotionMatchesRegion(entry, region, now = new Date()) {
@@ -227,13 +260,24 @@ async function redirect() {
     const payload = await fetchJson(region.affiliateLinks, "Enlaces regionales");
     if (payload.region !== region.id || payload.country !== region.countryCode) throw new Error("El archivo de enlaces no pertenece a la región solicitada.");
     const entry = payload?.links?.[offerId];
-    const destination = allowedDestination(entry?.url);
-    if (!destination || !entryMatchesRegion(entry, region)) {
+    const fallbackDestination = offerProgramFallback(entry, region);
+    const destination = fallbackDestination || allowedDestination(entry?.url);
+    if (
+      !destination ||
+      (!fallbackDestination && !entryMatchesRegion(entry, region))
+    ) {
       fail("La oferta no está publicada para este país o su enlace no supera la verificación.");
       return;
     }
     try {
-      sessionStorage.setItem("secretshop:last-outbound:v1", JSON.stringify({ offerId, merchantId: entry.merchantId, country: entry.country, region: region.id, at: new Date().toISOString() }));
+      sessionStorage.setItem("secretshop:last-outbound:v1", JSON.stringify({
+        offerId,
+        merchantId: entry.merchantId,
+        country: entry.country,
+        region: region.id,
+        destinationMode: fallbackDestination ? "program_fallback" : "product",
+        at: new Date().toISOString()
+      }));
     } catch {}
     location.replace(destination);
   } catch {
