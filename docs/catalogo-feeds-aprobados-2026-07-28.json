@@ -1,0 +1,998 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T14:18:54+02:00",
+  "sourceBatch": [
+    "datafeed_2996453 (1).csv.gz",
+    "Lenovo-ES-Products-New_GOOGLE.xml.gz",
+    "Product-Feed-Spain-(Google-Shopping-Format)_GOOGLE.xml.gz"
+  ],
+  "strategy": {
+    "mode": "incremental_staged_patch",
+    "selectionLimitPerAdvertiser": 120,
+    "matching": [
+      "GTIN/EAN/UPC",
+      "marca + MPN",
+      "marca + modelo + variante",
+      "ID de merchant aislado sin cruce entre anunciantes"
+    ],
+    "publicationCriteria": {
+      "minimumProducts": 200,
+      "minimumAdvertisers": 3,
+      "minimumCategories": 3,
+      "maximumSingleBrandShare": 0.6
+    },
+    "currencyRule": "La moneda del feed debe coincidir con la moneda regional; no se realizan conversiones.",
+    "mergeRule": "Los manifests y enlaces se amplían; no se eliminan fuentes ni enlaces existentes."
+  },
+  "awin": {
+    "merchants": [
+      {
+        "merchantId": "omara-jewelry-es",
+        "advertiserId": "127695",
+        "name": "Omara Jewelry (ES)",
+        "rawRows": 19491,
+        "validRows": 19491,
+        "rejectedRows": 0,
+        "rejectionReasons": {},
+        "selectedFamilies": 120,
+        "selectedOffers": 120,
+        "feedIds": [
+          "115881",
+          "115885",
+          "115887"
+        ],
+        "shippingCountries": [
+          "ES",
+          "PT",
+          "FR",
+          "DE",
+          "IT",
+          "AT",
+          "BE",
+          "NL",
+          "FI",
+          "SK",
+          "LV",
+          "LT",
+          "LU",
+          "EE",
+          "SI",
+          "HR",
+          "GR",
+          "BG"
+        ],
+        "shippingEvidence": "https://omara.es/product/alianza-de-boda-eternity-pave",
+        "alreadyIntegrated": false
+      },
+      {
+        "merchantId": "perfumeria-comas-es",
+        "advertiserId": "33073",
+        "name": "Perfumería Comas ES",
+        "rawRows": 6988,
+        "validRows": 6987,
+        "rejectedRows": 1,
+        "rejectionReasons": {
+          "invalid_or_zero_price": 1
+        },
+        "selectedFamilies": 120,
+        "selectedOffers": 120,
+        "feedIds": [
+          "95720"
+        ],
+        "shippingCountries": [
+          "ES",
+          "FR"
+        ],
+        "shippingEvidence": "https://perfumeriacomas.com/es/envios-y-devoluciones",
+        "alreadyIntegrated": false
+      },
+      {
+        "merchantId": "clarel-es",
+        "advertiserId": "84669",
+        "name": "Clarel",
+        "rawRows": 6716,
+        "validRows": 6696,
+        "rejectedRows": 20,
+        "rejectionReasons": {
+          "invalid_or_zero_price": 20
+        },
+        "selectedFamilies": 120,
+        "selectedOffers": 120,
+        "feedIds": [
+          "95374"
+        ],
+        "shippingCountries": [
+          "ES"
+        ],
+        "shippingEvidence": "https://www.clarel.es/es/condiciones-generales-de-compra",
+        "alreadyIntegrated": false
+      },
+      {
+        "merchantId": "la-drogueria-es",
+        "advertiserId": "63006",
+        "name": "La Drogueria de Percon",
+        "rawRows": 4467,
+        "validRows": 4467,
+        "rejectedRows": 0,
+        "rejectionReasons": {},
+        "selectedFamilies": 120,
+        "selectedOffers": 121,
+        "feedIds": [
+          "115855"
+        ],
+        "shippingCountries": [
+          "ES",
+          "PT"
+        ],
+        "shippingEvidence": "https://ladrogueria.com/content/19-promociones-y-descuentos",
+        "alreadyIntegrated": false
+      },
+      {
+        "merchantId": "juguetesonline-es",
+        "advertiserId": "112796",
+        "name": "JUGUETESONLINE ES",
+        "rawRows": 1786,
+        "validRows": 1786,
+        "rejectedRows": 0,
+        "rejectionReasons": {},
+        "selectedFamilies": 120,
+        "selectedOffers": 120,
+        "feedIds": [
+          "110906"
+        ],
+        "shippingCountries": [
+          "ES",
+          "PT"
+        ],
+        "shippingEvidence": "https://www.juguetesonline.com/policies/shipping-policy",
+        "alreadyIntegrated": false
+      },
+      {
+        "merchantId": "trotec-iberic-es-pt",
+        "advertiserId": "115363",
+        "name": "Trotec - Iberic (ES & PT)",
+        "rawRows": 1074,
+        "validRows": 1074,
+        "rejectedRows": 0,
+        "rejectionReasons": {},
+        "selectedFamilies": 120,
+        "selectedOffers": 120,
+        "feedIds": [
+          "110267"
+        ],
+        "shippingCountries": [
+          "ES",
+          "PT",
+          "FR",
+          "DE",
+          "IT",
+          "AT",
+          "BE",
+          "IE",
+          "NL",
+          "FI",
+          "SK",
+          "LV",
+          "LT",
+          "LU",
+          "EE",
+          "SI",
+          "HR",
+          "MC",
+          "GR",
+          "BG",
+          "MT",
+          "CY"
+        ],
+        "shippingEvidence": "https://es.trotec.com/shop/faq-envio-y-entrega",
+        "alreadyIntegrated": false
+      },
+      {
+        "merchantId": "munecas-llorens-es",
+        "advertiserId": "107237",
+        "name": "Muñecas Llorens (ES)",
+        "rawRows": 117,
+        "validRows": 117,
+        "rejectedRows": 0,
+        "rejectionReasons": {},
+        "selectedFamilies": 117,
+        "selectedOffers": 117,
+        "feedIds": [
+          "98483"
+        ],
+        "shippingCountries": [
+          "ES"
+        ],
+        "shippingEvidence": "https://llorensdolls.com/pages/terminos-y-condiciones",
+        "alreadyIntegrated": true
+      },
+      {
+        "merchantId": "paj-gps-es-pt",
+        "advertiserId": "109918",
+        "name": "PAJ GPS ES/PT",
+        "rawRows": 18,
+        "validRows": 14,
+        "rejectedRows": 4,
+        "rejectionReasons": {
+          "availability_out_of_stock": 4
+        },
+        "selectedFamilies": 14,
+        "selectedOffers": 14,
+        "feedIds": [
+          "99305"
+        ],
+        "shippingCountries": [
+          "ES",
+          "PT",
+          "FR",
+          "DE",
+          "IT",
+          "AT",
+          "BE",
+          "IE",
+          "NL",
+          "FI",
+          "SK",
+          "LV",
+          "LT",
+          "LU",
+          "EE",
+          "SI",
+          "HR",
+          "MC",
+          "GR",
+          "BG",
+          "MT",
+          "CY"
+        ],
+        "shippingEvidence": "https://www.paj-gps.es/costes-de-envio/",
+        "alreadyIntegrated": false
+      }
+    ]
+  },
+  "lenovo": {
+    "feeds": [
+      {
+        "file": "Lenovo-ES-Products-New_GOOGLE.xml.gz",
+        "rawRows": 620,
+        "validRows": 515,
+        "rejectedRows": 105,
+        "rejectionReasons": {
+          "missing_https_image": 105
+        }
+      },
+      {
+        "file": "Product-Feed-Spain-(Google-Shopping-Format)_GOOGLE.xml.gz",
+        "rawRows": 1193,
+        "validRows": 1192,
+        "rejectedRows": 1,
+        "rejectionReasons": {
+          "missing_https_image": 1
+        }
+      }
+    ],
+    "rawOverlap": 19,
+    "mergedValidProducts": 1688,
+    "selectedFamilies": 120,
+    "selectedOffers": 120,
+    "selectedCampaigns": {
+      "553883": 1,
+      "665754": 119
+    },
+    "shippingCountries": [
+      "ES"
+    ],
+    "shippingEvidence": "https://www.lenovo.com/es/es/shopping-faq/"
+  },
+  "llorensRefresh": {
+    "feedOffers": 117,
+    "existingOffersRefreshed": 117,
+    "missingOffersAddedToBatch": 0
+  },
+  "batch": {
+    "selectedRecords": 855,
+    "exactFamilies": 850,
+    "offerLinks": 855
+  },
+  "regionsUpdated": {
+    "es": {
+      "country": "ES",
+      "newFamilies": 850,
+      "newOffers": 855,
+      "preservedLinks": 10564,
+      "addedLinks": 855,
+      "totalLinks": 11419
+    },
+    "pt": {
+      "country": "PT",
+      "newFamilies": 494,
+      "newOffers": 495,
+      "preservedLinks": 1472,
+      "addedLinks": 495,
+      "totalLinks": 1967
+    },
+    "fr": {
+      "country": "FR",
+      "newFamilies": 374,
+      "newOffers": 374,
+      "preservedLinks": 1112,
+      "addedLinks": 374,
+      "totalLinks": 1486
+    },
+    "de": {
+      "country": "DE",
+      "newFamilies": 254,
+      "newOffers": 254,
+      "preservedLinks": 1112,
+      "addedLinks": 254,
+      "totalLinks": 1366
+    },
+    "it": {
+      "country": "IT",
+      "newFamilies": 254,
+      "newOffers": 254,
+      "preservedLinks": 1112,
+      "addedLinks": 254,
+      "totalLinks": 1366
+    },
+    "at": {
+      "country": "AT",
+      "newFamilies": 254,
+      "newOffers": 254,
+      "preservedLinks": 195,
+      "addedLinks": 254,
+      "totalLinks": 449
+    },
+    "be": {
+      "country": "BE",
+      "newFamilies": 254,
+      "newOffers": 254,
+      "preservedLinks": 1112,
+      "addedLinks": 254,
+      "totalLinks": 1366
+    },
+    "ie": {
+      "country": "IE",
+      "newFamilies": 134,
+      "newOffers": 134,
+      "preservedLinks": 195,
+      "addedLinks": 134,
+      "totalLinks": 329
+    },
+    "nl": {
+      "country": "NL",
+      "newFamilies": 254,
+      "newOffers": 254,
+      "preservedLinks": 1112,
+      "addedLinks": 254,
+      "totalLinks": 1366
+    },
+    "fi": {
+      "country": "FI",
+      "newFamilies": 254,
+      "newOffers": 254,
+      "preservedLinks": 964,
+      "addedLinks": 254,
+      "totalLinks": 1218
+    },
+    "sk": {
+      "country": "SK",
+      "newFamilies": 254,
+      "newOffers": 254,
+      "preservedLinks": 47,
+      "addedLinks": 254,
+      "totalLinks": 301
+    },
+    "lv": {
+      "country": "LV",
+      "newFamilies": 254,
+      "newOffers": 254,
+      "preservedLinks": 47,
+      "addedLinks": 254,
+      "totalLinks": 301
+    },
+    "lt": {
+      "country": "LT",
+      "newFamilies": 254,
+      "newOffers": 254,
+      "preservedLinks": 47,
+      "addedLinks": 254,
+      "totalLinks": 301
+    },
+    "lu": {
+      "country": "LU",
+      "newFamilies": 254,
+      "newOffers": 254,
+      "preservedLinks": 964,
+      "addedLinks": 254,
+      "totalLinks": 1218
+    },
+    "ee": {
+      "country": "EE",
+      "newFamilies": 254,
+      "newOffers": 254,
+      "preservedLinks": 47,
+      "addedLinks": 254,
+      "totalLinks": 301
+    },
+    "si": {
+      "country": "SI",
+      "newFamilies": 254,
+      "newOffers": 254,
+      "preservedLinks": 47,
+      "addedLinks": 254,
+      "totalLinks": 301
+    },
+    "hr": {
+      "country": "HR",
+      "newFamilies": 254,
+      "newOffers": 254,
+      "preservedLinks": 47,
+      "addedLinks": 254,
+      "totalLinks": 301
+    },
+    "mc": {
+      "country": "MC",
+      "newFamilies": 134,
+      "newOffers": 134,
+      "preservedLinks": 917,
+      "addedLinks": 134,
+      "totalLinks": 1051
+    },
+    "gr": {
+      "country": "GR",
+      "newFamilies": 254,
+      "newOffers": 254,
+      "preservedLinks": 917,
+      "addedLinks": 254,
+      "totalLinks": 1171
+    },
+    "bg": {
+      "country": "BG",
+      "newFamilies": 254,
+      "newOffers": 254,
+      "preservedLinks": 0,
+      "addedLinks": 254,
+      "totalLinks": 254
+    },
+    "mt": {
+      "country": "MT",
+      "newFamilies": 134,
+      "newOffers": 134,
+      "preservedLinks": 0,
+      "addedLinks": 134,
+      "totalLinks": 134
+    },
+    "cy": {
+      "country": "CY",
+      "newFamilies": 134,
+      "newOffers": 134,
+      "preservedLinks": 0,
+      "addedLinks": 134,
+      "totalLinks": 134
+    }
+  },
+  "regionPublicationEvaluation": {
+    "es": {
+      "country": "ES",
+      "status": "published",
+      "products": 4370,
+      "offers": 11419,
+      "advertisers": 26,
+      "categories": 21,
+      "topBrand": "Lounge Underwear",
+      "topBrandProducts": 934,
+      "topBrandShare": 0.2137,
+      "eligible": true,
+      "criteria": {
+        "minimumProducts": true,
+        "minimumAdvertisers": true,
+        "minimumCategories": true,
+        "maximumBrandShare": true
+      }
+    },
+    "mx": {
+      "country": "MX",
+      "status": "draft",
+      "products": 249,
+      "offers": 249,
+      "advertisers": 1,
+      "categories": 10,
+      "topBrand": "Selección",
+      "topBrandProducts": 249,
+      "topBrandShare": 1.0,
+      "eligible": false,
+      "criteria": {
+        "minimumProducts": true,
+        "minimumAdvertisers": false,
+        "minimumCategories": true,
+        "maximumBrandShare": false
+      }
+    },
+    "co": {
+      "country": "CO",
+      "status": "draft",
+      "products": 205,
+      "offers": 205,
+      "advertisers": 1,
+      "categories": 14,
+      "topBrand": "Selección",
+      "topBrandProducts": 202,
+      "topBrandShare": 0.9854,
+      "eligible": false,
+      "criteria": {
+        "minimumProducts": true,
+        "minimumAdvertisers": false,
+        "minimumCategories": true,
+        "maximumBrandShare": false
+      }
+    },
+    "pt": {
+      "country": "PT",
+      "status": "published",
+      "products": 772,
+      "offers": 1967,
+      "advertisers": 9,
+      "categories": 11,
+      "topBrand": "Omara.es",
+      "topBrandProducts": 120,
+      "topBrandShare": 0.1554,
+      "eligible": true,
+      "criteria": {
+        "minimumProducts": true,
+        "minimumAdvertisers": true,
+        "minimumCategories": true,
+        "maximumBrandShare": true
+      }
+    },
+    "ve": {
+      "country": "VE",
+      "status": "draft",
+      "products": 170,
+      "offers": 903,
+      "advertisers": 2,
+      "categories": 2,
+      "topBrand": "Vivien",
+      "topBrandProducts": 57,
+      "topBrandShare": 0.3353,
+      "eligible": false,
+      "criteria": {
+        "minimumProducts": false,
+        "minimumAdvertisers": false,
+        "minimumCategories": false,
+        "maximumBrandShare": true
+      }
+    },
+    "us": {
+      "country": "US",
+      "status": "published",
+      "products": 250,
+      "offers": 1063,
+      "advertisers": 5,
+      "categories": 4,
+      "topBrand": "Vivien",
+      "topBrandProducts": 57,
+      "topBrandShare": 0.228,
+      "eligible": true,
+      "criteria": {
+        "minimumProducts": true,
+        "minimumAdvertisers": true,
+        "minimumCategories": true,
+        "maximumBrandShare": true
+      }
+    },
+    "gb": {
+      "country": "GB",
+      "status": "draft",
+      "products": 120,
+      "offers": 120,
+      "advertisers": 1,
+      "categories": 1,
+      "topBrand": "Chanel",
+      "topBrandProducts": 9,
+      "topBrandShare": 0.075,
+      "eligible": false,
+      "criteria": {
+        "minimumProducts": false,
+        "minimumAdvertisers": false,
+        "minimumCategories": false,
+        "maximumBrandShare": true
+      }
+    },
+    "fr": {
+      "country": "FR",
+      "status": "published",
+      "products": 532,
+      "offers": 1486,
+      "advertisers": 7,
+      "categories": 11,
+      "topBrand": "Omara.es",
+      "topBrandProducts": 120,
+      "topBrandShare": 0.2256,
+      "eligible": true,
+      "criteria": {
+        "minimumProducts": true,
+        "minimumAdvertisers": true,
+        "minimumCategories": true,
+        "maximumBrandShare": true
+      }
+    },
+    "de": {
+      "country": "DE",
+      "status": "published",
+      "products": 412,
+      "offers": 1366,
+      "advertisers": 6,
+      "categories": 8,
+      "topBrand": "Omara.es",
+      "topBrandProducts": 120,
+      "topBrandShare": 0.2913,
+      "eligible": true,
+      "criteria": {
+        "minimumProducts": true,
+        "minimumAdvertisers": true,
+        "minimumCategories": true,
+        "maximumBrandShare": true
+      }
+    },
+    "it": {
+      "country": "IT",
+      "status": "published",
+      "products": 412,
+      "offers": 1366,
+      "advertisers": 6,
+      "categories": 8,
+      "topBrand": "Omara.es",
+      "topBrandProducts": 120,
+      "topBrandShare": 0.2913,
+      "eligible": true,
+      "criteria": {
+        "minimumProducts": true,
+        "minimumAdvertisers": true,
+        "minimumCategories": true,
+        "maximumBrandShare": true
+      }
+    },
+    "at": {
+      "country": "AT",
+      "status": "published",
+      "products": 337,
+      "offers": 449,
+      "advertisers": 5,
+      "categories": 4,
+      "topBrand": "Omara.es",
+      "topBrandProducts": 120,
+      "topBrandShare": 0.3561,
+      "eligible": true,
+      "criteria": {
+        "minimumProducts": true,
+        "minimumAdvertisers": true,
+        "minimumCategories": true,
+        "maximumBrandShare": true
+      }
+    },
+    "be": {
+      "country": "BE",
+      "status": "published",
+      "products": 412,
+      "offers": 1366,
+      "advertisers": 6,
+      "categories": 8,
+      "topBrand": "Omara.es",
+      "topBrandProducts": 120,
+      "topBrandShare": 0.2913,
+      "eligible": true,
+      "criteria": {
+        "minimumProducts": true,
+        "minimumAdvertisers": true,
+        "minimumCategories": true,
+        "maximumBrandShare": true
+      }
+    },
+    "ie": {
+      "country": "IE",
+      "status": "published",
+      "products": 217,
+      "offers": 329,
+      "advertisers": 4,
+      "categories": 4,
+      "topBrand": "Trotec",
+      "topBrandProducts": 108,
+      "topBrandShare": 0.4977,
+      "eligible": true,
+      "criteria": {
+        "minimumProducts": true,
+        "minimumAdvertisers": true,
+        "minimumCategories": true,
+        "maximumBrandShare": true
+      }
+    },
+    "nl": {
+      "country": "NL",
+      "status": "published",
+      "products": 412,
+      "offers": 1366,
+      "advertisers": 6,
+      "categories": 8,
+      "topBrand": "Omara.es",
+      "topBrandProducts": 120,
+      "topBrandShare": 0.2913,
+      "eligible": true,
+      "criteria": {
+        "minimumProducts": true,
+        "minimumAdvertisers": true,
+        "minimumCategories": true,
+        "maximumBrandShare": true
+      }
+    },
+    "fi": {
+      "country": "FI",
+      "status": "published",
+      "products": 350,
+      "offers": 1218,
+      "advertisers": 5,
+      "categories": 8,
+      "topBrand": "Omara.es",
+      "topBrandProducts": 120,
+      "topBrandShare": 0.3429,
+      "eligible": true,
+      "criteria": {
+        "minimumProducts": true,
+        "minimumAdvertisers": true,
+        "minimumCategories": true,
+        "maximumBrandShare": true
+      }
+    },
+    "sk": {
+      "country": "SK",
+      "status": "published",
+      "products": 275,
+      "offers": 301,
+      "advertisers": 4,
+      "categories": 4,
+      "topBrand": "Omara.es",
+      "topBrandProducts": 120,
+      "topBrandShare": 0.4364,
+      "eligible": true,
+      "criteria": {
+        "minimumProducts": true,
+        "minimumAdvertisers": true,
+        "minimumCategories": true,
+        "maximumBrandShare": true
+      }
+    },
+    "lv": {
+      "country": "LV",
+      "status": "published",
+      "products": 275,
+      "offers": 301,
+      "advertisers": 4,
+      "categories": 4,
+      "topBrand": "Omara.es",
+      "topBrandProducts": 120,
+      "topBrandShare": 0.4364,
+      "eligible": true,
+      "criteria": {
+        "minimumProducts": true,
+        "minimumAdvertisers": true,
+        "minimumCategories": true,
+        "maximumBrandShare": true
+      }
+    },
+    "lt": {
+      "country": "LT",
+      "status": "published",
+      "products": 275,
+      "offers": 301,
+      "advertisers": 4,
+      "categories": 4,
+      "topBrand": "Omara.es",
+      "topBrandProducts": 120,
+      "topBrandShare": 0.4364,
+      "eligible": true,
+      "criteria": {
+        "minimumProducts": true,
+        "minimumAdvertisers": true,
+        "minimumCategories": true,
+        "maximumBrandShare": true
+      }
+    },
+    "lu": {
+      "country": "LU",
+      "status": "published",
+      "products": 350,
+      "offers": 1218,
+      "advertisers": 5,
+      "categories": 8,
+      "topBrand": "Omara.es",
+      "topBrandProducts": 120,
+      "topBrandShare": 0.3429,
+      "eligible": true,
+      "criteria": {
+        "minimumProducts": true,
+        "minimumAdvertisers": true,
+        "minimumCategories": true,
+        "maximumBrandShare": true
+      }
+    },
+    "ee": {
+      "country": "EE",
+      "status": "published",
+      "products": 275,
+      "offers": 301,
+      "advertisers": 4,
+      "categories": 4,
+      "topBrand": "Omara.es",
+      "topBrandProducts": 120,
+      "topBrandShare": 0.4364,
+      "eligible": true,
+      "criteria": {
+        "minimumProducts": true,
+        "minimumAdvertisers": true,
+        "minimumCategories": true,
+        "maximumBrandShare": true
+      }
+    },
+    "si": {
+      "country": "SI",
+      "status": "published",
+      "products": 275,
+      "offers": 301,
+      "advertisers": 4,
+      "categories": 4,
+      "topBrand": "Omara.es",
+      "topBrandProducts": 120,
+      "topBrandShare": 0.4364,
+      "eligible": true,
+      "criteria": {
+        "minimumProducts": true,
+        "minimumAdvertisers": true,
+        "minimumCategories": true,
+        "maximumBrandShare": true
+      }
+    },
+    "hr": {
+      "country": "HR",
+      "status": "published",
+      "products": 275,
+      "offers": 301,
+      "advertisers": 4,
+      "categories": 4,
+      "topBrand": "Omara.es",
+      "topBrandProducts": 120,
+      "topBrandShare": 0.4364,
+      "eligible": true,
+      "criteria": {
+        "minimumProducts": true,
+        "minimumAdvertisers": true,
+        "minimumCategories": true,
+        "maximumBrandShare": true
+      }
+    },
+    "mc": {
+      "country": "MC",
+      "status": "published",
+      "products": 209,
+      "offers": 1051,
+      "advertisers": 3,
+      "categories": 7,
+      "topBrand": "Trotec",
+      "topBrandProducts": 108,
+      "topBrandShare": 0.5167,
+      "eligible": true,
+      "criteria": {
+        "minimumProducts": true,
+        "minimumAdvertisers": true,
+        "minimumCategories": true,
+        "maximumBrandShare": true
+      }
+    },
+    "gr": {
+      "country": "GR",
+      "status": "published",
+      "products": 329,
+      "offers": 1171,
+      "advertisers": 4,
+      "categories": 7,
+      "topBrand": "Omara.es",
+      "topBrandProducts": 120,
+      "topBrandShare": 0.3647,
+      "eligible": true,
+      "criteria": {
+        "minimumProducts": true,
+        "minimumAdvertisers": true,
+        "minimumCategories": true,
+        "maximumBrandShare": true
+      }
+    },
+    "bg": {
+      "country": "BG",
+      "status": "published",
+      "products": 254,
+      "offers": 254,
+      "advertisers": 3,
+      "categories": 3,
+      "topBrand": "Omara.es",
+      "topBrandProducts": 120,
+      "topBrandShare": 0.4724,
+      "eligible": true,
+      "criteria": {
+        "minimumProducts": true,
+        "minimumAdvertisers": true,
+        "minimumCategories": true,
+        "maximumBrandShare": true
+      }
+    },
+    "mt": {
+      "country": "MT",
+      "status": "draft",
+      "products": 134,
+      "offers": 134,
+      "advertisers": 2,
+      "categories": 3,
+      "topBrand": "Trotec",
+      "topBrandProducts": 108,
+      "topBrandShare": 0.806,
+      "eligible": false,
+      "criteria": {
+        "minimumProducts": false,
+        "minimumAdvertisers": false,
+        "minimumCategories": true,
+        "maximumBrandShare": false
+      }
+    },
+    "cy": {
+      "country": "CY",
+      "status": "draft",
+      "products": 134,
+      "offers": 134,
+      "advertisers": 2,
+      "categories": 3,
+      "topBrand": "Trotec",
+      "topBrandProducts": 108,
+      "topBrandShare": 0.806,
+      "eligible": false,
+      "criteria": {
+        "minimumProducts": false,
+        "minimumAdvertisers": false,
+        "minimumCategories": true,
+        "maximumBrandShare": false
+      }
+    }
+  },
+  "publishedRegions": [
+    "es",
+    "pt",
+    "us",
+    "fr",
+    "de",
+    "it",
+    "at",
+    "be",
+    "ie",
+    "nl",
+    "fi",
+    "sk",
+    "lv",
+    "lt",
+    "lu",
+    "ee",
+    "si",
+    "hr",
+    "mc",
+    "gr",
+    "bg"
+  ],
+  "draftRegions": [
+    "mx",
+    "co",
+    "cl",
+    "pe",
+    "ar",
+    "br",
+    "ve",
+    "gb",
+    "mt",
+    "cy"
+  ]
+}

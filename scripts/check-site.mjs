@@ -12,7 +12,7 @@ async function walk(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
   const files = [];
   for (const entry of entries) {
-    if ([".git", "node_modules"].includes(entry.name)) continue;
+    if ([".git", "node_modules", "archivos"].includes(entry.name)) continue;
     const path = resolve(directory, entry.name);
     if (entry.isDirectory()) files.push(...await walk(path));
     else files.push(path);
@@ -63,7 +63,7 @@ for (const path of htmlFiles) {
   if (duplicateIds.length) {
     errors.push(`${name}: IDs duplicados (${duplicateIds.join(", ")})`);
   }
-  if (!/<html\b[^>]*\blang="(?:es|es-[A-Z]{2}|pt-[A-Z]{2})"/i.test(html)) {
+  if (!/<html\b[^>]*\blang="[a-z]{2}(?:-[A-Z]{2})?"/i.test(html)) {
     errors.push(`${name}: falta un lang regional válido`);
   }
   if (!/<meta\b[^>]*name="viewport"/i.test(html)) errors.push(`${name}: falta viewport`);

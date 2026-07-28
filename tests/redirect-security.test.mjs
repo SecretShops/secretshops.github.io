@@ -47,6 +47,12 @@ test("acepta únicamente los destinos afiliados previstos", () => {
     ),
     "https://heybikeeu.sjv.io/c/7518894/3806125/49281?prodsku=123&u=https%3A%2F%2Feu.heybike.com%2Fproducts%2Fexample&intsrc=CATF_31506"
   );
+  assert.equal(
+    allowedDestination(
+      "https://lenovo.evyy.net/c/7518894/665754/3831?prodsku=11JHRAT1EU&u=https%3A%2F%2Fwww.lenovo.com%2Fes%2Fes%2Fp%2Fmonitors%2F11jhrat1eu&intsrc=CATF_5021"
+    ),
+    "https://lenovo.evyy.net/c/7518894/665754/3831?prodsku=11JHRAT1EU&u=https%3A%2F%2Fwww.lenovo.com%2Fes%2Fes%2Fp%2Fmonitors%2F11jhrat1eu&intsrc=CATF_5021"
+  );
 });
 
 test("rechaza protocolos, hosts, rutas y parámetros inseguros", () => {

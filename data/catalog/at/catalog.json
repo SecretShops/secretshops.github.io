@@ -20,6 +20,12 @@
       "currency": "EUR",
       "merchantId": "pixar",
       "merchantName": "PIXAR Bikes"
+    },
+    {
+      "id": "approved-feeds-2026-07-28",
+      "path": "/data/catalog/at/approved-feeds-2026-07-28.json",
+      "country": "AT",
+      "currency": "EUR"
     }
   ]
 }

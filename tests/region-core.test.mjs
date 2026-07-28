@@ -20,10 +20,16 @@ const config = validateRegionConfig(
   JSON.parse(await readFile(resolve(root, "data/config/regions.json"), "utf8"))
 );
 
-test("España y Portugal están publicadas y los borradores no se ofrecen al usuario", () => {
-  assert.deepEqual(publishedRegions(config).map((region) => region.id), ["es", "pt"]);
+test("las regiones que superan el control están publicadas y los borradores siguen aislados", () => {
+  const published = publishedRegions(config).map((region) => region.id);
+  assert.ok(published.includes("es"));
+  assert.ok(published.includes("pt"));
+  assert.ok(published.includes("us"));
+  assert.ok(published.includes("bg"));
   assert.equal(config.regions.find((region) => region.id === "mx").status, "draft");
   assert.equal(config.regions.find((region) => region.id === "co").status, "draft");
+  assert.equal(config.regions.find((region) => region.id === "mt").status, "draft");
+  assert.equal(config.regions.find((region) => region.id === "cy").status, "draft");
 });
 
 test("resuelve la región por URL y bloquea una región draft", () => {

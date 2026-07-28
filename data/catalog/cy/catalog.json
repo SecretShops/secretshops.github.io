@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "region": "cy",
+  "country": "CY",
+  "locale": "el-CY",
+  "currency": "EUR",
+  "sources": [
+    {
+      "id": "approved-feeds-2026-07-28",
+      "path": "/data/catalog/cy/approved-feeds-2026-07-28.json",
+      "country": "CY",
+      "currency": "EUR"
+    }
+  ]
+}

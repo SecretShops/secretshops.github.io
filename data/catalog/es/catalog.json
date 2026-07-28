@@ -64,6 +64,12 @@
       "path": "/data/catalog/shared/awin-es-piloto.json",
       "country": "ES",
       "currency": "EUR"
+    },
+    {
+      "id": "approved-feeds-2026-07-28",
+      "path": "/data/catalog/es/approved-feeds-2026-07-28.json",
+      "country": "ES",
+      "currency": "EUR"
     }
   ]
 }

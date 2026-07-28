@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "region": "bg",
+  "country": "BG",
+  "locale": "bg-BG",
+  "currency": "EUR",
+  "sources": [
+    {
+      "id": "approved-feeds-2026-07-28",
+      "path": "/data/catalog/bg/approved-feeds-2026-07-28.json",
+      "country": "BG",
+      "currency": "EUR"
+    }
+  ]
+}

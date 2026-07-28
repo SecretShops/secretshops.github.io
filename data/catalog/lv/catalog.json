@@ -12,6 +12,12 @@
       "currency": "EUR",
       "merchantId": "heybike",
       "merchantName": "Heybike"
+    },
+    {
+      "id": "approved-feeds-2026-07-28",
+      "path": "/data/catalog/lv/approved-feeds-2026-07-28.json",
+      "country": "LV",
+      "currency": "EUR"
     }
   ]
 }

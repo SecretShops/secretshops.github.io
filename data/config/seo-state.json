@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-27T17:48:00.535Z",
+  "generatedAt": "2026-07-28T12:20:13.195Z",
   "pages": {
     "/paises/": {
-      "sha256": "78cd78e06a777a78d8603ef71e16009f0c062ac16f18e346d4048803caf59ade",
-      "lastmod": "2026-07-26"
+      "sha256": "512db80c246aed60ee4074bdb0ca3f9db207d7f4cb472df08d6dc5a3769d3a3d",
+      "lastmod": "2026-07-28"
     },
     "/metodologia.html": {
       "sha256": "b55587acad63c6328098aefb9fbddd2048fe023abb736ef28d30fdf30dc5bd8f",
@@ -15,8 +15,8 @@
       "lastmod": "2026-07-25"
     },
     "/privacidad.html": {
-      "sha256": "6ea42c7e8b39b62fcf099cb2054839d70082d532e5e3160bf3f551ed1e5a3a8c",
-      "lastmod": "2026-07-25"
+      "sha256": "955cc84af02aff6689edcbb42cf1bc904fd05964934b309c9f12613f2d14481b",
+      "lastmod": "2026-07-28"
     },
     "/aviso-legal.html": {
       "sha256": "119e36b083f3f7b81da6aae75fb60074efa6fd076b6bdd9d5da7f73293197bc3",

@@ -19,7 +19,9 @@ const IMPACT_RULES = [
   { host: "heybikeeu.sjv.io", path: "/c/7518894/3806125/49281", source: "CATF_31506", landing: /(^|\.)eu\.heybike\.com$/i, countries: ["AT", "BE", "HR", "EE", "FI", "FR", "DE", "IE", "IT", "LV", "LT", "LU", "NL", "PT", "SK", "SI", "ES"] },
   { host: "pixar.sjv.io", path: "/c/7518894/3971350/55246", source: "CATF_35357", landing: /(^|\.)pixarbikes\.com$/i, countries: ["AT", "BE", "FR", "DE", "IE", "IT", "NL", "PT", "ES"] },
   { host: "doreroseeu.sjv.io", path: "/c/7518894/3947787/54473", source: "CATF_34681", landing: /(^|\.)doreandrose\.com$/i, countries: ["BE", "FI", "FR", "DE", "GR", "IT", "LU", "MC", "NL", "PT", "ES"] },
-  { host: "outininc.pxf.io", path: "/c/7518894/3830920/49942", source: "CATF_31985", landing: /(^|\.)outin\.com$/i, countries: ["US"] }
+  { host: "outininc.pxf.io", path: "/c/7518894/3830920/49942", source: "CATF_31985", landing: /(^|\.)outin\.com$/i, countries: ["US"] },
+  { host: "lenovo.evyy.net", path: "/c/7518894/553883/3831", source: "CATF_4182", landing: /(^|\.)lenovo\.com$/i, countries: ["ES"] },
+  { host: "lenovo.evyy.net", path: "/c/7518894/665754/3831", source: "CATF_5021", landing: /(^|\.)lenovo\.com$/i, countries: ["ES"] }
 ];
 
 function fail(text) {

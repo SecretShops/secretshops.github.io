@@ -12,6 +12,12 @@
       "currency": "EUR",
       "merchantId": "dore-rose",
       "merchantName": "Dore & Rose"
+    },
+    {
+      "id": "approved-feeds-2026-07-28",
+      "path": "/data/catalog/gr/approved-feeds-2026-07-28.json",
+      "country": "GR",
+      "currency": "EUR"
     }
   ]
 }

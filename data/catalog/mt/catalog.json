@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "region": "mt",
+  "country": "MT",
+  "locale": "mt-MT",
+  "currency": "EUR",
+  "sources": [
+    {
+      "id": "approved-feeds-2026-07-28",
+      "path": "/data/catalog/mt/approved-feeds-2026-07-28.json",
+      "country": "MT",
+      "currency": "EUR"
+    }
+  ]
+}

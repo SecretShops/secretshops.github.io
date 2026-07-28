@@ -263,16 +263,58 @@
       "feedExpected": true,
       "feedId": null,
       "feedIds": [
-        "115887",
         "115881",
-        "115885"
+        "115885",
+        "115887"
       ],
       "catalogMode": "retail",
       "landingDomains": [
         "omara.es"
       ],
-      "statusUpdatedAt": "2026-07-27",
-      "publicationStatus": "prepared_large_staged"
+      "statusUpdatedAt": "2026-07-28",
+      "publicationStatus": "published_staged",
+      "countries": [
+        "ES",
+        "PT",
+        "FR",
+        "DE",
+        "IT",
+        "AT",
+        "BE",
+        "NL",
+        "FI",
+        "SK",
+        "LV",
+        "LT",
+        "LU",
+        "EE",
+        "SI",
+        "HR",
+        "GR",
+        "BG"
+      ],
+      "currency": "EUR",
+      "preparedCountries": [
+        "ES",
+        "PT",
+        "FR",
+        "DE",
+        "IT",
+        "AT",
+        "BE",
+        "NL",
+        "FI",
+        "SK",
+        "LV",
+        "LT",
+        "LU",
+        "EE",
+        "SI",
+        "HR",
+        "GR",
+        "BG"
+      ],
+      "shippingEvidence": "https://omara.es/product/alianza-de-boda-eternity-pave"
     },
     {
       "id": "365rider-es",
@@ -322,8 +364,16 @@
       "landingDomains": [
         "www.clarel.es"
       ],
-      "statusUpdatedAt": "2026-07-27",
-      "publicationStatus": "prepared_large_staged"
+      "statusUpdatedAt": "2026-07-28",
+      "publicationStatus": "published_staged",
+      "countries": [
+        "ES"
+      ],
+      "currency": "EUR",
+      "preparedCountries": [
+        "ES"
+      ],
+      "shippingEvidence": "https://www.clarel.es/es/condiciones-generales-de-compra"
     },
     {
       "id": "la-drogueria-es",
@@ -339,8 +389,18 @@
       "landingDomains": [
         "ladrogueria.com"
       ],
-      "statusUpdatedAt": "2026-07-27",
-      "publicationStatus": "prepared_recommended"
+      "statusUpdatedAt": "2026-07-28",
+      "publicationStatus": "published_staged",
+      "countries": [
+        "ES",
+        "PT"
+      ],
+      "currency": "EUR",
+      "preparedCountries": [
+        "ES",
+        "PT"
+      ],
+      "shippingEvidence": "https://ladrogueria.com/content/19-promociones-y-descuentos"
     },
     {
       "id": "deubaxxl-es",
@@ -441,8 +501,16 @@
       "landingDomains": [
         "llorensdolls.com"
       ],
-      "statusUpdatedAt": "2026-07-27",
-      "publicationStatus": "prepared_recommended"
+      "statusUpdatedAt": "2026-07-28",
+      "publicationStatus": "published_refreshed",
+      "countries": [
+        "ES"
+      ],
+      "currency": "EUR",
+      "preparedCountries": [
+        "ES"
+      ],
+      "shippingEvidence": "https://llorensdolls.com/pages/terminos-y-condiciones"
     },
     {
       "id": "isinwheel-es",
@@ -531,6 +599,250 @@
       "currency": "USD",
       "statusUpdatedAt": "2026-07-27",
       "publicationStatus": "prepared_for_usd_region_not_es"
+    },
+    {
+      "id": "perfumeria-comas-es",
+      "name": "Perfumería Comas ES",
+      "country": "ES",
+      "countries": [
+        "ES",
+        "FR"
+      ],
+      "status": "approved",
+      "network": "awin",
+      "awinAdvertiserId": "33073",
+      "feedExpected": true,
+      "feedId": "95720",
+      "feedIds": null,
+      "catalogMode": "retail",
+      "currency": "EUR",
+      "landingDomains": [
+        "perfumeriacomas.com"
+      ],
+      "statusUpdatedAt": "2026-07-28",
+      "publicationStatus": "published_staged",
+      "preparedCountries": [
+        "ES",
+        "FR"
+      ],
+      "shippingEvidence": "https://perfumeriacomas.com/es/envios-y-devoluciones"
+    },
+    {
+      "id": "juguetesonline-es",
+      "name": "JUGUETESONLINE ES",
+      "country": "ES",
+      "countries": [
+        "ES",
+        "PT"
+      ],
+      "status": "approved",
+      "network": "awin",
+      "awinAdvertiserId": "112796",
+      "feedExpected": true,
+      "feedId": "110906",
+      "feedIds": null,
+      "catalogMode": "retail",
+      "currency": "EUR",
+      "landingDomains": [
+        "www.juguetesonline.com"
+      ],
+      "statusUpdatedAt": "2026-07-28",
+      "publicationStatus": "published_staged",
+      "preparedCountries": [
+        "ES",
+        "PT"
+      ],
+      "shippingEvidence": "https://www.juguetesonline.com/policies/shipping-policy"
+    },
+    {
+      "id": "trotec-iberic-es-pt",
+      "name": "Trotec - Iberic (ES & PT)",
+      "country": "ES",
+      "countries": [
+        "ES",
+        "PT",
+        "FR",
+        "DE",
+        "IT",
+        "AT",
+        "BE",
+        "IE",
+        "NL",
+        "FI",
+        "SK",
+        "LV",
+        "LT",
+        "LU",
+        "EE",
+        "SI",
+        "HR",
+        "MC",
+        "GR",
+        "BG",
+        "MT",
+        "CY"
+      ],
+      "status": "approved",
+      "network": "awin",
+      "awinAdvertiserId": "115363",
+      "feedExpected": true,
+      "feedId": "110267",
+      "feedIds": null,
+      "catalogMode": "retail",
+      "currency": "EUR",
+      "landingDomains": [
+        "es.trotec.com"
+      ],
+      "statusUpdatedAt": "2026-07-28",
+      "publicationStatus": "published_staged",
+      "preparedCountries": [
+        "ES",
+        "PT",
+        "FR",
+        "DE",
+        "IT",
+        "AT",
+        "BE",
+        "IE",
+        "NL",
+        "FI",
+        "SK",
+        "LV",
+        "LT",
+        "LU",
+        "EE",
+        "SI",
+        "HR",
+        "MC",
+        "GR",
+        "BG",
+        "MT",
+        "CY"
+      ],
+      "shippingEvidence": "https://es.trotec.com/shop/faq-envio-y-entrega"
+    },
+    {
+      "id": "paj-gps-es-pt",
+      "name": "PAJ GPS ES/PT",
+      "country": "ES",
+      "countries": [
+        "ES",
+        "PT",
+        "FR",
+        "DE",
+        "IT",
+        "AT",
+        "BE",
+        "IE",
+        "NL",
+        "FI",
+        "SK",
+        "LV",
+        "LT",
+        "LU",
+        "EE",
+        "SI",
+        "HR",
+        "MC",
+        "GR",
+        "BG",
+        "MT",
+        "CY"
+      ],
+      "status": "approved",
+      "network": "awin",
+      "awinAdvertiserId": "109918",
+      "feedExpected": true,
+      "feedId": "99305",
+      "feedIds": null,
+      "catalogMode": "retail",
+      "currency": "EUR",
+      "landingDomains": [
+        "www.paj-gps.es"
+      ],
+      "statusUpdatedAt": "2026-07-28",
+      "publicationStatus": "published_staged",
+      "preparedCountries": [
+        "ES",
+        "PT",
+        "FR",
+        "DE",
+        "IT",
+        "AT",
+        "BE",
+        "IE",
+        "NL",
+        "FI",
+        "SK",
+        "LV",
+        "LT",
+        "LU",
+        "EE",
+        "SI",
+        "HR",
+        "MC",
+        "GR",
+        "BG",
+        "MT",
+        "CY"
+      ],
+      "shippingEvidence": "https://www.paj-gps.es/costes-de-envio/"
+    },
+    {
+      "id": "lenovo-es-553883",
+      "name": "Lenovo ES",
+      "country": "ES",
+      "countries": [
+        "ES"
+      ],
+      "status": "approved",
+      "network": "impact",
+      "impactTrackingHost": "lenovo.evyy.net",
+      "impactPublisherId": "7518894",
+      "impactCampaignId": "553883",
+      "impactCreativeId": "3831",
+      "impactCatalogSource": "CATF_4182",
+      "landingDomains": [
+        "www.lenovo.com",
+        "lenovo.com"
+      ],
+      "feedExpected": true,
+      "catalogMode": "retail",
+      "currency": "EUR",
+      "statusUpdatedAt": "2026-07-28",
+      "publicationStatus": "published_staged",
+      "preparedCountries": [
+        "ES"
+      ],
+      "shippingEvidence": "https://www.lenovo.com/es/es/shopping-faq/"
+    },
+    {
+      "id": "lenovo-es-665754",
+      "name": "Lenovo ES",
+      "country": "ES",
+      "countries": [
+        "ES"
+      ],
+      "status": "approved",
+      "network": "impact",
+      "impactTrackingHost": "lenovo.evyy.net",
+      "impactPublisherId": "7518894",
+      "impactCampaignId": "665754",
+      "impactCreativeId": "3831",
+      "impactCatalogSource": "CATF_5021",
+      "landingDomains": [
+        "www.lenovo.com",
+        "lenovo.com"
+      ],
+      "feedExpected": true,
+      "catalogMode": "retail",
+      "currency": "EUR",
+      "statusUpdatedAt": "2026-07-28",
+      "publicationStatus": "published_staged",
+      "preparedCountries": [
+        "ES"
+      ],
+      "shippingEvidence": "https://www.lenovo.com/es/es/shopping-faq/"
     }
   ]
 }
