@@ -678,6 +678,7 @@ function storeEntries() {
       const current = entries.get(groupId) || {
         id: groupId,
         name: branding.name || offer.merchantName,
+        filterNames: new Set(),
         products: new Set(),
         offers: 0,
         merchantIds: new Set(),
@@ -686,6 +687,7 @@ function storeEntries() {
       current.products.add(family.id);
       current.offers += 1;
       current.merchantIds.add(id);
+      current.filterNames.add(offer.merchantName);
       entries.set(groupId, current);
     }
   }
@@ -707,9 +709,14 @@ function storeLogoMarkup(store) {
   return `<span class="store-mark" aria-hidden="true">${escapeHtml(store.name.slice(0, 2).toUpperCase())}</span>`;
 }
 
+function storeFilterName(store) {
+  return [...(store.filterNames || [])][0] || store.name;
+}
+
 function storeCardMarkup(store) {
+  const filterName = storeFilterName(store);
   return `
-      <a class="store-card" href="${escapeHtml(storePath(store.name, activeRegion))}" data-set-store="${escapeHtml(store.name)}">
+      <a class="store-card" href="${escapeHtml(storePath(filterName, activeRegion))}" data-set-store="${escapeHtml(filterName)}">
         ${storeLogoMarkup(store)}
         <span class="store-copy">
           <strong>${escapeHtml(store.name)}</strong>
@@ -750,7 +757,7 @@ function renderNavigationMenus() {
     storeMenu.innerHTML = `
       <div class="nav-link-list store-nav-list">
         ${stores.map((store) => `
-          <a href="${escapeHtml(storePath(store.name, activeRegion))}" data-set-store="${escapeHtml(store.name)}">
+          <a href="${escapeHtml(storePath(storeFilterName(store), activeRegion))}" data-set-store="${escapeHtml(storeFilterName(store))}">
             ${storeLogoMarkup(store)}
             <span>${escapeHtml(store.name)}</span>
             <small>${formatter.format(store.products.size)}</small>
@@ -1009,7 +1016,9 @@ function renderDirectoryView() {
     return;
   }
 
-  const selectedStore = storeEntries().find((entry) => entry.name === state.store);
+  const selectedStore = storeEntries().find(
+    (entry) => entry.name === state.store || entry.filterNames?.has(state.store)
+  );
   eyebrow.textContent = t("stores");
   title.textContent = state.store;
   text.textContent = selectedStore
