@@ -1,0 +1,175 @@
+name: Actualizar catálogos Awin
+
+on:
+  workflow_dispatch:
+    inputs:
+      force:
+        description: Volver a comprobar todos los feeds aunque Awin no marque cambios
+        required: false
+        type: boolean
+        default: false
+  schedule:
+    # Dos horas UTC mantienen una única ejecución a las 09:17 de Europe/Madrid
+    # durante todo el año. El trabajo "horario" descarta la segunda ejecución.
+    - cron: "17 7 * * *"
+    - cron: "17 8 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: actualizar-catalogos-awin-main
+  cancel-in-progress: false
+
+jobs:
+  horario:
+    runs-on: ubuntu-latest
+    outputs:
+      ejecutar: ${{ steps.comprobar.outputs.ejecutar }}
+    steps:
+      - id: comprobar
+        name: Mantener las 09:00 de España
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          EVENT_SCHEDULE: ${{ github.event.schedule }}
+        run: |
+          if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
+            echo "ejecutar=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          node - <<'NODE'
+          const schedule = process.env.EVENT_SCHEDULE || "";
+          const match = schedule.match(/^\d+\s+(\d+)\s+\*\s+\*\s+\*$/);
+          if (!match) process.exit(1);
+          const date = new Date();
+          date.setUTCHours(Number(match[1]), 17, 0, 0);
+          const hour = new Intl.DateTimeFormat("en-GB", {
+            timeZone: "Europe/Madrid",
+            hour: "2-digit",
+            hourCycle: "h23"
+          }).format(date);
+          require("fs").appendFileSync(
+            process.env.GITHUB_OUTPUT,
+            `ejecutar=${hour === "09"}\n`
+          );
+          NODE
+
+  actualizar:
+    needs: horario
+    if: needs.horario.outputs.ejecutar == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      AWIN_API_TOKEN: ${{ secrets.AWIN_API_TOKEN }}
+      AWIN_DATAFEED_API_KEY: ${{ secrets.AWIN_DATAFEED_API_KEY }}
+      AWIN_PUBLISHER_ID: ${{ vars.AWIN_PUBLISHER_ID }}
+
+    steps:
+      - name: Descargar el main actual
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+
+      - id: base
+        name: Guardar versión inicial
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar dependencias
+        run: npm ci --ignore-scripts --no-audit --no-fund
+
+      - id: actualizar
+        name: Descargar y aplicar los feeds autorizados
+        env:
+          FORCE_REFRESH: ${{ inputs.force }}
+        run: |
+          argumentos=(--report "$RUNNER_TEMP/awin-api-last.json")
+          if [ "$FORCE_REFRESH" = "true" ]; then
+            argumentos+=(--force)
+          fi
+          node scripts/refresh-awin-catalogs.mjs "${argumentos[@]}"
+
+      - name: Reconstruir catálogos y páginas
+        if: steps.actualizar.outputs.catalog_changed == 'true'
+        run: npm run build:catalog
+
+      - name: Ejecutar pruebas
+        run: npm test
+
+      - name: Validar catálogo y afiliación
+        run: npm run validate:catalog
+
+      - name: Validar regiones
+        run: npm run validate:regions
+
+      - name: Validar SEO
+        run: npm run validate:seo
+
+      - name: Validar sitio
+        run: npm run validate:site
+
+      - name: Bloquear eliminaciones y cambios de código
+        run: |
+          eliminados="$(git diff --diff-filter=DR --name-only)"
+          if [ -n "$eliminados" ]; then
+            echo "::error::Awin intentó eliminar o renombrar archivos; publicación bloqueada."
+            echo "$eliminados"
+            exit 1
+          fi
+          protegidos="$(git status --porcelain=v1 --untracked-files=all -- .github assets scripts tests package.json package-lock.json)"
+          if [ -n "$protegidos" ]; then
+            echo "::error::Awin intentó modificar código o configuración protegida."
+            echo "$protegidos"
+            exit 1
+          fi
+
+      - name: Guardar actualización en main
+        if: steps.actualizar.outputs.any_changed == 'true'
+        env:
+          BASE_SHA: ${{ steps.base.outputs.sha }}
+        run: |
+          git fetch origin main
+          if [ "$(git rev-parse origin/main)" != "$BASE_SHA" ]; then
+            echo "::error::main cambió durante la actualización. Se cancela para evitar conflictos."
+            exit 1
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+
+          if git grep --cached -q -F "$AWIN_API_TOKEN"; then
+            echo "::error::Se detectó el token OAuth2 en los archivos preparados."
+            exit 1
+          fi
+          if git grep --cached -q -F "$AWIN_DATAFEED_API_KEY"; then
+            echo "::error::Se detectó la clave de feeds en los archivos preparados."
+            exit 1
+          fi
+          if git diff --cached --quiet; then
+            echo "No hay cambios que publicar."
+            exit 0
+          fi
+
+          git commit -m "Actualizar catálogos Awin"
+          git push origin HEAD:main
+
+      - name: Guardar informe de la ejecución
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: informe-awin-${{ github.run_id }}
+          path: ${{ runner.temp }}/awin-api-last.json
+          if-no-files-found: ignore
+          retention-days: 30

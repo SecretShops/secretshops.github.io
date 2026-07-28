@@ -21,6 +21,7 @@
     "impact:shokz:import": "node scripts/import-impact-shokz.mjs",
     "validate:seo": "node scripts/validate-seo.mjs",
     "awin:import": "node scripts/import-awin.mjs",
+    "awin:refresh": "node scripts/refresh-awin-catalogs.mjs",
     "awin:bikila:dry": "node scripts/import-awin.mjs data/sources/awin/bikila-es.csv.gz --merchant bikila-es --dry-run",
     "awin:bikila:import": "node scripts/import-awin.mjs data/sources/awin/bikila-es.csv.gz --merchant bikila-es",
     "catalog:prepared:check": "node scripts/import-prepared-catalog.mjs",
