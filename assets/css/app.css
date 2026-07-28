@@ -4958,3 +4958,155 @@ dialog,
     transition-duration: 0.01ms !important;
   }
 }
+/*
+  SecretShop — parche responsive para fichas de producto
+  Añadir este bloque AL FINAL de assets/css/app.css
+*/
+
+@media (max-width: 820px) {
+  .product-modal {
+    width: calc(100vw - 16px);
+    width: calc(100dvw - 16px);
+    max-width: calc(100vw - 16px);
+    max-width: calc(100dvw - 16px);
+    margin-inline: auto;
+  }
+
+  .product-modal > div {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .product-detail {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .detail-media,
+  .detail-content,
+  .detail-content > *,
+  .detail-topbar,
+  .detail-actions,
+  .detail-section,
+  .detail-section-head,
+  .variant-list,
+  .offer-highlight,
+  .offer-cards,
+  .offer-card,
+  .standalone-product,
+  .standalone-product-content,
+  .standalone-offers,
+  .standalone-offer {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .detail-content {
+    width: 100%;
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+
+  .detail-topbar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: 10px;
+  }
+
+  .detail-actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 7px;
+  }
+
+  .detail-actions button {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    text-align: center;
+  }
+
+  .detail-section-head {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .detail-content h2,
+  .detail-description,
+  .detail-variant-title,
+  .breadcrumbs,
+  .detail-section-head span,
+  .offer-highlight p,
+  .offer-highlight strong,
+  .offer-highlight small,
+  .offer-card strong,
+  .offer-card small,
+  .standalone-product-content h1,
+  .standalone-product-content p {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+
+  .variant-chip {
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    text-align: center;
+  }
+
+  .offer-highlight {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .offer-highlight > *,
+  .offer-card > *,
+  .standalone-offer > * {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .offer-card {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .offer-highlight .offer-link,
+  .offer-card .offer-link,
+  .standalone-offer .offer-link {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    display: flex;
+    grid-column: 1 / -1;
+    justify-self: stretch;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    text-align: center;
+    line-height: 1.25;
+  }
+
+  .standalone-product {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .standalone-offer {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .offer-card {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
