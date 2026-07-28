@@ -1,4 +1,5 @@
 import "./cloudflare-analytics.js";
+import "./google-analytics.js";
 import { createTranslator } from "./i18n.js";
 
 const key = "secretshop:theme:v1";

@@ -1,4 +1,5 @@
 import "./cloudflare-analytics.js";
+import "./google-analytics.js";
 
 const REGION_ID_PATTERN = /^[a-z]{2}$/;
 const COUNTRY_CODE_PATTERN = /^[A-Z]{2}$/;
