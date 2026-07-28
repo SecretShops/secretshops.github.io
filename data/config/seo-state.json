@@ -1,9 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-28T12:20:13.195Z",
+  "generatedAt": "2026-07-28T15:42:42.000Z",
   "pages": {
     "/paises/": {
       "sha256": "512db80c246aed60ee4074bdb0ca3f9db207d7f4cb472df08d6dc5a3769d3a3d",
+      "lastmod": "2026-07-28"
+    },
+    "/promociones/": {
+      "sha256": "37613e089799fff96d52ea2945c6ed8e6fcaa9636f925a1b7711920f80779100",
       "lastmod": "2026-07-28"
     },
     "/metodologia.html": {

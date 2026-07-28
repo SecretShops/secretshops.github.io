@@ -4,6 +4,7 @@ const STOP_WORDS = new Set([
   "con",
   "de",
   "del",
+  "e",
   "el",
   "en",
   "la",
@@ -19,9 +20,37 @@ const STOP_WORDS = new Set([
 const SEARCH_SYNONYMS = {
   auriculares: ["audifonos", "cascos", "headphones"],
   audifonos: ["auriculares", "cascos"],
+  bici: ["bicicleta", "bicicletas", "bike", "bicycle", "cycling", "velo", "fahrrad", "fiets"],
+  bicicleta: ["bici", "bicicletas", "bike", "bicycle", "cycling", "velo", "fahrrad", "fiets"],
+  bicicletas: ["bici", "bicicleta", "bikes", "bicycles", "cycling", "velo", "fahrrad", "fiets"],
+  bike: ["bici", "bicicleta", "bicicletas", "bicycle", "cycling", "velo", "fahrrad", "fiets"],
+  bicycle: ["bici", "bicicleta", "bicicletas", "bike", "cycling", "velo", "fahrrad", "fiets"],
+  cycling: ["bici", "bicicleta", "bike", "bicycle", "velo", "fahrrad", "fiets"],
+  velo: ["bici", "bicicleta", "bike", "bicycle", "cycling"],
+  fahrrad: ["bici", "bicicleta", "bike", "bicycle", "cycling"],
+  fiets: ["bici", "bicicleta", "bike", "bicycle", "cycling"],
   bolso: ["bolsa", "mochila"],
   celular: ["movil", "telefono", "smartphone"],
   coche: ["auto", "automovil", "carro"],
+  patinete: ["scooter", "e-scooter", "monopatin", "trottinette", "monopattino", "trotineta"],
+  scooter: ["patinete", "patinete electrico", "e-scooter", "trottinette", "monopattino", "trotineta"],
+  trottinette: ["patinete", "scooter", "monopatin"],
+  monopattino: ["patinete", "scooter", "monopatin"],
+  trotineta: ["patinete", "scooter", "monopatin"],
+  repuesto: ["repuestos", "recambio", "recambios", "spare part", "replacement part", "ersatzteil", "piece detachee"],
+  repuestos: ["repuesto", "recambio", "recambios", "spare parts", "replacement parts", "ersatzteile", "pieces detachees"],
+  recambio: ["recambios", "repuesto", "repuestos", "spare part", "replacement part"],
+  recambios: ["recambio", "repuesto", "repuestos", "spare parts", "replacement parts"],
+  spare: ["repuesto", "repuestos", "recambio", "recambios"],
+  part: ["repuesto", "recambio"],
+  parts: ["repuestos", "recambios"],
+  replacement: ["repuesto", "repuestos", "recambio", "recambios"],
+  ersatzteil: ["repuesto", "repuestos", "recambio", "recambios"],
+  ersatzteile: ["repuesto", "repuestos", "recambio", "recambios"],
+  piece: ["repuesto", "recambio"],
+  pieces: ["repuestos", "recambios"],
+  detachee: ["repuesto", "recambio"],
+  detachees: ["repuestos", "recambios"],
   lampara: ["iluminacion", "luz"],
   movil: ["celular", "telefono", "smartphone"],
   ordenador: ["computadora", "pc"],
@@ -78,7 +107,14 @@ export const CATEGORY_GROUPS = [
   {
     name: "Deportes",
     icon: "○",
-    aliases: ["Deportes y aire libre"]
+    aliases: [
+      "Deporte",
+      "Deportes",
+      "Deportes y aire libre",
+      "Running",
+      "Ciclismo",
+      "Movilidad eléctrica"
+    ]
   },
   {
     name: "Aventura y viajes",
@@ -88,7 +124,7 @@ export const CATEGORY_GROUPS = [
   {
     name: "Coche/Moto",
     icon: "◎",
-    aliases: ["Coche/Moto"]
+    aliases: ["Coche/Moto", "Motor", "Repuestos y recambios"]
   },
   {
     name: "Virales",

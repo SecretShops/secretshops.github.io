@@ -71,6 +71,7 @@ const UI = {
     loadErrorTitle: "No se pudo cargar el catálogo",
     loadErrorText: "Actualiza la página en unos instantes. El resto de la información sigue disponible.",
     productsCount: "{count} productos",
+    oneProduct: "1 producto",
     viewAll: "Ver todas",
     viewAllCategories: "Ver todas las categorías",
     viewAllStores: "Ver todas las tiendas",
@@ -219,6 +220,7 @@ const UI = {
     loadErrorTitle: "Não foi possível carregar o catálogo",
     loadErrorText: "Atualize a página dentro de alguns instantes. A restante informação continua disponível.",
     productsCount: "{count} produtos",
+    oneProduct: "1 produto",
     viewAll: "Ver todas",
     viewAllCategories: "Ver todas as categorias",
     viewAllStores: "Ver todas as lojas",
@@ -509,6 +511,280 @@ const STATIC_PT = {
   "SecretShop necesita JavaScript para cargar y filtrar el catálogo.": "A SecretShop necessita de JavaScript para carregar e filtrar o catálogo."
 };
 
+const CORE_LOCALES = {
+  en: {
+    search: "Search", placeholder: "Search products, brands or categories",
+    categories: "Categories", stores: "Stores", guides: "Guides", favorites: "Favourites",
+    promotions: "Promotions and codes", filters: "Filters", category: "Category", store: "Store",
+    allCategories: "All categories", allStores: "All stores", clear: "Clear", moreFilters: "More filters",
+    from: "From", viewOffer: "View offer", compare: "Compare", products: "products", product: "product",
+    available: "Available", close: "Close", changeCountry: "Change country", darkMode: "Dark mode",
+    lightMode: "Light mode", offers: "Offers", exploreProducts: "Explore products",
+    viewCategories: "View categories", compareBefore: "Compare before you buy.", decide: "Choose better.",
+    methodology: "Methodology", affiliation: "Affiliation", privacy: "Privacy"
+  },
+  fr: {
+    search: "Rechercher", placeholder: "Rechercher des produits, marques ou catégories",
+    categories: "Catégories", stores: "Boutiques", guides: "Guides", favorites: "Favoris",
+    promotions: "Promotions et codes", filters: "Filtres", category: "Catégorie", store: "Boutique",
+    allCategories: "Toutes les catégories", allStores: "Toutes les boutiques", clear: "Effacer", moreFilters: "Plus de filtres",
+    from: "Dès", viewOffer: "Voir l’offre", compare: "Comparer", products: "produits", product: "produit",
+    available: "Disponible", close: "Fermer", changeCountry: "Changer de pays", darkMode: "Mode sombre",
+    lightMode: "Mode clair", offers: "Offres", exploreProducts: "Explorer les produits",
+    viewCategories: "Voir les catégories", compareBefore: "Comparez avant d’acheter.", decide: "Décidez mieux.",
+    methodology: "Méthodologie", affiliation: "Affiliation", privacy: "Confidentialité"
+  },
+  de: {
+    search: "Suchen", placeholder: "Produkte, Marken oder Kategorien suchen",
+    categories: "Kategorien", stores: "Shops", guides: "Ratgeber", favorites: "Favoriten",
+    promotions: "Aktionen und Codes", filters: "Filter", category: "Kategorie", store: "Shop",
+    allCategories: "Alle Kategorien", allStores: "Alle Shops", clear: "Löschen", moreFilters: "Weitere Filter",
+    from: "Ab", viewOffer: "Angebot ansehen", compare: "Vergleichen", products: "Produkte", product: "Produkt",
+    available: "Verfügbar", close: "Schließen", changeCountry: "Land ändern", darkMode: "Dunkler Modus",
+    lightMode: "Heller Modus", offers: "Angebote", exploreProducts: "Produkte entdecken",
+    viewCategories: "Kategorien ansehen", compareBefore: "Vor dem Kauf vergleichen.", decide: "Besser entscheiden.",
+    methodology: "Methodik", affiliation: "Affiliate-Information", privacy: "Datenschutz"
+  },
+  it: {
+    search: "Cerca", placeholder: "Cerca prodotti, marchi o categorie",
+    categories: "Categorie", stores: "Negozi", guides: "Guide", favorites: "Preferiti",
+    promotions: "Promozioni e codici", filters: "Filtri", category: "Categoria", store: "Negozio",
+    allCategories: "Tutte le categorie", allStores: "Tutti i negozi", clear: "Cancella", moreFilters: "Altri filtri",
+    from: "Da", viewOffer: "Vedi offerta", compare: "Confronta", products: "prodotti", product: "prodotto",
+    available: "Disponibile", close: "Chiudi", changeCountry: "Cambia paese", darkMode: "Modalità scura",
+    lightMode: "Modalità chiara", offers: "Offerte", exploreProducts: "Esplora i prodotti",
+    viewCategories: "Vedi categorie", compareBefore: "Confronta prima di acquistare.", decide: "Scegli meglio.",
+    methodology: "Metodologia", affiliation: "Affiliazione", privacy: "Privacy"
+  },
+  nl: {
+    search: "Zoeken", placeholder: "Zoek producten, merken of categorieën",
+    categories: "Categorieën", stores: "Winkels", guides: "Gidsen", favorites: "Favorieten",
+    promotions: "Acties en codes", filters: "Filters", category: "Categorie", store: "Winkel",
+    allCategories: "Alle categorieën", allStores: "Alle winkels", clear: "Wissen", moreFilters: "Meer filters",
+    from: "Vanaf", viewOffer: "Bekijk aanbieding", compare: "Vergelijken", products: "producten", product: "product",
+    available: "Beschikbaar", close: "Sluiten", changeCountry: "Land wijzigen", darkMode: "Donkere modus",
+    lightMode: "Lichte modus", offers: "Aanbiedingen", exploreProducts: "Producten bekijken",
+    viewCategories: "Categorieën bekijken", compareBefore: "Vergelijk vóór je koopt.", decide: "Kies beter.",
+    methodology: "Methodologie", affiliation: "Affiliate-informatie", privacy: "Privacy"
+  },
+  fi: {
+    search: "Hae", placeholder: "Hae tuotteita, merkkejä tai tuoteryhmiä",
+    categories: "Tuoteryhmät", stores: "Kaupat", guides: "Oppaat", favorites: "Suosikit",
+    promotions: "Kampanjat ja koodit", filters: "Suodattimet", category: "Tuoteryhmä", store: "Kauppa",
+    allCategories: "Kaikki tuoteryhmät", allStores: "Kaikki kaupat", clear: "Tyhjennä", moreFilters: "Lisää suodattimia",
+    from: "Alkaen", viewOffer: "Näytä tarjous", compare: "Vertaa", products: "tuotetta", product: "tuote",
+    available: "Saatavilla", close: "Sulje", changeCountry: "Vaihda maata", darkMode: "Tumma tila",
+    lightMode: "Vaalea tila", offers: "Tarjoukset", exploreProducts: "Selaa tuotteita",
+    viewCategories: "Näytä tuoteryhmät", compareBefore: "Vertaa ennen ostamista.", decide: "Valitse paremmin.",
+    methodology: "Menetelmä", affiliation: "Kumppanuus", privacy: "Tietosuoja"
+  },
+  sk: {
+    search: "Hľadať", placeholder: "Hľadajte produkty, značky alebo kategórie",
+    categories: "Kategórie", stores: "Obchody", guides: "Sprievodcovia", favorites: "Obľúbené",
+    promotions: "Akcie a kódy", filters: "Filtre", category: "Kategória", store: "Obchod",
+    allCategories: "Všetky kategórie", allStores: "Všetky obchody", clear: "Vymazať", moreFilters: "Ďalšie filtre",
+    from: "Od", viewOffer: "Zobraziť ponuku", compare: "Porovnať", products: "produktov", product: "produkt",
+    available: "Dostupné", close: "Zavrieť", changeCountry: "Zmeniť krajinu", darkMode: "Tmavý režim",
+    lightMode: "Svetlý režim", offers: "Ponuky", exploreProducts: "Preskúmať produkty",
+    viewCategories: "Zobraziť kategórie", compareBefore: "Porovnajte pred nákupom.", decide: "Rozhodnite sa lepšie.",
+    methodology: "Metodika", affiliation: "Affiliate program", privacy: "Súkromie"
+  },
+  lv: {
+    search: "Meklēt", placeholder: "Meklēt produktus, zīmolus vai kategorijas",
+    categories: "Kategorijas", stores: "Veikali", guides: "Ceļveži", favorites: "Izlase",
+    promotions: "Akcijas un kodi", filters: "Filtri", category: "Kategorija", store: "Veikals",
+    allCategories: "Visas kategorijas", allStores: "Visi veikali", clear: "Notīrīt", moreFilters: "Vairāk filtru",
+    from: "No", viewOffer: "Skatīt piedāvājumu", compare: "Salīdzināt", products: "produkti", product: "produkts",
+    available: "Pieejams", close: "Aizvērt", changeCountry: "Mainīt valsti", darkMode: "Tumšais režīms",
+    lightMode: "Gaišais režīms", offers: "Piedāvājumi", exploreProducts: "Apskatīt produktus",
+    viewCategories: "Skatīt kategorijas", compareBefore: "Salīdzini pirms pirkuma.", decide: "Izvēlies labāk.",
+    methodology: "Metodika", affiliation: "Partnerība", privacy: "Privātums"
+  },
+  lt: {
+    search: "Ieškoti", placeholder: "Ieškokite produktų, prekių ženklų ar kategorijų",
+    categories: "Kategorijos", stores: "Parduotuvės", guides: "Gidai", favorites: "Mėgstamiausi",
+    promotions: "Akcijos ir kodai", filters: "Filtrai", category: "Kategorija", store: "Parduotuvė",
+    allCategories: "Visos kategorijos", allStores: "Visos parduotuvės", clear: "Išvalyti", moreFilters: "Daugiau filtrų",
+    from: "Nuo", viewOffer: "Žiūrėti pasiūlymą", compare: "Palyginti", products: "produktai", product: "produktas",
+    available: "Yra", close: "Uždaryti", changeCountry: "Keisti šalį", darkMode: "Tamsus režimas",
+    lightMode: "Šviesus režimas", offers: "Pasiūlymai", exploreProducts: "Naršyti produktus",
+    viewCategories: "Žiūrėti kategorijas", compareBefore: "Palyginkite prieš pirkdami.", decide: "Rinkitės geriau.",
+    methodology: "Metodika", affiliation: "Partnerystė", privacy: "Privatumas"
+  },
+  mt: {
+    search: "Fittex", placeholder: "Fittex prodotti, marki jew kategoriji",
+    categories: "Kategoriji", stores: "Ħwienet", guides: "Gwidi", favorites: "Favoriti",
+    promotions: "Promozzjonijiet u kodiċijiet", filters: "Filtri", category: "Kategorija", store: "Ħanut",
+    allCategories: "Il-kategoriji kollha", allStores: "Il-ħwienet kollha", clear: "Neħħi", moreFilters: "Aktar filtri",
+    from: "Minn", viewOffer: "Ara l-offerta", compare: "Qabbel", products: "prodotti", product: "prodott",
+    available: "Disponibbli", close: "Agħlaq", changeCountry: "Ibdel il-pajjiż", darkMode: "Mod skur",
+    lightMode: "Mod ċar", offers: "Offerti", exploreProducts: "Esplora l-prodotti",
+    viewCategories: "Ara l-kategoriji", compareBefore: "Qabbel qabel tixtri.", decide: "Agħżel aħjar.",
+    methodology: "Metodoloġija", affiliation: "Affiljazzjoni", privacy: "Privatezza"
+  },
+  et: {
+    search: "Otsi", placeholder: "Otsi tooteid, kaubamärke või kategooriaid",
+    categories: "Kategooriad", stores: "Poed", guides: "Juhendid", favorites: "Lemmikud",
+    promotions: "Kampaaniad ja koodid", filters: "Filtrid", category: "Kategooria", store: "Pood",
+    allCategories: "Kõik kategooriad", allStores: "Kõik poed", clear: "Tühjenda", moreFilters: "Rohkem filtreid",
+    from: "Alates", viewOffer: "Vaata pakkumist", compare: "Võrdle", products: "toodet", product: "toode",
+    available: "Saadaval", close: "Sulge", changeCountry: "Muuda riiki", darkMode: "Tume režiim",
+    lightMode: "Hele režiim", offers: "Pakkumised", exploreProducts: "Sirvi tooteid",
+    viewCategories: "Vaata kategooriaid", compareBefore: "Võrdle enne ostmist.", decide: "Vali paremini.",
+    methodology: "Metoodika", affiliation: "Partnerlus", privacy: "Privaatsus"
+  },
+  sl: {
+    search: "Išči", placeholder: "Išči izdelke, znamke ali kategorije",
+    categories: "Kategorije", stores: "Trgovine", guides: "Vodniki", favorites: "Priljubljeno",
+    promotions: "Akcije in kode", filters: "Filtri", category: "Kategorija", store: "Trgovina",
+    allCategories: "Vse kategorije", allStores: "Vse trgovine", clear: "Počisti", moreFilters: "Več filtrov",
+    from: "Od", viewOffer: "Poglej ponudbo", compare: "Primerjaj", products: "izdelkov", product: "izdelek",
+    available: "Na voljo", close: "Zapri", changeCountry: "Spremeni državo", darkMode: "Temni način",
+    lightMode: "Svetli način", offers: "Ponudbe", exploreProducts: "Razišči izdelke",
+    viewCategories: "Poglej kategorije", compareBefore: "Primerjajte pred nakupom.", decide: "Izberite bolje.",
+    methodology: "Metodologija", affiliation: "Partnerstvo", privacy: "Zasebnost"
+  },
+  hr: {
+    search: "Pretraži", placeholder: "Pretraži proizvode, marke ili kategorije",
+    categories: "Kategorije", stores: "Trgovine", guides: "Vodiči", favorites: "Favoriti",
+    promotions: "Promocije i kodovi", filters: "Filtri", category: "Kategorija", store: "Trgovina",
+    allCategories: "Sve kategorije", allStores: "Sve trgovine", clear: "Očisti", moreFilters: "Više filtara",
+    from: "Od", viewOffer: "Pogledaj ponudu", compare: "Usporedi", products: "proizvoda", product: "proizvod",
+    available: "Dostupno", close: "Zatvori", changeCountry: "Promijeni zemlju", darkMode: "Tamni način",
+    lightMode: "Svijetli način", offers: "Ponude", exploreProducts: "Istraži proizvode",
+    viewCategories: "Pogledaj kategorije", compareBefore: "Usporedite prije kupnje.", decide: "Odaberite bolje.",
+    methodology: "Metodologija", affiliation: "Partnerstvo", privacy: "Privatnost"
+  },
+  el: {
+    search: "Αναζήτηση", placeholder: "Αναζήτηση προϊόντων, επωνυμιών ή κατηγοριών",
+    categories: "Κατηγορίες", stores: "Καταστήματα", guides: "Οδηγοί", favorites: "Αγαπημένα",
+    promotions: "Προσφορές και κωδικοί", filters: "Φίλτρα", category: "Κατηγορία", store: "Κατάστημα",
+    allCategories: "Όλες οι κατηγορίες", allStores: "Όλα τα καταστήματα", clear: "Εκκαθάριση", moreFilters: "Περισσότερα φίλτρα",
+    from: "Από", viewOffer: "Προβολή προσφοράς", compare: "Σύγκριση", products: "προϊόντα", product: "προϊόν",
+    available: "Διαθέσιμο", close: "Κλείσιμο", changeCountry: "Αλλαγή χώρας", darkMode: "Σκοτεινή λειτουργία",
+    lightMode: "Φωτεινή λειτουργία", offers: "Προσφορές", exploreProducts: "Εξερεύνηση προϊόντων",
+    viewCategories: "Προβολή κατηγοριών", compareBefore: "Συγκρίνετε πριν αγοράσετε.", decide: "Επιλέξτε καλύτερα.",
+    methodology: "Μεθοδολογία", affiliation: "Συνεργασία", privacy: "Απόρρητο"
+  },
+  bg: {
+    search: "Търсене", placeholder: "Търсете продукти, марки или категории",
+    categories: "Категории", stores: "Магазини", guides: "Ръководства", favorites: "Любими",
+    promotions: "Промоции и кодове", filters: "Филтри", category: "Категория", store: "Магазин",
+    allCategories: "Всички категории", allStores: "Всички магазини", clear: "Изчисти", moreFilters: "Още филтри",
+    from: "От", viewOffer: "Виж офертата", compare: "Сравни", products: "продукта", product: "продукт",
+    available: "Налично", close: "Затвори", changeCountry: "Смени държавата", darkMode: "Тъмен режим",
+    lightMode: "Светъл режим", offers: "Оферти", exploreProducts: "Разгледай продуктите",
+    viewCategories: "Виж категориите", compareBefore: "Сравнете преди покупка.", decide: "Изберете по-добре.",
+    methodology: "Методология", affiliation: "Партньорство", privacy: "Поверителност"
+  }
+};
+
+for (const [lang, labels] of Object.entries(CORE_LOCALES)) {
+  UI[lang] = {
+    search: labels.search,
+    categories: labels.categories,
+    stores: labels.stores,
+    guides: labels.guides,
+    favorites: labels.favorites,
+    offers: labels.offers,
+    filters: labels.filters,
+    category: labels.category,
+    store: labels.store,
+    allCategories: labels.allCategories,
+    allStores: labels.allStores,
+    clearFilters: labels.clear,
+    from: labels.from,
+    viewOffer: labels.viewOffer,
+    viewStoreOffer: labels.viewOffer,
+    compare: labels.compare,
+    comparePrices: labels.compare,
+    addFavorite: labels.favorites,
+    addCompare: labels.compare,
+    productsCount: `{count} ${labels.products}`,
+    oneProduct: `1 ${labels.product}`,
+    products: `{count} ${labels.products}`,
+    productsAvailable: `{count} ${labels.products}`,
+    oneResult: `1 ${labels.product}`,
+    oneOption: "1",
+    available: labels.available,
+    close: labels.close,
+    changeCountry: labels.changeCountry,
+    darkMode: labels.darkMode,
+    light: labels.lightMode,
+    methodology: labels.methodology,
+    affiliation: labels.affiliation,
+    privacy: labels.privacy,
+    viewAllCategories: labels.allCategories,
+    viewAllStores: labels.allStores,
+    categoryDirectoryTitle: labels.allCategories,
+    storeDirectoryTitle: labels.allStores,
+    open: labels.viewOffer,
+    openCard: labels.viewOffer,
+    viewDetail: labels.viewOffer,
+    backToCatalog: labels.categories
+  };
+}
+
+const STATIC_CORE_KEYS = {
+  "Buscar": "search",
+  "Buscar productos": "search",
+  "Busca productos, marcas o categorías": "placeholder",
+  "Categorías": "categories",
+  "Tiendas": "stores",
+  "Guías": "guides",
+  "Favoritos": "favorites",
+  "Promos": "promotions",
+  "Promociones y códigos": "promotions",
+  "Filtros": "filters",
+  "Categoría": "category",
+  "Tienda": "store",
+  "Todas las categorías": "allCategories",
+  "Todas las tiendas": "allStores",
+  "Limpiar": "clear",
+  "Más filtros": "moreFilters",
+  "Desde": "from",
+  "Ver oferta": "viewOffer",
+  "Comparar": "compare",
+  "productos": "products",
+  "Disponible": "available",
+  "Cerrar": "close",
+  "Cambiar país": "changeCountry",
+  "Modo oscuro": "darkMode",
+  "Ofertas": "offers",
+  "Explorar productos": "exploreProducts",
+  "Ver categorías": "viewCategories",
+  "Compara antes de comprar.": "compareBefore",
+  "Decide mejor.": "decide",
+  "Metodología": "methodology",
+  "Afiliación": "affiliation",
+  "Privacidad": "privacy"
+};
+
+const STATIC_BY_LANGUAGE = { pt: STATIC_PT };
+for (const [lang, labels] of Object.entries(CORE_LOCALES)) {
+  STATIC_BY_LANGUAGE[lang] = Object.fromEntries(
+    Object.entries(STATIC_CORE_KEYS).map(([source, key]) => [source, labels[key]])
+  );
+}
+
+const CATEGORY_CORE = {
+  en: { "Tecnología": "Technology", "Moda": "Fashion", "Hogar": "Home", "Belleza y cuidado": "Beauty and care", "Deportes": "Sports", "Coche/Moto": "Car/Motorcycle", "Juguetes": "Toys", "Mascotas": "Pets", "Otros": "Other" },
+  fr: { "Tecnología": "Technologie", "Moda": "Mode", "Hogar": "Maison", "Belleza y cuidado": "Beauté et soins", "Deportes": "Sports", "Coche/Moto": "Auto/Moto", "Juguetes": "Jouets", "Mascotas": "Animaux", "Otros": "Autres" },
+  de: { "Tecnología": "Technik", "Moda": "Mode", "Hogar": "Wohnen", "Belleza y cuidado": "Beauty und Pflege", "Deportes": "Sport", "Coche/Moto": "Auto/Motorrad", "Juguetes": "Spielzeug", "Mascotas": "Haustiere", "Otros": "Sonstiges" },
+  it: { "Tecnología": "Tecnologia", "Moda": "Moda", "Hogar": "Casa", "Belleza y cuidado": "Bellezza e cura", "Deportes": "Sport", "Coche/Moto": "Auto/Moto", "Juguetes": "Giocattoli", "Mascotas": "Animali", "Otros": "Altro" },
+  nl: { "Tecnología": "Technologie", "Moda": "Mode", "Hogar": "Wonen", "Belleza y cuidado": "Beauty en verzorging", "Deportes": "Sport", "Coche/Moto": "Auto/Motor", "Juguetes": "Speelgoed", "Mascotas": "Huisdieren", "Otros": "Overig" },
+  fi: { "Tecnología": "Teknologia", "Moda": "Muoti", "Hogar": "Koti", "Belleza y cuidado": "Kauneus ja hoito", "Deportes": "Urheilu", "Coche/Moto": "Auto/Moottoripyörä", "Juguetes": "Lelut", "Mascotas": "Lemmikit", "Otros": "Muut" },
+  sk: { "Tecnología": "Technológie", "Moda": "Móda", "Hogar": "Domov", "Belleza y cuidado": "Krása a starostlivosť", "Deportes": "Šport", "Coche/Moto": "Auto/Motocykel", "Juguetes": "Hračky", "Mascotas": "Domáce zvieratá", "Otros": "Ostatné" },
+  lv: { "Tecnología": "Tehnoloģijas", "Moda": "Mode", "Hogar": "Mājai", "Belleza y cuidado": "Skaistums un kopšana", "Deportes": "Sports", "Coche/Moto": "Auto/Moto", "Juguetes": "Rotaļlietas", "Mascotas": "Mājdzīvnieki", "Otros": "Citi" },
+  lt: { "Tecnología": "Technologijos", "Moda": "Mada", "Hogar": "Namams", "Belleza y cuidado": "Grožis ir priežiūra", "Deportes": "Sportas", "Coche/Moto": "Auto/Moto", "Juguetes": "Žaislai", "Mascotas": "Augintiniai", "Otros": "Kita" },
+  mt: { "Tecnología": "Teknoloġija", "Moda": "Moda", "Hogar": "Dar", "Belleza y cuidado": "Sbuħija u kura", "Deportes": "Sport", "Coche/Moto": "Karozza/Mutur", "Juguetes": "Ġugarelli", "Mascotas": "Annimali domestiċi", "Otros": "Oħrajn" },
+  et: { "Tecnología": "Tehnoloogia", "Moda": "Mood", "Hogar": "Kodu", "Belleza y cuidado": "Ilu ja hooldus", "Deportes": "Sport", "Coche/Moto": "Auto/Mootorratas", "Juguetes": "Mänguasjad", "Mascotas": "Lemmikloomad", "Otros": "Muu" },
+  sl: { "Tecnología": "Tehnologija", "Moda": "Moda", "Hogar": "Dom", "Belleza y cuidado": "Lepota in nega", "Deportes": "Šport", "Coche/Moto": "Avto/Motor", "Juguetes": "Igrače", "Mascotas": "Hišni ljubljenčki", "Otros": "Drugo" },
+  hr: { "Tecnología": "Tehnologija", "Moda": "Moda", "Hogar": "Dom", "Belleza y cuidado": "Ljepota i njega", "Deportes": "Sport", "Coche/Moto": "Auto/Motor", "Juguetes": "Igračke", "Mascotas": "Kućni ljubimci", "Otros": "Ostalo" },
+  el: { "Tecnología": "Τεχνολογία", "Moda": "Μόδα", "Hogar": "Σπίτι", "Belleza y cuidado": "Ομορφιά και φροντίδα", "Deportes": "Αθλητισμός", "Coche/Moto": "Αυτοκίνητο/Μοτοσικλέτα", "Juguetes": "Παιχνίδια", "Mascotas": "Κατοικίδια", "Otros": "Άλλα" },
+  bg: { "Tecnología": "Технологии", "Moda": "Мода", "Hogar": "Дом", "Belleza y cuidado": "Красота и грижа", "Deportes": "Спорт", "Coche/Moto": "Авто/Мото", "Juguetes": "Играчки", "Mascotas": "Домашни любимци", "Otros": "Други" }
+};
+
 function language(locale) {
   return String(locale || "es").toLowerCase().split("-")[0];
 }
@@ -527,34 +803,39 @@ export function createTranslator(locale) {
 }
 
 export function localizeCategory(value, locale) {
-  return language(locale) === "pt"
-    ? CATEGORY_PT[String(value || "")] || String(value || "")
-    : String(value || "");
+  const lang = language(locale);
+  const dictionary = lang === "pt" ? CATEGORY_PT : CATEGORY_CORE[lang];
+  return dictionary?.[String(value || "")] || String(value || "");
 }
 
 export function translateStaticHtml(source, locale) {
-  if (language(locale) !== "pt") return source;
-  const translations = Object.entries(STATIC_PT)
+  const lang = language(locale);
+  const dictionary = STATIC_BY_LANGUAGE[lang];
+  if (!dictionary) return source;
+  const allowPartial = lang === "pt";
+  const translations = Object.entries(dictionary)
     .sort((left, right) => right[0].length - left[0].length);
   const translationPattern = new RegExp(
     translations
       .map(([from]) => from.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
-      .join("|"),
+    .join("|"),
     "g"
   );
   const translateText = (value) => String(value).replace(
     translationPattern,
-    (match) => STATIC_PT[match] || match
+    (match) => dictionary[match] || match
   );
   const translateNode = (value) => {
     const text = String(value);
     const trimmed = text.trim();
     if (!trimmed) return text;
     const compact = trimmed.replace(/\s+/g, " ");
-    const translated = STATIC_PT[trimmed] || STATIC_PT[compact];
+    const translated = dictionary[trimmed] || dictionary[compact];
     return translated
       ? text.replace(trimmed, translated)
-      : translateText(text);
+      : allowPartial
+        ? translateText(text)
+        : text;
   };
 
   return String(source)
@@ -565,14 +846,29 @@ export function translateStaticHtml(source, locale) {
       return token.replace(
         /\b(aria-label|placeholder|title)="([^"]*)"/gi,
         (match, attribute, value) =>
-          `${attribute}="${STATIC_PT[value] || value}"`
+          `${attribute}="${dictionary[value] || value}"`
       );
     })
     .join("") || String(source);
 }
 
 export function applyStaticLocale(locale, root = document) {
-  if (language(locale) !== "pt" || !root?.createTreeWalker) return;
+  const lang = language(locale);
+  const dictionary = STATIC_BY_LANGUAGE[lang];
+  if (!dictionary || !root?.createTreeWalker) return;
+  const allowPartial = lang === "pt";
+  const translations = Object.entries(dictionary)
+    .sort((left, right) => right[0].length - left[0].length);
+  const translationPattern = new RegExp(
+    translations
+      .map(([from]) => from.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
+      .join("|"),
+    "g"
+  );
+  const translatedText = (value) => String(value).replace(
+    translationPattern,
+    (match) => dictionary[match] || match
+  );
   const walker = root.createTreeWalker(
     root.body || root,
     globalThis.NodeFilter?.SHOW_TEXT ?? 4
@@ -583,15 +879,22 @@ export function applyStaticLocale(locale, root = document) {
     if (["SCRIPT", "STYLE"].includes(node.parentElement?.tagName)) continue;
     const value = node.nodeValue;
     const trimmed = value.trim();
-    const translated = STATIC_PT[trimmed] || STATIC_PT[trimmed.replace(/\s+/g, " ")];
+    const translated = dictionary[trimmed] || dictionary[trimmed.replace(/\s+/g, " ")];
     if (translated) {
       node.nodeValue = value.replace(trimmed, translated);
+    } else if (allowPartial) {
+      node.nodeValue = translatedText(value);
     }
   }
   for (const element of root.querySelectorAll("[aria-label], [placeholder], [title]")) {
     for (const attribute of ["aria-label", "placeholder", "title"]) {
       const value = element.getAttribute(attribute);
-      if (value && STATIC_PT[value]) element.setAttribute(attribute, STATIC_PT[value]);
+      if (value) {
+        element.setAttribute(
+          attribute,
+          dictionary[value] || (allowPartial ? translatedText(value) : value)
+        );
+      }
     }
   }
 }

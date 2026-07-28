@@ -345,6 +345,15 @@ export function candidatesFromFeed(text, merchant, publisherId, generatedAt) {
   };
 }
 
+export function selectExistingCandidates(candidates, existingProductIds) {
+  const existing = existingProductIds instanceof Set
+    ? existingProductIds
+    : new Set(existingProductIds || []);
+  return new Map(
+    [...(candidates || new Map())].filter(([productId]) => existing.has(productId))
+  );
+}
+
 function sameValue(left, right) {
   if (left === right) return true;
   if (left === null || left === undefined || right === null || right === undefined) return false;

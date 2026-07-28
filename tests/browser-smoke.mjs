@@ -1,13 +1,19 @@
 #!/usr/bin/env node
 
 import { createReadStream } from "node:fs";
-import { access, stat } from "node:fs/promises";
+import { access, readFile, stat } from "node:fs/promises";
 import { createServer } from "node:http";
 import { createRequire } from "node:module";
 import { dirname, extname, resolve, sep } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+const regionsConfig = JSON.parse(
+  await readFile(resolve(root, "data/config/regions.json"), "utf8")
+);
+const expectedPublishedRegions = regionsConfig.regions.filter(
+  (region) => region.status === "published"
+).length;
 const require = createRequire(import.meta.url);
 const playwright = await import(pathToFileURL(require.resolve("playwright")));
 const axe = require("axe-core");
@@ -101,6 +107,17 @@ try {
   }
   await desktop.keyboard.press("Escape");
 
+  await desktop.locator(".region-menu [data-pin-menu]").click();
+  await desktop.locator("[data-nav-regions] a").first().waitFor();
+  const desktopCountries = await desktop.locator("[data-nav-regions] a").count();
+  const desktopFlags = await desktop.locator("[data-nav-regions] .region-nav-flag").count();
+  if (desktopCountries !== expectedPublishedRegions || desktopFlags !== expectedPublishedRegions) {
+    failures.push(
+      `desktop: el selector muestra ${desktopCountries} países y ${desktopFlags} banderas`
+    );
+  }
+  await desktop.keyboard.press("Escape");
+
   const searchTarget = (await desktop.locator("[data-catalog-grid] .product-card h3").first().textContent())?.trim();
   if (!searchTarget) throw new Error("desktop: no se pudo obtener un producto para probar la búsqueda");
   await desktop.locator("#header-search").fill(searchTarget);
@@ -112,7 +129,7 @@ try {
     failures.push(`desktop: la búsqueda del primer producto devolvió ${searchedCards} tarjetas`);
   }
 
-  await desktop.locator("[data-catalog-grid] [data-open-family]").first().click();
+  await desktop.locator("[data-catalog-grid] .product-card-hit").first().click();
   await desktop.locator("#product-dialog[open]").waitFor();
   productPathname = new URL(desktop.url()).pathname;
   if (!productPathname.startsWith("/producto/")) {
@@ -165,7 +182,12 @@ try {
   );
   if (serious.length) {
     failures.push(
-      `desktop: accesibilidad ${serious.map((violation) => `${violation.id}(${violation.nodes.length})`).join(", ")}`
+      `desktop: accesibilidad ${serious.map((violation) =>
+        `${violation.id}(${violation.nodes.length}: ${violation.nodes
+          .slice(0, 8)
+          .map((node) => node.target.join(" "))
+          .join(" | ")})`
+      ).join(", ")}`
     );
   }
 
@@ -204,6 +226,20 @@ try {
     node.scrollWidth > node.clientWidth
   );
   if (!scoreScrollable) failures.push("mobile: SecretScore no permite desplazamiento horizontal");
+  const mobilePromotions = await mobile.locator(".mobile-bottom-nav [data-region-promotions]").getAttribute("href");
+  if (!mobilePromotions?.startsWith("/promociones/?region=es")) {
+    failures.push("mobile: la navegación inferior no abre las promociones regionales");
+  }
+
+  await mobile.locator("[data-catalog-grid] .product-card-hit").first().click();
+  await mobile.locator("#product-dialog[open]").waitFor();
+  const mobileOverflow = await mobile.evaluate(() =>
+    document.documentElement.scrollWidth > window.innerWidth ||
+    document.querySelector("#product-dialog").scrollWidth >
+      document.querySelector("#product-dialog").clientWidth
+  );
+  if (mobileOverflow) failures.push("mobile: la ficha de producto desborda horizontalmente");
+  await mobile.locator("#product-dialog [data-close-product]").click();
 
   await mobile.locator("[data-catalog-sentinel]").scrollIntoViewIfNeeded();
   await mobile.waitForFunction(() =>
@@ -237,17 +273,36 @@ try {
   );
   if (mobileSerious.length) {
     failures.push(
-      `mobile: accesibilidad ${mobileSerious.map((violation) => `${violation.id}(${violation.nodes.length})`).join(", ")}`
+      `mobile: accesibilidad ${mobileSerious.map((violation) =>
+        `${violation.id}(${violation.nodes.length}: ${violation.nodes
+          .slice(0, 8)
+          .map((node) => node.target.join(" "))
+          .join(" | ")})`
+      ).join(", ")}`
     );
   }
   await mobile.close();
+
+  const tablet = await browser.newPage({ viewport: { width: 768, height: 1024 }, isMobile: true });
+  await inspectPage(tablet, "tablet");
+  await isolateExternalImages(tablet);
+  await tablet.goto(baseUrl, { waitUntil: "domcontentloaded" });
+  await tablet.locator("[data-catalog-grid] .product-card-hit").first().waitFor();
+  await tablet.locator("[data-catalog-grid] .product-card-hit").first().click();
+  await tablet.locator("#product-dialog[open]").waitFor();
+  const tabletOverflow = await tablet.evaluate(() =>
+    document.documentElement.scrollWidth > window.innerWidth ||
+    document.querySelector("#product-dialog").getBoundingClientRect().right > window.innerWidth
+  );
+  if (tabletOverflow) failures.push("tablet: la ficha de producto desborda horizontalmente");
+  await tablet.close();
 
   const architecture = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   await inspectPage(architecture, "arquitectura");
   await isolateExternalImages(architecture);
   await architecture.goto(new URL("/paises/", baseUrl).href, { waitUntil: "domcontentloaded" });
   const publishedCountries = await architecture.locator(".country-card").count();
-  if (publishedCountries !== 2) {
+  if (publishedCountries !== expectedPublishedRegions) {
     failures.push(`arquitectura: el selector muestra ${publishedCountries} países publicados`);
   }
   if (await architecture.locator('a[href^="/mx/"], a[href^="/co/"]').count()) {
@@ -294,6 +349,28 @@ try {
     failures.push("arquitectura: la interfaz portuguesa conserva etiquetas españolas");
   }
 
+  await architecture.goto(new URL("/de/", baseUrl).href, { waitUntil: "domcontentloaded" });
+  await architecture.locator("[data-catalog-grid] .product-card").first().waitFor();
+  const germanNavigation = await architecture.locator(".primary-nav").textContent();
+  if (!germanNavigation?.includes("Kategorien") || !germanNavigation.includes("Aktionen")) {
+    failures.push("arquitectura: la interfaz alemana conserva la navegación española");
+  }
+
+  await architecture.goto(new URL("/promociones/?region=es", baseUrl).href, {
+    waitUntil: "domcontentloaded"
+  });
+  await architecture.locator("[data-discount-grid]").waitFor();
+  await architecture.waitForFunction(() =>
+    !document.querySelector("[data-discount-grid] .promotion-loading") ||
+    document.querySelector("[data-discount-grid]").textContent.includes("No hay")
+  );
+  const invalidCopyButtons = await architecture.locator("[data-copy-code]").evaluateAll((buttons) =>
+    buttons.filter((button) => !button.dataset.copyCode?.trim()).length
+  );
+  if (invalidCopyButtons) {
+    failures.push(`arquitectura: hay ${invalidCopyButtons} botones para copiar códigos vacíos`);
+  }
+
   await architecture.goto(new URL(productPathname, baseUrl).href, { waitUntil: "domcontentloaded" });
   await architecture.locator(".standalone-product").waitFor();
   const canonical = await architecture.locator('link[rel="canonical"]').getAttribute("href");
@@ -330,5 +407,5 @@ if (failures.length) {
   failures.forEach((failure) => console.error(`- ${failure}`));
   process.exitCode = 1;
 } else {
-  console.log("Pruebas de navegador: escritorio, móvil, selector regional, ficha SEO, búsqueda, favoritos, comparador, tema y accesibilidad OK.");
+  console.log("Pruebas de navegador: escritorio, móvil, tablet, promociones, selector regional, ficha SEO, búsqueda, favoritos, comparador, tema y accesibilidad OK.");
 }

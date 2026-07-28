@@ -66,6 +66,30 @@ function validateAliExpress(value) {
   }
 }
 
+function impactProductId(offerId, merchantId, canonicalOffer) {
+  if (canonicalOffer?.merchantProductId) return canonicalOffer.merchantProductId;
+  const prefix = `${merchantId}:`;
+  const value = String(offerId || "");
+  return value.startsWith(prefix) ? value.slice(prefix.length).replace(/^[a-z]{2}:/, "") : "";
+}
+
+function validateConfiguredImpactLink(entry, offerId) {
+  const merchant = merchants.get(entry?.merchantId);
+  if (merchant?.network !== "impact") return true;
+  const canonicalOffer = canonicalOffers.get(offerId);
+  const productSku = impactProductId(offerId, entry.merchantId, canonicalOffer);
+  if (!productSku) return false;
+  return Boolean(parseImpactAffiliateUrl(entry.url, {
+    trackingHost: merchant.impactTrackingHost,
+    publisherId: merchant.impactPublisherId,
+    campaignId: merchant.impactCampaignId,
+    creativeId: merchant.impactCreativeId,
+    catalogSource: merchant.impactCatalogSource,
+    productSku,
+    landingDomains: merchant.landingDomains
+  }));
+}
+
 const [
   offersPayload,
   merchantsPayload,
@@ -202,6 +226,15 @@ for (const region of regionsPayload.regions) {
     if (!destinationAllowedForCountry(entry.url, region.countryCode)) {
       invalid += 1;
       findings.push({ region: region.id, offerId: id, reason: "regional_destination_rejected" });
+      continue;
+    }
+    if (!validateConfiguredImpactLink(entry, id)) {
+      invalid += 1;
+      findings.push({
+        region: region.id,
+        offerId: id,
+        reason: "regional_impact_product_or_campaign_mismatch"
+      });
     }
   }
   for (const id of linked) {

@@ -13,7 +13,6 @@ import {
   mergeCatalogPayloads,
   offerTotal,
   relatedFamilies,
-  selectDiverseFamilies,
   topDeals,
   topScored,
   uniqueStrings
@@ -23,6 +22,7 @@ import {
   categoryPath,
   offerRedirectPath,
   productPath,
+  publishedRegions,
   publicAssetUrl,
   regionStorageKeys,
   resolveActiveRegion,
@@ -361,6 +361,12 @@ function productCardMarkup(family, options = {}) {
 
   return `
     <article class="product-card" data-family-card="${escapeHtml(family.id)}">
+      <a
+        class="product-card-hit"
+        href="${escapeHtml(familyHref(family))}"
+        data-open-family="${escapeHtml(family.id)}"
+        aria-label="${escapeHtml(t("openProduct", { title: family.title }))}"
+      ></a>
       <div class="product-media">
         <div class="card-badges">
           ${discount > 0 ? `<span class="badge discount">−${discount}%</span>` : ""}
@@ -374,6 +380,7 @@ function productCardMarkup(family, options = {}) {
         >${favorite ? "♥" : "♡"}</button>
         <img
           src="${escapeHtml(publicAssetUrl(family.image))}"
+          data-image-fallback="/assets/brand/product-placeholder.svg"
           alt="${escapeHtml(family.title)}"
           loading="${loading}"
           width="420"
@@ -409,10 +416,58 @@ function hasPresentationImage(family) {
   return Boolean(family?.image) && !family.image.includes("amazon-placeholder");
 }
 
+function stableHash(value) {
+  let hash = 2166136261;
+  for (const character of String(value)) {
+    hash ^= character.codePointAt(0);
+    hash = Math.imul(hash, 16777619);
+  }
+  return hash >>> 0;
+}
+
+function dailySelection(familyList, limit, salt, score = (family) => family.secretScore) {
+  const day = new Date().toISOString().slice(0, 10);
+  const ordered = [...familyList]
+    .filter((family) => family?.image)
+    .sort((left, right) =>
+      Math.floor(score(right) * 2) - Math.floor(score(left) * 2) ||
+      stableHash(`${day}:${salt}:${left.id}`) - stableHash(`${day}:${salt}:${right.id}`)
+    );
+  const output = [];
+  const selectedIds = new Set();
+  const usedGroups = new Set();
+  const usedStores = new Set();
+
+  const append = (family) => {
+    output.push(family);
+    selectedIds.add(family.id);
+    if (family.primaryGroup) usedGroups.add(family.primaryGroup);
+    (family.stores || []).forEach((store) => usedStores.add(store));
+  };
+  const hasNewStore = (family) =>
+    (family.stores || []).some((store) => !usedStores.has(store));
+
+  for (const family of ordered) {
+    if (output.length >= limit) break;
+    if (usedGroups.has(family.primaryGroup) || !hasNewStore(family)) continue;
+    append(family);
+  }
+  for (const family of ordered) {
+    if (output.length >= limit) break;
+    if (selectedIds.has(family.id) || !hasNewStore(family)) continue;
+    append(family);
+  }
+  for (const family of ordered) {
+    if (output.length >= limit) break;
+    if (!selectedIds.has(family.id)) append(family);
+  }
+  return output;
+}
+
 function heroSelection() {
   const candidates = families.filter(hasPresentationImage);
   const source = candidates.length >= 3 ? candidates : families;
-  const pool = selectDiverseFamilies(source, Math.min(18, source.length));
+  const pool = dailySelection(source, Math.min(18, source.length), "hero");
   if (pool.length <= 3) return pool;
   const rotated = [...pool.slice(heroRotationOffset), ...pool.slice(0, heroRotationOffset)];
   return rotated.slice(0, 3);
@@ -447,13 +502,15 @@ function renderHero({ animate = false } = {}) {
 }
 
 function categoryImage(categoryName) {
-  const candidates = [...families]
-    .filter((family) => family.groups.includes(categoryName) && hasPresentationImage(family))
-    .sort((left, right) => right.secretScore - left.secretScore);
-  const fallback = [...families]
-    .filter((family) => family.groups.includes(categoryName) && family.image)
-    .sort((left, right) => right.secretScore - left.secretScore);
-  return candidates[0]?.image || fallback[0]?.image || "";
+  const candidates = families
+    .filter((family) => family.groups.includes(categoryName) && hasPresentationImage(family));
+  const fallback = families
+    .filter((family) => family.groups.includes(categoryName) && family.image);
+  return dailySelection(
+    candidates.length ? candidates : fallback,
+    1,
+    `category:${normalizedLabel(categoryName)}`
+  )[0]?.image || "";
 }
 
 function normalizedLabel(value) {
@@ -462,6 +519,16 @@ function normalizedLabel(value) {
     .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase()
     .trim();
+}
+
+function localizedRegionName(region) {
+  try {
+    return new Intl.DisplayNames([activeRegion?.locale || region.locale || "es"], {
+      type: "region"
+    }).of(region.countryCode) || region.name;
+  } catch {
+    return region.name;
+  }
 }
 
 function familyMatchesCategory(family, categoryName) {
@@ -477,7 +544,7 @@ function categoryProductCount(categoryName) {
 function productCountLabel(count) {
   const normalizedCount = Number(count) || 0;
   if (normalizedCount === 1) {
-    return activeRegion.locale.startsWith("pt") ? "1 produto" : "1 producto";
+    return t("oneProduct");
   }
   return t("productsCount", { count: formatter.format(normalizedCount) });
 }
@@ -556,7 +623,7 @@ function categoryCardMarkup(category, options = {}) {
   return `
     <a class="category-card ${options.compact ? "is-compact" : ""}" href="${escapeHtml(href)}" data-set-category="${escapeHtml(category.name)}">
       <span class="category-visual" aria-hidden="true">
-        ${image ? `<img src="${escapeHtml(publicAssetUrl(image))}" alt="" loading="lazy">` : `<span class="category-icon">${escapeHtml(category.icon || "＋")}</span>`}
+        ${image ? `<img src="${escapeHtml(publicAssetUrl(image))}" data-image-fallback="/assets/brand/product-placeholder.svg" alt="" loading="lazy">` : `<span class="category-icon">${escapeHtml(category.icon || "＋")}</span>`}
       </span>
       <span class="category-copy">
         <strong>${escapeHtml(localizeCategory(category.name, activeRegion.locale))}</strong>
@@ -579,16 +646,19 @@ function renderCategories() {
 function renderHighlights() {
   const visualFamilies = families.filter(hasPresentationImage);
   const source = visualFamilies.length >= 16 ? visualFamilies : families;
-  const dealCandidates = topDeals(source, 48);
-  const fallbackCandidates = topScored(source, 28);
-  const dealFamilies = selectDiverseFamilies(
+  const dealCandidates = topDeals(source, source.length);
+  const fallbackCandidates = topScored(source, source.length);
+  const dealFamilies = dailySelection(
     dealCandidates.length ? dealCandidates : fallbackCandidates,
-    12
+    12,
+    "deals",
+    (family) => family.maxDiscount || family.secretScore
   );
   const used = new Set(dealFamilies.map((family) => family.id));
-  const featuredFamilies = selectDiverseFamilies(
-    topScored(source.filter((family) => !used.has(family.id)), 32),
-    10
+  const featuredFamilies = dailySelection(
+    topScored(source.filter((family) => !used.has(family.id)), source.length),
+    10,
+    "secret-score"
   );
   $("[data-deals-carousel]").innerHTML = dealFamilies
     .map((family) => productCardMarkup(family))
@@ -603,22 +673,23 @@ function storeEntries() {
   for (const family of families) {
     for (const offer of family.offers) {
       const id = offer.merchantId || normalizedLabel(offer.merchantName).replace(/\s+/g, "-");
-      const current = entries.get(id) || {
-        id,
-        name: offer.merchantName,
+      const branding = storeBranding.get(id) || {};
+      const groupId = branding.groupId || id;
+      const current = entries.get(groupId) || {
+        id: groupId,
+        name: branding.name || offer.merchantName,
         products: new Set(),
-        offers: 0
+        offers: 0,
+        merchantIds: new Set(),
+        ...branding
       };
       current.products.add(family.id);
       current.offers += 1;
-      entries.set(id, current);
+      current.merchantIds.add(id);
+      entries.set(groupId, current);
     }
   }
   return [...entries.values()]
-    .map((entry) => ({
-      ...entry,
-      ...(storeBranding.get(entry.id) || {})
-    }))
     .sort((left, right) =>
       right.products.size - left.products.size ||
       left.name.localeCompare(right.name, activeRegion.locale)
@@ -630,6 +701,7 @@ function storeLogoMarkup(store) {
     return `
       <span class="store-mark has-logo" aria-hidden="true">
         <img src="${escapeHtml(publicAssetUrl(store.logo))}" alt="" loading="lazy">
+        <span class="store-fallback-initials">${escapeHtml(store.name.slice(0, 2).toUpperCase())}</span>
       </span>`;
   }
   return `<span class="store-mark" aria-hidden="true">${escapeHtml(store.name.slice(0, 2).toUpperCase())}</span>`;
@@ -658,6 +730,7 @@ function renderNavigationMenus() {
   const stores = storeEntries();
   const categoryMenu = $("[data-nav-categories]");
   const storeMenu = $("[data-nav-stores]");
+  const regionMenu = $("[data-nav-regions]");
   const favoritePreview = $("[data-nav-favorites-preview]");
 
   if (categoryMenu) {
@@ -687,6 +760,18 @@ function renderNavigationMenus() {
         ${escapeHtml(t("viewAllStores"))} <span aria-hidden="true">→</span>
       </a>`;
   }
+  if (regionMenu) {
+    regionMenu.innerHTML = publishedRegions(regionsConfig).map((region) => `
+      <a
+        href="${escapeHtml(region.basePath)}"
+        hreflang="${escapeHtml(region.locale)}"
+        ${region.id === activeRegion.id ? 'aria-current="page"' : ""}
+      >
+        <span class="region-nav-flag" aria-hidden="true">${escapeHtml(region.flag)}</span>
+        <span>${escapeHtml(localizedRegionName(region))}</span>
+        <small>${escapeHtml(region.currency)}</small>
+      </a>`).join("");
+  }
   if (favoritePreview) {
     const selected = [...state.favorites]
       .map((id) => familyById.get(id))
@@ -708,6 +793,9 @@ function renderNavigationMenus() {
   });
   $$("[data-region-offers]").forEach((link) => {
     link.href = `${activeRegion.basePath}#ofertas`;
+  });
+  $$("[data-region-promotions]").forEach((link) => {
+    link.href = `/promociones/?region=${encodeURIComponent(activeRegion.id)}`;
   });
   $$("[data-region-guides]").forEach((link) => {
     link.href = "/guias/";
@@ -816,11 +904,17 @@ function renderContextHighlights(sourceFamilies) {
 
   const visual = sourceFamilies.filter(hasPresentationImage);
   const source = visual.length >= 8 ? visual : sourceFamilies;
-  const deals = selectDiverseFamilies(topDeals(source, 32), 10);
+  const deals = dailySelection(
+    topDeals(source, source.length),
+    10,
+    `context-deals:${state.category}:${state.store}`,
+    (family) => family.maxDiscount || family.secretScore
+  );
   const used = new Set(deals.map((family) => family.id));
-  const scores = selectDiverseFamilies(
-    topScored(source.filter((family) => !used.has(family.id)), 32),
-    10
+  const scores = dailySelection(
+    topScored(source.filter((family) => !used.has(family.id)), source.length),
+    10,
+    `context-score:${state.category}:${state.store}`
   );
   dealsSection.hidden = deals.length === 0;
   scoreSection.hidden = scores.length === 0;
@@ -1757,6 +1851,10 @@ function wireEvents() {
       state.sort = event.target.value;
       renderCatalog();
     }
+    if (event.target.closest("[data-nav-menu]")) {
+      closePinnedMenus();
+      event.target.blur?.();
+    }
   });
 
   document.addEventListener("keydown", (event) => {
@@ -1817,6 +1915,8 @@ function wireEvents() {
     const category = event.target.closest("[data-set-category]");
     if (category) {
       event.preventDefault();
+      closePinnedMenus();
+      category.blur();
       setCategory(category.dataset.setCategory);
       return;
     }
@@ -1830,6 +1930,8 @@ function wireEvents() {
     const store = event.target.closest("[data-set-store]");
     if (store) {
       event.preventDefault();
+      closePinnedMenus();
+      store.blur();
       setStore(store.dataset.setStore);
       return;
     }
@@ -1992,7 +2094,8 @@ function wireEvents() {
     ) {
       closeSuggestions();
     }
-    if (!event.target.closest("[data-nav-menu]")) closePinnedMenus();
+    const navigationLink = event.target.closest("[data-nav-menu] a");
+    if (navigationLink || !event.target.closest("[data-nav-menu]")) closePinnedMenus();
 
     const menuLink = event.target.closest("#menu-dialog a");
     if (menuLink) closeDialog($("#menu-dialog"));
@@ -2006,6 +2109,18 @@ function wireEvents() {
 
   document.addEventListener("error", (event) => {
     if (event.target instanceof HTMLImageElement) {
+      const fallback = event.target.dataset.imageFallback || (
+        event.target.closest(
+          ".product-card, .mosaic-card, .detail-main-image, .gallery-thumbs, .detail-related"
+        )
+          ? "/assets/brand/product-placeholder.svg"
+          : ""
+      );
+      if (fallback && event.target.src !== new URL(fallback, location.origin).href) {
+        event.target.dataset.imageFallback = "";
+        event.target.src = fallback;
+        return;
+      }
       event.target.hidden = true;
       event.target.parentElement?.classList.add("image-error");
     }
@@ -2112,6 +2227,73 @@ async function fetchJson(url, label) {
   return response.json();
 }
 
+function upgradeRegionalNavigation() {
+  const primary = $(".primary-nav");
+  const legacyOffers = primary?.querySelector(":scope > [data-region-offers]");
+  if (legacyOffers && !primary.querySelector("[data-region-promotions]")) {
+    const wrapper = document.createElement("div");
+    wrapper.className = "nav-menu";
+    wrapper.dataset.navMenu = "";
+    wrapper.innerHTML = `
+      <button class="nav-menu-trigger" type="button" data-pin-menu aria-expanded="false">
+        Promos <span aria-hidden="true">⌄</span>
+      </button>
+      <div class="nav-dropdown nav-guides-dropdown nav-promotions-dropdown">
+        <a href="/promociones/" data-region-promotions>
+          <strong>Promociones y códigos</strong>
+          <small>Solo ventajas vigentes y verificadas</small>
+        </a>
+        <a href="${escapeHtml(activeRegion.basePath)}#ofertas" data-region-offers>
+          <strong>Descuentos en productos</strong>
+          <small>Precio anterior y ahorro comprobable</small>
+        </a>
+        <a class="nav-view-all" href="/afiliacion.html">
+          Cómo funcionan <span aria-hidden="true">→</span>
+        </a>
+      </div>`;
+    legacyOffers.replaceWith(wrapper);
+  }
+
+  const legacyRegion = $(".header-actions > a.region-selector[data-region-selector]");
+  if (legacyRegion) {
+    const wrapper = document.createElement("div");
+    wrapper.className = "header-action-menu nav-menu region-menu";
+    wrapper.dataset.navMenu = "";
+    wrapper.innerHTML = `
+      <button class="region-selector" type="button" data-pin-menu aria-label="Cambiar país" aria-expanded="false">
+        <span data-region-flag aria-hidden="true">${escapeHtml(activeRegion.flag)}</span>
+        <span class="action-label" data-region-name>${escapeHtml(localizedRegionName(activeRegion))}</span>
+        <span aria-hidden="true">⌄</span>
+      </button>
+      <div class="nav-dropdown region-dropdown">
+        <strong>País y moneda</strong>
+        <div class="region-nav-list" data-nav-regions></div>
+        <a class="nav-view-all" href="/paises/" data-region-selector>
+          Ver todos los países <span aria-hidden="true">→</span>
+        </a>
+      </div>`;
+    legacyRegion.replaceWith(wrapper);
+  }
+
+  const mobileOffers = $(".mobile-bottom-nav [data-region-offers]");
+  if (mobileOffers && !$(".mobile-bottom-nav [data-region-promotions]")) {
+    mobileOffers.removeAttribute("data-region-offers");
+    mobileOffers.dataset.regionPromotions = "";
+    mobileOffers.href = `/promociones/?region=${encodeURIComponent(activeRegion.id)}`;
+    mobileOffers.innerHTML = '<span aria-hidden="true">%</span><small>Promos</small>';
+  }
+
+  const mobileMenu = $("#menu-dialog nav");
+  if (mobileMenu && !mobileMenu.querySelector("[data-region-promotions]")) {
+    const promotions = document.createElement("a");
+    promotions.href = `/promociones/?region=${encodeURIComponent(activeRegion.id)}`;
+    promotions.dataset.regionPromotions = "";
+    promotions.textContent = "Promociones y códigos";
+    const guides = mobileMenu.querySelector("[data-region-guides]");
+    mobileMenu.insertBefore(promotions, guides || mobileMenu.firstChild);
+  }
+}
+
 async function initializeRegion() {
   const [regionsPayload, taxonomyPayload, brandingPayload] = await Promise.all([
     fetchJson(REGIONS_URL, "Configuración regional"),
@@ -2125,6 +2307,7 @@ async function initializeRegion() {
     location.pathname
   );
   t = createTranslator(activeRegion.locale);
+  upgradeRegionalNavigation();
   applyStaticLocale(activeRegion.locale);
   categoryTaxonomy = Array.isArray(taxonomyPayload?.categories)
     ? taxonomyPayload.categories
@@ -2152,7 +2335,7 @@ async function initializeRegion() {
   state = initialState();
   document.documentElement.lang = activeRegion.locale;
   $$("[data-region-name]").forEach((node) => {
-    node.textContent = activeRegion.name;
+    node.textContent = localizedRegionName(activeRegion);
   });
   $$("[data-region-flag]").forEach((node) => {
     node.textContent = activeRegion.flag;

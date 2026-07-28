@@ -828,6 +828,7 @@ await writeText(
 
 const globalPaths = [
   config.selectorPath,
+  "/promociones/",
   "/metodologia.html",
   "/afiliacion.html",
   "/privacidad.html",

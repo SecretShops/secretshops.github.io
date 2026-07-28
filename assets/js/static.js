@@ -1,9 +1,10 @@
 import "./cloudflare-analytics.js";
 import "./google-analytics.js";
-import { createTranslator } from "./i18n.js";
+import { applyStaticLocale, createTranslator } from "./i18n.js";
 
 const key = "secretshop:theme:v1";
 const t = createTranslator(document.documentElement.lang);
+applyStaticLocale(document.documentElement.lang);
 
 function renderTheme() {
   const dark = document.documentElement.dataset.theme === "dark";
@@ -28,5 +29,14 @@ document.addEventListener("click", (event) => {
 document.querySelectorAll("[data-current-year]").forEach((node) => {
   node.textContent = String(new Date().getFullYear());
 });
+
+document.addEventListener("error", (event) => {
+  const image = event.target.closest?.(
+    ".standalone-product img, .category-card img, .store-card img"
+  );
+  if (!image || image.dataset.fallbackApplied) return;
+  image.dataset.fallbackApplied = "true";
+  image.src = "/assets/brand/product-placeholder.svg";
+}, true);
 
 renderTheme();

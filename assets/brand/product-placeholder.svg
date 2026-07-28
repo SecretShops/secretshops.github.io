@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 420" role="img" aria-labelledby="title description">
+  <title id="title">Imagen de producto no disponible</title>
+  <desc id="description">Marcador neutro de SecretShop para productos cuya imagen externa no responde.</desc>
+  <rect width="420" height="420" rx="38" fill="#f7f2e8"/>
+  <rect x="98" y="116" width="224" height="188" rx="26" fill="#ffffff" stroke="#d8d2c6" stroke-width="8"/>
+  <path d="M130 264l58-62 42 39 31-31 35 54z" fill="#fee97d"/>
+  <circle cx="270" cy="165" r="22" fill="#1f1f1f"/>
+  <path d="M152 332h116" stroke="#1f1f1f" stroke-linecap="round" stroke-width="12"/>
+</svg>

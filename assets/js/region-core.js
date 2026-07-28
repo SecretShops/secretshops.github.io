@@ -150,3 +150,9 @@ export function offerRedirectPath(regionId, offerId) {
   const offer = encodeURIComponent(String(offerId || ""));
   return `/go.html?region=${region}&offer=${offer}`;
 }
+
+export function promotionRedirectPath(regionId, promotionId) {
+  const region = encodeURIComponent(String(regionId || "").toLowerCase());
+  const promotion = encodeURIComponent(String(promotionId || ""));
+  return `/go.html?region=${region}&promo=${promotion}`;
+}

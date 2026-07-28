@@ -4,6 +4,7 @@ import {
   candidatesFromFeed,
   madridCronShouldRun,
   parseFeedList,
+  selectExistingCandidates,
   secureFeedUrl,
   updateAffiliateLinks,
   updateCanonicalOffers,
@@ -44,6 +45,18 @@ test("solo admite URLs de descarga oficiales de Awin", () => {
   assert.throws(
     () => secureFeedUrl("https://example.com/datafeed/download/apikey/abc"),
     /no permitida/
+  );
+});
+
+test("un feed ajeno o vacío se puede retener sin borrar el catálogo existente", () => {
+  const parsed = candidatesFromFeed(feed, merchant, publisherId, generatedAt);
+  const selected = selectExistingCandidates(parsed.candidates, new Set(["32142"]));
+  assert.deepEqual([...selected.keys()], ["32142"]);
+  assert.equal(parsed.candidates.has("NUEVO"), true);
+  assert.equal(selected.has("NUEVO"), false);
+  assert.equal(
+    selectExistingCandidates(new Map(), new Set(["32142"])).size,
+    0
   );
 });
 

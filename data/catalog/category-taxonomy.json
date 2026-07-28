@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-07-27",
+  "updatedAt": "2026-07-28",
   "categories": [
     {
       "id": "featured",
@@ -276,6 +276,13 @@
       "order": 124
     },
     {
+      "id": "motor-spare-parts",
+      "label": "Repuestos y recambios",
+      "parent": "Coche/Moto",
+      "showOnHome": false,
+      "order": 131
+    },
+    {
       "id": "beauty-perfume",
       "label": "Perfumería",
       "parent": "Belleza y cuidado",
@@ -298,6 +305,58 @@
     }
   ],
   "genericRules": [
+    {
+      "department": "Deporte",
+      "category": "Ciclismo",
+      "includeAny": [
+        "bike",
+        "bikes",
+        "bicycle",
+        "bicycles",
+        "cycling",
+        "bicicleta",
+        "bicicletas",
+        "bici",
+        "ciclismo",
+        "velo",
+        "fahrrad",
+        "fiets"
+      ]
+    },
+    {
+      "department": "Deporte",
+      "category": "Movilidad eléctrica",
+      "includeAny": [
+        "electric scooter",
+        "e-scooter",
+        "scooter",
+        "patinete",
+        "patinete electrico",
+        "monopatin",
+        "trottinette",
+        "monopattino",
+        "trotineta"
+      ]
+    },
+    {
+      "department": "Coche/Moto",
+      "category": "Repuestos y recambios",
+      "includeAny": [
+        "spare part",
+        "spare parts",
+        "replacement part",
+        "repuesto",
+        "repuestos",
+        "recambio",
+        "recambios",
+        "ersatzteil",
+        "ersatzteile",
+        "piece detachee",
+        "pieces detachees",
+        "ricambio",
+        "ricambi"
+      ]
+    },
     {
       "department": "Tecnología",
       "category": "Tecnología",

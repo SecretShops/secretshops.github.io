@@ -4,7 +4,9 @@ import {
 } from "./region-core.js";
 
 const AMAZON_ASSOCIATE_TAG = "christian0ddd-21";
+const AWIN_PUBLISHER_ID = "2996453";
 const REGIONS_URL = "/data/config/regions.json";
+const PROMOTIONS_URL = "/data/promotions/awin.json";
 
 const IMPACT_RULES = [
   { host: "shokzes.pxf.io", path: "/c/7518894/3800995/48345", source: "CATF_31438", landing: /(^|\.)es\.shokz\.com$/i, countries: ["ES"] },
@@ -52,13 +54,44 @@ export function allowedDestination(value) {
   try {
     const url = new URL(value);
     if (url.protocol !== "https:") return null;
-    const awin = /(^|\.)awin1\.com$/i.test(url.hostname) && ["/pclick.php", "/cread.php"].includes(url.pathname) && ["a", "p", "m"].every((key) => url.searchParams.get(key));
+    const awinPublisher = url.searchParams.get("a") || url.searchParams.get("awinaffid");
+    const awinAdvertiser = url.searchParams.get("m") || url.searchParams.get("awinmid");
+    const awinDestination = url.searchParams.get("p") || url.searchParams.get("ued");
+    const awin =
+      /(^|\.)awin1\.com$/i.test(url.hostname) &&
+      ["/pclick.php", "/cread.php"].includes(url.pathname) &&
+      Boolean(awinPublisher && awinAdvertiser && awinDestination);
     const aliexpress = /^s\.click\.aliexpress\.com$/i.test(url.hostname);
     const amazon = /^(?:www\.)?amazon\.es$/i.test(url.hostname) && /^\/dp\/[A-Z0-9]{10}\/ref=nosim\/?$/i.test(url.pathname) && url.searchParams.get("tag") === AMAZON_ASSOCIATE_TAG;
     return awin || aliexpress || amazon || impactRule(url) ? url.href : null;
   } catch {
     return null;
   }
+}
+
+export function promotionMatchesRegion(entry, region, now = new Date()) {
+  if (
+    entry?.network !== "awin" ||
+    !region ||
+    region.status !== "published" ||
+    !Array.isArray(entry.regions) ||
+    !entry.regions.includes(region.id)
+  ) {
+    return false;
+  }
+  const timestamp = now instanceof Date ? now.getTime() : Date.parse(now);
+  if (!Number.isFinite(timestamp)) return false;
+  if (entry.startAt && Date.parse(entry.startAt) > timestamp) return false;
+  if (entry.endAt && Date.parse(entry.endAt) < timestamp) return false;
+  const destination = allowedDestination(entry.trackingUrl);
+  if (!destination) return false;
+  const url = new URL(destination);
+  const publisher = url.searchParams.get("a") || url.searchParams.get("awinaffid");
+  const advertiser = url.searchParams.get("m") || url.searchParams.get("awinmid");
+  return (
+    publisher === AWIN_PUBLISHER_ID &&
+    advertiser === String(entry.advertiserId || "")
+  );
 }
 
 export function destinationAllowedForCountry(value, countryCode) {
@@ -95,7 +128,12 @@ async function fetchJson(url, label) {
 async function redirect() {
   const params = new URLSearchParams(location.search);
   const offerId = params.get("offer")?.trim();
-  if (!offerId || offerId.length > 200) {
+  const promotionId = params.get("promo")?.trim();
+  if (
+    Boolean(offerId) === Boolean(promotionId) ||
+    (offerId?.length || 0) > 200 ||
+    (promotionId?.length || 0) > 200
+  ) {
     fail("La oferta indicada no es válida o ya no está disponible.");
     return;
   }
@@ -109,6 +147,28 @@ async function redirect() {
     }
     const back = document.querySelector("[data-redirect-back]");
     if (back) back.href = region.basePath;
+    if (promotionId) {
+      const payload = await fetchJson(PROMOTIONS_URL, "Promociones verificadas");
+      const entry = (payload?.promotions || []).find(
+        (promotion) => promotion.id === promotionId
+      );
+      const destination = allowedDestination(entry?.trackingUrl);
+      if (!destination || !promotionMatchesRegion(entry, region)) {
+        fail("La promoción no está vigente para este país o su enlace no supera la verificación.");
+        return;
+      }
+      try {
+        sessionStorage.setItem("secretshop:last-outbound:v1", JSON.stringify({
+          promotionId,
+          merchantId: entry.merchantId,
+          country: region.countryCode,
+          region: region.id,
+          at: new Date().toISOString()
+        }));
+      } catch {}
+      location.replace(destination);
+      return;
+    }
     const payload = await fetchJson(region.affiliateLinks, "Enlaces regionales");
     if (payload.region !== region.id || payload.country !== region.countryCode) throw new Error("El archivo de enlaces no pertenece a la región solicitada.");
     const entry = payload?.links?.[offerId];

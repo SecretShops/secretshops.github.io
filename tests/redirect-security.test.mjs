@@ -2,7 +2,8 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   allowedDestination,
-  entryMatchesRegion
+  entryMatchesRegion,
+  promotionMatchesRegion
 } from "../assets/js/redirect.js";
 
 const spain = {
@@ -20,6 +21,10 @@ test("acepta únicamente los destinos afiliados previstos", () => {
   assert.equal(
     allowedDestination("https://www.awin1.com/pclick.php?p=1&a=2&m=3"),
     "https://www.awin1.com/pclick.php?p=1&a=2&m=3"
+  );
+  assert.equal(
+    allowedDestination("https://www.awin1.com/cread.php?awinmid=3&awinaffid=2&ued=https%3A%2F%2Fexample.com"),
+    "https://www.awin1.com/cread.php?awinmid=3&awinaffid=2&ued=https%3A%2F%2Fexample.com"
   );
   assert.equal(
     allowedDestination("https://s.click.aliexpress.com/e/_ejemplo"),
@@ -88,4 +93,29 @@ test("el redirector rechaza ofertas de otro país y regiones draft", () => {
   assert.equal(entryMatchesRegion(spanishEntry, spain), true);
   assert.equal(entryMatchesRegion(mexicanEntry, spain), false);
   assert.equal(entryMatchesRegion(mexicanEntry, mexicoDraft), false);
+});
+
+test("las promociones exigen anunciante, publisher, vigencia y país exactos", () => {
+  const promotion = {
+    id: "awin:77",
+    network: "awin",
+    advertiserId: "84669",
+    regions: ["es"],
+    startAt: "2026-07-01T00:00:00.000Z",
+    endAt: "2026-08-01T00:00:00.000Z",
+    trackingUrl: "https://www.awin1.com/cread.php?awinmid=84669&awinaffid=2996453&ued=https%3A%2F%2Fwww.clarel.es%2F"
+  };
+  assert.equal(
+    promotionMatchesRegion(promotion, spain, new Date("2026-07-28T09:00:00Z")),
+    true
+  );
+  assert.equal(
+    promotionMatchesRegion({ ...promotion, advertiserId: "OTRO" }, spain, new Date("2026-07-28T09:00:00Z")),
+    false
+  );
+  assert.equal(
+    promotionMatchesRegion(promotion, spain, new Date("2026-08-02T09:00:00Z")),
+    false
+  );
+  assert.equal(promotionMatchesRegion(promotion, mexicoDraft), false);
 });

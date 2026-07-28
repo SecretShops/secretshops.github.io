@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Promociones, códigos reales y descuentos verificables disponibles en SecretShop.">
+  <meta name="theme-color" content="#1f1f1f">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Promociones y códigos | SecretShop">
+  <meta property="og:url" content="https://getsecretshop.com/promociones/">
+  <title>Promociones y códigos | SecretShop</title>
+  <link rel="canonical" href="https://getsecretshop.com/promociones/">
+  <link rel="icon" href="/assets/brand/secretshop-logo-compact.png" type="image/png">
+  <link rel="stylesheet" href="/assets/css/app.css">
+  <script>
+    (() => {
+      try {
+        const saved = localStorage.getItem("secretshop:theme:v1");
+        const dark = matchMedia("(prefers-color-scheme: dark)").matches;
+        document.documentElement.dataset.theme = saved || (dark ? "dark" : "light");
+      } catch {}
+    })();
+  </script>
+</head>
+<body>
+  <header class="content-header">
+    <div class="shell">
+      <a class="brand" href="/" data-promotion-home>
+        <img src="/assets/brand/secretshop-logo-compact.png" alt="" width="42" height="42">
+        <span>SecretShop</span>
+      </a>
+      <div class="content-actions">
+        <label class="promotion-region-control">
+          <span data-promotion-flag aria-hidden="true">🇪🇸</span>
+          <span class="sr-only">País</span>
+          <select data-promotion-region aria-label="País"></select>
+        </label>
+        <button class="button secondary" type="button" data-theme-toggle>◐ Modo oscuro</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="content-page promotions-page">
+    <div class="content-shell">
+      <header class="content-hero promotions-hero">
+        <p class="eyebrow">Ventajas verificadas</p>
+        <h1>Promociones y códigos reales</h1>
+        <p>
+          Solo mostramos códigos proporcionados por la red de afiliación y descuentos
+          cuyo precio anterior figura en el catálogo. La vigencia se comprueba para el país elegido.
+        </p>
+        <div class="promotion-summary" aria-live="polite">
+          <span><strong data-promotion-code-count>0</strong> códigos activos</span>
+          <span><strong data-promotion-offer-count>0</strong> promociones</span>
+          <span><strong data-discount-count>0</strong> productos rebajados</span>
+        </div>
+      </header>
+
+      <section class="promotion-section" data-code-section aria-labelledby="promotion-codes-title" hidden>
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Copiar y usar</p>
+            <h2 id="promotion-codes-title">Códigos activos</h2>
+            <p>El botón de copiar solo aparece cuando la red facilita un código real.</p>
+          </div>
+        </div>
+        <div class="promotion-grid" data-code-grid></div>
+      </section>
+
+      <section class="promotion-section" data-promotion-section aria-labelledby="promotion-list-title" hidden>
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Ventajas de tienda</p>
+            <h2 id="promotion-list-title">Promociones vigentes</h2>
+            <p>Abre siempre la promoción mediante el enlace verificado de SecretShop.</p>
+          </div>
+        </div>
+        <div class="promotion-grid" data-promotion-grid></div>
+      </section>
+
+      <section class="promotion-section" aria-labelledby="discount-list-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Ahorro comprobable</p>
+            <h2 id="discount-list-title">Productos con descuento</h2>
+            <p>Precio anterior y precio actual proceden del mismo catálogo.</p>
+          </div>
+        </div>
+        <div class="promotion-product-grid" data-discount-grid aria-live="polite">
+          <p class="promotion-loading">Comprobando descuentos…</p>
+        </div>
+      </section>
+
+      <aside class="prose-card promotion-empty" data-promotion-empty hidden>
+        <h2>Aún no hay códigos activos para este país</h2>
+        <p>
+          No inventamos códigos ni mostramos ventajas caducadas. Los descuentos de productos
+          disponibles siguen apareciendo debajo y esta sección se actualiza automáticamente.
+        </p>
+      </aside>
+    </div>
+  </main>
+
+  <div class="toast-region" data-promotion-toast aria-live="polite" aria-atomic="true"></div>
+  <script type="module" src="/assets/js/promotions.js"></script>
+</body>
+</html>

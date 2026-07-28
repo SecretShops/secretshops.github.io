@@ -111,7 +111,24 @@
             <div data-nav-categories></div>
           </div>
         </div>
-        <a href="/#ofertas" data-region-offers>Ofertas</a>
+        <div class="nav-menu" data-nav-menu>
+          <button class="nav-menu-trigger" type="button" data-pin-menu aria-expanded="false">
+            Promos <span aria-hidden="true">⌄</span>
+          </button>
+          <div class="nav-dropdown nav-guides-dropdown nav-promotions-dropdown">
+            <a href="/promociones/" data-region-promotions>
+              <strong>Promociones y códigos</strong>
+              <small>Solo ventajas vigentes y verificadas</small>
+            </a>
+            <a href="/#ofertas" data-region-offers>
+              <strong>Descuentos en productos</strong>
+              <small>Precio anterior y ahorro comprobable</small>
+            </a>
+            <a class="nav-view-all" href="/afiliacion.html">
+              Cómo funcionan <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
         <div class="nav-menu" data-nav-menu>
           <button class="nav-menu-trigger" type="button" data-pin-menu aria-expanded="false">
             Tiendas <span aria-hidden="true">⌄</span>
@@ -179,10 +196,26 @@
       </nav>
 
       <div class="header-actions">
-        <a class="region-selector" href="/paises/" data-region-selector aria-label="Cambiar país">
-          <span data-region-flag aria-hidden="true">🇪🇸</span>
-          <span class="action-label" data-region-name>España</span>
-        </a>
+        <div class="header-action-menu nav-menu region-menu" data-nav-menu>
+          <button
+            class="region-selector"
+            type="button"
+            data-pin-menu
+            aria-label="Cambiar país"
+            aria-expanded="false"
+          >
+            <span data-region-flag aria-hidden="true">🇪🇸</span>
+            <span class="action-label" data-region-name>España</span>
+            <span aria-hidden="true">⌄</span>
+          </button>
+          <div class="nav-dropdown region-dropdown">
+            <strong>País y moneda</strong>
+            <div class="region-nav-list" data-nav-regions></div>
+            <a class="nav-view-all" href="/paises/" data-region-selector>
+              Ver todos los países <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
         <div class="header-action-menu nav-menu" data-nav-menu>
           <button class="icon-action saved-action" type="button" data-open-saved aria-label="Abrir favoritos e historial">
             <span aria-hidden="true">♡</span>
@@ -294,7 +327,7 @@
           <span>Colecciones</span>
           <button type="button" data-set-collection="deals">Ofertas</button>
           <button type="button" data-set-collection="viral">Virales</button>
-          <button type="button" data-set-collection="under-10">Menos de 10</button>
+          <button class="collection-under-10" type="button" data-set-collection="under-10">Menos de 10 €</button>
         </div>
       </div>
     </section>
@@ -686,6 +719,7 @@
         Tema: <span data-theme-label>Oscuro</span>
       </button>
       <a href="/guias/" data-region-guides>Guías</a>
+      <a href="/promociones/" data-region-promotions>Promociones y códigos</a>
       <a href="/#como-funciona">Cómo funciona</a>
       <a href="/metodologia.html">Metodología</a>
     </nav>
@@ -705,9 +739,9 @@
       <small>Favoritos</small>
       <span class="mobile-count" data-favorite-count>0</span>
     </button>
-    <a href="/#ofertas" data-region-offers>
+    <a href="/promociones/" data-region-promotions>
       <span aria-hidden="true">%</span>
-      <small>Ofertas</small>
+      <small>Promos</small>
     </a>
     <button type="button" data-focus-search>
       <span aria-hidden="true">⌕</span>

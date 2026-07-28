@@ -129,6 +129,33 @@ test("la búsqueda inteligente entiende sinónimos y pequeños errores", () => {
   assert.equal(smartSearchScore(phone, "sofá modular"), -1);
 });
 
+test("la búsqueda reconoce bicicleta, patinete y repuestos en varios idiomas", () => {
+  const example = (id, title, category) => ({
+    id,
+    title,
+    brand: "",
+    model: "",
+    categories: [category],
+    groups: [],
+    description: "",
+    variants: [],
+    secretScore: 7,
+    variantCount: 1
+  });
+  const bike = example("bike", "Bicicleta eléctrica urbana", "Ciclismo");
+  const scooter = example("scooter", "Patinete eléctrico plegable", "Movilidad eléctrica");
+  const parts = example("parts", "Kit de repuestos para motor", "Repuestos y recambios");
+  for (const query of ["bici", "bike", "fahrrad", "fiets", "velo"]) {
+    assert.ok(smartSearchScore(bike, query) >= 0, query);
+  }
+  for (const query of ["scooter", "trottinette", "monopattino"]) {
+    assert.ok(smartSearchScore(scooter, query) >= 0, query);
+  }
+  for (const query of ["recambios", "spare parts", "ersatzteile"]) {
+    assert.ok(smartSearchScore(parts, query) >= 0, query);
+  }
+});
+
 
 test("la búsqueda no incluye coincidencias presentes solo en descripciones", () => {
   const furniture = {

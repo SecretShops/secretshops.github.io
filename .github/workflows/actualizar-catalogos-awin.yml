@@ -104,6 +104,10 @@ jobs:
         if: steps.actualizar.outputs.catalog_changed == 'true'
         run: npm run build:catalog
 
+      - id: promociones
+        name: Descargar promociones y códigos verificados
+        run: node scripts/refresh-awin-promotions.mjs
+
       - name: Ejecutar pruebas
         run: npm test
 
@@ -135,7 +139,7 @@ jobs:
           fi
 
       - name: Guardar actualización en main
-        if: steps.actualizar.outputs.any_changed == 'true'
+        if: steps.actualizar.outputs.any_changed == 'true' || steps.promociones.outputs.promotions_changed == 'true'
         env:
           BASE_SHA: ${{ steps.base.outputs.sha }}
         run: |
@@ -162,7 +166,7 @@ jobs:
             exit 0
           fi
 
-          git commit -m "Actualizar catálogos Awin"
+          git commit -m "Actualizar catálogos y promociones Awin"
           git push origin HEAD:main
 
       - name: Guardar informe de la ejecución

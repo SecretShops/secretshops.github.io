@@ -8,6 +8,7 @@ import {
   chooseCandidate,
   decodeMaybeGzip,
   parseFeedList,
+  selectExistingCandidates,
   secureFeedUrl,
   sha256,
   updateAffiliateLinks,
@@ -273,7 +274,15 @@ async function main() {
       const stateKey = `${merchant.awinAdvertiserId}:${feedId}`;
       const entry = feedEntries.get(stateKey);
       if (!entry) {
-        throw new Error(`${merchant.id}: el feed ${feedId} no aparece en la cuenta Awin`);
+        feedReports.push({
+          merchantId: merchant.id,
+          advertiserId: String(merchant.awinAdvertiserId),
+          feedId,
+          status: "held_missing",
+          reason: "El feed no aparece en el listado autorizado de la cuenta Awin.",
+          existingProductsPreserved: true
+        });
+        continue;
       }
 
       const previousState = nextState.feeds[stateKey];
@@ -292,74 +301,115 @@ async function main() {
         continue;
       }
 
-      const response = await downloadText(
-        secureFeedUrl(entry.url),
-        `${merchant.id}/feed-${feedId}`
-      );
-      const digest = sha256(response.buffer);
-      if (!force && previousState?.sha256 === digest) {
-        const nextFeedState = {
-          ...previousState,
-          lastImported: entry.lastImported,
-          sha256: digest
-        };
-        if (JSON.stringify(nextFeedState) !== JSON.stringify(previousState)) {
-          nextState.feeds[stateKey] = nextFeedState;
-          stateChanged = true;
+      try {
+        const response = await downloadText(
+          secureFeedUrl(entry.url),
+          `${merchant.id}/feed-${feedId}`
+        );
+        const digest = sha256(response.buffer);
+        if (!force && previousState?.sha256 === digest) {
+          const nextFeedState = {
+            ...previousState,
+            lastImported: entry.lastImported,
+            sha256: digest
+          };
+          if (JSON.stringify(nextFeedState) !== JSON.stringify(previousState)) {
+            nextState.feeds[stateKey] = nextFeedState;
+            stateChanged = true;
+          }
+          feedReports.push({
+            merchantId: merchant.id,
+            advertiserId: String(merchant.awinAdvertiserId),
+            feedId,
+            status: "same_content",
+            lastImported: entry.lastImported
+          });
+          continue;
         }
+
+        const parsed = candidatesFromFeed(
+          response.text,
+          merchant,
+          publisherId,
+          generatedAt
+        );
+        if (parsed.feedRows === 0 || parsed.acceptedRows === 0) {
+          feedReports.push({
+            merchantId: merchant.id,
+            advertiserId: String(merchant.awinAdvertiserId),
+            feedId,
+            status: "held_invalid",
+            reason: "El feed está vacío o no contiene filas válidas para este anunciante.",
+            lastImported: entry.lastImported,
+            feedRows: parsed.feedRows,
+            acceptedRows: parsed.acceptedRows,
+            existingProductsPreserved: true
+          });
+          continue;
+        }
+
+        const matchedCandidates = selectExistingCandidates(
+          parsed.candidates,
+          merchant.existingProductIds
+        );
+        const matchedProducts = matchedCandidates.size;
+        if (matchedProducts === 0) {
+          feedReports.push({
+            merchantId: merchant.id,
+            advertiserId: String(merchant.awinAdvertiserId),
+            feedId,
+            status: "held_unmatched",
+            reason: "El feed no coincide con ningún producto publicado del anunciante.",
+            lastImported: entry.lastImported,
+            feedRows: parsed.feedRows,
+            acceptedRows: parsed.acceptedRows,
+            newProductsHeld: parsed.candidates.size,
+            existingProductsPreserved: true
+          });
+          continue;
+        }
+
+        for (const [productId, candidate] of matchedCandidates) {
+          merchantCandidates.set(
+            productId,
+            chooseCandidate(merchantCandidates.get(productId), candidate)
+          );
+        }
+        nextState.feeds[stateKey] = {
+          merchantId: merchant.id,
+          advertiserId: String(merchant.awinAdvertiserId),
+          feedId,
+          lastImported: entry.lastImported,
+          sha256: digest,
+          feedRows: parsed.feedRows,
+          acceptedRows: parsed.acceptedRows,
+          matchedExistingProducts: matchedProducts,
+          updatedAt: generatedAt
+        };
+        stateChanged = true;
         feedReports.push({
           merchantId: merchant.id,
           advertiserId: String(merchant.awinAdvertiserId),
           feedId,
-          status: "same_content",
-          lastImported: entry.lastImported
+          status: "downloaded",
+          lastImported: entry.lastImported,
+          feedRows: parsed.feedRows,
+          acceptedRows: parsed.acceptedRows,
+          matchedExistingProducts: matchedProducts,
+          newProductsHeld: Math.max(0, parsed.candidates.size - matchedProducts)
         });
-        continue;
+        await wait(750);
+      } catch (error) {
+        feedReports.push({
+          merchantId: merchant.id,
+          advertiserId: String(merchant.awinAdvertiserId),
+          feedId,
+          status: "held_error",
+          reason: String(error?.message || "No se pudo procesar el feed.").slice(0, 300),
+          lastImported: entry.lastImported,
+          existingProductsPreserved: true
+        });
       }
-
-      const parsed = candidatesFromFeed(
-        response.text,
-        merchant,
-        publisherId,
-        generatedAt
-      );
-      if (parsed.feedRows === 0 || parsed.acceptedRows === 0) {
-        throw new Error(`${merchant.id}/feed-${feedId}: no contiene filas válidas`);
-      }
-      for (const [productId, candidate] of parsed.candidates) {
-        merchantCandidates.set(
-          productId,
-          chooseCandidate(merchantCandidates.get(productId), candidate)
-        );
-      }
-
-      const matchedProducts = [...parsed.candidates.keys()].filter((productId) =>
-        merchant.existingProductIds.has(productId)
-      ).length;
-      nextState.feeds[stateKey] = {
-        merchantId: merchant.id,
-        advertiserId: String(merchant.awinAdvertiserId),
-        feedId,
-        lastImported: entry.lastImported,
-        sha256: digest,
-        feedRows: parsed.feedRows,
-        acceptedRows: parsed.acceptedRows,
-        matchedExistingProducts: matchedProducts,
-        updatedAt: generatedAt
-      };
-      stateChanged = true;
-      feedReports.push({
-        merchantId: merchant.id,
-        advertiserId: String(merchant.awinAdvertiserId),
-        feedId,
-        status: "downloaded",
-        lastImported: entry.lastImported,
-        feedRows: parsed.feedRows,
-        acceptedRows: parsed.acceptedRows,
-        matchedExistingProducts: matchedProducts,
-        newProductsHeld: Math.max(0, parsed.candidates.size - matchedProducts)
-      });
-      await wait(750);
     }
     if (merchantCandidates.size > 0) {
       candidatesByMerchant.set(merchant.id, merchantCandidates);
@@ -395,12 +445,6 @@ async function main() {
     }
   }
 
-  for (const merchantId of candidatesByMerchant.keys()) {
-    if ((matchedByMerchant.get(merchantId) || 0) === 0) {
-      throw new Error(`${merchantId}: el feed no coincide con ningún producto existente`);
-    }
-  }
-
   if (canonicalResult.changedOffers > 0) {
     await atomicWriteJson(
       resolve(root, "data/catalog/offers.json"),
@@ -432,7 +476,10 @@ async function main() {
     totals: {
       targetMerchants: repository.targets.length,
       downloadedFeeds: feedReports.filter((feed) => feed.status === "downloaded").length,
-      unchangedFeeds: feedReports.filter((feed) => feed.status !== "downloaded").length,
+      unchangedFeeds: feedReports.filter((feed) =>
+        ["unchanged", "same_content"].includes(feed.status)
+      ).length,
+      heldFeeds: feedReports.filter((feed) => feed.status.startsWith("held_")).length,
       canonicalOffersChanged: canonicalResult.changedOffers,
       publicOffersChanged: sourceResults.reduce(
         (sum, source) => sum + source.changedOffers,
@@ -452,7 +499,8 @@ async function main() {
       newAdvertisersAdded: 0,
       newCountriesAdded: 0,
       productsDeleted: 0,
-      unmatchedExistingProductsPreserved: true
+      unmatchedExistingProductsPreserved: true,
+      invalidFeedDoesNotBlockOtherFeeds: true
     }
   };
   await mkdir(dirname(reportPath), { recursive: true });

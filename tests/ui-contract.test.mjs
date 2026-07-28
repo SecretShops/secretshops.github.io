@@ -4,7 +4,7 @@ import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 
 const root = resolve(import.meta.dirname, "..");
-const [html, css, app, i18n, regionCore, regions, storeBranding, portugalHome] = await Promise.all([
+const [html, css, app, i18n, regionCore, regions, storeBranding, portugalHome, promotionsHtml, promotionsJs] = await Promise.all([
   readFile(resolve(root, "index.html"), "utf8"),
   readFile(resolve(root, "assets/css/app.css"), "utf8"),
   readFile(resolve(root, "assets/js/app.js"), "utf8"),
@@ -12,7 +12,9 @@ const [html, css, app, i18n, regionCore, regions, storeBranding, portugalHome] =
   readFile(resolve(root, "assets/js/region-core.js"), "utf8"),
   readFile(resolve(root, "data/config/regions.json"), "utf8"),
   readFile(resolve(root, "data/config/store-branding.json"), "utf8"),
-  readFile(resolve(root, "pt/index.html"), "utf8")
+  readFile(resolve(root, "pt/index.html"), "utf8"),
+  readFile(resolve(root, "promociones/index.html"), "utf8"),
+  readFile(resolve(root, "assets/js/promotions.js"), "utf8")
 ]);
 
 test("conserva la dirección visual y el texto aprobados", () => {
@@ -119,6 +121,11 @@ test("incluye navegación avanzada, directorios e infinito móvil", () => {
   assert.ok(regionCore.includes("export function storePath"));
   assert.ok(css.includes(".score-carousel"));
   assert.ok(css.includes(".mobile-bottom-nav"));
+  assert.ok(html.includes("data-nav-regions"));
+  assert.ok(html.includes("region-dropdown"));
+  assert.ok(html.includes("data-region-promotions"));
+  assert.ok(app.includes("upgradeRegionalNavigation"));
+  assert.ok(app.includes("publishedRegions(regionsConfig)"));
 });
 
 test("Portugal conserva los datos y traduce la interfaz", () => {
@@ -131,13 +138,66 @@ test("Portugal conserva los datos y traduce la interfaz", () => {
   assert.equal(portugalHome.includes("Cargando más productos"), false);
 });
 
+test("todos los idiomas publicados tienen interfaz localizada", () => {
+  const publishedLanguages = new Set(
+    JSON.parse(regions).regions
+      .filter((region) => region.status === "published")
+      .map((region) => region.locale.split("-")[0])
+      .filter((language) => !["es", "pt"].includes(language))
+  );
+  for (const language of publishedLanguages) {
+    assert.ok(
+      i18n.includes(`${language}: {`) || i18n.includes(`"${language}": {`),
+      `falta interfaz ${language}`
+    );
+  }
+  assert.ok(i18n.includes("STATIC_BY_LANGUAGE"));
+  assert.ok(i18n.includes("CATEGORY_CORE"));
+});
+
+test("las tarjetas completas, imágenes y escaparates tienen comportamiento seguro", () => {
+  assert.ok(app.includes('class="product-card-hit"'));
+  assert.ok(css.includes(".product-card-hit"));
+  assert.ok(app.includes("dailySelection"));
+  assert.ok(app.includes('"hero"'));
+  assert.ok(app.includes("hasNewStore"));
+  assert.ok(app.includes("product-placeholder.svg"));
+  assert.ok(html.includes("collection-under-10"));
+  assert.ok(html.includes("Menos de 10 €"));
+});
+
+test("la página de promociones solo copia códigos reales y usa el redirector", () => {
+  assert.ok(promotionsHtml.includes("data-copy-code") === false);
+  assert.ok(promotionsHtml.includes("data-code-grid"));
+  assert.ok(promotionsJs.includes("promotion.code"));
+  assert.ok(promotionsJs.includes("data-copy-code"));
+  assert.ok(promotionsJs.includes("promotionRedirectPath"));
+  assert.ok(regionCore.includes("export function promotionRedirectPath"));
+});
+
 test("las tiendas activas tienen identidad visual local", () => {
   const branding = JSON.parse(storeBranding);
   assert.equal(branding.schemaVersion, 1);
-  assert.equal(branding.stores.length, 18);
+  assert.ok(branding.stores.length >= 27);
   assert.ok(branding.stores.every((store) =>
     store.domain && store.logo.startsWith("/assets/brands/stores/")
   ));
+  for (const id of [
+    "clarel-es",
+    "juguetesonline-es",
+    "la-drogueria-es",
+    "lenovo-es-553883",
+    "lenovo-es-665754",
+    "omara-jewelry-es",
+    "paj-gps-es-pt",
+    "perfumeria-comas-es",
+    "trotec-iberic-es-pt"
+  ]) {
+    assert.ok(branding.stores.some((store) => store.id === id), id);
+  }
+  const lenovo = branding.stores.filter((store) => store.id.startsWith("lenovo-es-"));
+  assert.ok(lenovo.length >= 2);
+  assert.ok(lenovo.every((store) => store.groupId === "lenovo-es"));
 });
 
 test("todos los diálogos tienen nombre accesible", () => {
