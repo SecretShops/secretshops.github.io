@@ -215,6 +215,12 @@ try {
     getComputedStyle(node).gridTemplateColumns.split(" ").length
   );
   if (columns !== 2) failures.push(`mobile: la cuadrícula usa ${columns} columnas`);
+  const homeCategoryColumns = await mobile.locator("[data-category-grid]").evaluate((node) =>
+    getComputedStyle(node).gridTemplateColumns.split(" ").length
+  );
+  if (homeCategoryColumns !== 1) {
+    failures.push(`mobile: las categorías de portada usan ${homeCategoryColumns} columnas`);
+  }
   if (!(await mobile.locator(".mobile-bottom-nav").isVisible())) {
     failures.push("mobile: la navegación inferior no es visible");
   }
@@ -261,6 +267,29 @@ try {
   }
   await mobile.locator("#compare-dialog [data-close-dialog]").click();
 
+  await mobile.goto(new URL("/categorias/", baseUrl).href, { waitUntil: "domcontentloaded" });
+  await mobile.locator("[data-category-directory-grid] .category-card").first().waitFor();
+  const directoryCategoryColumns = await mobile
+    .locator("[data-category-directory-grid]")
+    .evaluate((node) => getComputedStyle(node).gridTemplateColumns.split(" ").length);
+  if (directoryCategoryColumns !== 1) {
+    failures.push(`mobile: el directorio de categorías usa ${directoryCategoryColumns} columnas`);
+  }
+  const directoryCategoryOverflow = await mobile.evaluate(() =>
+    document.documentElement.scrollWidth > window.innerWidth ||
+    document.querySelector("[data-category-directory-grid]").scrollWidth >
+      document.querySelector("[data-category-directory-grid]").clientWidth
+  );
+  if (directoryCategoryOverflow) {
+    failures.push("mobile: el directorio de categorías desborda horizontalmente");
+  }
+  await mobile.locator(".mobile-bottom-nav [data-focus-search]").click();
+  await mobile.locator("#hero-search").waitFor({ state: "visible" });
+  const focusedMobileSearch = await mobile.evaluate(() => document.activeElement?.id);
+  if (focusedMobileSearch !== "hero-search" || new URL(mobile.url()).pathname !== "/") {
+    failures.push("mobile: el botón Buscar no vuelve a la portada ni enfoca el buscador");
+  }
+
   await mobile.addScriptTag({ content: axe.source });
   const mobileAccessibility = await mobile.evaluate(async () =>
     window.axe.run(document, {
@@ -286,6 +315,14 @@ try {
   const tablet = await browser.newPage({ viewport: { width: 768, height: 1024 }, isMobile: true });
   await inspectPage(tablet, "tablet");
   await isolateExternalImages(tablet);
+  await tablet.goto(new URL("/categorias/", baseUrl).href, { waitUntil: "domcontentloaded" });
+  await tablet.locator("[data-category-directory-grid] .category-card").first().waitFor();
+  const tabletCategoryColumns = await tablet
+    .locator("[data-category-directory-grid]")
+    .evaluate((node) => getComputedStyle(node).gridTemplateColumns.split(" ").length);
+  if (tabletCategoryColumns !== 1) {
+    failures.push(`tablet: el directorio de categorías usa ${tabletCategoryColumns} columnas`);
+  }
   await tablet.goto(baseUrl, { waitUntil: "domcontentloaded" });
   await tablet.locator("[data-catalog-grid] .product-card-hit").first().waitFor();
   await tablet.locator("[data-catalog-grid] .product-card-hit").first().click();
@@ -296,6 +333,32 @@ try {
   );
   if (tabletOverflow) failures.push("tablet: la ficha de producto desborda horizontalmente");
   await tablet.close();
+
+  const compactMobile = await browser.newPage({
+    viewport: { width: 320, height: 568 },
+    isMobile: true
+  });
+  await inspectPage(compactMobile, "mobile-320");
+  await isolateExternalImages(compactMobile);
+  await compactMobile.goto(baseUrl, { waitUntil: "domcontentloaded" });
+  await compactMobile.locator("[data-catalog-grid] .product-card").first().waitFor();
+  const compactOverflow = await compactMobile.evaluate(() =>
+    document.documentElement.scrollWidth > window.innerWidth
+  );
+  if (compactOverflow) failures.push("mobile-320: la portada desborda horizontalmente");
+  const compactCategoryColumns = await compactMobile
+    .locator("[data-category-grid]")
+    .evaluate((node) => getComputedStyle(node).gridTemplateColumns.split(" ").length);
+  if (compactCategoryColumns !== 1) {
+    failures.push(`mobile-320: las categorías usan ${compactCategoryColumns} columnas`);
+  }
+  if (!(await compactMobile.locator("[data-menu-toggle]").isVisible())) {
+    failures.push("mobile-320: el botón de menú no es visible");
+  }
+  if (!(await compactMobile.locator(".mobile-bottom-nav").isVisible())) {
+    failures.push("mobile-320: la navegación inferior no es visible");
+  }
+  await compactMobile.close();
 
   const architecture = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   await inspectPage(architecture, "arquitectura");
