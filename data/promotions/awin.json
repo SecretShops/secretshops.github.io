@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-28T16:30:44.875Z",
+  "generatedAt": "2026-07-29T13:27:00.036Z",
   "source": "Awin Offers API",
   "promotions": [
     {
@@ -248,7 +248,7 @@
       "exclusive": false,
       "attributable": false,
       "startAt": "2026-07-01T09:31:00.000Z",
-      "endAt": "2026-09-07T09:31:00.000Z",
+      "endAt": "2026-08-24T09:31:00.000Z",
       "regions": [
         "es",
         "fr"
