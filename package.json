@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build:catalog": "python scripts/build-product-families.py && node scripts/build-marketplace-catalog.mjs && node scripts/build-affiliate-links.mjs && node scripts/promote-eligible-regions.mjs && node scripts/build-regional-site.mjs",
-    "build:regions": "node scripts/build-affiliate-links.mjs && node scripts/promote-eligible-regions.mjs && node scripts/build-regional-site.mjs",
+    "build:catalog": "python scripts/build-product-families.py && node scripts/build-marketplace-catalog.mjs && node scripts/build-affiliate-links.mjs && node scripts/promote-eligible-regions.mjs && node scripts/build-regional-site.mjs && node scripts/build-variant-index.mjs",
+    "build:regions": "node scripts/build-affiliate-links.mjs && node scripts/promote-eligible-regions.mjs && node scripts/build-regional-site.mjs && node scripts/build-variant-index.mjs",
     "test": "node --test tests/*.test.mjs scripts/import-awin.test.mjs scripts/import-impact-shokz.test.mjs",
     "test:browser": "node tests/browser-smoke.mjs",
     "validate:catalog": "node scripts/validate-catalog.mjs && node scripts/audit-affiliate-links.mjs",
@@ -29,7 +29,8 @@
     "awin:bikila:import": "node scripts/import-awin.mjs data/sources/awin/bikila-es.csv.gz --merchant bikila-es",
     "catalog:prepared:check": "node scripts/import-prepared-catalog.mjs",
     "lounge:es:check": "node scripts/import-prepared-catalog.mjs data/sources/lounge-eu/lounge-es-catalogo-preparado.csv lounge-eu",
-    "lounge:pt:check": "node scripts/import-prepared-catalog.mjs data/sources/lounge-eu/lounge-pt-catalogo-preparado.csv lounge-eu"
+    "lounge:pt:check": "node scripts/import-prepared-catalog.mjs data/sources/lounge-eu/lounge-pt-catalogo-preparado.csv lounge-eu",
+    "build:variants": "node scripts/build-variant-index.mjs"
   },
   "engines": {
     "node": "^20.19.0 || >=22.12.0",

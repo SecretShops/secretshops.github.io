@@ -35,6 +35,12 @@ import {
   createTranslator,
   localizeCategory
 } from "./i18n.js";
+import {
+  buildVariantPresentation,
+  chooseVariantForAttribute,
+  variantLabels,
+  variantValueAvailable
+} from "./variant-system.js";
 
 const REGIONS_URL = "/data/config/regions.json";
 const TAXONOMY_URL = "/data/catalog/category-taxonomy.json";
@@ -1320,12 +1326,106 @@ function offerCardMarkup(offer, index) {
     </article>`;
 }
 
+function variantControlMarkup(presentation) {
+  if (!presentation) return "";
+  const labels = variantLabels(activeRegion.locale);
+  const groups = presentation.groups || [];
+  const availableSizes = presentation.availableSizes || [];
+  if (!groups.length && !availableSizes.length) return "";
+
+  const groupMarkup = groups.map((group) => {
+    if (group.type === "select") {
+      return `
+        <div class="variant-attribute-group" data-variant-group="${escapeHtml(group.key)}">
+          <label for="variant-${escapeHtml(group.key)}">${escapeHtml(group.label)}</label>
+          <select id="variant-${escapeHtml(group.key)}" data-variant-attribute-select="${escapeHtml(group.key)}">
+            ${group.values.map((item) => {
+              const available = variantValueAvailable(presentation, group.key, item.value);
+              return `<option value="${escapeHtml(item.value)}" ${item.selected ? "selected" : ""} ${available ? "" : "disabled"}>${escapeHtml(item.value)}</option>`;
+            }).join("")}
+          </select>
+        </div>`;
+    }
+
+    return `
+      <fieldset class="variant-attribute-group" data-variant-group="${escapeHtml(group.key)}">
+        <legend>${escapeHtml(group.label)}</legend>
+        <div class="variant-option-list ${group.type === "visual" ? "is-visual" : ""}">
+          ${group.values.map((item) => {
+            const available = variantValueAvailable(presentation, group.key, item.value);
+            const image = item.image ? publicAssetUrl(item.image) : "";
+            const style = item.swatch ? ` style="--variant-swatch:${escapeHtml(item.swatch)}"` : "";
+            return `
+              <button
+                class="variant-option ${group.type === "visual" ? "is-visual" : ""} ${item.selected ? "is-selected" : ""}"
+                type="button"
+                data-variant-attribute="${escapeHtml(group.key)}"
+                data-variant-value="${escapeHtml(item.value)}"
+                aria-pressed="${item.selected ? "true" : "false"}"
+                ${available ? "" : "disabled"}
+              >
+                ${group.type === "visual" ? `
+                  <span class="variant-option-visual"${style}>
+                    ${image ? `<img src="${escapeHtml(image)}" alt="" loading="lazy">` : ""}
+                  </span>` : ""}
+                <span>${escapeHtml(item.value)}</span>
+              </button>`;
+          }).join("")}
+        </div>
+      </fieldset>`;
+  }).join("");
+
+  const sizeMarkup = availableSizes.length ? `
+    <div class="variant-attribute-group is-informational">
+      <span class="variant-group-label">${escapeHtml(labels.availableSizes)}</span>
+      <div class="variant-option-list">
+        ${availableSizes.map((size) => `<span class="variant-option is-information">${escapeHtml(size)}</span>`).join("")}
+      </div>
+    </div>` : "";
+
+  return `
+    <section class="product-variant-configurator" aria-label="${escapeHtml(labels.choose)}">
+      ${groupMarkup}
+      ${sizeMarkup}
+    </section>`;
+}
+
+function variantAttributeDetails(presentation) {
+  const labels = variantLabels(activeRegion.locale);
+  const selected = presentation?.selected;
+  if (!selected) return [];
+  return Object.entries(selected._attributes || {})
+    .filter(([, value]) => value)
+    .map(([key, value]) => [labels[key] || key, value]);
+}
+
+function selectProductVariantAttribute(key, value) {
+  const family = familyById.get(state.selectedFamilyId);
+  if (!family) return;
+  const presentation = buildVariantPresentation(
+    family,
+    state.selectedVariantId,
+    activeRegion.locale
+  );
+  const next = chooseVariantForAttribute(presentation, key, value);
+  if (!next) return;
+  state.selectedImage = null;
+  renderProductDialog(family.id, next.id);
+}
+
 function renderProductDialog(familyId, preferredVariantId = null) {
   const family = familyById.get(familyId);
   if (!family) return;
-  const variant =
+  const initialVariant =
     family.variants.find((item) => item.id === preferredVariantId) ||
     family.variants[0];
+  const presentation = buildVariantPresentation(
+    family,
+    initialVariant?.id || null,
+    activeRegion.locale
+  );
+  const variant = presentation.selected || initialVariant;
+  if (!variant) return;
   state.selectedFamilyId = family.id;
   state.selectedVariantId = variant.id;
   const images = uniqueStrings([...variant.images, ...family.images]).slice(0, 8);
@@ -1335,7 +1435,7 @@ function renderProductDialog(familyId, preferredVariantId = null) {
     (offerTotal(left) ?? Infinity) - (offerTotal(right) ?? Infinity)
   );
   const best = offers[0] || null;
-  const attributes = variantAttributes(variant);
+  const attributes = variantAttributeDetails(presentation);
   const compared = state.compare.includes(family.id);
   const favorite = state.favorites.has(family.id);
   const related = relatedFamilies(families, family, 3);
@@ -1351,14 +1451,7 @@ function renderProductDialog(familyId, preferredVariantId = null) {
       <a class="offer-link product-buy-cta" href="${escapeHtml(offerRedirectPath(activeRegion.id, best.id))}" target="_blank" rel="nofollow sponsored noopener" data-outbound-offer="${escapeHtml(best.id)}">${escapeHtml(t("viewStoreOffer"))}</a>
     </section>` : "";
 
-  const variantControl = family.variants.length > 1 ? `
-    <div class="product-variant-control">
-      <label for="product-variant-select">${escapeHtml(t("exactOption"))}</label>
-      <select id="product-variant-select" data-select-variant-select>
-        ${family.variants.map((item) => `
-          <option value="${escapeHtml(item.id)}" ${item.id === variant.id ? "selected" : ""}>${escapeHtml(item.label)}</option>`).join("")}
-      </select>
-    </div>` : "";
+  const variantControl = variantControlMarkup(presentation);
 
   const offersMarkup = offers.length > 1 ? `
     <section class="detail-section product-offers-section" aria-labelledby="offers-title">
@@ -1839,6 +1932,13 @@ function wireEvents() {
   });
 
   document.addEventListener("change", (event) => {
+    if (event.target.matches("[data-variant-attribute-select]")) {
+      selectProductVariantAttribute(
+        event.target.dataset.variantAttributeSelect,
+        event.target.value
+      );
+      return;
+    }
     if (event.target.matches("[data-select-variant-select]")) {
       state.selectedImage = null;
       renderProductDialog(state.selectedFamilyId, event.target.value);
@@ -2044,6 +2144,15 @@ function wireEvents() {
     if (useSearch) {
       closeDialog($("#saved-dialog"));
       setQuery(useSearch.dataset.useSearch, { save: true, scroll: true });
+      return;
+    }
+
+    const variantAttribute = event.target.closest("[data-variant-attribute]");
+    if (variantAttribute) {
+      selectProductVariantAttribute(
+        variantAttribute.dataset.variantAttribute,
+        variantAttribute.dataset.variantValue
+      );
       return;
     }
 

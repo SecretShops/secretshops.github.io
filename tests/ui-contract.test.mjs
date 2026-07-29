@@ -18,6 +18,13 @@ const [html, css, app, staticJs, i18n, regionCore, regions, storeBranding, portu
   readFile(resolve(root, "assets/js/promotions.js"), "utf8")
 ]);
 
+const [variantSystem, variantIndexScript, variantAudit, variantManifest] = await Promise.all([
+  readFile(resolve(root, "assets/js/variant-system.js"), "utf8"),
+  readFile(resolve(root, "scripts/build-variant-index.mjs"), "utf8"),
+  readFile(resolve(root, "data/catalog/variant-control-audit.json"), "utf8"),
+  readFile(resolve(root, "data/catalog/variant-index/manifest.json"), "utf8")
+]);
+
 test("conserva la dirección visual y el texto aprobados", () => {
   assert.ok(html.includes("<h1>Encuentra el mejor precio</h1>"));
   assert.ok(html.includes("Busca productos, marcas o categorías"));
@@ -229,4 +236,50 @@ test("simplifica la ficha interior sin perder compra, variantes ni responsive", 
   for (const key of ["whereToBuy", "moreInformation", "fullDescription", "productOptions"]) {
     assert.ok(i18n.includes(key), key);
   }
+});
+
+
+test("las variantes se presentan por atributos reales y sin opciones genéricas", () => {
+  assert.ok(app.includes('from "./variant-system.js"'));
+  assert.ok(staticJs.includes('from "./variant-system.js"'));
+  for (const marker of [
+    "buildVariantPresentation",
+    "chooseVariantForAttribute",
+    "variantValueAvailable",
+    "bothBaskets",
+    "availableSizes",
+    "lengthFromToken"
+  ]) {
+    assert.ok(variantSystem.includes(marker), marker);
+  }
+  assert.ok(app.includes("data-variant-attribute"));
+  assert.ok(staticJs.includes("data-static-variant-attribute"));
+  assert.ok(css.includes(".product-variant-configurator"));
+  assert.ok(css.includes(".variant-option-list.is-visual"));
+  assert.ok(variantIndexScript.includes("const SHARDS = 32"));
+  const manifest = JSON.parse(variantManifest);
+  assert.equal(manifest.shards, 32);
+  assert.ok(manifest.familyCount >= 1600);
+});
+
+test("la auditoría revisa todos los productos con opciones y no deja atributos sin resolver", () => {
+  const audit = JSON.parse(variantAudit);
+  assert.ok(audit.summary.uniqueFamiliesReviewed >= 4500);
+  assert.ok(audit.summary.optionFamiliesReviewed >= 1600);
+  assert.equal(audit.summary.familiesWithoutIdentifiableAttribute, 0);
+  assert.ok(audit.summary.duplicatesGrouped >= 1000);
+  for (const key of ["size", "color", "style", "configuration", "length", "dimensions", "material"]) {
+    assert.ok(audit.summary.controlsByAttribute[key] > 0, key);
+  }
+});
+
+test("las tarjetas exteriores conservan imágenes legibles en móviles pequeños y tablets", () => {
+  assert.ok(css.includes("SecretShop — variantes comprensibles y tarjetas móviles visibles"));
+  assert.ok(css.includes("@media (max-width: 820px)"));
+  assert.ok(css.includes("min-height: 164px"));
+  assert.ok(css.includes("@media (max-width: 420px)"));
+  assert.ok(css.includes("min-height: 220px"));
+  assert.ok(css.includes("aspect-ratio: 4 / 3"));
+  assert.ok(css.includes("grid-template-columns: minmax(0, 1fr)"));
+  assert.ok(css.includes("object-fit: contain"));
 });

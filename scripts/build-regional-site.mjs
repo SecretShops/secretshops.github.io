@@ -376,7 +376,7 @@ function productPage(config, region, family, canonical) {
         <span aria-current="page">${html(title)}</span>
       </nav>
 
-      <article class="standalone-product">
+      <article class="standalone-product" data-family-id="${html(family.id)}">
         <div class="standalone-product-media">
           <img src="${html(publicAssetUrl(family.image))}" alt="${html(title)}" width="720" height="720">
         </div>

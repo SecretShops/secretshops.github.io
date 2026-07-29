@@ -91,6 +91,34 @@ def first_attribute(title: str, values: tuple[str, ...]) -> str | None:
     )
 
 
+
+
+def infer_size_from_mpn(value: Any) -> str | None:
+    text = str(value or "").strip()
+    if "." not in text:
+        return None
+    suffix = text.split(".", 1)[1]
+    suffix = re.sub(r"-(?:righ(?:t)?|lef(?:t)?)$", "", suffix, flags=re.I).strip()
+    if re.fullmatch(r"(?:XS|S|M|L|XL|XXL|XXXL|3XL|4XL|5XL|S/M|M/L|L/XL|XS/S)", suffix, re.I):
+        return suffix.upper()
+    if re.fullmatch(r"(?:3538|3942|4346|4750)", suffix):
+        return f"{suffix[:2]}–{suffix[2:]}"
+    numeric_range = re.fullmatch(r"(\d{1,2})[/-](\d{1,2})", suffix)
+    if numeric_range:
+        return f"{numeric_range.group(1)}–{numeric_range.group(2)}"
+    if re.fullmatch(r"\d{1,2}(?:\.\d)?", suffix):
+        return suffix
+    return None
+
+
+def infer_orientation_from_mpn(value: Any) -> str | None:
+    text = str(value or "").strip()
+    if re.search(r"-righ(?:t)?$", text, re.I):
+        return "derecha"
+    if re.search(r"-lef(?:t)?$", text, re.I):
+        return "izquierda"
+    return None
+
 def offer_total(offer: dict[str, Any]) -> float | None:
     if isinstance(offer.get("totalPrice"), (int, float)):
         return float(offer["totalPrice"])
@@ -228,10 +256,14 @@ def main() -> int:
             title = product["title"]
             attributes = product.get("attributes") or {}
             variant = product.get("variant") or {}
+            identifiers = product.get("identifiers") or {}
+            mpn = identifiers.get("mpn")
+            inferred_size = variant.get("size") or infer_size_from_mpn(mpn)
             color = variant.get("color") or first_attribute(title, COLORS)
-            orientation = variant.get("orientation") or first_attribute(
-                title,
-                ORIENTATIONS,
+            orientation = (
+                variant.get("orientation")
+                or infer_orientation_from_mpn(mpn)
+                or first_attribute(title, ORIENTATIONS)
             )
             dimensions = attributes.get("dimensions")
             material = attributes.get("specifications")
@@ -253,19 +285,20 @@ def main() -> int:
                     "id": product["id"],
                     "title": title,
                     "label": variant_label(
-                        product,
+                        {**product, "variant": {**variant, "size": inferred_size}},
                         color,
                         orientation,
                         dimensions,
                         material,
                     ),
                     "color": color,
-                    "size": variant.get("size"),
+                    "size": inferred_size,
                     "orientation": orientation,
                     "dimensions": dimensions,
                     "material": material,
                     "capacity": variant.get("capacity"),
                     "configuration": variant.get("configuration"),
+                    "mpn": mpn,
                     "images": (product.get("images") or [])[:5],
                     "offers": normalized_offers,
                 }

@@ -51,6 +51,25 @@ function duplicateValues(values) {
 }
 
 const files = await walk(root);
+const filePaths = new Set(files);
+const directoryPaths = new Set([root]);
+for (const file of files) {
+  let directory = dirname(file);
+  while (directory.startsWith(root) && !directoryPaths.has(directory)) {
+    directoryPaths.add(directory);
+    if (directory === root) break;
+    directory = dirname(directory);
+  }
+}
+
+function resolveKnownLocalTarget(baseDirectory, reference) {
+  let target = reference.startsWith("/")
+    ? resolve(root, `.${decodeURIComponent(reference)}`)
+    : resolve(baseDirectory, decodeURIComponent(reference));
+  if (directoryPaths.has(target)) target = resolve(target, "index.html");
+  return filePaths.has(target) ? target : null;
+}
+
 const htmlFiles = files.filter((path) => extname(path) === ".html");
 const cssFiles = files.filter((path) => extname(path) === ".css");
 const javascriptFiles = files.filter((path) => [".js", ".mjs"].includes(extname(path)));
@@ -78,16 +97,8 @@ for (const path of htmlFiles) {
   for (const match of html.matchAll(/\b(?:href|src)="([^"]+)"/g)) {
     const reference = localReference(match[1]);
     if (!reference) continue;
-    let target = reference.startsWith("/")
-      ? resolve(root, `.${decodeURIComponent(reference)}`)
-      : resolve(dirname(path), decodeURIComponent(reference));
-    if (await exists(target)) {
-      const targetStat = await stat(target);
-      if (targetStat.isDirectory()) target = resolve(target, "index.html");
-    }
-    if (!(await exists(target))) {
-      errors.push(`${name}: referencia local inexistente ${match[1]}`);
-    }
+    const target = resolveKnownLocalTarget(dirname(path), reference);
+    if (!target) errors.push(`${name}: referencia local inexistente ${match[1]}`);
   }
 }
 
@@ -100,17 +111,21 @@ for (const path of cssFiles) {
   for (const match of source.matchAll(/\burl\((["']?)([^"')]+)\1\)/g)) {
     const reference = localReference(match[2]);
     if (!reference) continue;
-    const target = resolve(dirname(path), decodeURIComponent(reference));
-    if (!(await exists(target))) errors.push(`${name}: recurso local inexistente ${match[2]}`);
+    const target = resolveKnownLocalTarget(dirname(path), reference);
+    if (!target) errors.push(`${name}: recurso local inexistente ${match[2]}`);
   }
 }
 
 for (const path of javascriptFiles) {
   const name = relative(root, path);
   const source = await readFile(path, "utf8");
-  for (const match of source.matchAll(/\bfrom\s+["'](\.[^"']+)["']/g)) {
-    const target = resolve(dirname(path), match[1]);
-    if (!(await exists(target))) errors.push(`${name}: import inexistente ${match[1]}`);
+  const references = [
+    ...source.matchAll(/^\s*(?:import|export)\s+[\s\S]{0,500}?\sfrom\s+["'](\.[^"']+)["']/gm),
+    ...source.matchAll(/^\s*import\s*["'](\.[^"']+)["']/gm)
+  ];
+  for (const match of references) {
+    const target = resolveKnownLocalTarget(dirname(path), match[1]);
+    if (!target) errors.push(`${name}: import inexistente ${match[1]}`);
   }
 }
 

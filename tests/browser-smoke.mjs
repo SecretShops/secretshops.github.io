@@ -227,7 +227,7 @@ try {
   const columns = await mobile.locator("[data-catalog-grid]").evaluate((node) =>
     getComputedStyle(node).gridTemplateColumns.split(" ").length
   );
-  if (columns !== 2) failures.push(`mobile: la cuadrícula usa ${columns} columnas`);
+  if (columns !== 1) failures.push(`mobile: la cuadrícula usa ${columns} columnas`);
   const homeCategoryColumns = await mobile.locator("[data-category-grid]").evaluate((node) =>
     getComputedStyle(node).gridTemplateColumns.split(" ").length
   );
@@ -240,6 +240,14 @@ try {
   const visibleMobileBottomActions = await mobile.locator(".mobile-bottom-nav > *:visible").count();
   if (visibleMobileBottomActions !== 5) {
     failures.push(`mobile: la navegación inferior visible contiene ${visibleMobileBottomActions} acciones`);
+  }
+  const mobileCardMedia = await mobile.locator("[data-catalog-grid] .product-media").first().evaluate((node) => {
+    const media = node.getBoundingClientRect();
+    const image = node.querySelector("img")?.getBoundingClientRect();
+    return { mediaWidth: media.width, mediaHeight: media.height, imageWidth: image?.width || 0, imageHeight: image?.height || 0 };
+  });
+  if (mobileCardMedia.mediaHeight < 220 || mobileCardMedia.imageWidth <= 0 || mobileCardMedia.imageHeight <= 0) {
+    failures.push("mobile: la imagen de la tarjeta exterior no tiene un tamaño legible");
   }
   if (await mobile.locator("[data-featured-grid]").isVisible()) {
     failures.push("mobile: la sección SecretScore sigue visible en la interfaz mínima");
@@ -362,6 +370,15 @@ try {
     document.querySelector("#product-dialog").getBoundingClientRect().right > window.innerWidth
   );
   if (tabletOverflow) failures.push("tablet: la ficha de producto desborda horizontalmente");
+  const tabletCardImage = await tablet.locator("[data-catalog-grid] .product-media img").first().evaluate((node) => {
+    const image = node.getBoundingClientRect();
+    const media = node.parentElement.getBoundingClientRect();
+    return { imageWidth: image.width, imageHeight: image.height, mediaWidth: media.width, mediaHeight: media.height };
+  });
+  if (Math.abs(tabletCardImage.imageWidth - tabletCardImage.mediaWidth) > 1 || Math.abs(tabletCardImage.imageHeight - tabletCardImage.mediaHeight) > 1) {
+    failures.push("tablet: la imagen exterior queda recortada o desborda su contenedor");
+  }
+
   await tablet.close();
 
   const compactMobile = await browser.newPage({
@@ -382,6 +399,14 @@ try {
   if (compactCategoryColumns !== 1) {
     failures.push(`mobile-320: las categorías usan ${compactCategoryColumns} columnas`);
   }
+  const compactCatalogColumns = await compactMobile
+    .locator("[data-catalog-grid]")
+    .evaluate((node) => getComputedStyle(node).gridTemplateColumns.split(" ").length);
+  if (compactCatalogColumns !== 1) {
+    failures.push(`mobile-320: el catálogo usa ${compactCatalogColumns} columnas`);
+  }
+  const compactMediaHeight = await compactMobile.locator("[data-catalog-grid] .product-media").first().evaluate((node) => node.getBoundingClientRect().height);
+  if (compactMediaHeight < 200) failures.push("mobile-320: la imagen de producto es demasiado pequeña");
   if (!(await compactMobile.locator("[data-menu-toggle]").isVisible())) {
     failures.push("mobile-320: el botón de menú no es visible");
   }

@@ -1,0 +1,169 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-29T11:41:44.149Z",
+  "shards": 32,
+  "familyCount": 1699,
+  "sourceCount": 34,
+  "files": [
+    {
+      "shard": "00",
+      "path": "/data/catalog/variant-index/00.json",
+      "families": 56
+    },
+    {
+      "shard": "01",
+      "path": "/data/catalog/variant-index/01.json",
+      "families": 51
+    },
+    {
+      "shard": "02",
+      "path": "/data/catalog/variant-index/02.json",
+      "families": 54
+    },
+    {
+      "shard": "03",
+      "path": "/data/catalog/variant-index/03.json",
+      "families": 54
+    },
+    {
+      "shard": "04",
+      "path": "/data/catalog/variant-index/04.json",
+      "families": 50
+    },
+    {
+      "shard": "05",
+      "path": "/data/catalog/variant-index/05.json",
+      "families": 58
+    },
+    {
+      "shard": "06",
+      "path": "/data/catalog/variant-index/06.json",
+      "families": 47
+    },
+    {
+      "shard": "07",
+      "path": "/data/catalog/variant-index/07.json",
+      "families": 52
+    },
+    {
+      "shard": "08",
+      "path": "/data/catalog/variant-index/08.json",
+      "families": 59
+    },
+    {
+      "shard": "09",
+      "path": "/data/catalog/variant-index/09.json",
+      "families": 49
+    },
+    {
+      "shard": "0a",
+      "path": "/data/catalog/variant-index/0a.json",
+      "families": 59
+    },
+    {
+      "shard": "0b",
+      "path": "/data/catalog/variant-index/0b.json",
+      "families": 56
+    },
+    {
+      "shard": "0c",
+      "path": "/data/catalog/variant-index/0c.json",
+      "families": 53
+    },
+    {
+      "shard": "0d",
+      "path": "/data/catalog/variant-index/0d.json",
+      "families": 39
+    },
+    {
+      "shard": "0e",
+      "path": "/data/catalog/variant-index/0e.json",
+      "families": 55
+    },
+    {
+      "shard": "0f",
+      "path": "/data/catalog/variant-index/0f.json",
+      "families": 45
+    },
+    {
+      "shard": "10",
+      "path": "/data/catalog/variant-index/10.json",
+      "families": 56
+    },
+    {
+      "shard": "11",
+      "path": "/data/catalog/variant-index/11.json",
+      "families": 63
+    },
+    {
+      "shard": "12",
+      "path": "/data/catalog/variant-index/12.json",
+      "families": 64
+    },
+    {
+      "shard": "13",
+      "path": "/data/catalog/variant-index/13.json",
+      "families": 55
+    },
+    {
+      "shard": "14",
+      "path": "/data/catalog/variant-index/14.json",
+      "families": 54
+    },
+    {
+      "shard": "15",
+      "path": "/data/catalog/variant-index/15.json",
+      "families": 50
+    },
+    {
+      "shard": "16",
+      "path": "/data/catalog/variant-index/16.json",
+      "families": 52
+    },
+    {
+      "shard": "17",
+      "path": "/data/catalog/variant-index/17.json",
+      "families": 68
+    },
+    {
+      "shard": "18",
+      "path": "/data/catalog/variant-index/18.json",
+      "families": 41
+    },
+    {
+      "shard": "19",
+      "path": "/data/catalog/variant-index/19.json",
+      "families": 56
+    },
+    {
+      "shard": "1a",
+      "path": "/data/catalog/variant-index/1a.json",
+      "families": 43
+    },
+    {
+      "shard": "1b",
+      "path": "/data/catalog/variant-index/1b.json",
+      "families": 46
+    },
+    {
+      "shard": "1c",
+      "path": "/data/catalog/variant-index/1c.json",
+      "families": 54
+    },
+    {
+      "shard": "1d",
+      "path": "/data/catalog/variant-index/1d.json",
+      "families": 57
+    },
+    {
+      "shard": "1e",
+      "path": "/data/catalog/variant-index/1e.json",
+      "families": 51
+    },
+    {
+      "shard": "1f",
+      "path": "/data/catalog/variant-index/1f.json",
+      "families": 52
+    }
+  ]
+}
