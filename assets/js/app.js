@@ -1224,6 +1224,9 @@ function toggleFavorite(familyId) {
   }
   persistPersonalState();
   refreshCardsAndCatalog();
+  if ($("#product-dialog")?.open && state.selectedFamilyId === familyId) {
+    renderProductDialog(familyId, state.selectedVariantId);
+  }
   if ($("#saved-dialog")?.open) renderSavedContent();
 }
 
@@ -1305,15 +1308,15 @@ function offerCardMarkup(offer, index) {
   const href = offerRedirectPath(activeRegion.id, offer.id);
   return `
     <article class="offer-card ${index === 0 ? "is-best" : ""}">
-      <div>
+      <div class="offer-card-store">
         <strong>${escapeHtml(offer.merchantName)}</strong>
-        <small>${bestPriceNote(offer, index) || escapeHtml(activeRegion.name)}</small>
+        <small>${bestPriceNote(offer, index) || escapeHtml(availabilityLabel(offer.availability))}</small>
       </div>
-      <div>
+      <div class="offer-card-price">
         <strong>${escapeHtml(displayOfferPrice(offer))}</strong>
-        <small>${escapeHtml(t("shipping", { value: shippingLabel(offer) }))}</small>
+        <small>${escapeHtml(shippingLabel(offer))}</small>
       </div>
-      <a class="offer-link" href="${escapeHtml(href)}" target="_blank" rel="nofollow sponsored noopener" data-outbound-offer="${escapeHtml(offer.id)}">${escapeHtml(t("viewStoreOffer"))}</a>
+      <a class="offer-link" href="${escapeHtml(href)}" target="_blank" rel="nofollow sponsored noopener" data-outbound-offer="${escapeHtml(offer.id)}">${escapeHtml(t("viewOffer"))}</a>
     </article>`;
 }
 
@@ -1331,17 +1334,44 @@ function renderProductDialog(familyId, preferredVariantId = null) {
   const offers = [...variant.offers].sort((left, right) =>
     (offerTotal(left) ?? Infinity) - (offerTotal(right) ?? Infinity)
   );
-  const best = offers[0];
+  const best = offers[0] || null;
   const attributes = variantAttributes(variant);
   const compared = state.compare.includes(family.id);
   const favorite = state.favorites.has(family.id);
-  const hiddenVariantCount = Math.max(0, family.variants.length - 10);
   const related = relatedFamilies(families, family, 3);
   const content = $("[data-product-content]");
 
+  const purchaseSummary = best ? `
+    <section class="product-buy-summary" aria-label="${escapeHtml(t("bestPrice"))}">
+      <div class="product-buy-copy">
+        <span class="product-buy-label">${escapeHtml(t("bestPrice"))}</span>
+        <strong class="product-buy-price">${escapeHtml(displayOfferPrice(best))}</strong>
+        <span class="product-buy-store">${escapeHtml(best.merchantName)}</span>
+      </div>
+      <a class="offer-link product-buy-cta" href="${escapeHtml(offerRedirectPath(activeRegion.id, best.id))}" target="_blank" rel="nofollow sponsored noopener" data-outbound-offer="${escapeHtml(best.id)}">${escapeHtml(t("viewStoreOffer"))}</a>
+    </section>` : "";
+
+  const variantControl = family.variants.length > 1 ? `
+    <div class="product-variant-control">
+      <label for="product-variant-select">${escapeHtml(t("exactOption"))}</label>
+      <select id="product-variant-select" data-select-variant-select>
+        ${family.variants.map((item) => `
+          <option value="${escapeHtml(item.id)}" ${item.id === variant.id ? "selected" : ""}>${escapeHtml(item.label)}</option>`).join("")}
+      </select>
+    </div>` : "";
+
+  const offersMarkup = offers.length > 1 ? `
+    <section class="detail-section product-offers-section" aria-labelledby="offers-title">
+      <div class="detail-section-head">
+        <h3 id="offers-title">${escapeHtml(t("compareOffers"))}</h3>
+        <span>${escapeHtml(t("offerCount", { count: offers.length }))}</span>
+      </div>
+      <div class="offer-cards">${offers.map(offerCardMarkup).join("")}</div>
+    </section>` : "";
+
   content.innerHTML = `
     <button class="modal-close product-close" type="button" data-close-product aria-label="${escapeHtml(t("close"))}">×</button>
-    <article class="product-detail">
+    <article class="product-detail product-detail-simplified">
       <div class="detail-media">
         <div class="detail-main-image">
           <button type="button" data-open-image="${escapeHtml(state.selectedImage)}" aria-label="${escapeHtml(t("enlargeImage"))}">
@@ -1359,80 +1389,55 @@ function renderProductDialog(familyId, preferredVariantId = null) {
       <div class="detail-content">
         <div class="detail-topbar">
           <span class="breadcrumbs">${escapeHtml(t("home"))} / ${escapeHtml(localizeCategory(family.primaryGroup, activeRegion.locale))} / ${escapeHtml(family.brand)}</span>
-          <div class="detail-actions">
-            <button type="button" data-toggle-favorite="${escapeHtml(family.id)}">${favorite ? `♥ ${escapeHtml(t("saved"))}` : `♡ ${escapeHtml(t("favorite"))}`}</button>
-            <button type="button" data-toggle-compare="${escapeHtml(family.id)}">${compared ? `✓ ${escapeHtml(t("comparing"))}` : `⇄ ${escapeHtml(t("compare"))}`}</button>
-          </div>
+          <button class="product-favorite-button" type="button" data-toggle-favorite="${escapeHtml(family.id)}">${favorite ? `♥ ${escapeHtml(t("saved"))}` : `♡ ${escapeHtml(t("favorite"))}`}</button>
         </div>
         <h2 id="product-title">${escapeHtml(family.title)}</h2>
-        <div class="detail-summary">
-          <span class="score">SecretScore ${family.secretScore.toFixed(1)}</span>
-          <span>${escapeHtml(family.variantCount === 1 ? t("oneOption") : t("options", { count: formatter.format(family.variantCount) }))}</span>
-          <span>${escapeHtml(activeRegion.name)}</span>
-        </div>
         ${variant.title !== family.title ? `<p class="detail-variant-title">${escapeHtml(variant.title)}</p>` : ""}
-        <p class="detail-description">${escapeHtml(family.description)}</p>
+        ${purchaseSummary}
+        ${variantControl}
+        <p class="product-description-preview">${escapeHtml(family.description)}</p>
+        ${offersMarkup}
 
-        <section class="detail-section" aria-labelledby="variants-title">
-          <div class="detail-section-head">
-            <h3 id="variants-title">${escapeHtml(t("exactOption"))}</h3>
-            <span>${formatter.format(family.variantCount)} ${escapeHtml(family.variantCount === 1 ? t("availableSingular") : t("availablePlural"))}</span>
-          </div>
-          <div class="variant-list">
-            ${family.variants.map((item, index) => `
-              <button
-                class="variant-chip ${item.id === variant.id ? "is-active" : ""} ${index >= 10 ? "extra-variant" : ""}"
-                type="button"
-                data-select-variant="${escapeHtml(item.id)}"
-                ${index >= 10 ? "hidden" : ""}
-              >${escapeHtml(item.label)}</button>`).join("")}
-            ${hiddenVariantCount ? `<button class="variant-chip" type="button" data-show-all-variants>${escapeHtml(t("viewMore", { count: hiddenVariantCount }))}</button>` : ""}
-          </div>
-        </section>
+        <div class="product-accordions">
+          <details class="product-accordion">
+            <summary>${escapeHtml(t("fullDescription"))}</summary>
+            <div class="product-accordion-body">
+              <p>${escapeHtml(family.description)}</p>
+            </div>
+          </details>
 
-        <section class="detail-section" aria-labelledby="offers-title">
-          <div class="detail-section-head">
-            <h3 id="offers-title">${escapeHtml(offers.length === 1 ? t("oneAvailableOffer") : t("compareOffers"))}</h3>
-            <span>${escapeHtml(offers.length === 1 ? t("oneStore") : t("offerCount", { count: offers.length }))}</span>
-          </div>
-          ${offers.length === 1 ? `
-            <div class="offer-highlight">
-              <div>
-                <p>${escapeHtml(best.merchantName)} · ${escapeHtml(activeRegion.name)}</p>
-                <strong class="offer-main-price">${escapeHtml(displayOfferPrice(best))}</strong>
-                <small>${escapeHtml(shippingDetailLabel(best))} · ${escapeHtml(availabilityLabel(best.availability))}</small>
+          ${attributes.length ? `
+            <details class="product-accordion">
+              <summary>${escapeHtml(t("optionFeatures"))}</summary>
+              <div class="product-accordion-body">
+                <dl class="attribute-grid">
+                  ${attributes.map(([label, value]) => `<div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`).join("")}
+                </dl>
               </div>
-              <a class="offer-link" href="${escapeHtml(offerRedirectPath(activeRegion.id, best.id))}" target="_blank" rel="nofollow sponsored noopener" data-outbound-offer="${escapeHtml(best.id)}">${escapeHtml(t("viewOffer"))}</a>
-            </div>` : `
-            <div class="offer-table-wrap">
-              <table class="offer-table">
-                <thead><tr><th>${escapeHtml(t("store"))}</th><th>${escapeHtml(t("price"))}</th><th>${escapeHtml(t("shippingColumn"))}</th><th>${escapeHtml(t("availability"))}</th><th>${escapeHtml(t("action"))}</th></tr></thead>
-                <tbody>${offers.map(offerRowMarkup).join("")}</tbody>
-              </table>
-            </div>
-            <div class="offer-cards">${offers.map(offerCardMarkup).join("")}</div>`}
-          <p class="detail-disclosure">${escapeHtml(t("storePriceDisclosure"))}</p>
-        </section>
+            </details>` : ""}
 
-        ${attributes.length ? `
-          <section class="detail-section" aria-labelledby="attributes-title">
-            <div class="detail-section-head"><h3 id="attributes-title">${escapeHtml(t("optionFeatures"))}</h3></div>
-            <dl class="attribute-grid">
-              ${attributes.map(([label, value]) => `<div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`).join("")}
-            </dl>
-          </section>` : ""}
-
-        ${related.length ? `
-          <section class="detail-section" aria-labelledby="related-title">
-            <div class="detail-section-head"><h3 id="related-title">${escapeHtml(t("similarAlternatives"))}</h3><span>${escapeHtml(t("notSameProduct"))}</span></div>
-            <div class="detail-related">
-              ${related.map((item) => `
-                <a href="${escapeHtml(familyHref(item))}" data-open-family="${escapeHtml(item.id)}">
-                  <img src="${escapeHtml(publicAssetUrl(item.image))}" alt="">
-                  <span>${escapeHtml(item.title)}</span>
-                </a>`).join("")}
+          <details class="product-accordion">
+            <summary>${escapeHtml(t("moreInformation"))}</summary>
+            <div class="product-accordion-body product-secondary-information">
+              <p class="detail-disclosure">${escapeHtml(t("storePriceDisclosure"))}</p>
+              <button type="button" data-toggle-compare="${escapeHtml(family.id)}">${compared ? `✓ ${escapeHtml(t("comparing"))}` : `⇄ ${escapeHtml(t("compare"))}`}</button>
             </div>
-          </section>` : ""}
+          </details>
+
+          ${related.length ? `
+            <details class="product-accordion">
+              <summary>${escapeHtml(t("similarAlternatives"))}</summary>
+              <div class="product-accordion-body">
+                <div class="detail-related">
+                  ${related.map((item) => `
+                    <a href="${escapeHtml(familyHref(item))}" data-open-family="${escapeHtml(item.id)}">
+                      <img src="${escapeHtml(publicAssetUrl(item.image))}" alt="">
+                      <span>${escapeHtml(item.title)}</span>
+                    </a>`).join("")}
+                </div>
+              </div>
+            </details>` : ""}
+        </div>
       </div>
     </article>
     <div class="image-viewer" data-image-viewer hidden>
@@ -1834,6 +1839,11 @@ function wireEvents() {
   });
 
   document.addEventListener("change", (event) => {
+    if (event.target.matches("[data-select-variant-select]")) {
+      state.selectedImage = null;
+      renderProductDialog(state.selectedFamilyId, event.target.value);
+      return;
+    }
     if (event.target.matches("[data-filter-category]")) {
       if (event.target.value === "all") {
         state.category = "all";

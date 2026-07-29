@@ -136,6 +136,19 @@ try {
     failures.push("desktop: la ficha no usa una URL de producto real");
   }
   await desktop.locator("#product-dialog .offer-link").first().waitFor();
+  if (!(await desktop.locator("#product-dialog .product-buy-summary").isVisible())) {
+    failures.push("desktop: la ficha no muestra primero el precio y la mejor oferta");
+  }
+  if (await desktop.locator("#product-dialog .detail-summary").count()) {
+    failures.push("desktop: la ficha conserva el resumen antiguo con demasiadas señales");
+  }
+  if (await desktop.locator("#product-dialog .offer-table").count()) {
+    failures.push("desktop: la ficha conserva la tabla extensa de ofertas");
+  }
+  const desktopProductAccordions = await desktop.locator("#product-dialog .product-accordion").count();
+  if (desktopProductAccordions < 2) {
+    failures.push(`desktop: la ficha solo contiene ${desktopProductAccordions} bloques desplegables`);
+  }
   const outbound = await desktop.locator("#product-dialog .offer-link").first().getAttribute("href");
   if (!outbound?.startsWith("/go.html?region=es&offer=")) {
     failures.push("desktop: la oferta no usa el redirector regional validado");
@@ -241,12 +254,27 @@ try {
 
   await mobile.locator("[data-catalog-grid] .product-card-hit").first().click();
   await mobile.locator("#product-dialog[open]").waitFor();
-  const mobileOverflow = await mobile.evaluate(() =>
-    document.documentElement.scrollWidth > window.innerWidth ||
-    document.querySelector("#product-dialog").scrollWidth >
-      document.querySelector("#product-dialog").clientWidth
-  );
-  if (mobileOverflow) failures.push("mobile: la ficha de producto desborda horizontalmente");
+  const mobileProductLayout = await mobile.evaluate(() => {
+    const dialog = document.querySelector("#product-dialog");
+    const image = document.querySelector("#product-dialog .detail-main-image img")?.getBoundingClientRect();
+    const title = document.querySelector("#product-dialog h2")?.getBoundingClientRect();
+    const cta = document.querySelector("#product-dialog .product-buy-cta")?.getBoundingClientRect();
+    return {
+      overflow:
+        document.documentElement.scrollWidth > window.innerWidth ||
+        dialog.scrollWidth > dialog.clientWidth,
+      imageRight: image?.right || 0,
+      titleRight: title?.right || 0,
+      ctaHeight: cta?.height || 0
+    };
+  });
+  if (mobileProductLayout.overflow) failures.push("mobile: la ficha de producto desborda horizontalmente");
+  if (mobileProductLayout.imageRight > 390 || mobileProductLayout.titleRight > 390) {
+    failures.push("mobile: la imagen o el título salen del ancho visible");
+  }
+  if (mobileProductLayout.ctaHeight < 42) {
+    failures.push("mobile: el botón principal de compra es demasiado pequeño");
+  }
   await mobile.locator("#product-dialog [data-close-product]").click();
 
   await mobile.locator("[data-catalog-sentinel]").scrollIntoViewIfNeeded();
@@ -437,7 +465,14 @@ try {
   }
 
   await architecture.goto(new URL(productPathname, baseUrl).href, { waitUntil: "domcontentloaded" });
-  await architecture.locator(".standalone-product").waitFor();
+  await architecture.locator(".standalone-product-simplified .product-buy-summary").waitFor();
+  if (await architecture.locator(".standalone-product-content > .detail-summary").count()) {
+    failures.push("arquitectura: la ficha estática conserva el resumen visual antiguo");
+  }
+  const staticAccordions = await architecture.locator(".standalone-product-simplified .product-accordion").count();
+  if (staticAccordions < 1) {
+    failures.push("arquitectura: la ficha estática no agrupa la información secundaria");
+  }
   const canonical = await architecture.locator('link[rel="canonical"]').getAttribute("href");
   if (!canonical?.endsWith(productPathname)) {
     failures.push("arquitectura: la ficha estática no tiene un canonical propio");

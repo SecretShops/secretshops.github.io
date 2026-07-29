@@ -4,10 +4,11 @@ import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 
 const root = resolve(import.meta.dirname, "..");
-const [html, css, app, i18n, regionCore, regions, storeBranding, portugalHome, promotionsHtml, promotionsJs] = await Promise.all([
+const [html, css, app, staticJs, i18n, regionCore, regions, storeBranding, portugalHome, promotionsHtml, promotionsJs] = await Promise.all([
   readFile(resolve(root, "index.html"), "utf8"),
   readFile(resolve(root, "assets/css/app.css"), "utf8"),
   readFile(resolve(root, "assets/js/app.js"), "utf8"),
+  readFile(resolve(root, "assets/js/static.js"), "utf8"),
   readFile(resolve(root, "assets/js/i18n.js"), "utf8"),
   readFile(resolve(root, "assets/js/region-core.js"), "utf8"),
   readFile(resolve(root, "data/config/regions.json"), "utf8"),
@@ -18,13 +19,16 @@ const [html, css, app, i18n, regionCore, regions, storeBranding, portugalHome, p
 ]);
 
 test("conserva la dirección visual y el texto aprobados", () => {
-  assert.ok(html.includes("Compara antes de comprar. <span>Decide mejor.</span>"));
+  assert.ok(html.includes("<h1>Encuentra el mejor precio</h1>"));
   assert.ok(html.includes("Busca productos, marcas o categorías"));
   assert.ok(html.includes("Podemos recibir una comisión por algunas compras, sin coste adicional para ti."));
   assert.ok(css.includes("--brand-primary: #1f1f1f"));
   assert.ok(css.includes("--brand-secondary: #fee97d"));
   assert.ok(html.includes("secretshop-logo-compact.png"));
   assert.ok(html.includes("secretshop-logo-original.png"));
+  assert.ok(html.includes('<a href="/promociones/" data-region-promotions>'));
+  assert.ok(html.includes("data-theme-toggle"));
+  assert.ok(css.includes("grid-template-columns: repeat(5, 1fr)"));
 });
 
 test("incluye la estructura funcional definitiva", () => {
@@ -209,4 +213,20 @@ test("todos los diálogos tienen nombre accesible", () => {
   const dialogs = [...html.matchAll(/<dialog\b([^>]*)>/g)].map((match) => match[1]);
   assert.ok(dialogs.length >= 5);
   assert.ok(dialogs.every((attributes) => /aria-(?:label|labelledby)=/.test(attributes)));
+});
+
+
+test("simplifica la ficha interior sin perder compra, variantes ni responsive", () => {
+  assert.ok(app.includes('class="product-buy-summary"'));
+  assert.ok(app.includes("data-select-variant-select"));
+  assert.ok(app.includes('class="product-accordion"'));
+  assert.equal(app.includes('class="offer-table"'), false);
+  assert.ok(staticJs.includes("enhanceStandaloneProduct"));
+  assert.ok(staticJs.includes("standalone-product-simplified"));
+  assert.ok(css.includes("SecretShop — ficha de producto simplificada y adaptable"));
+  assert.ok(css.includes("@media (min-width: 821px) and (max-width: 1080px)"));
+  assert.ok(css.includes("@media (max-width: 380px)"));
+  for (const key of ["whereToBuy", "moreInformation", "fullDescription", "productOptions"]) {
+    assert.ok(i18n.includes(key), key);
+  }
 });

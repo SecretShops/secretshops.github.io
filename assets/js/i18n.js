@@ -55,6 +55,10 @@ const UI = {
     availableOffers: "Ofertas disponibles",
     totalForRegion: "{count} para {region}",
     storePriceDisclosure: "El precio, el envío y la disponibilidad definitivos se confirman en la tienda. El enlace puede generar una comisión sin coste adicional.",
+    whereToBuy: "Dónde comprar",
+    moreInformation: "Más información",
+    fullDescription: "Descripción completa",
+    productOptions: "Opciones del producto",
     searchesEmptyTitle: "Aún no hay búsquedas guardadas",
     searchesEmptyText: "Las últimas búsquedas quedan solo en este dispositivo.",
     favoritesEmpty: "No has guardado favoritos",
@@ -204,6 +208,10 @@ const UI = {
     availableOffers: "Ofertas disponíveis",
     totalForRegion: "{count} para {region}",
     storePriceDisclosure: "O preço, o envio e a disponibilidade finais são confirmados na loja. A ligação pode gerar uma comissão sem custos adicionais.",
+    whereToBuy: "Onde comprar",
+    moreInformation: "Mais informações",
+    fullDescription: "Descrição completa",
+    productOptions: "Opções do produto",
     searchesEmptyTitle: "Ainda não há pesquisas guardadas",
     searchesEmptyText: "As últimas pesquisas ficam apenas neste dispositivo.",
     favoritesEmpty: "Ainda não guardou favoritos",
@@ -521,6 +529,7 @@ const CORE_LOCALES = {
     available: "Available", close: "Close", changeCountry: "Change country", darkMode: "Dark mode",
     lightMode: "Light mode", offers: "Offers", exploreProducts: "Explore products",
     viewCategories: "View categories", compareBefore: "Compare before you buy.", decide: "Choose better.",
+    whereToBuy: "Where to buy", moreInformation: "More information", fullDescription: "Full description", productOptions: "Product options",
     methodology: "Methodology", affiliation: "Affiliation", privacy: "Privacy"
   },
   fr: {
@@ -532,6 +541,7 @@ const CORE_LOCALES = {
     available: "Disponible", close: "Fermer", changeCountry: "Changer de pays", darkMode: "Mode sombre",
     lightMode: "Mode clair", offers: "Offres", exploreProducts: "Explorer les produits",
     viewCategories: "Voir les catégories", compareBefore: "Comparez avant d’acheter.", decide: "Décidez mieux.",
+    whereToBuy: "Où acheter", moreInformation: "Plus d’informations", fullDescription: "Description complète", productOptions: "Options du produit",
     methodology: "Méthodologie", affiliation: "Affiliation", privacy: "Confidentialité"
   },
   de: {
@@ -543,6 +553,7 @@ const CORE_LOCALES = {
     available: "Verfügbar", close: "Schließen", changeCountry: "Land ändern", darkMode: "Dunkler Modus",
     lightMode: "Heller Modus", offers: "Angebote", exploreProducts: "Produkte entdecken",
     viewCategories: "Kategorien ansehen", compareBefore: "Vor dem Kauf vergleichen.", decide: "Besser entscheiden.",
+    whereToBuy: "Wo kaufen", moreInformation: "Weitere Informationen", fullDescription: "Vollständige Beschreibung", productOptions: "Produktoptionen",
     methodology: "Methodik", affiliation: "Affiliate-Information", privacy: "Datenschutz"
   },
   it: {
@@ -554,6 +565,7 @@ const CORE_LOCALES = {
     available: "Disponibile", close: "Chiudi", changeCountry: "Cambia paese", darkMode: "Modalità scura",
     lightMode: "Modalità chiara", offers: "Offerte", exploreProducts: "Esplora i prodotti",
     viewCategories: "Vedi categorie", compareBefore: "Confronta prima di acquistare.", decide: "Scegli meglio.",
+    whereToBuy: "Dove acquistare", moreInformation: "Altre informazioni", fullDescription: "Descrizione completa", productOptions: "Opzioni del prodotto",
     methodology: "Metodologia", affiliation: "Affiliazione", privacy: "Privacy"
   },
   nl: {
@@ -565,6 +577,7 @@ const CORE_LOCALES = {
     available: "Beschikbaar", close: "Sluiten", changeCountry: "Land wijzigen", darkMode: "Donkere modus",
     lightMode: "Lichte modus", offers: "Aanbiedingen", exploreProducts: "Producten bekijken",
     viewCategories: "Categorieën bekijken", compareBefore: "Vergelijk vóór je koopt.", decide: "Kies beter.",
+    whereToBuy: "Waar te koop", moreInformation: "Meer informatie", fullDescription: "Volledige beschrijving", productOptions: "Productopties",
     methodology: "Methodologie", affiliation: "Affiliate-informatie", privacy: "Privacy"
   },
   fi: {
@@ -576,6 +589,7 @@ const CORE_LOCALES = {
     available: "Saatavilla", close: "Sulje", changeCountry: "Vaihda maata", darkMode: "Tumma tila",
     lightMode: "Vaalea tila", offers: "Tarjoukset", exploreProducts: "Selaa tuotteita",
     viewCategories: "Näytä tuoteryhmät", compareBefore: "Vertaa ennen ostamista.", decide: "Valitse paremmin.",
+    whereToBuy: "Mistä ostaa", moreInformation: "Lisätiedot", fullDescription: "Täydellinen kuvaus", productOptions: "Tuotevaihtoehdot",
     methodology: "Menetelmä", affiliation: "Kumppanuus", privacy: "Tietosuoja"
   },
   sk: {
@@ -587,6 +601,7 @@ const CORE_LOCALES = {
     available: "Dostupné", close: "Zavrieť", changeCountry: "Zmeniť krajinu", darkMode: "Tmavý režim",
     lightMode: "Svetlý režim", offers: "Ponuky", exploreProducts: "Preskúmať produkty",
     viewCategories: "Zobraziť kategórie", compareBefore: "Porovnajte pred nákupom.", decide: "Rozhodnite sa lepšie.",
+    whereToBuy: "Kde kúpiť", moreInformation: "Viac informácií", fullDescription: "Úplný popis", productOptions: "Možnosti produktu",
     methodology: "Metodika", affiliation: "Affiliate program", privacy: "Súkromie"
   },
   lv: {
@@ -598,6 +613,7 @@ const CORE_LOCALES = {
     available: "Pieejams", close: "Aizvērt", changeCountry: "Mainīt valsti", darkMode: "Tumšais režīms",
     lightMode: "Gaišais režīms", offers: "Piedāvājumi", exploreProducts: "Apskatīt produktus",
     viewCategories: "Skatīt kategorijas", compareBefore: "Salīdzini pirms pirkuma.", decide: "Izvēlies labāk.",
+    whereToBuy: "Kur iegādāties", moreInformation: "Papildu informācija", fullDescription: "Pilns apraksts", productOptions: "Produkta varianti",
     methodology: "Metodika", affiliation: "Partnerība", privacy: "Privātums"
   },
   lt: {
@@ -609,6 +625,7 @@ const CORE_LOCALES = {
     available: "Yra", close: "Uždaryti", changeCountry: "Keisti šalį", darkMode: "Tamsus režimas",
     lightMode: "Šviesus režimas", offers: "Pasiūlymai", exploreProducts: "Naršyti produktus",
     viewCategories: "Žiūrėti kategorijas", compareBefore: "Palyginkite prieš pirkdami.", decide: "Rinkitės geriau.",
+    whereToBuy: "Kur pirkti", moreInformation: "Daugiau informacijos", fullDescription: "Išsamus aprašymas", productOptions: "Produkto parinktys",
     methodology: "Metodika", affiliation: "Partnerystė", privacy: "Privatumas"
   },
   mt: {
@@ -620,6 +637,7 @@ const CORE_LOCALES = {
     available: "Disponibbli", close: "Agħlaq", changeCountry: "Ibdel il-pajjiż", darkMode: "Mod skur",
     lightMode: "Mod ċar", offers: "Offerti", exploreProducts: "Esplora l-prodotti",
     viewCategories: "Ara l-kategoriji", compareBefore: "Qabbel qabel tixtri.", decide: "Agħżel aħjar.",
+    whereToBuy: "Minn fejn tixtri", moreInformation: "Aktar informazzjoni", fullDescription: "Deskrizzjoni sħiħa", productOptions: "Għażliet tal-prodott",
     methodology: "Metodoloġija", affiliation: "Affiljazzjoni", privacy: "Privatezza"
   },
   et: {
@@ -631,6 +649,7 @@ const CORE_LOCALES = {
     available: "Saadaval", close: "Sulge", changeCountry: "Muuda riiki", darkMode: "Tume režiim",
     lightMode: "Hele režiim", offers: "Pakkumised", exploreProducts: "Sirvi tooteid",
     viewCategories: "Vaata kategooriaid", compareBefore: "Võrdle enne ostmist.", decide: "Vali paremini.",
+    whereToBuy: "Kust osta", moreInformation: "Lisateave", fullDescription: "Täielik kirjeldus", productOptions: "Toote valikud",
     methodology: "Metoodika", affiliation: "Partnerlus", privacy: "Privaatsus"
   },
   sl: {
@@ -642,6 +661,7 @@ const CORE_LOCALES = {
     available: "Na voljo", close: "Zapri", changeCountry: "Spremeni državo", darkMode: "Temni način",
     lightMode: "Svetli način", offers: "Ponudbe", exploreProducts: "Razišči izdelke",
     viewCategories: "Poglej kategorije", compareBefore: "Primerjajte pred nakupom.", decide: "Izberite bolje.",
+    whereToBuy: "Kje kupiti", moreInformation: "Več informacij", fullDescription: "Celoten opis", productOptions: "Možnosti izdelka",
     methodology: "Metodologija", affiliation: "Partnerstvo", privacy: "Zasebnost"
   },
   hr: {
@@ -653,6 +673,7 @@ const CORE_LOCALES = {
     available: "Dostupno", close: "Zatvori", changeCountry: "Promijeni zemlju", darkMode: "Tamni način",
     lightMode: "Svijetli način", offers: "Ponude", exploreProducts: "Istraži proizvode",
     viewCategories: "Pogledaj kategorije", compareBefore: "Usporedite prije kupnje.", decide: "Odaberite bolje.",
+    whereToBuy: "Gdje kupiti", moreInformation: "Više informacija", fullDescription: "Potpuni opis", productOptions: "Opcije proizvoda",
     methodology: "Metodologija", affiliation: "Partnerstvo", privacy: "Privatnost"
   },
   el: {
@@ -664,6 +685,7 @@ const CORE_LOCALES = {
     available: "Διαθέσιμο", close: "Κλείσιμο", changeCountry: "Αλλαγή χώρας", darkMode: "Σκοτεινή λειτουργία",
     lightMode: "Φωτεινή λειτουργία", offers: "Προσφορές", exploreProducts: "Εξερεύνηση προϊόντων",
     viewCategories: "Προβολή κατηγοριών", compareBefore: "Συγκρίνετε πριν αγοράσετε.", decide: "Επιλέξτε καλύτερα.",
+    whereToBuy: "Πού θα το αγοράσετε", moreInformation: "Περισσότερες πληροφορίες", fullDescription: "Πλήρης περιγραφή", productOptions: "Επιλογές προϊόντος",
     methodology: "Μεθοδολογία", affiliation: "Συνεργασία", privacy: "Απόρρητο"
   },
   bg: {
@@ -675,6 +697,7 @@ const CORE_LOCALES = {
     available: "Налично", close: "Затвори", changeCountry: "Смени държавата", darkMode: "Тъмен режим",
     lightMode: "Светъл режим", offers: "Оферти", exploreProducts: "Разгледай продуктите",
     viewCategories: "Виж категориите", compareBefore: "Сравнете преди покупка.", decide: "Изберете по-добре.",
+    whereToBuy: "Откъде да купите", moreInformation: "Повече информация", fullDescription: "Пълно описание", productOptions: "Опции на продукта",
     methodology: "Методология", affiliation: "Партньорство", privacy: "Поверителност"
   }
 };
@@ -714,6 +737,10 @@ for (const [lang, labels] of Object.entries(CORE_LOCALES)) {
     methodology: labels.methodology,
     affiliation: labels.affiliation,
     privacy: labels.privacy,
+    whereToBuy: labels.whereToBuy,
+    moreInformation: labels.moreInformation,
+    fullDescription: labels.fullDescription,
+    productOptions: labels.productOptions,
     viewAllCategories: labels.allCategories,
     viewAllStores: labels.allStores,
     categoryDirectoryTitle: labels.allCategories,
