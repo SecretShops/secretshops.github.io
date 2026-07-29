@@ -148,7 +148,7 @@ for (const legacy of [
 ]) {
   if (index.includes(legacy)) errors.push(`index.html conserva referencia obsoleta: ${legacy}`);
 }
-if (!index.includes("Compara antes de comprar. <span>Decide mejor.</span>")) {
+if (!index.includes("Encuentra el mejor precio")) {
   errors.push("index.html: falta el titular aprobado");
 }
 if (!index.includes("Podemos recibir una comisión por algunas compras, sin coste adicional para ti.")) {

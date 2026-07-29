@@ -224,17 +224,19 @@ try {
   if (!(await mobile.locator(".mobile-bottom-nav").isVisible())) {
     failures.push("mobile: la navegación inferior no es visible");
   }
-  const mobileBottomActions = await mobile.locator(".mobile-bottom-nav > *").count();
-  if (mobileBottomActions !== 5) {
-    failures.push(`mobile: la navegación inferior contiene ${mobileBottomActions} acciones`);
+  const visibleMobileBottomActions = await mobile.locator(".mobile-bottom-nav > *:visible").count();
+  if (visibleMobileBottomActions !== 5) {
+    failures.push(`mobile: la navegación inferior visible contiene ${visibleMobileBottomActions} acciones`);
   }
-  const scoreScrollable = await mobile.locator("[data-featured-grid]").evaluate((node) =>
-    node.scrollWidth > node.clientWidth
-  );
-  if (!scoreScrollable) failures.push("mobile: SecretScore no permite desplazamiento horizontal");
+  if (await mobile.locator("[data-featured-grid]").isVisible()) {
+    failures.push("mobile: la sección SecretScore sigue visible en la interfaz mínima");
+  }
   const mobilePromotions = await mobile.locator(".mobile-bottom-nav [data-region-promotions]").getAttribute("href");
   if (!mobilePromotions?.startsWith("/promociones/?region=es")) {
-    failures.push("mobile: la navegación inferior no abre las promociones regionales");
+    failures.push("mobile: DTO y cupones no abre las promociones regionales");
+  }
+  if (!(await mobile.locator(".header-actions [data-theme-toggle]").isVisible())) {
+    failures.push("mobile: el selector de tema no es visible");
   }
 
   await mobile.locator("[data-catalog-grid] .product-card-hit").first().click();
