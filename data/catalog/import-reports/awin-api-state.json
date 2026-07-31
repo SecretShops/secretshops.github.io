@@ -1,51 +1,51 @@
 {
   "schemaVersion": 1,
   "publisherId": "2996453",
-  "updatedAt": "2026-07-30T13:11:58.488Z",
+  "updatedAt": "2026-07-31T13:18:28.690Z",
   "feeds": {
     "63006:115855": {
       "merchantId": "la-drogueria-es",
       "advertiserId": "63006",
       "feedId": "115855",
-      "lastImported": "2026-07-30 07:03:11",
-      "sha256": "3c558df35e12e85f705b44b20ee7fd3827889d6c08658d437efe79d7e96fe8ed",
-      "feedRows": 4424,
-      "acceptedRows": 4424,
-      "matchedExistingProducts": 118,
-      "updatedAt": "2026-07-30T13:11:58.488Z"
+      "lastImported": "2026-07-31 07:02:53",
+      "sha256": "52823ff6270bb355f4c5b52f3ef19158441834403bc85ba3101b85536509702c",
+      "feedRows": 4415,
+      "acceptedRows": 4415,
+      "matchedExistingProducts": 117,
+      "updatedAt": "2026-07-31T13:18:28.690Z"
     },
     "122118:112474": {
       "merchantId": "muebles-style-spain",
       "advertiserId": "122118",
       "feedId": "112474",
-      "lastImported": "2026-07-30 12:03:07",
-      "sha256": "bbe5eec68c7ec81d026db0ae83ce82d2979fab996d22cec0900ea35a275d5dad",
-      "feedRows": 3104,
-      "acceptedRows": 3104,
-      "matchedExistingProducts": 3103,
-      "updatedAt": "2026-07-30T13:11:58.488Z"
+      "lastImported": "2026-07-31 12:02:52",
+      "sha256": "e7d414117524f025948e6777ba36dda25c9d6514f6b355738d9abcfcb3771d88",
+      "feedRows": 3103,
+      "acceptedRows": 3103,
+      "matchedExistingProducts": 3102,
+      "updatedAt": "2026-07-31T13:18:28.690Z"
     },
     "127695:115881": {
       "merchantId": "omara-jewelry-es",
       "advertiserId": "127695",
       "feedId": "115881",
-      "lastImported": "2026-07-29 21:01:45",
-      "sha256": "4942901247ef797f129d4e4f074581ae74f116f5e48b17d5c2b3f9ca0593518f",
+      "lastImported": "2026-07-30 21:01:39",
+      "sha256": "a92354bee6a2dc5c3b657bd6eff819e54eff8bb2d02131ca6ed9bad552bf5de4",
       "feedRows": 3949,
       "acceptedRows": 3949,
       "matchedExistingProducts": 36,
-      "updatedAt": "2026-07-30T13:11:58.488Z"
+      "updatedAt": "2026-07-31T13:18:28.690Z"
     },
     "127695:115885": {
       "merchantId": "omara-jewelry-es",
       "advertiserId": "127695",
       "feedId": "115885",
-      "lastImported": "2026-07-29 21:01:38",
-      "sha256": "9f3591da25c6db117b32b3294bbb00b8b1a8625f30e237734d4324ca3ab65a49",
+      "lastImported": "2026-07-30 21:01:32",
+      "sha256": "eb5dc80c751e12393b918c6e7948e674439e17ed773ed8e6252b4e102ad9ec01",
       "feedRows": 2210,
       "acceptedRows": 2210,
       "matchedExistingProducts": 84,
-      "updatedAt": "2026-07-30T13:11:58.488Z"
+      "updatedAt": "2026-07-31T13:18:28.690Z"
     },
     "109918:99305": {
       "merchantId": "paj-gps-es-pt",
@@ -73,7 +73,7 @@
       "merchantId": "trotec-iberic-es-pt",
       "advertiserId": "115363",
       "feedId": "110267",
-      "lastImported": "2026-07-30 07:02:04",
+      "lastImported": "2026-07-31 07:01:52",
       "sha256": "85348ffd50b7445867f6acb841c7f1699414b6ef9ae6011c31f85125623e5aa3",
       "feedRows": 1074,
       "acceptedRows": 1074,

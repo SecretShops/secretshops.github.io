@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-29T13:27:00.036Z",
+  "generatedAt": "2026-07-31T13:19:05.766Z",
   "source": "Awin Offers API",
   "promotions": [
     {
@@ -107,27 +107,6 @@
         "fr"
       ],
       "trackingUrl": "https://www.awin1.com/cread.php?awinmid=33073&awinaffid=2996453&ued=https%3A%2F%2Fperfumeriacomas.com%2Fes%2Fperfumes-3625"
-    },
-    {
-      "id": "awin:3858241",
-      "network": "awin",
-      "merchantId": "perfumeria-comas-es",
-      "advertiserId": "33073",
-      "merchantName": "Perfumería Comas ES",
-      "type": "voucher",
-      "title": "¡Disfruta de un 10% de descuento en toda la web!",
-      "description": "Aprovecha un 10% dto en todos los productos y encuentra tus favoritos al mejor precio.",
-      "terms": "Aprovecha los wifi days con un 10% dto en todos los productos y encuentra tus favoritos al mejor precio.",
-      "code": "WIFI10",
-      "exclusive": false,
-      "attributable": false,
-      "startAt": "2026-05-15T08:01:00.000Z",
-      "endAt": "2026-07-31T08:01:00.000Z",
-      "regions": [
-        "es",
-        "fr"
-      ],
-      "trackingUrl": "https://www.awin1.com/cread.php?awinmid=33073&awinaffid=2996453&ued=https%3A%2F%2Fperfumeriacomas.com%2Ffr%2Fcosmetica-8118"
     },
     {
       "id": "awin:3858245",
