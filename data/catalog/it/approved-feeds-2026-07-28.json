@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-08-01T11:43:38.649Z",
+  "generatedAt": "2026-08-02T11:43:01.185Z",
   "country": "IT",
   "currency": "EUR",
   "families": [
@@ -7031,8 +7031,8 @@
         "https://static.omara.es/upload/a06ed1cc-ecfe-41f5-8d25-0a0ea6755d5c.png",
         "https://images2.productserve.com/?w=70&h=70&bg=white&trim=5&t=letterbox&url=ssl%3Astatic.omara.es%2Fupload%2Fa06ed1cc-cf34-4d36-8433-bae915873840.png&feedId=115881&k=44ec1d8c5a74e2ea0760498fb1c2e0179aa5c1ab"
       ],
-      "minPrice": 445,
-      "maxPrice": 445,
+      "minPrice": 435,
+      "maxPrice": 435,
       "variantCount": 1,
       "secretScore": 7.4,
       "source": "approved-feeds-2026-07-28",
@@ -7060,14 +7060,14 @@
               "id": "omara-jewelry-es:1031078",
               "merchantId": "omara-jewelry-es",
               "merchantName": "Omara Jewelry (ES)",
-              "price": 445,
+              "price": 435,
               "previousPrice": null,
               "shippingCost": 0,
-              "totalPrice": 445,
+              "totalPrice": 435,
               "availability": "in_stock",
               "condition": "new",
               "deliveryTime": null,
-              "updatedAt": "2026-07-28T14:18:54+02:00",
+              "updatedAt": "2026-08-02T11:43:01.185Z",
               "country": "IT",
               "currency": "EUR"
             }

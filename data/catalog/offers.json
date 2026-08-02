@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-31T13:18:28.690Z",
+  "generatedAt": "2026-08-02T11:43:01.185Z",
   "offers": [
     {
       "id": "amazon-es:B001BEAWZM",
@@ -80104,14 +80104,14 @@
       "commissionGroup": null,
       "isCommissionable": true,
       "stockQuantity": null,
-      "deliveryTime": "10",
+      "deliveryTime": "9",
       "displayPrice": "EUR1075",
       "source": {
         "awProductId": "43432662544",
         "dataFeedId": "112474",
         "awinMerchantId": "122118"
       },
-      "lastUpdatedAt": "2026-07-30T13:11:58.488Z"
+      "lastUpdatedAt": "2026-08-02T11:43:01.185Z"
     },
     {
       "id": "muebles-style-spain:KA026003L",
@@ -101866,14 +101866,14 @@
       "commissionGroup": null,
       "isCommissionable": true,
       "stockQuantity": null,
-      "deliveryTime": "6",
+      "deliveryTime": "5",
       "displayPrice": "EUR141",
       "source": {
         "awProductId": "43432665533",
         "dataFeedId": "112474",
         "awinMerchantId": "122118"
       },
-      "lastUpdatedAt": "2026-07-30T13:11:58.488Z"
+      "lastUpdatedAt": "2026-08-02T11:43:01.185Z"
     },
     {
       "id": "muebles-style-spain:KA080334V",
@@ -102109,14 +102109,14 @@
       "commissionGroup": null,
       "isCommissionable": true,
       "stockQuantity": null,
-      "deliveryTime": "6",
+      "deliveryTime": "5",
       "displayPrice": "EUR141",
       "source": {
         "awProductId": "43432665665",
         "dataFeedId": "112474",
         "awinMerchantId": "122118"
       },
-      "lastUpdatedAt": "2026-07-30T13:11:58.488Z"
+      "lastUpdatedAt": "2026-08-02T11:43:01.185Z"
     },
     {
       "id": "muebles-style-spain:KA083111L",
@@ -111991,14 +111991,14 @@
       "commissionGroup": null,
       "isCommissionable": true,
       "stockQuantity": null,
-      "deliveryTime": "6",
+      "deliveryTime": "5",
       "displayPrice": "EUR142",
       "source": {
         "awProductId": "43432665615",
         "dataFeedId": "112474",
         "awinMerchantId": "122118"
       },
-      "lastUpdatedAt": "2026-07-30T13:11:58.488Z"
+      "lastUpdatedAt": "2026-08-02T11:43:01.185Z"
     },
     {
       "id": "muebles-style-spain:KA113645",
@@ -150061,14 +150061,14 @@
       "commissionGroup": null,
       "isCommissionable": true,
       "stockQuantity": null,
-      "deliveryTime": "10",
+      "deliveryTime": "9",
       "displayPrice": "EUR2013",
       "source": {
         "awProductId": "43432662526",
         "dataFeedId": "112474",
         "awinMerchantId": "122118"
       },
-      "lastUpdatedAt": "2026-07-30T13:11:58.488Z"
+      "lastUpdatedAt": "2026-08-02T11:43:01.185Z"
     },
     {
       "id": "muebles-style-spain:KA384033F3",
@@ -154381,14 +154381,14 @@
       "commissionGroup": null,
       "isCommissionable": true,
       "stockQuantity": null,
-      "deliveryTime": "10",
+      "deliveryTime": "9",
       "displayPrice": "EUR1176",
       "source": {
         "awProductId": "43514765989",
         "dataFeedId": "112474",
         "awinMerchantId": "122118"
       },
-      "lastUpdatedAt": "2026-07-30T13:11:58.488Z"
+      "lastUpdatedAt": "2026-08-02T11:43:01.185Z"
     },
     {
       "id": "muebles-style-spain:KA426033F1",
@@ -154462,14 +154462,14 @@
       "commissionGroup": null,
       "isCommissionable": true,
       "stockQuantity": null,
-      "deliveryTime": "10",
+      "deliveryTime": "9",
       "displayPrice": "EUR1176",
       "source": {
         "awProductId": "43525277165",
         "dataFeedId": "112474",
         "awinMerchantId": "122118"
       },
-      "lastUpdatedAt": "2026-07-30T13:11:58.488Z"
+      "lastUpdatedAt": "2026-08-02T11:43:01.185Z"
     },
     {
       "id": "muebles-style-spain:KA427013F5",
@@ -155137,14 +155137,14 @@
       "commissionGroup": null,
       "isCommissionable": true,
       "stockQuantity": null,
-      "deliveryTime": "10",
+      "deliveryTime": "9",
       "displayPrice": "EUR1845",
       "source": {
         "awProductId": "43782227568",
         "dataFeedId": "112474",
         "awinMerchantId": "122118"
       },
-      "lastUpdatedAt": "2026-07-30T13:11:58.488Z"
+      "lastUpdatedAt": "2026-08-02T11:43:01.185Z"
     },
     {
       "id": "muebles-style-spain:KA428015F2",
@@ -155218,14 +155218,14 @@
       "commissionGroup": null,
       "isCommissionable": true,
       "stockQuantity": null,
-      "deliveryTime": "10",
+      "deliveryTime": "9",
       "displayPrice": "EUR1845",
       "source": {
         "awProductId": "43638840646",
         "dataFeedId": "112474",
         "awinMerchantId": "122118"
       },
-      "lastUpdatedAt": "2026-07-30T13:11:58.488Z"
+      "lastUpdatedAt": "2026-08-02T11:43:01.185Z"
     },
     {
       "id": "muebles-style-spain:KA430620V1",
