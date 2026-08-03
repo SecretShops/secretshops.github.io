@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-01T11:44:11.603Z",
+  "generatedAt": "2026-08-03T16:11:19.109Z",
   "source": "Awin Offers API",
   "promotions": [
     {
@@ -172,27 +172,6 @@
       "trackingUrl": "https://www.awin1.com/cread.php?awinmid=33073&awinaffid=2996453&ued=https%3A%2F%2Fperfumeriacomas.com%2Fes%2Fbrands"
     },
     {
-      "id": "awin:3921339",
-      "network": "awin",
-      "merchantId": "perfumeria-comas-es",
-      "advertiserId": "33073",
-      "merchantName": "Perfumería Comas ES",
-      "type": "voucher",
-      "title": "Disfruta de un 10% de descuento extra en Cofres",
-      "description": "Disfruta de un 10% de descuento extra en Cofres para este vernano, por compras mínimas de 60€",
-      "terms": "Mínimo de compra de 60€",
-      "code": "COFRES10",
-      "exclusive": false,
-      "attributable": false,
-      "startAt": "2026-05-31T08:17:00.000Z",
-      "endAt": "2026-08-03T08:17:00.000Z",
-      "regions": [
-        "es",
-        "fr"
-      ],
-      "trackingUrl": "https://www.awin1.com/cread.php?awinmid=33073&awinaffid=2996453&ued=https%3A%2F%2Fperfumeriacomas.com%2Fes%2Festuches"
-    },
-    {
       "id": "awin:3960031",
       "network": "awin",
       "merchantId": "perfumeria-comas-es",
@@ -270,6 +249,48 @@
       "attributable": false,
       "startAt": "2026-07-01T14:49:00.000Z",
       "endAt": "2026-08-31T14:49:00.000Z",
+      "regions": [
+        "es",
+        "fr"
+      ],
+      "trackingUrl": "https://www.awin1.com/cread.php?awinmid=33073&awinaffid=2996453&ued=https%3A%2F%2Fperfumeriacomas.com%2Fes%2Fcosmetica-9360"
+    },
+    {
+      "id": "awin:4028903",
+      "network": "awin",
+      "merchantId": "perfumeria-comas-es",
+      "advertiserId": "33073",
+      "merchantName": "Perfumería Comas ES",
+      "type": "voucher",
+      "title": "Descuento del día internacional del orgasmo femenino",
+      "description": "Disfruta de un 10% de descuento en nuestra SEXSHOP en productos seleccionados.",
+      "terms": "Mínimo de compra de 50€.",
+      "code": "IMBATSEX",
+      "exclusive": false,
+      "attributable": false,
+      "startAt": "2026-08-03T10:12:00.000Z",
+      "endAt": "2026-08-10T10:12:00.000Z",
+      "regions": [
+        "es",
+        "fr"
+      ],
+      "trackingUrl": "https://www.awin1.com/cread.php?awinmid=33073&awinaffid=2996453&ued=https%3A%2F%2Fperfumeriacomas.com%2Fes%2Fsalud-sexual"
+    },
+    {
+      "id": "awin:4028907",
+      "network": "awin",
+      "merchantId": "perfumeria-comas-es",
+      "advertiserId": "33073",
+      "merchantName": "Perfumería Comas ES",
+      "type": "voucher",
+      "title": "¡Disfruta de 10€ de descuento en cosmética de lujo!",
+      "description": "Aprovecha hasta un 50% de descuento + 10€ extra en una selección exclusiva. Aplica el cupón en el carrito y benefíciate de esta promoción única.",
+      "terms": "Mínimo de compra 79€",
+      "code": "10COSM",
+      "exclusive": false,
+      "attributable": false,
+      "startAt": "2026-08-03T10:16:00.000Z",
+      "endAt": "2026-09-02T10:16:00.000Z",
       "regions": [
         "es",
         "fr"
