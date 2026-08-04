@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-04T18:00:00.000Z",
+  "mode": "full",
+  "merchantId": "tsarbomba-mx",
+  "advertiserId": "109230",
+  "feedId": "108930",
+  "region": "mx",
+  "country": "MX",
+  "currency": "MXN",
+  "regionStatus": "draft",
+  "sourcePath": "/data/catalog/mx/awin-tsarbomba-mx.json",
+  "rawRows": 242,
+  "acceptedRows": 242,
+  "rejectedRows": 0,
+  "rejectionReasons": {},
+  "families": 62,
+  "variants": 242,
+  "offers": 242,
+  "affiliateLinks": 242,
+  "safety": {
+    "exactCountry": true,
+    "exactCurrency": true,
+    "publisherId": "2996453",
+    "landingDomainsVerified": true,
+    "regionStatusPreserved": true
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-04T18:00:00.000Z",
+  "policy": "Publish only where country, storefront and feed currency all match; never convert feed prices.",
+  "catalogs": [
+    {
+      "merchantId": "fidelis-es",
+      "advertiserId": "123348",
+      "feedId": "114212",
+      "sourceMarket": "es_ES",
+      "sourceCurrency": "EUR",
+      "allowedCountries": [
+        "ES"
+      ],
+      "publishedCountries": [
+        "ES"
+      ],
+      "rawRows": 112,
+      "acceptedRows": 112,
+      "families": 112,
+      "offers": 112,
+      "shippingEvidence": "https://fidelis.es/products/ternera-deshidratado-2500g"
+    },
+    {
+      "merchantId": "tsarbomba-mx",
+      "advertiserId": "109230",
+      "feedId": "108930",
+      "sourceMarket": "MX_Feed",
+      "sourceStorefront": "/es-mx",
+      "sourceCurrency": "MXN",
+      "allowedCountries": [
+        "MX"
+      ],
+      "preparedCountries": [
+        "MX"
+      ],
+      "regionStatus": "draft",
+      "rawRows": 243,
+      "acceptedRows": 242,
+      "rejectedRows": 1,
+      "rejectionReasons": {
+        "invalid_currency_USD": 1
+      },
+      "families": 62,
+      "variants": 242,
+      "offers": 242,
+      "shippingEvidence": "https://tsarbomba.com/es/pages/entrega-y-envio",
+      "globalShippingClaim": true,
+      "scopeReason": "Global shipping does not make an MXN /es-mx product feed price-valid in non-MXN regional catalogs."
+    }
+  ]
+}

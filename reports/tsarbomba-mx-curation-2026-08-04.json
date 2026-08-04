@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-04T14:00:00.000Z",
+  "sourceFile": "109230-108930-es_US-MX_Feed.csv.gz",
+  "merchantId": "tsarbomba-mx",
+  "advertiserId": "109230",
+  "mode": "balanced_family_selection",
+  "requestedFamilies": 1000,
+  "referenceOfferIds": null,
+  "rawRows": 243,
+  "merchantRows": 243,
+  "validRows": 242,
+  "selectedFamilies": 41,
+  "selectedRows": 242,
+  "rejected": {
+    "invalid_currency": 1
+  },
+  "selectedCategories": {
+    "Accesorios y complementos": 242
+  },
+  "outputSha256": "00c24fbb713f45585f3cc4a0c33b1e8dbe642b5b4fae26cb2a5f7d55a89709bb"
+}

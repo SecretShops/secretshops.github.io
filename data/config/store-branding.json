@@ -51,6 +51,12 @@
       "logo": "/assets/brands/stores/dore-rose.png"
     },
     {
+      "id": "fidelis-es",
+      "name": "Fidelis ES",
+      "domain": "fidelis.es",
+      "logo": "/assets/brands/stores/fidelis.svg"
+    },
+    {
       "id": "foot-store-es",
       "name": "Foot-Store ES",
       "domain": "foot-store.es",
@@ -165,6 +171,12 @@
       "name": "SHOKZ ES",
       "domain": "es.shokz.com",
       "logo": "/assets/brands/stores/shokz.png"
+    },
+    {
+      "id": "tsarbomba-mx",
+      "name": "Tsarbomba México",
+      "domain": "tsarbomba.com",
+      "logo": "/assets/brands/stores/tsarbomba.svg"
     },
     {
       "id": "trotec-iberic-es-pt",

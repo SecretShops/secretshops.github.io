@@ -220,6 +220,31 @@
       "publicationStatus": "prepared_recommended"
     },
     {
+      "id": "fidelis-es",
+      "name": "Fidelis ES",
+      "country": "ES",
+      "countries": [
+        "ES"
+      ],
+      "status": "approved",
+      "network": "awin",
+      "awinAdvertiserId": "123348",
+      "feedExpected": true,
+      "feedId": "114212",
+      "catalogMode": "retail_curated",
+      "landingDomains": [
+        "fidelis.es",
+        "www.fidelis.es"
+      ],
+      "currency": "EUR",
+      "statusUpdatedAt": "2026-08-04",
+      "publicationStatus": "published_staged",
+      "preparedCountries": [
+        "ES"
+      ],
+      "shippingEvidence": "https://fidelis.es/products/ternera-deshidratado-2500g"
+    },
+    {
       "id": "foot-store-es",
       "name": "Foot-Store ES",
       "country": "ES",
@@ -881,6 +906,31 @@
       "status": "pending",
       "feedExpected": true,
       "catalogMode": "retail"
+    },
+    {
+      "id": "tsarbomba-mx",
+      "name": "Tsarbomba México",
+      "country": "MX",
+      "countries": [
+        "MX"
+      ],
+      "status": "approved",
+      "network": "awin",
+      "awinAdvertiserId": "109230",
+      "feedExpected": true,
+      "feedId": "108930",
+      "catalogMode": "retail_curated_regional",
+      "landingDomains": [
+        "tsarbomba.com",
+        "www.tsarbomba.com"
+      ],
+      "currency": "MXN",
+      "statusUpdatedAt": "2026-08-04",
+      "publicationStatus": "prepared_region_draft",
+      "preparedCountries": [
+        "MX"
+      ],
+      "shippingEvidence": "https://tsarbomba.com/es/pages/entrega-y-envio"
     },
     {
       "id": "trotec-iberic-es-pt",

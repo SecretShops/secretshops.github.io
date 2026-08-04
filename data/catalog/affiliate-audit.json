@@ -1,23 +1,23 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-08-04T14:59:32.499Z",
+  "generatedAt": "2026-08-04T16:13:00.309Z",
   "summary": {
-    "canonicalOffers": 9514,
+    "canonicalOffers": 9626,
     "canonicalByNetwork": {
-      "awin": 9274,
+      "awin": 9386,
       "amazon": 191,
       "impact": 49
     },
     "validCanonicalByNetwork": {
-      "awin": 9274,
+      "awin": 9386,
       "amazon": 191,
       "impact": 49
     },
-    "canonicalPublishedOffers": 10382,
-    "canonicalPublishedLinks": 10382,
-    "regionalOfferAssignments": 42129,
-    "regionalLinkAssignments": 42129,
-    "awinCanonicalLinks": 9274,
+    "canonicalPublishedOffers": 10494,
+    "canonicalPublishedLinks": 10494,
+    "regionalOfferAssignments": 42483,
+    "regionalLinkAssignments": 42483,
+    "awinCanonicalLinks": 9386,
     "aliexpressCanonicalLinks": 868,
     "amazonCanonicalLinks": 191,
     "impactCanonicalLinks": 49,
@@ -28,15 +28,15 @@
     "es": {
       "status": "published",
       "country": "ES",
-      "offers": 13682,
-      "links": 13682,
+      "offers": 13794,
+      "links": 13794,
       "invalid": 0
     },
     "mx": {
       "status": "draft",
       "country": "MX",
-      "offers": 252,
-      "links": 252,
+      "offers": 494,
+      "links": 494,
       "invalid": 0
     },
     "co": {

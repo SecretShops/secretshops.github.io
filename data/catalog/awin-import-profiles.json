@@ -401,6 +401,29 @@
         }
       ]
     },
+    "fidelis-es": {
+      "country": "ES",
+      "currency": "EUR",
+      "department": "Mascotas",
+      "fallbackCategory": "Mascotas",
+      "defaultBrand": "FIDELIS",
+      "defaultCondition": "new",
+      "requireGlobalIdentifier": true,
+      "requireExactIdentifier": true,
+      "allowMerchantScopedProductId": false,
+      "categoryRules": [
+        {
+          "category": "Mascotas",
+          "includeAny": [
+            "pets",
+            "pet food",
+            "dog food",
+            "comida para perros",
+            "snacks"
+          ]
+        }
+      ]
+    },
     "foot-store-es": {
       "country": "ES",
       "currency": "EUR",
@@ -492,6 +515,28 @@
             "swimming",
             "deportes",
             "sport"
+          ]
+        }
+      ]
+    },
+    "tsarbomba-mx": {
+      "country": "MX",
+      "currency": "MXN",
+      "department": "Moda",
+      "fallbackCategory": "Accesorios y complementos",
+      "defaultBrand": "TSAR BOMBA WATCH",
+      "defaultCondition": "new",
+      "requireGlobalIdentifier": false,
+      "requireExactIdentifier": true,
+      "allowMerchantScopedProductId": false,
+      "categoryRules": [
+        {
+          "category": "Accesorios y complementos",
+          "includeAny": [
+            "watches",
+            "watch",
+            "reloj",
+            "relojes"
           ]
         }
       ]

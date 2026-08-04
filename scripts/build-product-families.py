@@ -11,6 +11,7 @@ from __future__ import annotations
 import datetime as dt
 import hashlib
 import json
+import os
 import re
 import unicodedata
 from collections import defaultdict
@@ -18,7 +19,9 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
-CATALOG_DIR = ROOT / "data" / "catalog"
+CATALOG_DIR = Path(
+    os.environ.get("SECRETSHOP_CATALOG_DIR", str(ROOT / "data" / "catalog"))
+).resolve()
 PRODUCTS_PATH = CATALOG_DIR / "products.json"
 OFFERS_PATH = CATALOG_DIR / "offers.json"
 MERCHANTS_PATH = CATALOG_DIR / "merchants.json"

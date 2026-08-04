@@ -1,0 +1,60 @@
+SECRETShop — PARCHE INCREMENTAL FIDELIS ES + TSARBOMBA MX
+Fecha: 04/08/2026
+
+REQUISITO OBLIGATORIO
+=====================
+Este parche se instala DESPUÉS de haber aplicado el archivo:
+SecretShop-parche-v5-reparado-catalogos-2026-08-04.zip
+
+No debe aplicarse directamente sobre una versión anterior del repositorio.
+
+INSTALACIÓN
+===========
+1. Descomprime este ZIP en una carpeta temporal.
+2. Abre la carpeta SecretShop-parche-catalogos-Fidelis-Tsarbomba-2026-08-04.
+3. Copia TODO su contenido, no la carpeta contenedora, a la raíz del repositorio.
+4. Acepta combinar carpetas y reemplazar los archivos que Windows indique.
+5. No borres previamente el contenido del repositorio: este ZIP es un parche incremental.
+
+ALCANCE TERRITORIAL SEGURO
+==========================
+- Fidelis ES: España (ES), EUR. Se publican 112 familias y 112 ofertas.
+- Tsarbomba México: México (MX), MXN. Se preparan 62 familias, 242 variantes y
+  242 ofertas dentro del manifiesto regional de México.
+
+Tsarbomba anuncia envíos internacionales, pero el feed entregado pertenece al
+escaparate /es-mx y contiene precios de México. No se copia a regiones EUR, USD
+u otras monedas y no se realiza conversión monetaria.
+
+México conserva el estado "draft" que ya tenía el repositorio. El catálogo de
+Tsarbomba queda completo y enlazado dentro de data/catalog/mx, pero el parche no
+elude el control general de publicación regional. El control sigue bloqueado por
+252 ofertas antiguas de AliExpress MX sin moneda estructurada; no por Tsarbomba.
+
+CONTROLES APLICADOS
+===================
+- Fidelis: 112/112 filas aceptadas; cero descartes.
+- Tsarbomba: 242/243 filas aceptadas del archivo original.
+- Se excluye una fila Tsarbomba marcada erróneamente como USD dentro del feed MX.
+- Todos los enlaces usan HTTPS, Awin Publisher 2996453 y el advertiser esperado.
+- No se mezclan países ni monedas entre los catálogos ES y MX.
+- Lounge permanece retirado temporalmente como en el parche v5 reparado.
+
+VALIDACIÓN LOCAL OPCIONAL
+=========================
+Desde la raíz del repositorio:
+
+  npm ci
+  npm run validate:new-catalog-patch
+  npm run validate:v5-repair
+  npm run quality
+  npm run test:browser
+
+El archivo MANIFEST-SHA256.txt incluido en el ZIP permite comprobar la integridad
+exacta de todos los archivos del parche antes de copiarlos.
+
+REVERSIÓN
+=========
+Este parche no contiene eliminaciones. Para revertirlo con precisión, restaura
+la copia del repositorio posterior al parche v5 reparado o revierte el commit que
+contenga esta instalación.

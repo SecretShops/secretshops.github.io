@@ -12,6 +12,14 @@
       "currency": "MXN",
       "merchantId": "aliexpress",
       "merchantName": "AliExpress"
+    },
+    {
+      "id": "awin-tsarbomba-mx",
+      "path": "/data/catalog/mx/awin-tsarbomba-mx.json",
+      "country": "MX",
+      "currency": "MXN",
+      "merchantId": "tsarbomba-mx",
+      "merchantName": "Tsarbomba México"
     }
   ]
 }

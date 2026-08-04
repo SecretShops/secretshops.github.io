@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 112" role="img" aria-labelledby="title desc">
+  <title id="title">Fidelis</title>
+  <desc id="desc">Identificador gráfico de Fidelis para el directorio de tiendas.</desc>
+  <rect width="360" height="112" rx="20" fill="#f4f8ee"/>
+  <path d="M38 56c0-20 14-36 33-36 9 0 17 4 23 10l10-11 8 26c1 4 2 8 2 11 0 22-17 38-38 38S38 78 38 56Z" fill="#5c7f36"/>
+  <circle cx="65" cy="52" r="4" fill="#f4f8ee"/>
+  <path d="M78 63c-6 8-17 8-23 0" fill="none" stroke="#f4f8ee" stroke-width="5" stroke-linecap="round"/>
+  <text x="132" y="70" fill="#29431f" font-family="Arial, Helvetica, sans-serif" font-size="43" font-weight="700" letter-spacing="2">FIDELIS</text>
+</svg>

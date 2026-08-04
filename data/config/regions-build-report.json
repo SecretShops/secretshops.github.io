@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-04T14:58:23.938Z",
+  "generatedAt": "2026-08-04T15:56:50.738Z",
   "publishedRegions": [
     "es",
     "pt",
@@ -41,12 +41,12 @@
       "region": "es",
       "country": "ES",
       "status": "published",
-      "families": 6272,
-      "variants": 13605,
-      "offers": 13682,
-      "productPages": 6272,
+      "families": 6384,
+      "variants": 13717,
+      "offers": 13794,
+      "productPages": 6384,
       "categoryPages": 52,
-      "storePages": 30,
+      "storePages": 31,
       "heldProductPages": 1019,
       "heldStorePages": 1,
       "lastmod": "2026-08-04"

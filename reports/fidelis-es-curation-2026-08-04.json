@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-04T14:00:00.000Z",
+  "sourceFile": "123348-114212-es_ES-FidelisEspana.csv.gz",
+  "merchantId": "fidelis-es",
+  "advertiserId": "123348",
+  "mode": "balanced_family_selection",
+  "requestedFamilies": 1000,
+  "referenceOfferIds": null,
+  "rawRows": 112,
+  "merchantRows": 112,
+  "validRows": 112,
+  "selectedFamilies": 112,
+  "selectedRows": 112,
+  "rejected": {},
+  "selectedCategories": {
+    "Mascotas": 112
+  },
+  "outputSha256": "0e1cba172ea51d0b15d649ae27b2cff33d501dc1b65e4c440433477513043e36"
+}
