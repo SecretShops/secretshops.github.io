@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-04T14:00:00.000Z",
+  "baseRepository": "secretshops.github.io-main (11).zip",
+  "result": "passed",
+  "patch": {
+    "type": "differential-overlay",
+    "payloadFiles": 20836,
+    "manifestEntries": 20836,
+    "deletions": 0,
+    "excluded": [
+      "node_modules",
+      "dist"
+    ]
+  },
+  "catalog": {
+    "merchants": 50,
+    "products": 9513,
+    "offers": 9514,
+    "families": 3876,
+    "categories": 47,
+    "canonicalAffiliateLinks": 10382,
+    "regionalAffiliateAssignments": 42129
+  },
+  "newCatalogs": {
+    "curatedFeedRows": 3409,
+    "familiesInSpain": 2921,
+    "offersInSpain": 3409,
+    "regionalSources": 53,
+    "regionalAssignments": 12632,
+    "selectionLimitPerMerchantOutsideSpain": 120,
+    "currency": "EUR",
+    "currencyConversion": false
+  },
+  "lounge": {
+    "status": "temporarily-retired",
+    "offersRemoved": 1146,
+    "productsRemoved": 1146,
+    "heldStaticProductPages": 1019,
+    "preservedSourceFiles": 8,
+    "catalogLinksAndSitemaps": "absent"
+  },
+  "checks": [
+    {
+      "command": "npm test",
+      "status": "passed",
+      "summary": "105/105"
+    },
+    {
+      "command": "npm run validate:catalog",
+      "status": "passed",
+      "summary": "10382/10382 canonical links and 42129/42129 regional assignments"
+    },
+    {
+      "command": "npm run validate:regions",
+      "status": "passed",
+      "summary": "21 published regions; drafts isolated"
+    },
+    {
+      "command": "npm run validate:v5-repair",
+      "status": "passed",
+      "summary": "224 data JSON files, exact country matrix, feeds, Awin publisher and reversible Lounge hold"
+    },
+    {
+      "command": "npm run validate:seo",
+      "status": "passed",
+      "summary": "18719 active product pages and 1019 retained Lounge pages excluded from sitemaps"
+    },
+    {
+      "command": "npm run validate:site",
+      "status": "passed",
+      "summary": "20566 HTML pages and 0 broken local references"
+    },
+    {
+      "command": "vite build",
+      "status": "passed",
+      "summary": "Vite 8.1.5 production bundle"
+    },
+    {
+      "command": "npm run test:browser",
+      "status": "passed",
+      "summary": "desktop, mobile, tablet, accessibility, search, product, favorites, comparison, theme, promotions and regional selector"
+    }
+  ],
+  "shippingEvidence": {
+    "voghion-global-es": "https://www.voghion.com/shipping-policy",
+    "al-jazeera-perfumes-eu": "https://europe.aljazeeraperfumes.com/es/page/shipping-and-delivery",
+    "foot-store-es": "https://foot-store.es/tarifas-y-opciones-de-envio",
+    "gigasport-es": "https://www.gigasport.es/faq/envios-y-entregas/"
+  }
+}

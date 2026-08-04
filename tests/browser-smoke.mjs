@@ -120,8 +120,9 @@ try {
 
   const searchTarget = (await desktop.locator("[data-catalog-grid] .product-card h3").first().textContent())?.trim();
   if (!searchTarget) throw new Error("desktop: no se pudo obtener un producto para probar la búsqueda");
-  await desktop.locator("#header-search").fill(searchTarget);
-  await desktop.locator(".header-search").press("Enter");
+  const visibleSearch = desktop.locator("[data-search-input]:visible").first();
+  await visibleSearch.fill(searchTarget);
+  await visibleSearch.press("Enter");
   await desktop.locator("[data-catalog-grid] .product-card").first().waitFor();
   await desktop.locator("[data-results-summary]").filter({ hasText: "producto" }).waitFor();
   const searchedCards = await desktop.locator("[data-catalog-grid] .product-card").count();
@@ -153,6 +154,11 @@ try {
   if (!outbound?.startsWith("/go.html?region=es&offer=")) {
     failures.push("desktop: la oferta no usa el redirector regional validado");
   }
+  const firstCompareAccordion = desktop.locator("#product-dialog .product-accordion").filter({
+    has: desktop.locator("[data-toggle-compare]")
+  });
+  await firstCompareAccordion.locator("summary").click();
+  await firstCompareAccordion.locator("[data-toggle-compare]").click();
   await desktop.locator("#product-dialog [data-close-product]").click();
   if (new URL(desktop.url()).pathname !== "/") {
     failures.push("desktop: cerrar la ficha no restaura la portada regional");
@@ -169,8 +175,14 @@ try {
     failures.push("desktop: favoritos no están aislados por región");
   }
 
-  await desktop.locator("[data-catalog-grid] [data-toggle-compare]").nth(0).click();
-  await desktop.locator("[data-catalog-grid] [data-toggle-compare]").nth(1).click();
+  await desktop.locator("[data-catalog-grid] .product-card-hit").nth(1).click();
+  await desktop.locator("#product-dialog[open]").waitFor();
+  const secondCompareAccordion = desktop.locator("#product-dialog .product-accordion").filter({
+    has: desktop.locator("[data-toggle-compare]")
+  });
+  await secondCompareAccordion.locator("summary").click();
+  await secondCompareAccordion.locator("[data-toggle-compare]").click();
+  await desktop.locator("#product-dialog [data-close-product]").click();
   await desktop.locator("[data-compare-tray]:not([hidden])").waitFor();
   await desktop.locator("[data-open-compare]").click();
   await desktop.locator("#compare-dialog[open] .comparison-table").waitFor();
@@ -283,6 +295,11 @@ try {
   if (mobileProductLayout.ctaHeight < 42) {
     failures.push("mobile: el botón principal de compra es demasiado pequeño");
   }
+  const firstMobileCompareAccordion = mobile.locator("#product-dialog .product-accordion").filter({
+    has: mobile.locator("[data-toggle-compare]")
+  });
+  await firstMobileCompareAccordion.locator("summary").click();
+  await firstMobileCompareAccordion.locator("[data-toggle-compare]").click();
   await mobile.locator("#product-dialog [data-close-product]").click();
 
   await mobile.locator("[data-catalog-sentinel]").scrollIntoViewIfNeeded();
@@ -292,8 +309,14 @@ try {
   const expandedCards = await mobile.locator("[data-catalog-grid] .product-card").count();
   if (expandedCards <= 24) failures.push("mobile: el catálogo infinito no cargó más productos");
 
-  await mobile.locator("[data-catalog-grid] [data-toggle-compare]").nth(0).click();
-  await mobile.locator("[data-catalog-grid] [data-toggle-compare]").nth(1).click();
+  await mobile.locator("[data-catalog-grid] .product-card-hit").nth(1).click();
+  await mobile.locator("#product-dialog[open]").waitFor();
+  const secondMobileCompareAccordion = mobile.locator("#product-dialog .product-accordion").filter({
+    has: mobile.locator("[data-toggle-compare]")
+  });
+  await secondMobileCompareAccordion.locator("summary").click();
+  await secondMobileCompareAccordion.locator("[data-toggle-compare]").click();
+  await mobile.locator("#product-dialog [data-close-product]").click();
   await mobile.locator("[data-open-compare]").click();
   await mobile.locator("#compare-dialog[open] .comparison-cards").waitFor();
   const mobileComparisonCards = await mobile.locator("#compare-dialog .comparison-card").count();

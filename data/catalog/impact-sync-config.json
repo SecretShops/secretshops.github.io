@@ -48,7 +48,10 @@
       "lookupFile": "data/sources/lounge-eu/lounge-eu-variantes-disponibles.csv",
       "lookupIdColumn": "variant_sku",
       "lookupParentColumn": "parent_sku",
-      "directFallbackWhenDeeplinkingDisabled": true
+      "directFallbackWhenDeeplinkingDisabled": true,
+      "enabled": false,
+      "publicationStatus": "held_contract_expired",
+      "disabledAt": "2026-08-04T14:00:00.000Z"
     },
     {
       "id": "casecess-us",

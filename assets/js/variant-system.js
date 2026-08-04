@@ -141,6 +141,58 @@ function inferSizeFromMpn(mpn) {
   return null;
 }
 
+const BIKILA_MEN_US_TO_EU = new Map([
+  [4, 36], [4.5, 36.5], [5, 37.5], [5.5, 38], [6, 38.5], [6.5, 39],
+  [7, 40], [7.5, 40.5], [8, 41], [8.5, 42], [9, 42.5], [9.5, 43],
+  [10, 44], [10.5, 44.5], [11, 45], [11.5, 45.5], [12, 46], [12.5, 47],
+  [13, 48], [14, 49], [15, 50]
+]);
+
+const BIKILA_WOMEN_US_TO_EU = new Map([
+  [4.5, 35], [5, 35.5], [5.5, 36], [6, 36.5], [6.5, 37.5], [7, 38],
+  [7.5, 38.5], [8, 39], [8.5, 40], [9, 40.5], [9.5, 41], [10, 42],
+  [10.5, 42.5], [11, 43], [11.5, 44], [12, 44.5], [12.5, 45], [13, 45.5]
+]);
+
+const BIKILA_YOUTH_US_TO_EU = new Map([
+  [1, 32], [1.5, 33], [2, 33.5], [2.5, 34], [3, 35], [3.5, 35.5],
+  [4, 36], [4.5, 36.5], [5, 37.5], [5.5, 38], [6, 38.5], [6.5, 39], [7, 40]
+]);
+
+function familyUsesBikila(family) {
+  if ((family?.stores || []).some((store) => normalizeVariantText(store) === "bikila es")) return true;
+  return (family?.variants || []).some((variant) => (variant.offers || []).some((offer) =>
+    normalizeVariantText(offer.merchantId) === "bikila es" ||
+    normalizeVariantText(offer.merchantName) === "bikila es"
+  ));
+}
+
+function bikilaShoeContext(family, variant) {
+  if (!familyUsesBikila(family)) return null;
+  const text = normalizeVariantText([
+    family?.title, family?.category, ...(family?.categories || []),
+    variant?.title, variant?.label
+  ].filter(Boolean).join(" "));
+  if (/calcetin|sock|camiseta|shirt|short|malla|tight|sudadera|chaqueta|jacket|pantalon|top|bra|gorra|visera|cinturon|mochila|chaleco|baston|plantilla|cordones|gafas|sunglasses/.test(text)) return null;
+  if (/junior|kids?|nino|nina|infantil|youth|boy|girl/.test(text)) return "youth";
+  if (/mujer|women|woman|damen|femme/.test(text)) return "women";
+  return "men";
+}
+
+function localizeBikilaShoeSize(value, family, variant, locale) {
+  if (!String(locale || "").toLowerCase().startsWith("es")) return value;
+  const context = bikilaShoeContext(family, variant);
+  if (!context) return value;
+  const numeric = Number.parseFloat(String(value || "").replace(",", "."));
+  if (!Number.isFinite(numeric) || numeric > 15 || numeric < 1) return value;
+  const map = context === "women" ? BIKILA_WOMEN_US_TO_EU : context === "youth" ? BIKILA_YOUTH_US_TO_EU : BIKILA_MEN_US_TO_EU;
+  const eu = map.get(numeric);
+  if (!eu) return value;
+  const usLabel = String(numeric).replace(".", ",");
+  const euLabel = String(eu).replace(".", ",");
+  return `EU ${euLabel} (US ${usLabel})`;
+}
+
 function inferOrientationFromMpn(mpn) {
   const text = String(mpn || "");
   if (/-righ(?:t)?$/i.test(text)) return "Derecha";
@@ -255,7 +307,7 @@ function inferVariantAttributes(variant, family, locale) {
   if (color) attributes.color = color.value;
 
   const explicitSize = normalizedSize(variant.size) || inferSizeFromMpn(variant.mpn);
-  if (explicitSize) attributes.size = explicitSize;
+  if (explicitSize) attributes.size = localizeBikilaShoeSize(explicitSize, family, variant, locale);
 
   const explicitOrientation = clean(variant.orientation) || inferOrientationFromMpn(variant.mpn);
   if (explicitOrientation) attributes.orientation = explicitOrientation;
@@ -355,7 +407,11 @@ function valueSort(key, values) {
   return [...values].sort((a,b) => {
     const an=normalizedKey(a), bn=normalizedKey(b);
     if (rank.has(an) || rank.has(bn)) return (rank.get(an) ?? 99) - (rank.get(bn) ?? 99);
-    const av=parseFloat(an.replace(",",".")), bv=parseFloat(bn.replace(",","."));
+    const numericSize = (value) => {
+      const match = value.match(/^eu\s*(\d+(?:[.,]\d+)?)/i);
+      return Number.parseFloat((match?.[1] || value).replace(",", "."));
+    };
+    const av=numericSize(an), bv=numericSize(bn);
     if (Number.isFinite(av) && Number.isFinite(bv)) return av-bv;
     return String(a).localeCompare(String(b), undefined, {numeric:true});
   });
@@ -486,15 +542,8 @@ export function chooseVariantForAttribute(presentation, key, value) {
 }
 
 export function variantValueAvailable(presentation, key, value) {
-  const selected = presentation?.selected;
-  if (!selected) return true;
   const normalizedValue = normalizedKey(value);
-  const otherKeys = (presentation.groups || []).map((group) => group.key).filter((groupKey) => groupKey !== key);
-  return (presentation.variants || []).some((variant) => (
+  return (presentation?.variants || []).some((variant) =>
     normalizedKey(variant._attributes[key]) === normalizedValue
-    && otherKeys.every((groupKey) => {
-      const selectedValue = selected._attributes[groupKey];
-      return !selectedValue || normalizedKey(variant._attributes[groupKey]) === normalizedKey(selectedValue);
-    })
-  ));
+  );
 }

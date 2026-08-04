@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {
+  balancedHomeFeed,
   bestOffer,
   categoryGroup,
   discountPercent,
@@ -237,4 +238,18 @@ test("genera sugerencias de producto y categoría", () => {
   assert.ok(productSuggestions.some((item) => item.type === "product" && item.value === "phone"));
   const categorySuggestions = getSuggestions(families, "Hogar");
   assert.ok(categorySuggestions.some((item) => item.type === "category"));
+});
+
+test("el feed principal intercala categorías, tiendas y cambia por franja", () => {
+  const sample = [];
+  for (const [group, store] of [["Tecnología","A"],["Moda","B"],["Hogar","C"],["Belleza y cuidado","D"]]) {
+    for (let index = 0; index < 4; index += 1) {
+      sample.push({ id: `${group}-${index}`, primaryGroup: group, groups: [group], stores: [store] });
+    }
+  }
+  const first = balancedHomeFeed(sample, 100);
+  const second = balancedHomeFeed(sample, 101);
+  assert.equal(new Set(first.map((item) => item.id)).size, sample.length);
+  assert.ok(new Set(first.slice(0, 4).map((item) => item.primaryGroup)).size >= 3);
+  assert.notDeepEqual(first.slice(0, 8).map((item) => item.id), second.slice(0, 8).map((item) => item.id));
 });

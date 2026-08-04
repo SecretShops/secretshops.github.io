@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-04T14:00:00.000Z",
+  "sourceFile": "datafeed_2996453 (2).csv.gz",
+  "merchantId": "gigasport-es",
+  "advertiserId": "121582",
+  "mode": "balanced_family_selection",
+  "requestedFamilies": 120,
+  "referenceOfferIds": null,
+  "rawRows": 215317,
+  "merchantRows": 19367,
+  "validRows": 8319,
+  "selectedFamilies": 120,
+  "selectedRows": 404,
+  "rejected": {
+    "not_commissionable": 11048
+  },
+  "selectedCategories": {
+    "Zapatillas de trail": 88,
+    "Running": 83,
+    "Aventura y viajes": 69,
+    "Ciclismo": 57,
+    "Textil deportivo": 54,
+    "Deporte": 53
+  },
+  "outputSha256": "4a146edf6162eedbcbf930c3df57380c4ccc3259117ea8453467fdec2d307a01"
+}

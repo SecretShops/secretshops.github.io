@@ -65,7 +65,7 @@ export const CATEGORY_GROUPS = [
   {
     name: "Tecnología",
     icon: "⌁",
-    aliases: ["Tecnología", "Electrónica", "Informática", "Papelería y oficina"]
+    aliases: ["Tecnología", "Electrónica", "Informática", "Papelería y oficina", "Videojuegos", "Software"]
   },
   {
     name: "Hogar",
@@ -84,7 +84,8 @@ export const CATEGORY_GROUPS = [
       "Jardín y terraza",
       "Cocina y comedor",
       "Decoración y accesorios",
-      "Herramientas y bricolaje"
+      "Herramientas y bricolaje",
+      "Limpieza del hogar"
     ]
   },
   {
@@ -96,13 +97,16 @@ export const CATEGORY_GROUPS = [
       "Moda infantil",
       "Accesorios mujer",
       "Accesorios hombre",
-      "Accesorios y complementos"
+      "Accesorios y complementos",
+      "Moda y accesorios",
+      "Moda vintage",
+      "Joyería"
     ]
   },
   {
     name: "Belleza y cuidado",
     icon: "✦",
-    aliases: ["Belleza y cuidado"]
+    aliases: ["Belleza y cuidado", "Perfumería", "Cuidado del cabello", "Salud y bienestar"]
   },
   {
     name: "Deportes",
@@ -113,7 +117,13 @@ export const CATEGORY_GROUPS = [
       "Deportes y aire libre",
       "Running",
       "Ciclismo",
-      "Movilidad eléctrica"
+      "Movilidad eléctrica",
+      "Zapatillas de running",
+      "Zapatillas de trail",
+      "Zapatillas de clavos",
+      "Textil deportivo",
+      "Calcetines deportivos",
+      "Accesorios de running"
     ]
   },
   {
@@ -144,7 +154,7 @@ export const CATEGORY_GROUPS = [
   {
     name: "Familia y ocio",
     icon: "☆",
-    aliases: ["Juguetes y ocio", "Bebés y niños"]
+    aliases: ["Juguetes y ocio", "Juguetes", "Bebés y niños"]
   },
   {
     name: "Otros",
@@ -820,6 +830,104 @@ export function filterAndSortFamilies(families, filters = {}) {
   });
 
   return results.map((result) => result.family);
+}
+
+const HOME_FEED_GROUP_ORDER = [
+  "Tecnología", "Moda", "Hogar", "Belleza y cuidado", "Deportes",
+  "Familia y ocio", "Aventura y viajes", "Coche/Moto", "Mascotas", "Otros"
+];
+
+function deterministicHash(value) {
+  let hash = 2166136261;
+  for (const character of String(value || "")) {
+    hash ^= character.charCodeAt(0);
+    hash = Math.imul(hash, 16777619);
+  }
+  return hash >>> 0;
+}
+
+function familyStoreKey(family) {
+  return String(family?.stores?.[0] || family?.offers?.[0]?.merchantName || "");
+}
+
+function diversifiedBucket(items, seed, groupName) {
+  const stores = new Map();
+  for (const family of items) {
+    const store = familyStoreKey(family) || "Otros";
+    if (!stores.has(store)) stores.set(store, []);
+    stores.get(store).push(family);
+  }
+  for (const [store, queue] of stores) {
+    queue.sort((left, right) =>
+      deterministicHash(`${seed}|${groupName}|${store}|${left.id}`) -
+      deterministicHash(`${seed}|${groupName}|${store}|${right.id}`)
+    );
+  }
+  const storeNames = [...stores.keys()].sort((left, right) =>
+    deterministicHash(`${seed}|${groupName}|${left}`) -
+    deterministicHash(`${seed}|${groupName}|${right}`)
+  );
+  const output = [];
+  while (output.length < items.length) {
+    let added = false;
+    for (const store of storeNames) {
+      const next = stores.get(store).shift();
+      if (!next) continue;
+      output.push(next);
+      added = true;
+    }
+    if (!added) break;
+  }
+  return output;
+}
+
+export function balancedHomeFeed(families, seed = 0, columns = 4) {
+  const unique = [...new Map((families || []).map((family) => [family.id, family])).values()];
+  if (unique.length < 2) return unique;
+  const buckets = new Map();
+  for (const family of unique) {
+    const group = family.primaryGroup || family.groups?.[0] || categoryGroup(family.category).name || "Otros";
+    if (!buckets.has(group)) buckets.set(group, []);
+    buckets.get(group).push(family);
+  }
+  for (const [group, items] of buckets) buckets.set(group, diversifiedBucket(items, seed, group));
+
+  const known = HOME_FEED_GROUP_ORDER.filter((group) => buckets.has(group));
+  const extra = [...buckets.keys()].filter((group) => !known.includes(group)).sort();
+  const groups = [...known, ...extra];
+  if (groups.length < 2) return diversifiedBucket(unique, seed, "all");
+
+  const shift = Math.abs(Number(seed) || 0) % groups.length;
+  const order = [...groups.slice(shift), ...groups.slice(0, shift)];
+  const output = [];
+  let lastStore = null;
+  let cycle = 0;
+  while (output.length < unique.length) {
+    let added = false;
+    const cycleShift = (cycle * Math.max(1, columns - 1)) % order.length;
+    const cycleOrder = [...order.slice(cycleShift), ...order.slice(0, cycleShift)];
+    const storesInRow = new Set();
+    for (const group of cycleOrder) {
+      const queue = buckets.get(group);
+      if (!queue?.length) continue;
+      let index = queue.findIndex((family) => {
+        const store = familyStoreKey(family);
+        return store !== lastStore && !storesInRow.has(store);
+      });
+      if (index < 0) index = queue.findIndex((family) => familyStoreKey(family) !== lastStore);
+      if (index < 0) index = 0;
+      const [family] = queue.splice(index, 1);
+      output.push(family);
+      lastStore = familyStoreKey(family);
+      storesInRow.add(lastStore);
+      added = true;
+      if (output.length >= unique.length) break;
+      if (output.length % Math.max(1, columns) === 0) storesInRow.clear();
+    }
+    if (!added) break;
+    cycle += 1;
+  }
+  return output;
 }
 
 export function catalogStats(families) {

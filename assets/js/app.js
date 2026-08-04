@@ -1,5 +1,6 @@
 import {
   asArray,
+  balancedHomeFeed,
   bestOffer,
   categoryGuide,
   categoryStats,
@@ -69,6 +70,7 @@ const DIRECTORY_CATEGORIES = [
 ];
 const HERO_ROTATION_MS = 12_000;
 const DEALS_ROTATION_MS = 18_000;
+const HOME_FEED_ROTATION_MS = 15 * 60_000;
 let activeRegion = null;
 let regionsConfig = null;
 let catalogSources = [];
@@ -145,6 +147,7 @@ let catalogWarnings = [];
 let inputTimer = null;
 let heroRotationTimer = null;
 let dealsRotationTimer = null;
+let homeFeedRotationTimer = null;
 let heroRotationOffset = 0;
 let catalogResultCount = 0;
 let catalogObserver = null;
@@ -1036,8 +1039,19 @@ function renderDirectoryView() {
     : "";
 }
 
+function isGenericHomeFeed() {
+  return !state.query && state.category === "all" && state.store === "all" &&
+    state.sort === "relevance" && state.minimumPrice === null && state.maximumPrice === null &&
+    !state.discountOnly && !state.multipleVariants;
+}
+
+function homeFeedSeed() {
+  return Math.floor(Date.now() / HOME_FEED_ROTATION_MS);
+}
+
 function renderCatalog({ updateHistory = true } = {}) {
-  const results = filterAndSortFamilies(families, currentFilters());
+  const filtered = filterAndSortFamilies(families, currentFilters());
+  const results = isGenericHomeFeed() ? balancedHomeFeed(filtered, homeFeedSeed()) : filtered;
   const visible = results.slice(0, state.visible);
   catalogResultCount = results.length;
   const grid = $("[data-catalog-grid]");
@@ -2306,6 +2320,18 @@ function startDealsRotation() {
   }, DEALS_ROTATION_MS);
 }
 
+function stopHomeFeedRotation() {
+  window.clearInterval(homeFeedRotationTimer);
+  homeFeedRotationTimer = null;
+}
+
+function startHomeFeedRotation() {
+  stopHomeFeedRotation();
+  homeFeedRotationTimer = window.setInterval(() => {
+    if (isGenericHomeFeed()) renderCatalog({ updateHistory: false });
+  }, HOME_FEED_ROTATION_MS);
+}
+
 function wireControlledRotations() {
   const hero = $("[data-hero-mosaic]");
   const deals = $("[data-deals-carousel]");
@@ -2327,6 +2353,7 @@ function wireControlledRotations() {
   }
   startHeroRotation();
   startDealsRotation();
+  startHomeFeedRotation();
 }
 
 function renderInitial(stats) {

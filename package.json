@@ -11,6 +11,7 @@
     "test:browser": "node tests/browser-smoke.mjs",
     "validate:catalog": "node scripts/validate-catalog.mjs && node scripts/audit-affiliate-links.mjs",
     "validate:regions": "node scripts/validate-regions.mjs",
+    "validate:v5-repair": "node scripts/audit-v5-repair.mjs",
     "regions:promote": "node scripts/promote-eligible-regions.mjs",
     "validate:site": "node scripts/check-site.mjs",
     "quality": "npm run build:catalog && npm test && npm run validate:catalog && npm run validate:regions && npm run validate:seo && npm run validate:site",

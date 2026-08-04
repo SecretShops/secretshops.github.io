@@ -251,3 +251,53 @@ test("una importación completa reemplaza solo las ofertas anteriores del mercha
   assert.equal(result.products.products.length, 1);
   assert.equal(result.report.totals.orphanProductsRemoved, 1);
 });
+
+test("el SKU acotado al merchant permite importar y reimportar feeds sin GTIN", async () => {
+  const catalogDir = await createCatalog();
+  const merchantsPath = resolve(catalogDir, "merchants.json");
+  const profilesPath = resolve(catalogDir, "awin-import-profiles.json");
+  const merchants = JSON.parse(await readFile(merchantsPath, "utf8"));
+  merchants.merchants[0].id = "merchant-sku";
+  merchants.merchants[0].name = "Merchant SKU";
+  await writeFile(merchantsPath, `${JSON.stringify(merchants, null, 2)}\n`, "utf8");
+  const profiles = JSON.parse(await readFile(profilesPath, "utf8"));
+  profiles.merchants = {
+    "merchant-sku": {
+      country: "ES",
+      currency: "EUR",
+      department: "Hogar",
+      fallbackCategory: "Hogar",
+      defaultCondition: "new",
+      requireExactIdentifier: false,
+      allowMerchantScopedProductId: true
+    }
+  };
+  await writeFile(profilesPath, `${JSON.stringify(profiles, null, 2)}\n`, "utf8");
+
+  const feedPath = resolve(catalogDir, "sku.csv");
+  await writeFile(feedPath, `${HEADERS.join(",")}\n${csvRow({
+    merchant_name: "Merchant SKU",
+    merchant_product_id: "ONLY-SKU-1",
+    ean: "",
+    condition: "",
+    product_model: "",
+    dimensions: "",
+    colour: ""
+  })}\n`, "utf8");
+
+  const options = {
+    inputPath: feedPath,
+    catalogDir,
+    merchantId: "merchant-sku",
+    generatedAt: "2026-08-04T12:00:00.000Z",
+    dryRun: false,
+    pruneOrphans: true
+  };
+  const first = await importAwinFeed(options);
+  const second = await importAwinFeed(options);
+  assert.equal(first.report.totals.productsCreated, 1);
+  assert.match(first.products.products[0].id, /^sku-merchant-sku-/);
+  assert.equal(second.report.totals.productsMatched, 1);
+  assert.equal(second.report.matching.merchant_product_id, 1);
+  assert.equal(second.products.products.length, 1);
+});

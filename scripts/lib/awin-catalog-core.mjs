@@ -254,13 +254,16 @@ function shortHash(value) {
   return createHash("sha256").update(value).digest("hex").slice(0, 18);
 }
 
-function buildProductId({ identifiers, brand, modelVariantKey }) {
+function buildProductId({ identifiers, brand, modelVariantKey, merchantId, merchantProductId, allowMerchantScopedProductId = false }) {
   if (identifiers.canonicalCodes[0]) return `gtin-${identifiers.canonicalCodes[0]}`;
   if (identifiers.mpn && brand) {
     return `mpn-${slugify(brand)}-${slugify(identifiers.mpn)}`;
   }
   if (modelVariantKey) {
     return `model-${slugify(brand)}-${shortHash(modelVariantKey)}`;
+  }
+  if (allowMerchantScopedProductId && merchantId && merchantProductId) {
+    return `sku-${slugify(merchantId)}-${shortHash(String(merchantProductId))}`;
   }
   return null;
 }
@@ -358,6 +361,7 @@ export function buildCandidate({ row, merchant, profile, taxonomy, generatedAt }
     problems.push("missing_exact_identifier");
   } else if (
     profile.requireExactIdentifier !== false &&
+    profile.allowMerchantScopedProductId !== true &&
     identifiers.canonicalCodes.length === 0 &&
     !identifiers.mpn &&
     !modelVariantKey
@@ -378,7 +382,20 @@ export function buildCandidate({ row, merchant, profile, taxonomy, generatedAt }
     problems.push("not_commissionable");
   }
 
-  const productId = buildProductId({ identifiers, brand, modelVariantKey });
+  const merchantScopedIdentityApproved = Boolean(
+    profile.allowMerchantScopedProductId === true &&
+    identifiers.canonicalCodes.length === 0 &&
+    !identifiers.mpn &&
+    !modelVariantKey
+  );
+  const productId = buildProductId({
+    identifiers,
+    brand,
+    modelVariantKey,
+    merchantId: merchant.id,
+    merchantProductId,
+    allowMerchantScopedProductId: profile.allowMerchantScopedProductId === true
+  });
   if (!productId) problems.push("missing_product_id");
 
   if (problems.length > 0) {
@@ -433,6 +450,7 @@ export function buildCandidate({ row, merchant, profile, taxonomy, generatedAt }
     },
     product: {
       id: productId,
+      merchantScopedIdentityApproved,
       title,
       brand,
       model,
@@ -609,6 +627,7 @@ function mergeProduct(current, incoming, merchantId) {
 
   return {
     ...current,
+    merchantScopedIdentityApproved: current.merchantScopedIdentityApproved === true || incoming.merchantScopedIdentityApproved === true,
     title: preferIncoming(current.title, incoming.title, ""),
     brand:
       !current.brand || current.brand === "Sin marca" || onlyCurrentMerchant
@@ -810,7 +829,8 @@ export async function importAwinFeed(options) {
     matching: {
       gtin: 0,
       mpn: 0,
-      brand_model_variant: 0
+      brand_model_variant: 0,
+      merchant_product_id: 0
     },
     categories: {},
     skipReasons: {},
@@ -873,11 +893,18 @@ export async function importAwinFeed(options) {
     } else {
       productId = candidate.product.id;
       if (productsById.has(productId)) {
-        throw new Error(`Colisión de productId generado: ${productId}`);
+        const current = productsById.get(productId);
+        const merged = mergeProduct(current, { ...candidate.product, id: productId }, merchant.id);
+        productsById.set(productId, merged);
+        registerProductIndexes(merged, indexes);
+        report.totals.productsMatched += 1;
+        report.totals.productsUpdated += 1;
+        increment(report.matching, "merchant_product_id");
+      } else {
+        productsById.set(productId, candidate.product);
+        registerProductIndexes(candidate.product, indexes);
+        report.totals.productsCreated += 1;
       }
-      productsById.set(productId, candidate.product);
-      registerProductIndexes(candidate.product, indexes);
-      report.totals.productsCreated += 1;
     }
 
     const offer = { ...candidate.offer, productId };

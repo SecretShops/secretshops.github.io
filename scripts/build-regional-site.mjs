@@ -4,6 +4,7 @@ import {
   access,
   mkdir,
   readFile,
+  readdir,
   rm,
   writeFile
 } from "node:fs/promises";
@@ -137,6 +138,62 @@ async function resetGeneratedDirectory(path) {
     resolve(path, generatedMarker),
     "Directorio generado por scripts/build-regional-site.mjs. No editar manualmente.\n"
   );
+}
+
+function holdsForRegion(catalogHolds, regionId) {
+  return (catalogHolds.holds || []).filter((hold) =>
+    hold?.status === "temporarily-retired"
+    && hold.preserveStaticPages === true
+    && Array.isArray(hold.regions)
+    && hold.regions.includes(regionId)
+  );
+}
+
+async function captureHeldProductPages(directory, holds) {
+  if (!holds.length || !(await exists(directory))) return [];
+  const pages = [];
+  for (const entry of await readdir(directory, { withFileTypes: true })) {
+    if (!entry.isDirectory()) continue;
+    const path = resolve(directory, entry.name, "index.html");
+    if (!(await exists(path))) continue;
+    const source = await readFile(path, "utf8");
+    const hold = holds.find((item) => {
+      const markers = Array.isArray(item.productHtmlMarkers) ? item.productHtmlMarkers : [];
+      return markers.length > 0 && markers.every((marker) => source.includes(marker));
+    });
+    if (hold) pages.push({ merchantId: hold.merchantId, relativePath: `${entry.name}/index.html`, source });
+  }
+  const expected = holds.reduce(
+    (total, hold) => total + Number(hold.expectedPreservedProductPages || 0),
+    0
+  );
+  if (pages.length > 0 && expected > 0) {
+    assert(
+      pages.length === expected,
+      `Se encontraron ${pages.length} fichas históricas retenidas; se esperaban ${expected}`
+    );
+  }
+  return pages;
+}
+
+async function captureHeldStorePages(directory, holds) {
+  const pages = [];
+  for (const hold of holds) {
+    const slug = String(hold.storeSlug || "");
+    assert(/^[a-z0-9-]+$/.test(slug), `Slug de tienda retenida no válido: ${slug}`);
+    const path = resolve(directory, slug, "index.html");
+    if (await exists(path)) {
+      pages.push({ merchantId: hold.merchantId, relativePath: `${slug}/index.html`, source: await readFile(path, "utf8") });
+    }
+  }
+  return pages;
+}
+
+async function restoreHeldPages(directory, pages) {
+  for (const page of pages) {
+    const path = resolve(directory, page.relativePath);
+    if (!(await exists(path))) await writeText(path, page.source);
+  }
 }
 
 function rawOffers(payload) {
@@ -665,6 +722,11 @@ ${entries.map((entry) => `  <sitemap><loc>${xml(entry.loc)}</loc><lastmod>${xml(
 const config = validateRegionConfig(
   await readJson(resolve(root, "data/config/regions.json"))
 );
+const catalogHoldsPath = resolve(root, "data/config/catalog-holds.json");
+const catalogHolds = await exists(catalogHoldsPath)
+  ? await readJson(catalogHoldsPath)
+  : { schemaVersion: 1, holds: [] };
+assert(catalogHolds.schemaVersion === 1 && Array.isArray(catalogHolds.holds), "catalog-holds.json no válido");
 const publicRegions = publishedRegions(config);
 const rootTemplate = await readFile(resolve(root, "index.html"), "utf8");
 const buildResults = [];
@@ -675,6 +737,9 @@ for (const region of publicRegions) {
   const productDirectory = localPath(`${region.basePath}producto/`);
   const categoryDirectory = localPath(categoryDirectoryPath(region));
   const storeDirectory = localPath(storeDirectoryPath(region));
+  const regionHolds = holdsForRegion(catalogHolds, region.id);
+  const heldProductPages = await captureHeldProductPages(productDirectory, regionHolds);
+  const heldStorePages = await captureHeldStorePages(storeDirectory, regionHolds);
   await resetGeneratedDirectory(productDirectory);
   await resetGeneratedDirectory(categoryDirectory);
   await resetGeneratedDirectory(storeDirectory);
@@ -692,6 +757,7 @@ for (const region of publicRegions) {
       productPage(config, region, family, canonical)
     );
   }
+  await restoreHeldPages(productDirectory, heldProductPages);
 
   const categoryDirectoryRoute = categoryDirectoryPath(region);
   const categoryDirectoryTitle = `${t("categoryDirectoryTitle")} | SecretShop ${region.name}`;
@@ -779,6 +845,7 @@ for (const region of publicRegions) {
       })
     );
   }
+  await restoreHeldPages(storeDirectory, heldStorePages);
 
   if (region.basePath !== "/") {
     await writeText(
@@ -817,6 +884,8 @@ for (const region of publicRegions) {
     productPages: routeSet.size,
     categoryPages: categoryRouteSet.size,
     storePages: storeRouteSet.size,
+    heldProductPages: heldProductPages.length,
+    heldStorePages: heldStorePages.length,
     lastmod
   });
 }

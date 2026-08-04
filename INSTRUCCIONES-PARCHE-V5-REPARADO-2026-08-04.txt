@@ -1,0 +1,67 @@
+SECRETSHOP - PARCHE V5 REPARADO
+Fecha: 2026-08-04
+Base exacta: secretshops.github.io-main (11).zip
+
+Este paquete sustituye al parche v5 anterior y al parche separado de retirada de Lounge.
+No mezcle archivos de los parches antiguos con este paquete.
+
+APLICACIÓN
+1. Haga una copia de seguridad del repositorio actual.
+2. Copie el contenido de esta carpeta sobre la raíz del repositorio.
+3. Confirme la sustitución de todos los archivos coincidentes.
+4. No es necesario eliminar archivos: el parche conserva deliberadamente las páginas HTML
+   históricas de Lounge y las deja fuera de catálogo, enlaces y sitemaps.
+5. No copie node_modules ni dist; no forman parte del parche.
+
+LOUNGE EU
+- Comercio pausado y sincronización deshabilitada.
+- 1.146 ofertas y 1.146 productos retirados del catálogo activo.
+- Sin enlaces canónicos ni regionales, marca activa ni URLs en sitemaps.
+- Se conservan 1.019 páginas HTML históricas, la página de tienda, el logo y 8 archivos
+  fuente para que la retirada sea reversible.
+- No ejecute la importación de Lounge mientras el contrato siga expirado.
+
+CATÁLOGOS NUEVOS
+- Voghion Global: ES, PT, FR, DE, IT, AT, BE, NL, FI, SK, LV, LT, LU, EE, SI, HR, GR.
+- Al Jazeera Perfumes EU: ES, PT, FR, DE, IT, AT, BE, IE, NL, FI, SK, LV, LT, LU, EE,
+  SI, HR, MC, GR, BG.
+- Foot-Store ES: ES, PT, FR, DE, IT, AT, BE, IE, NL, SK, LV, LT, LU, EE, SI, HR, MC,
+  GR, BG.
+- Gigasport ES: solo ES.
+
+Los feeds son EUR y solo se publican en regiones publicadas con EUR. No se convierten
+monedas. España recibe el catálogo curado completo; fuera de España se publican como
+máximo 120 familias por comercio, con selección equilibrada por categoría.
+
+DATOS CURADOS EN ESPAÑA
+- Voghion: 2.604 filas / 2.604 familias / 2.604 ofertas.
+- Al Jazeera: 85 filas / 83 familias / 85 ofertas.
+- Foot-Store: 316 filas / 114 familias / 316 ofertas.
+- Gigasport: 404 filas / 120 familias / 404 ofertas.
+- Total nuevo: 3.409 filas y ofertas, repartidas en 2.921 familias.
+
+VALIDACIÓN RECOMENDADA DESPUÉS DE COPIAR
+  npm ci
+  npm test
+  npm run validate:catalog
+  npm run validate:regions
+  npm run validate:v5-repair
+  npm run validate:seo
+  npm run validate:site
+  ./node_modules/.bin/vite build
+  npx playwright install chromium
+  npm run test:browser
+
+RESULTADO DEL PARCHE ENTREGADO
+- 105/105 pruebas unitarias superadas.
+- 10.382/10.382 enlaces canónicos y 42.129/42.129 asignaciones regionales válidas.
+- 21 regiones publicadas validadas; borradores aislados.
+- 224 JSON de datos analizados, sin errores.
+- 20.566 páginas HTML y 0 referencias locales rotas.
+- SEO: 18.719 fichas activas en sitemap y 1.019 fichas Lounge retenidas fuera de sitemap.
+- Vite 8.1.5 compila correctamente.
+- Playwright: escritorio, móvil y tablet; búsqueda, ficha, favoritos, comparador, tema,
+  promociones, selector regional y accesibilidad, todo correcto.
+
+Compruebe MANIFEST-SHA256.txt antes de aplicar el parche si el archivo se ha transferido
+por un canal que pueda alterar su contenido.

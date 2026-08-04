@@ -1,12 +1,18 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-07-28",
+  "updatedAt": "2026-08-04",
   "stores": [
     {
       "id": "365rider-es",
       "name": "365Rider",
       "domain": "www.365rider.com",
       "logo": "/assets/brands/stores/365rider.svg"
+    },
+    {
+      "id": "al-jazeera-perfumes-eu",
+      "name": "Al Jazeera Perfumes EU",
+      "domain": "europe.aljazeeraperfumes.com",
+      "logo": "/assets/brands/stores/al-jazeera-perfumes.svg"
     },
     {
       "id": "aliexpress",
@@ -27,6 +33,12 @@
       "logo": "/assets/brands/stores/bikila.png"
     },
     {
+      "id": "clarel-es",
+      "name": "Clarel",
+      "domain": "www.clarel.es",
+      "logo": "/assets/brands/stores/clarel.svg"
+    },
+    {
       "id": "coach",
       "name": "Coach",
       "domain": "es.coach.com",
@@ -37,6 +49,18 @@
       "name": "Dore & Rose",
       "domain": "doreandrose.com",
       "logo": "/assets/brands/stores/dore-rose.png"
+    },
+    {
+      "id": "foot-store-es",
+      "name": "Foot-Store ES",
+      "domain": "foot-store.es",
+      "logo": "/assets/brands/stores/foot-store.svg"
+    },
+    {
+      "id": "gigasport-es",
+      "name": "Gigasport ES",
+      "domain": "www.gigasport.es",
+      "logo": "/assets/brands/stores/gigasport.svg"
     },
     {
       "id": "heybike",
@@ -63,16 +87,16 @@
       "logo": "/assets/brands/stores/italist.png"
     },
     {
-      "id": "lounge-eu",
-      "name": "Lounge EU",
-      "domain": "eu.lounge.com",
-      "logo": "/assets/brands/stores/lounge.png"
+      "id": "juguetesonline-es",
+      "name": "JuguetesOnline",
+      "domain": "www.juguetesonline.com",
+      "logo": "/assets/brands/stores/juguetesonline.svg"
     },
     {
-      "id": "omara-jewelry-es",
-      "name": "Omara Jewelry",
-      "domain": "omara.es",
-      "logo": "/assets/brands/stores/omara.svg"
+      "id": "la-drogueria-es",
+      "name": "La Droguería",
+      "domain": "ladrogueria.com",
+      "logo": "/assets/brands/stores/la-drogueria.svg"
     },
     {
       "id": "lenovo-es-553883",
@@ -87,42 +111,6 @@
       "name": "Lenovo ES",
       "domain": "www.lenovo.com",
       "logo": "/assets/brands/stores/lenovo.svg"
-    },
-    {
-      "id": "paj-gps-es-pt",
-      "name": "PAJ GPS",
-      "domain": "www.paj-gps.es",
-      "logo": "/assets/brands/stores/paj-gps.svg"
-    },
-    {
-      "id": "perfumeria-comas-es",
-      "name": "Perfumería Comas",
-      "domain": "perfumeriacomas.com",
-      "logo": "/assets/brands/stores/perfumeria-comas.svg"
-    },
-    {
-      "id": "trotec-iberic-es-pt",
-      "name": "Trotec Iberic",
-      "domain": "es.trotec.com",
-      "logo": "/assets/brands/stores/trotec.svg"
-    },
-    {
-      "id": "clarel-es",
-      "name": "Clarel",
-      "domain": "www.clarel.es",
-      "logo": "/assets/brands/stores/clarel.svg"
-    },
-    {
-      "id": "la-drogueria-es",
-      "name": "La Droguería",
-      "domain": "ladrogueria.com",
-      "logo": "/assets/brands/stores/la-drogueria.svg"
-    },
-    {
-      "id": "juguetesonline-es",
-      "name": "JuguetesOnline",
-      "domain": "www.juguetesonline.com",
-      "logo": "/assets/brands/stores/juguetesonline.svg"
     },
     {
       "id": "muebles-style-spain",
@@ -143,6 +131,24 @@
       "logo": "/assets/brands/stores/nasopia.png"
     },
     {
+      "id": "omara-jewelry-es",
+      "name": "Omara Jewelry",
+      "domain": "omara.es",
+      "logo": "/assets/brands/stores/omara.svg"
+    },
+    {
+      "id": "paj-gps-es-pt",
+      "name": "PAJ GPS",
+      "domain": "www.paj-gps.es",
+      "logo": "/assets/brands/stores/paj-gps.svg"
+    },
+    {
+      "id": "perfumeria-comas-es",
+      "name": "Perfumería Comas",
+      "domain": "perfumeriacomas.com",
+      "logo": "/assets/brands/stores/perfumeria-comas.svg"
+    },
+    {
       "id": "pixar",
       "name": "PIXAR Bikes",
       "domain": "pixarbikes.com",
@@ -161,10 +167,22 @@
       "logo": "/assets/brands/stores/shokz.png"
     },
     {
+      "id": "trotec-iberic-es-pt",
+      "name": "Trotec Iberic",
+      "domain": "es.trotec.com",
+      "logo": "/assets/brands/stores/trotec.svg"
+    },
+    {
       "id": "vegairoa-es",
       "name": "Vegairoa",
       "domain": "www.vegairoaprofesional.com",
       "logo": "/assets/brands/stores/vegairoa.svg"
+    },
+    {
+      "id": "voghion-global-es",
+      "name": "Voghion Global",
+      "domain": "www.voghion.com",
+      "logo": "/assets/brands/stores/voghion.svg"
     }
   ]
 }

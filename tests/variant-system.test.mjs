@@ -2,7 +2,8 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   buildVariantPresentation,
-  chooseVariantForAttribute
+  chooseVariantForAttribute,
+  variantValueAvailable
 } from "../assets/js/variant-system.js";
 
 function offer(id, price = 100) {
@@ -111,6 +112,7 @@ test("Bikila usa la talla deducida del MPN y no muestra Modelo disponible", () =
   const family = {
     id: "bikila-test",
     title: "Zapatilla de running",
+    stores: ["BIKILA ES"],
     image: "https://cdn.example.com/shoe.jpg",
     images: [],
     variants: [
@@ -121,7 +123,7 @@ test("Bikila usa la talla deducida del MPN y no muestra Modelo disponible", () =
   const presentation = buildVariantPresentation(family, null, "es-ES");
   assert.equal(presentation.groups.length, 1);
   assert.equal(presentation.groups[0].key, "size");
-  assert.deepEqual(presentation.groups[0].values.map((item) => item.value), ["9.5", "10"]);
+  assert.deepEqual(presentation.groups[0].values.map((item) => item.value), ["EU 43 (US 9,5)", "EU 44 (US 10)"]);
 });
 
 test("un producto sin opciones reales no muestra configurador", () => {
@@ -230,4 +232,20 @@ test("usa miniaturas de diseño cuando el feed solo aporta imágenes distintas",
   const presentation = buildVariantPresentation(family, null, "es-ES");
   assert.deepEqual(presentation.groups.map((group) => group.key), ["style"]);
   assert.deepEqual(presentation.groups[0].values.map((item) => item.value), ["Diseño 1", "Diseño 2"]);
+});
+
+test("las opciones compatibles indirectamente siguen activas y reajustan la combinación", () => {
+  const family = {
+    id: "combination-test",
+    title: "Conjunto",
+    image: "https://cdn.example.com/a.jpg",
+    variants: [
+      { id: "black-s", title: "Conjunto", color: "Black", size: "S", images: ["https://cdn.example.com/a.jpg"], offers: offer("black-s") },
+      { id: "pink-m", title: "Conjunto", color: "Pink", size: "M", images: ["https://cdn.example.com/b.jpg"], offers: offer("pink-m") }
+    ]
+  };
+  const presentation = buildVariantPresentation(family, "black-s", "es-ES");
+  assert.equal(variantValueAvailable(presentation, "color", "Rosa"), true);
+  const next = chooseVariantForAttribute(presentation, "color", "Rosa");
+  assert.equal(next.id, "pink-m");
 });

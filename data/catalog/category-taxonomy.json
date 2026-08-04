@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-07-28",
+  "updatedAt": "2026-08-04",
   "categories": [
     {
       "id": "featured",
@@ -302,6 +302,34 @@
       "parent": "Hogar",
       "showOnHome": false,
       "order": 62
+    },
+    {
+      "id": "fashion",
+      "label": "Moda",
+      "parent": null,
+      "showOnHome": true,
+      "order": 65
+    },
+    {
+      "id": "kids-fashion",
+      "label": "Moda infantil",
+      "parent": null,
+      "showOnHome": true,
+      "order": 85
+    },
+    {
+      "id": "fashion-accessories",
+      "label": "Accesorios y complementos",
+      "parent": null,
+      "showOnHome": true,
+      "order": 105
+    },
+    {
+      "id": "pets",
+      "label": "Mascotas",
+      "parent": null,
+      "showOnHome": true,
+      "order": 127
     }
   ],
   "genericRules": [

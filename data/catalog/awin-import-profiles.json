@@ -262,6 +262,334 @@
           ]
         }
       ]
+    },
+    "voghion-global-es": {
+      "country": "ES",
+      "currency": "EUR",
+      "department": "Moda",
+      "fallbackCategory": "Accesorios y complementos",
+      "defaultCondition": "new",
+      "requireGlobalIdentifier": false,
+      "requireExactIdentifier": false,
+      "allowMerchantScopedProductId": true,
+      "categoryRules": [
+        {
+          "category": "Moda mujer",
+          "includeAny": [
+            "women's clothing",
+            "womens clothing"
+          ]
+        },
+        {
+          "category": "Moda hombre",
+          "includeAny": [
+            "men's clothing",
+            "mens clothing"
+          ]
+        },
+        {
+          "category": "Moda infantil",
+          "includeAny": [
+            "mother & kids",
+            "mother and kids"
+          ]
+        },
+        {
+          "category": "Joyería",
+          "includeAny": [
+            "jewelry & accessories",
+            "jewelry and accessories"
+          ]
+        },
+        {
+          "category": "Accesorios y complementos",
+          "includeAny": [
+            "shoes",
+            "apparel accessories",
+            "watches"
+          ]
+        },
+        {
+          "category": "Aventura y viajes",
+          "includeAny": [
+            "luggage & bags",
+            "luggage and bags"
+          ]
+        },
+        {
+          "category": "Deporte",
+          "includeAny": [
+            "sports & outdoor",
+            "sports and outdoor"
+          ]
+        },
+        {
+          "category": "Cuidado del cabello",
+          "includeAny": [
+            "hair extensions & wigs",
+            "hair extensions and wigs"
+          ]
+        },
+        {
+          "category": "Belleza y cuidado",
+          "includeAny": [
+            "beauty & health",
+            "beauty and health"
+          ]
+        },
+        {
+          "category": "Tecnología",
+          "includeAny": [
+            "cellphones & telecommunications",
+            "consumer electronics",
+            "computer & office",
+            "computer and office",
+            "education & office supplies",
+            "education and office supplies"
+          ]
+        },
+        {
+          "category": "Hogar",
+          "includeAny": [
+            "home & garden",
+            "home and garden",
+            "home appliances",
+            "home improvement",
+            "tools"
+          ]
+        },
+        {
+          "category": "Coche/Moto",
+          "includeAny": [
+            "automobiles & motorcycles",
+            "automobiles and motorcycles",
+            "motors"
+          ]
+        },
+        {
+          "category": "Juguetes",
+          "includeAny": [
+            "toys & games",
+            "toys and games"
+          ]
+        },
+        {
+          "category": "Mascotas",
+          "includeAny": [
+            "pet products"
+          ]
+        }
+      ]
+    },
+    "al-jazeera-perfumes-eu": {
+      "country": "ES",
+      "currency": "EUR",
+      "department": "Belleza y cuidado",
+      "fallbackCategory": "Perfumería",
+      "defaultCondition": "new",
+      "requireGlobalIdentifier": false,
+      "requireExactIdentifier": false,
+      "allowMerchantScopedProductId": true,
+      "categoryRules": [
+        {
+          "category": "Perfumería",
+          "includeAny": [
+            "perfume",
+            "eau de parfum",
+            "fragrance"
+          ]
+        }
+      ]
+    },
+    "foot-store-es": {
+      "country": "ES",
+      "currency": "EUR",
+      "department": "Deporte",
+      "fallbackCategory": "Deporte",
+      "defaultCondition": "new",
+      "requireGlobalIdentifier": false,
+      "requireExactIdentifier": false,
+      "allowMerchantScopedProductId": true,
+      "categoryRules": [
+        {
+          "category": "Ciclismo",
+          "includeAny": [
+            "cycling",
+            "cyclisme",
+            "ciclismo",
+            "bicicleta",
+            "bicycle",
+            "bike",
+            "velo"
+          ]
+        },
+        {
+          "category": "Zapatillas de trail",
+          "includeAny": [
+            "trail shoe",
+            "trail running",
+            "zapatilla trail"
+          ]
+        },
+        {
+          "category": "Zapatillas de running",
+          "includeAny": [
+            "running shoe",
+            "running shoes",
+            "zapatilla running"
+          ]
+        },
+        {
+          "category": "Running",
+          "includeAny": [
+            "running",
+            "athletisme",
+            "atletismo",
+            "course a pied"
+          ]
+        },
+        {
+          "category": "Aventura y viajes",
+          "includeAny": [
+            "outdoor",
+            "hiking",
+            "senderismo",
+            "camping",
+            "ski",
+            "snowboard",
+            "randonnee"
+          ]
+        },
+        {
+          "category": "Textil deportivo",
+          "includeAny": [
+            "maillot",
+            "jersey",
+            "camiseta",
+            "shirt",
+            "short",
+            "pantalon",
+            "legging",
+            "chaqueta",
+            "jacket",
+            "ropa"
+          ]
+        },
+        {
+          "category": "Deporte",
+          "includeAny": [
+            "football",
+            "futbol",
+            "basket",
+            "handball",
+            "volley",
+            "rugby",
+            "tennis",
+            "padel",
+            "multisports",
+            "fitness",
+            "natation",
+            "swimming",
+            "deportes",
+            "sport"
+          ]
+        }
+      ]
+    },
+    "gigasport-es": {
+      "country": "ES",
+      "currency": "EUR",
+      "department": "Deporte",
+      "fallbackCategory": "Deporte",
+      "defaultCondition": "new",
+      "requireGlobalIdentifier": false,
+      "requireExactIdentifier": false,
+      "allowMerchantScopedProductId": true,
+      "categoryRules": [
+        {
+          "category": "Ciclismo",
+          "includeAny": [
+            "cycling",
+            "cyclisme",
+            "ciclismo",
+            "bicicleta",
+            "bicycle",
+            "bike",
+            "velo"
+          ]
+        },
+        {
+          "category": "Zapatillas de trail",
+          "includeAny": [
+            "trail shoe",
+            "trail running",
+            "zapatilla trail"
+          ]
+        },
+        {
+          "category": "Zapatillas de running",
+          "includeAny": [
+            "running shoe",
+            "running shoes",
+            "zapatilla running"
+          ]
+        },
+        {
+          "category": "Running",
+          "includeAny": [
+            "running",
+            "athletisme",
+            "atletismo",
+            "course a pied"
+          ]
+        },
+        {
+          "category": "Aventura y viajes",
+          "includeAny": [
+            "outdoor",
+            "hiking",
+            "senderismo",
+            "camping",
+            "ski",
+            "snowboard",
+            "randonnee"
+          ]
+        },
+        {
+          "category": "Textil deportivo",
+          "includeAny": [
+            "maillot",
+            "jersey",
+            "camiseta",
+            "shirt",
+            "short",
+            "pantalon",
+            "legging",
+            "chaqueta",
+            "jacket",
+            "ropa"
+          ]
+        },
+        {
+          "category": "Deporte",
+          "includeAny": [
+            "football",
+            "futbol",
+            "basket",
+            "handball",
+            "volley",
+            "rugby",
+            "tennis",
+            "padel",
+            "multisports",
+            "fitness",
+            "natation",
+            "swimming",
+            "deportes",
+            "sport"
+          ]
+        }
+      ]
     }
   }
 }

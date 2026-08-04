@@ -5541,7 +5541,7 @@ body[data-page-kind="home"] #categorias .category-copy strong {
     height: 36px;
   }
 
-  .brand span {
+  .header-primary > .brand span {
     display: none;
   }
 

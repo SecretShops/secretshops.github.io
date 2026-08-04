@@ -1,15 +1,1 @@
-{
-  "schemaVersion": 1,
-  "region": "bg",
-  "country": "BG",
-  "locale": "bg-BG",
-  "currency": "EUR",
-  "sources": [
-    {
-      "id": "approved-feeds-2026-07-28",
-      "path": "/data/catalog/bg/approved-feeds-2026-07-28.json",
-      "country": "BG",
-      "currency": "EUR"
-    }
-  ]
-}
+{"schemaVersion":1,"region":"bg","country":"BG","locale":"bg-BG","currency":"EUR","sources":[{"id":"approved-feeds-2026-07-28","path":"/data/catalog/bg/approved-feeds-2026-07-28.json","country":"BG","currency":"EUR"},{"id":"awin-v5-al-jazeera-perfumes-eu","path":"/data/catalog/bg/awin-v5-al-jazeera-perfumes-eu.json","country":"BG","currency":"EUR","merchantId":"al-jazeera-perfumes-eu","merchantName":"Al Jazeera Perfumes EU"},{"id":"awin-v5-foot-store-es","path":"/data/catalog/bg/awin-v5-foot-store-es.json","country":"BG","currency":"EUR","merchantId":"foot-store-es","merchantName":"Foot-Store ES"}]}

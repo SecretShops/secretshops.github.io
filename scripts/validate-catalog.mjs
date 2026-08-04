@@ -151,7 +151,10 @@ function validateProducts(payload, categoryLabels) {
       product.variant &&
       Object.values(product.variant).some(Boolean)
     );
-    assert(hasExactId || hasModelVariant || product.manualMatchApproved === true, `${product.id}: falta identificador exacto o revisión manual`);
+    assert(
+      hasExactId || hasModelVariant || product.manualMatchApproved === true || product.merchantScopedIdentityApproved === true,
+      `${product.id}: falta identificador exacto, identidad SKU aprobada o revisión manual`
+    );
     assert(isIsoDate(product.sourceUpdatedAt), `${product.id}: sourceUpdatedAt inválido`);
   }
   return ids;

@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-04T14:00:00.000Z",
+  "sourceFile": "datafeed_2996453 (2).csv.gz",
+  "merchantId": "foot-store-es",
+  "advertiserId": "65912",
+  "mode": "balanced_family_selection",
+  "requestedFamilies": 120,
+  "referenceOfferIds": null,
+  "rawRows": 215317,
+  "merchantRows": 195950,
+  "validRows": 195950,
+  "selectedFamilies": 120,
+  "selectedRows": 316,
+  "rejected": {},
+  "selectedCategories": {
+    "Running": 76,
+    "Textil deportivo": 62,
+    "Deporte": 61,
+    "Aventura y viajes": 57,
+    "Ciclismo": 48,
+    "Repuestos y recambios": 4,
+    "Hogar": 4,
+    "Movilidad eléctrica": 2,
+    "Tecnología": 2
+  },
+  "outputSha256": "80e7521585f022697d516c17befa2a7d5a1be4de64d67804a0cfad388c58e4c7"
+}

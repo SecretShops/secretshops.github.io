@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-04T14:00:00.000Z",
+  "merchantId": "lounge-eu",
+  "mode": "temporary-publication-hold",
+  "reversibleFromPreservedSources": true,
+  "sourceFilesPreserved": true,
+  "removedOffers": 1146,
+  "productsDetached": 0,
+  "productsRemoved": 1146,
+  "productsRemaining": 9513,
+  "offersRemaining": 9514
+}

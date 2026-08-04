@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "holds": [
+    {
+      "merchantId": "lounge-eu",
+      "status": "temporarily-retired",
+      "regions": [
+        "es"
+      ],
+      "preserveSources": true,
+      "preserveStaticPages": true,
+      "expectedPreservedProductPages": 1019,
+      "productHtmlMarkers": [
+        "Lounge EU",
+        "offer=lounge-eu%3A"
+      ],
+      "storeSlug": "lounge-eu"
+    }
+  ]
+}

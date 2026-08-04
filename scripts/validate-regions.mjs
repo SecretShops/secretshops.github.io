@@ -45,19 +45,54 @@ function collect(payload) {
   return { families, offers };
 }
 
-async function countProductPages(directory) {
+function holdsForRegion(catalogHolds, regionId) {
+  return (catalogHolds.holds || []).filter((hold) =>
+    hold?.status === "temporarily-retired"
+    && hold.preserveStaticPages === true
+    && Array.isArray(hold.regions)
+    && hold.regions.includes(regionId)
+  );
+}
+
+async function countProductPages(directory, region, expectedRoutes, holds) {
   const entries = await readdir(directory, { withFileTypes: true });
-  let count = 0;
+  let active = 0;
+  let held = 0;
   for (const entry of entries) {
     if (!entry.isDirectory()) continue;
-    if (await exists(resolve(directory, entry.name, "index.html"))) count += 1;
+    const path = resolve(directory, entry.name, "index.html");
+    if (!(await exists(path))) continue;
+    const route = `${region.basePath}producto/${entry.name}/`;
+    if (expectedRoutes.has(route)) {
+      active += 1;
+      continue;
+    }
+    const source = await readFile(path, "utf8");
+    const hold = holds.find((item) => {
+      const markers = Array.isArray(item.productHtmlMarkers) ? item.productHtmlMarkers : [];
+      return markers.length > 0 && markers.every((marker) => source.includes(marker));
+    });
+    assert(hold, `${region.id}: ficha huérfana no autorizada ${route}`);
+    held += 1;
   }
-  return count;
+  const expectedHeld = holds.reduce(
+    (total, hold) => total + Number(hold.expectedPreservedProductPages || 0),
+    0
+  );
+  if (held > 0 && expectedHeld > 0) {
+    assert(held === expectedHeld, `${region.id}: ${held} fichas retenidas para ${expectedHeld} previstas`);
+  }
+  return { active, held };
 }
 
 const config = validateRegionConfig(
   await readJson(resolve(root, "data/config/regions.json"))
 );
+const catalogHoldsPath = resolve(root, "data/config/catalog-holds.json");
+const catalogHolds = await exists(catalogHoldsPath)
+  ? await readJson(catalogHoldsPath)
+  : { schemaVersion: 1, holds: [] };
+assert(catalogHolds.schemaVersion === 1 && Array.isArray(catalogHolds.holds), "catalog-holds.json no válido");
 const publicRegionIds = new Set(publishedRegions(config).map((region) => region.id));
 const selector = await readFile(localPath(config.selectorPath + "index.html"), "utf8");
 const rootIndex = await readFile(resolve(root, "index.html"), "utf8");
@@ -123,10 +158,6 @@ for (const region of config.regions) {
   if (isPublished) {
     const productDirectory = localPath(`${region.basePath}producto/`);
     assert(await exists(resolve(productDirectory, "_GENERATED_BY_SECRETSHOP.txt")), `${region.id}: falta marcador de fichas generadas`);
-    const productPages = await countProductPages(productDirectory);
-    assert(productPages === familyIds.size, `${region.id}: ${productPages} fichas para ${familyIds.size} familias`);
-    assert(await exists(resolve(root, `sitemap-${region.id}.xml`)), `${region.id}: falta sitemap regional`);
-
     const merged = mergeCatalogPayloads(loadedSources);
     assert(merged.warnings.length === 0, `${region.id}: ${merged.warnings.join("; ")}`);
     const seenRoutes = new Set();
@@ -136,7 +167,21 @@ for (const region of config.regions) {
       seenRoutes.add(route);
       assert(await exists(resolve(localPath(route), "index.html")), `${region.id}: falta ${route}`);
     }
-    totals.push({ region: region.id, families: familyIds.size, offers: offerIds.size, productPages });
+    const productPages = await countProductPages(
+      productDirectory,
+      region,
+      seenRoutes,
+      holdsForRegion(catalogHolds, region.id)
+    );
+    assert(productPages.active === familyIds.size, `${region.id}: ${productPages.active} fichas activas para ${familyIds.size} familias`);
+    assert(await exists(resolve(root, `sitemap-${region.id}.xml`)), `${region.id}: falta sitemap regional`);
+    totals.push({
+      region: region.id,
+      families: familyIds.size,
+      offers: offerIds.size,
+      productPages: productPages.active,
+      heldProductPages: productPages.held
+    });
   }
 }
 
@@ -149,5 +194,5 @@ for (const region of config.regions.filter((entry) => entry.status === "draft"))
 }
 
 console.log(
-  `Regiones válidas: ${totals.map((entry) => `${entry.region} ${entry.families} familias/${entry.offers} ofertas/${entry.productPages} fichas`).join("; ")}. Drafts sin publicar: ${config.regions.filter((region) => region.status === "draft").map((region) => region.id).join(", ")}.`
+  `Regiones válidas: ${totals.map((entry) => `${entry.region} ${entry.families} familias/${entry.offers} ofertas/${entry.productPages} fichas activas/${entry.heldProductPages} retenidas`).join("; ")}. Drafts sin publicar: ${config.regions.filter((region) => region.status === "draft").map((region) => region.id).join(", ")}.`
 );

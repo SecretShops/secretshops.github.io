@@ -44,15 +44,18 @@ test("cada catálogo regional tiene exactamente un enlace aceptado por oferta", 
   }
 });
 
-test("España conserva los catálogos históricos y los nuevos de Impact", async () => {
+test("España conserva los catálogos históricos y añade los nuevos Awin", async () => {
   const links = (await readJson("data/catalog/es/affiliate-links.json")).links;
   for (const prefix of [
     "amazon-es:",
     "aliexpress-es:",
     "shokz-es:",
-    "lounge-eu:",
     "bikila-es:",
     "muebles-style-spain:",
+    "voghion-global-es:",
+    "al-jazeera-perfumes-eu:",
+    "foot-store-es:",
+    "gigasport-es:",
     "coach-es:",
     "italist-es:",
     "heybike:",
@@ -62,6 +65,25 @@ test("España conserva los catálogos históricos y los nuevos de Impact", async
     assert.ok(
       Object.keys(links).some((offerId) => offerId.startsWith(prefix)),
       `España no conserva enlaces ${prefix}`
+    );
+  }
+});
+
+test("Lounge queda fuera de todos los catálogos y enlaces públicos", async () => {
+  for (const region of regions.regions) {
+    if (!region.catalogManifest || !region.affiliateLinks) continue;
+    const manifest = await readJson(region.catalogManifest);
+    for (const source of manifest.sources) {
+      const payload = await readJson(source.path);
+      assert.ok(
+        [...offerIds(payload)].every((offerId) => !offerId.startsWith("lounge-eu:")),
+        `${region.id}: Lounge sigue referenciado por ${source.id}`
+      );
+    }
+    const links = (await readJson(region.affiliateLinks)).links || {};
+    assert.ok(
+      Object.keys(links).every((offerId) => !offerId.startsWith("lounge-eu:")),
+      `${region.id}: Lounge sigue publicado en enlaces regionales`
     );
   }
 });

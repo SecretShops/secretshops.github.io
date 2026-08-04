@@ -1,26 +1,26 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-08-04T13:26:38.045Z",
+  "generatedAt": "2026-08-04T14:59:32.499Z",
   "summary": {
-    "canonicalOffers": 7251,
+    "canonicalOffers": 9514,
     "canonicalByNetwork": {
-      "awin": 5865,
+      "awin": 9274,
       "amazon": 191,
-      "impact": 1195
+      "impact": 49
     },
     "validCanonicalByNetwork": {
-      "awin": 5865,
+      "awin": 9274,
       "amazon": 191,
-      "impact": 1195
+      "impact": 49
     },
-    "canonicalPublishedOffers": 8119,
-    "canonicalPublishedLinks": 8119,
-    "regionalOfferAssignments": 30643,
-    "regionalLinkAssignments": 30643,
-    "awinCanonicalLinks": 5865,
+    "canonicalPublishedOffers": 10382,
+    "canonicalPublishedLinks": 10382,
+    "regionalOfferAssignments": 42129,
+    "regionalLinkAssignments": 42129,
+    "awinCanonicalLinks": 9274,
     "aliexpressCanonicalLinks": 868,
     "amazonCanonicalLinks": 191,
-    "impactCanonicalLinks": 1195,
+    "impactCanonicalLinks": 49,
     "findings": 0,
     "allOffersTracked": true
   },
@@ -28,8 +28,8 @@
     "es": {
       "status": "published",
       "country": "ES",
-      "offers": 11419,
-      "links": 11419,
+      "offers": 13682,
+      "links": 13682,
       "invalid": 0
     },
     "mx": {
@@ -49,8 +49,8 @@
     "pt": {
       "status": "published",
       "country": "PT",
-      "offers": 1967,
-      "links": 1967,
+      "offers": 2488,
+      "links": 2488,
       "invalid": 0
     },
     "ve": {
@@ -77,127 +77,127 @@
     "fr": {
       "status": "published",
       "country": "FR",
-      "offers": 1486,
-      "links": 1486,
+      "offers": 2007,
+      "links": 2007,
       "invalid": 0
     },
     "de": {
       "status": "published",
       "country": "DE",
-      "offers": 1366,
-      "links": 1366,
+      "offers": 1887,
+      "links": 1887,
       "invalid": 0
     },
     "it": {
       "status": "published",
       "country": "IT",
-      "offers": 1366,
-      "links": 1366,
+      "offers": 1887,
+      "links": 1887,
       "invalid": 0
     },
     "at": {
       "status": "published",
       "country": "AT",
-      "offers": 449,
-      "links": 449,
+      "offers": 970,
+      "links": 970,
       "invalid": 0
     },
     "be": {
       "status": "published",
       "country": "BE",
-      "offers": 1366,
-      "links": 1366,
+      "offers": 1887,
+      "links": 1887,
       "invalid": 0
     },
     "ie": {
       "status": "published",
       "country": "IE",
-      "offers": 329,
-      "links": 329,
+      "offers": 730,
+      "links": 730,
       "invalid": 0
     },
     "nl": {
       "status": "published",
       "country": "NL",
-      "offers": 1366,
-      "links": 1366,
+      "offers": 1887,
+      "links": 1887,
       "invalid": 0
     },
     "fi": {
       "status": "published",
       "country": "FI",
-      "offers": 1218,
-      "links": 1218,
+      "offers": 1423,
+      "links": 1423,
       "invalid": 0
     },
     "sk": {
       "status": "published",
       "country": "SK",
-      "offers": 301,
-      "links": 301,
+      "offers": 822,
+      "links": 822,
       "invalid": 0
     },
     "lv": {
       "status": "published",
       "country": "LV",
-      "offers": 301,
-      "links": 301,
+      "offers": 822,
+      "links": 822,
       "invalid": 0
     },
     "lt": {
       "status": "published",
       "country": "LT",
-      "offers": 301,
-      "links": 301,
+      "offers": 822,
+      "links": 822,
       "invalid": 0
     },
     "lu": {
       "status": "published",
       "country": "LU",
-      "offers": 1218,
-      "links": 1218,
+      "offers": 1739,
+      "links": 1739,
       "invalid": 0
     },
     "ee": {
       "status": "published",
       "country": "EE",
-      "offers": 301,
-      "links": 301,
+      "offers": 822,
+      "links": 822,
       "invalid": 0
     },
     "si": {
       "status": "published",
       "country": "SI",
-      "offers": 301,
-      "links": 301,
+      "offers": 822,
+      "links": 822,
       "invalid": 0
     },
     "hr": {
       "status": "published",
       "country": "HR",
-      "offers": 301,
-      "links": 301,
+      "offers": 822,
+      "links": 822,
       "invalid": 0
     },
     "mc": {
       "status": "published",
       "country": "MC",
-      "offers": 1051,
-      "links": 1051,
+      "offers": 1452,
+      "links": 1452,
       "invalid": 0
     },
     "gr": {
       "status": "published",
       "country": "GR",
-      "offers": 1171,
-      "links": 1171,
+      "offers": 1692,
+      "links": 1692,
       "invalid": 0
     },
     "bg": {
       "status": "published",
       "country": "BG",
-      "offers": 254,
-      "links": 254,
+      "offers": 655,
+      "links": 655,
       "invalid": 0
     },
     "mt": {

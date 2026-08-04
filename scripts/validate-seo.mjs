@@ -21,7 +21,7 @@ async function walk(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
   const files = [];
   for (const entry of entries) {
-    if ([".git", "node_modules"].includes(entry.name)) continue;
+    if ([".git", "node_modules", "dist"].includes(entry.name)) continue;
     const path = resolve(directory, entry.name);
     if (entry.isDirectory()) files.push(...await walk(path));
     else files.push(path);
@@ -75,11 +75,29 @@ function localPathForUrl(value) {
   return resolve(root, `.${pathname}`);
 }
 
+function heldCatalogForHtml(catalogHolds, name, html) {
+  if (!(name.startsWith("producto/") || name.includes("/producto/"))) return null;
+  return (catalogHolds.holds || []).find((hold) => {
+    if (hold?.status !== "temporarily-retired" || hold.preserveStaticPages !== true) return false;
+    const markers = Array.isArray(hold.productHtmlMarkers) ? hold.productHtmlMarkers : [];
+    return markers.length > 0 && markers.every((marker) => html.includes(marker));
+  }) || null;
+}
+
+const catalogHoldsPath = resolve(root, "data/config/catalog-holds.json");
+const catalogHolds = await exists(catalogHoldsPath)
+  ? JSON.parse(await readFile(catalogHoldsPath, "utf8"))
+  : { schemaVersion: 1, holds: [] };
+if (catalogHolds.schemaVersion !== 1 || !Array.isArray(catalogHolds.holds)) {
+  errors.push("catalog-holds.json: estructura inválida");
+}
 const files = await walk(root);
 const htmlFiles = files.filter((path) => extname(path) === ".html");
 const htmlByCanonical = new Map();
 let productPages = 0;
+let heldProductPages = 0;
 let productRichResultPages = 0;
+const heldProductCanonicalUrls = new Set();
 
 for (const path of htmlFiles) {
   const name = relative(root, path);
@@ -119,6 +137,12 @@ for (const path of htmlFiles) {
     if (!types.has("WebSite")) errors.push("index.html: falta WebSite en JSON-LD");
   }
   if (name.startsWith("producto/") || name.includes("/producto/")) {
+    const heldCatalog = heldCatalogForHtml(catalogHolds, name, html);
+    if (heldCatalog) {
+      heldProductPages += 1;
+      if (canonicals.length === 1) heldProductCanonicalUrls.add(canonicals[0]);
+      continue;
+    }
     productPages += 1;
     if (!types.has("WebPage")) errors.push(`${name}: falta WebPage en JSON-LD`);
     if (!types.has("BreadcrumbList")) errors.push(`${name}: falta BreadcrumbList en JSON-LD`);
@@ -212,6 +236,11 @@ const productUrls = [...allIndexedUrls.keys()].filter((url) => new URL(url).path
 if (productUrls.length !== productPages) {
   errors.push(`sitemap: ${productUrls.length} fichas incluidas frente a ${productPages} fichas publicadas`);
 }
+for (const canonical of heldProductCanonicalUrls) {
+  if (allIndexedUrls.has(canonical)) {
+    errors.push(`sitemap: incluye una ficha retenida temporalmente (${canonical})`);
+  }
+}
 if (productRichResultPages === 0) {
   errors.push("ninguna ficha de variante única con precio contiene Product y AggregateOffer");
 }
@@ -236,6 +265,6 @@ if (errors.length) {
   process.exitCode = 1;
 } else {
   console.log(
-    `SEO válido: ${htmlFiles.length} páginas, ${productPages} fichas con BreadcrumbList, ${productRichResultPages} fichas exactas elegibles para Product/AggregateOffer, ${allIndexedUrls.size} URLs en sitemaps y Analytics sin duplicados.`
+    `SEO válido: ${htmlFiles.length} páginas, ${productPages} fichas activas con BreadcrumbList, ${heldProductPages} fichas históricas retenidas fuera de sitemap, ${productRichResultPages} fichas exactas elegibles para Product/AggregateOffer, ${allIndexedUrls.size} URLs en sitemaps y Analytics sin duplicados.`
   );
 }

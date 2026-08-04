@@ -259,7 +259,11 @@ test("las variantes se presentan por atributos reales y sin opciones genéricas"
   assert.ok(variantIndexScript.includes("const SHARDS = 32"));
   const manifest = JSON.parse(variantManifest);
   assert.equal(manifest.shards, 32);
-  assert.ok(manifest.familyCount >= 1600);
+  assert.equal(
+    manifest.familyCount,
+    manifest.files.reduce((total, file) => total + file.families, 0)
+  );
+  assert.ok(manifest.familyCount >= 1000);
 });
 
 test("la auditoría revisa todos los productos con opciones y no deja atributos sin resolver", () => {

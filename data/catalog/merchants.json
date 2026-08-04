@@ -1,7 +1,95 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-07-27",
+  "updatedAt": "2026-08-04",
   "merchants": [
+    {
+      "id": "365rider-es",
+      "name": "365Rider",
+      "country": "ES",
+      "status": "approved",
+      "network": "awin",
+      "awinAdvertiserId": "26763",
+      "feedExpected": true,
+      "feedId": "71453",
+      "feedIds": null,
+      "catalogMode": "retail",
+      "landingDomains": [
+        "www.365rider.com"
+      ],
+      "statusUpdatedAt": "2026-07-27",
+      "publicationStatus": "prepared_recommended"
+    },
+    {
+      "id": "al-jazeera-perfumes-eu",
+      "name": "Al Jazeera Perfumes EU",
+      "country": "ES",
+      "countries": [
+        "ES",
+        "PT",
+        "FR",
+        "DE",
+        "IT",
+        "AT",
+        "BE",
+        "IE",
+        "NL",
+        "FI",
+        "SK",
+        "LV",
+        "LT",
+        "LU",
+        "EE",
+        "SI",
+        "HR",
+        "MC",
+        "GR",
+        "BG"
+      ],
+      "status": "approved",
+      "network": "awin",
+      "awinAdvertiserId": "126135",
+      "feedExpected": true,
+      "feedId": "115871",
+      "catalogMode": "retail_curated",
+      "landingDomains": [
+        "europe.aljazeeraperfumes.com",
+        "api-europe.aljazeeraperfumes.com"
+      ],
+      "currency": "EUR",
+      "statusUpdatedAt": "2026-08-04",
+      "publicationStatus": "published_staged",
+      "preparedCountries": [
+        "ES",
+        "PT",
+        "FR",
+        "DE",
+        "IT",
+        "AT",
+        "BE",
+        "IE",
+        "NL",
+        "FI",
+        "SK",
+        "LV",
+        "LT",
+        "LU",
+        "EE",
+        "SI",
+        "HR",
+        "MC",
+        "GR",
+        "BG"
+      ],
+      "shippingEvidence": "https://europe.aljazeeraperfumes.com/es/page/shipping-and-delivery"
+    },
+    {
+      "id": "alternate-es",
+      "name": "alternate ES",
+      "country": "ES",
+      "status": "pending",
+      "feedExpected": true,
+      "catalogMode": "retail"
+    },
     {
       "id": "amazon-es",
       "name": "Amazon ES",
@@ -15,122 +103,6 @@
       "statusUpdatedAt": "2026-07-23"
     },
     {
-      "id": "shokz-es",
-      "name": "SHOKZ ES",
-      "country": "ES",
-      "status": "approved",
-      "network": "impact",
-      "impactTrackingHost": "shokzes.pxf.io",
-      "impactPublisherId": "7518894",
-      "impactCampaignId": "3800995",
-      "impactCreativeId": "48345",
-      "impactCatalogSource": "CATF_31438",
-      "impactDirectProductFallback": true,
-      "landingDomains": [
-        "es.shokz.com"
-      ],
-      "feedExpected": true,
-      "catalogMode": "retail",
-      "statusUpdatedAt": "2026-07-25"
-    },
-    {
-      "id": "rebuy-es",
-      "name": "reBuy ES",
-      "country": "ES",
-      "status": "pending",
-      "feedExpected": true,
-      "catalogMode": "refurbished_and_trade_in"
-    },
-    {
-      "id": "kiko-es",
-      "name": "Kiko ES",
-      "country": "ES",
-      "status": "pending",
-      "feedExpected": true,
-      "catalogMode": "retail"
-    },
-    {
-      "id": "clarins-es",
-      "name": "Clarins ES",
-      "country": "ES",
-      "status": "pending",
-      "feedExpected": true,
-      "catalogMode": "retail"
-    },
-    {
-      "id": "kitchenaid-es",
-      "name": "KitchenAid ES",
-      "country": "ES",
-      "status": "pending",
-      "feedExpected": true,
-      "catalogMode": "retail"
-    },
-    {
-      "id": "lefties-es",
-      "name": "Lefties ES",
-      "country": "ES",
-      "status": "pending",
-      "feedExpected": true,
-      "catalogMode": "retail"
-    },
-    {
-      "id": "shein-es",
-      "name": "SHEIN ES",
-      "country": "ES",
-      "status": "pending",
-      "feedExpected": true,
-      "catalogMode": "retail"
-    },
-    {
-      "id": "size-official-es",
-      "name": "size?Official ES",
-      "country": "ES",
-      "status": "pending",
-      "feedExpected": true,
-      "catalogMode": "retail"
-    },
-    {
-      "id": "alternate-es",
-      "name": "alternate ES",
-      "country": "ES",
-      "status": "pending",
-      "feedExpected": true,
-      "catalogMode": "retail"
-    },
-    {
-      "id": "forum-sport-es",
-      "name": "Forum Sport ES",
-      "country": "ES",
-      "status": "pending",
-      "feedExpected": true,
-      "catalogMode": "retail"
-    },
-    {
-      "id": "decathlon-es",
-      "name": "Decathlon ES",
-      "country": "ES",
-      "status": "pending",
-      "feedExpected": true,
-      "catalogMode": "retail",
-      "excludeNonCommissionable": true
-    },
-    {
-      "id": "hawkers-row",
-      "name": "Hawkers ROW",
-      "country": "ES",
-      "status": "pending",
-      "feedExpected": true,
-      "catalogMode": "retail"
-    },
-    {
-      "id": "la-redoute-es",
-      "name": "La Redoute ES",
-      "country": "ES",
-      "status": "pending",
-      "feedExpected": true,
-      "catalogMode": "retail"
-    },
-    {
       "id": "banak-es",
       "name": "Banak ES",
       "country": "ES",
@@ -139,39 +111,70 @@
       "catalogMode": "retail"
     },
     {
-      "id": "muebles-style-spain",
-      "name": "Muebles Style Spain",
+      "id": "bikila-es",
+      "name": "BIKILA ES",
       "country": "ES",
       "status": "approved",
-      "awinAdvertiserId": "122118",
+      "network": "awin",
+      "awinAdvertiserId": "75838",
       "feedExpected": true,
-      "feedId": "112474",
-      "catalogMode": "new_and_second_chance",
-      "statusUpdatedAt": "2026-07-22"
+      "feedId": "104663",
+      "catalogMode": "retail",
+      "landingDomains": [
+        "bikila.com",
+        "www.bikila.com"
+      ],
+      "statusUpdatedAt": "2026-07-26"
     },
     {
-      "id": "pccomponentes-es",
-      "name": "PcComponentes ES",
-      "country": "ES",
-      "status": "pending",
-      "feedExpected": true,
-      "catalogMode": "retail"
-    },
-    {
-      "id": "sephora-es",
-      "name": "Sephora ES",
-      "country": "ES",
-      "status": "pending",
+      "id": "casecess",
+      "name": "CASECESS",
+      "country": "US",
+      "status": "approved",
+      "network": "impact",
+      "impactTrackingHost": "casecess.pxf.io",
+      "impactPublisherId": "7518894",
+      "impactCampaignId": "3757273",
+      "impactCreativeId": "47158",
+      "impactCatalogSource": "CATF_30305",
+      "impactDirectProductFallback": true,
+      "landingDomains": [
+        "www.casecess.com"
+      ],
       "feedExpected": true,
       "catalogMode": "retail",
-      "excludeBrands": [
-        "Chanel",
-        "Dior"
-      ]
+      "currency": "USD",
+      "statusUpdatedAt": "2026-07-27",
+      "publicationStatus": "prepared_for_usd_region_not_es"
     },
     {
-      "id": "pixmania-es",
-      "name": "Pixmania ES",
+      "id": "clarel-es",
+      "name": "Clarel",
+      "country": "ES",
+      "status": "approved",
+      "network": "awin",
+      "awinAdvertiserId": "84669",
+      "feedExpected": true,
+      "feedId": "95374",
+      "feedIds": null,
+      "catalogMode": "retail",
+      "landingDomains": [
+        "www.clarel.es"
+      ],
+      "statusUpdatedAt": "2026-07-28",
+      "publicationStatus": "published_staged",
+      "countries": [
+        "ES"
+      ],
+      "currency": "EUR",
+      "preparedCountries": [
+        "ES"
+      ],
+      "shippingEvidence": "https://www.clarel.es/es/condiciones-generales-de-compra"
+    },
+    {
+      "id": "clarins-es",
+      "name": "Clarins ES",
       "country": "ES",
       "status": "pending",
       "feedExpected": true,
@@ -191,12 +194,417 @@
       "statusUpdatedAt": "2026-07-22"
     },
     {
+      "id": "decathlon-es",
+      "name": "Decathlon ES",
+      "country": "ES",
+      "status": "pending",
+      "feedExpected": true,
+      "catalogMode": "retail",
+      "excludeNonCommissionable": true
+    },
+    {
+      "id": "deubaxxl-es",
+      "name": "DeubaXXL ES",
+      "country": "ES",
+      "status": "approved",
+      "network": "awin",
+      "awinAdvertiserId": "24018",
+      "feedExpected": true,
+      "feedId": "57049",
+      "feedIds": null,
+      "catalogMode": "retail",
+      "landingDomains": [
+        "deubaxxl.es"
+      ],
+      "statusUpdatedAt": "2026-07-27",
+      "publicationStatus": "prepared_recommended"
+    },
+    {
+      "id": "foot-store-es",
+      "name": "Foot-Store ES",
+      "country": "ES",
+      "countries": [
+        "ES",
+        "PT",
+        "FR",
+        "DE",
+        "IT",
+        "AT",
+        "BE",
+        "IE",
+        "NL",
+        "SK",
+        "LV",
+        "LT",
+        "LU",
+        "EE",
+        "SI",
+        "HR",
+        "MC",
+        "GR",
+        "BG"
+      ],
+      "status": "approved",
+      "network": "awin",
+      "awinAdvertiserId": "65912",
+      "feedExpected": true,
+      "feedId": "89032",
+      "catalogMode": "retail_curated",
+      "landingDomains": [
+        "foot-store.es",
+        "www.foot-store.es",
+        "cdn.blazimg.com"
+      ],
+      "currency": "EUR",
+      "statusUpdatedAt": "2026-08-04",
+      "publicationStatus": "published_staged",
+      "preparedCountries": [
+        "ES",
+        "PT",
+        "FR",
+        "DE",
+        "IT",
+        "AT",
+        "BE",
+        "IE",
+        "NL",
+        "SK",
+        "LV",
+        "LT",
+        "LU",
+        "EE",
+        "SI",
+        "HR",
+        "MC",
+        "GR",
+        "BG"
+      ],
+      "shippingEvidence": "https://foot-store.es/tarifas-y-opciones-de-envio"
+    },
+    {
+      "id": "forum-sport-es",
+      "name": "Forum Sport ES",
+      "country": "ES",
+      "status": "pending",
+      "feedExpected": true,
+      "catalogMode": "retail"
+    },
+    {
+      "id": "gigasport-es",
+      "name": "Gigasport ES",
+      "country": "ES",
+      "countries": [
+        "ES"
+      ],
+      "status": "approved",
+      "network": "awin",
+      "awinAdvertiserId": "121582",
+      "feedExpected": true,
+      "feedId": "112011",
+      "catalogMode": "retail_curated",
+      "landingDomains": [
+        "www.gigasport.es",
+        "gigasport.es"
+      ],
+      "currency": "EUR",
+      "statusUpdatedAt": "2026-08-04",
+      "publicationStatus": "published_staged",
+      "preparedCountries": [
+        "ES"
+      ],
+      "shippingEvidence": "https://www.gigasport.es/faq/envios-y-entregas/"
+    },
+    {
+      "id": "hawkers-row",
+      "name": "Hawkers ROW",
+      "country": "ES",
+      "status": "pending",
+      "feedExpected": true,
+      "catalogMode": "retail"
+    },
+    {
+      "id": "hivital-es",
+      "name": "HIVITAL",
+      "country": "ES",
+      "status": "approved",
+      "network": "awin",
+      "awinAdvertiserId": "20039",
+      "feedExpected": true,
+      "feedId": "45599",
+      "feedIds": null,
+      "catalogMode": "retail",
+      "landingDomains": [
+        "www.hivital.com"
+      ],
+      "statusUpdatedAt": "2026-07-27",
+      "publicationStatus": "held_editorial_health_review"
+    },
+    {
+      "id": "homo-naturals-es",
+      "name": "HOMO NATURALS",
+      "country": "ES",
+      "status": "approved",
+      "network": "awin",
+      "awinAdvertiserId": "58623",
+      "feedExpected": true,
+      "feedId": "87441",
+      "feedIds": null,
+      "catalogMode": "retail",
+      "landingDomains": [
+        "www.homonaturals.com"
+      ],
+      "statusUpdatedAt": "2026-07-27",
+      "publicationStatus": "prepared_recommended"
+    },
+    {
+      "id": "isinwheel-es",
+      "name": "isinwheel.ES",
+      "country": "ES",
+      "status": "approved",
+      "network": "awin",
+      "awinAdvertiserId": "59763",
+      "feedExpected": true,
+      "feedId": "97023",
+      "feedIds": null,
+      "catalogMode": "retail",
+      "landingDomains": [
+        "www.isinwheel.es"
+      ],
+      "statusUpdatedAt": "2026-07-27",
+      "publicationStatus": "prepared_recommended"
+    },
+    {
+      "id": "juguetesonline-es",
+      "name": "JUGUETESONLINE ES",
+      "country": "ES",
+      "countries": [
+        "ES",
+        "PT"
+      ],
+      "status": "approved",
+      "network": "awin",
+      "awinAdvertiserId": "112796",
+      "feedExpected": true,
+      "feedId": "110906",
+      "feedIds": null,
+      "catalogMode": "retail",
+      "currency": "EUR",
+      "landingDomains": [
+        "www.juguetesonline.com"
+      ],
+      "statusUpdatedAt": "2026-07-28",
+      "publicationStatus": "published_staged",
+      "preparedCountries": [
+        "ES",
+        "PT"
+      ],
+      "shippingEvidence": "https://www.juguetesonline.com/policies/shipping-policy"
+    },
+    {
+      "id": "kiko-es",
+      "name": "Kiko ES",
+      "country": "ES",
+      "status": "pending",
+      "feedExpected": true,
+      "catalogMode": "retail"
+    },
+    {
+      "id": "kitchenaid-es",
+      "name": "KitchenAid ES",
+      "country": "ES",
+      "status": "pending",
+      "feedExpected": true,
+      "catalogMode": "retail"
+    },
+    {
+      "id": "la-drogueria-es",
+      "name": "La Drogueria de Percon",
+      "country": "ES",
+      "status": "approved",
+      "network": "awin",
+      "awinAdvertiserId": "63006",
+      "feedExpected": true,
+      "feedId": "115855",
+      "feedIds": null,
+      "catalogMode": "retail",
+      "landingDomains": [
+        "ladrogueria.com"
+      ],
+      "statusUpdatedAt": "2026-07-28",
+      "publicationStatus": "published_staged",
+      "countries": [
+        "ES",
+        "PT"
+      ],
+      "currency": "EUR",
+      "preparedCountries": [
+        "ES",
+        "PT"
+      ],
+      "shippingEvidence": "https://ladrogueria.com/content/19-promociones-y-descuentos"
+    },
+    {
+      "id": "la-redoute-es",
+      "name": "La Redoute ES",
+      "country": "ES",
+      "status": "pending",
+      "feedExpected": true,
+      "catalogMode": "retail"
+    },
+    {
+      "id": "lefties-es",
+      "name": "Lefties ES",
+      "country": "ES",
+      "status": "pending",
+      "feedExpected": true,
+      "catalogMode": "retail"
+    },
+    {
+      "id": "lenovo-es-553883",
+      "name": "Lenovo ES",
+      "country": "ES",
+      "countries": [
+        "ES"
+      ],
+      "status": "approved",
+      "network": "impact",
+      "impactTrackingHost": "lenovo.evyy.net",
+      "impactPublisherId": "7518894",
+      "impactCampaignId": "553883",
+      "impactCreativeId": "3831",
+      "impactCatalogSource": "CATF_4182",
+      "impactDirectProductFallback": true,
+      "landingDomains": [
+        "www.lenovo.com",
+        "lenovo.com"
+      ],
+      "feedExpected": true,
+      "catalogMode": "retail",
+      "currency": "EUR",
+      "statusUpdatedAt": "2026-07-28",
+      "publicationStatus": "published_staged",
+      "preparedCountries": [
+        "ES"
+      ],
+      "shippingEvidence": "https://www.lenovo.com/es/es/shopping-faq/"
+    },
+    {
+      "id": "lenovo-es-665754",
+      "name": "Lenovo ES",
+      "country": "ES",
+      "countries": [
+        "ES"
+      ],
+      "status": "approved",
+      "network": "impact",
+      "impactTrackingHost": "lenovo.evyy.net",
+      "impactPublisherId": "7518894",
+      "impactCampaignId": "665754",
+      "impactCreativeId": "3831",
+      "impactCatalogSource": "CATF_5021",
+      "impactDirectProductFallback": true,
+      "landingDomains": [
+        "www.lenovo.com",
+        "lenovo.com"
+      ],
+      "feedExpected": true,
+      "catalogMode": "retail",
+      "currency": "EUR",
+      "statusUpdatedAt": "2026-07-28",
+      "publicationStatus": "published_staged",
+      "preparedCountries": [
+        "ES"
+      ],
+      "shippingEvidence": "https://www.lenovo.com/es/es/shopping-faq/"
+    },
+    {
+      "id": "lounge-eu",
+      "name": "Lounge EU",
+      "country": "ES",
+      "countries": [
+        "ES"
+      ],
+      "status": "paused",
+      "network": "impact",
+      "impactTrackingHost": "loungeeu.sjv.io",
+      "impactPublisherId": "7518894",
+      "impactCampaignId": "3973367",
+      "impactCreativeId": "54841",
+      "impactCatalogSource": "CATF_35417",
+      "impactDirectProductFallback": true,
+      "landingDomains": [
+        "eu.lounge.com"
+      ],
+      "feedExpected": true,
+      "catalogMode": "retail",
+      "currency": "EUR",
+      "statusUpdatedAt": "2026-08-04",
+      "publicationStatus": "held_contract_expired",
+      "preparedCountries": [
+        "PT"
+      ],
+      "temporaryRemovalReason": "Impact contract expired; sources retained for reversible restoration."
+    },
+    {
       "id": "msi-spain",
       "name": "MSI SPAIN",
       "country": "ES",
       "status": "pending",
       "feedExpected": true,
       "catalogMode": "retail"
+    },
+    {
+      "id": "muebles-style-spain",
+      "name": "Muebles Style Spain",
+      "country": "ES",
+      "status": "approved",
+      "awinAdvertiserId": "122118",
+      "feedExpected": true,
+      "feedId": "112474",
+      "catalogMode": "new_and_second_chance",
+      "statusUpdatedAt": "2026-07-22"
+    },
+    {
+      "id": "munecas-llorens-es",
+      "name": "Muñecas Llorens (ES)",
+      "country": "ES",
+      "status": "approved",
+      "network": "awin",
+      "awinAdvertiserId": "107237",
+      "feedExpected": true,
+      "feedId": "98483",
+      "feedIds": null,
+      "catalogMode": "retail",
+      "landingDomains": [
+        "llorensdolls.com"
+      ],
+      "statusUpdatedAt": "2026-07-28",
+      "publicationStatus": "published_refreshed",
+      "countries": [
+        "ES"
+      ],
+      "currency": "EUR",
+      "preparedCountries": [
+        "ES"
+      ],
+      "shippingEvidence": "https://llorensdolls.com/pages/terminos-y-condiciones"
+    },
+    {
+      "id": "nasopia-es",
+      "name": "Nasopia ES",
+      "country": "ES",
+      "status": "approved",
+      "network": "awin",
+      "awinAdvertiserId": "112314",
+      "feedExpected": true,
+      "feedId": "109096",
+      "feedIds": null,
+      "catalogMode": "retail",
+      "landingDomains": [
+        "nasopia.com"
+      ],
+      "statusUpdatedAt": "2026-07-27",
+      "publicationStatus": "prepared_recommended"
     },
     {
       "id": "naturitas-es",
@@ -211,49 +619,6 @@
       "rejectionReasonText": "El anunciante aún no colabora con este tipo de afiliado",
       "retryable": false,
       "statusUpdatedAt": "2026-07-22"
-    },
-    {
-      "id": "bikila-es",
-      "name": "BIKILA ES",
-      "country": "ES",
-      "status": "approved",
-      "network": "awin",
-      "awinAdvertiserId": "75838",
-      "feedExpected": true,
-      "feedId": "104663",
-      "catalogMode": "retail",
-      "landingDomains": [
-        "bikila.com",
-        "www.bikila.com"
-      ],
-      "statusUpdatedAt": "2026-07-26"
-    },
-    {
-      "id": "lounge-eu",
-      "name": "Lounge EU",
-      "country": "ES",
-      "countries": [
-        "ES"
-      ],
-      "status": "approved",
-      "network": "impact",
-      "impactTrackingHost": "loungeeu.sjv.io",
-      "impactPublisherId": "7518894",
-      "impactCampaignId": "3973367",
-      "impactCreativeId": "54841",
-      "impactCatalogSource": "CATF_35417",
-      "impactDirectProductFallback": true,
-      "landingDomains": [
-        "eu.lounge.com"
-      ],
-      "feedExpected": true,
-      "catalogMode": "retail",
-      "currency": "EUR",
-      "statusUpdatedAt": "2026-07-26",
-      "publicationStatus": "prepared_titles_require_editorial_review",
-      "preparedCountries": [
-        "PT"
-      ]
     },
     {
       "id": "omara-jewelry-es",
@@ -317,412 +682,6 @@
         "BG"
       ],
       "shippingEvidence": "https://omara.es/product/alianza-de-boda-eternity-pave"
-    },
-    {
-      "id": "365rider-es",
-      "name": "365Rider",
-      "country": "ES",
-      "status": "approved",
-      "network": "awin",
-      "awinAdvertiserId": "26763",
-      "feedExpected": true,
-      "feedId": "71453",
-      "feedIds": null,
-      "catalogMode": "retail",
-      "landingDomains": [
-        "www.365rider.com"
-      ],
-      "statusUpdatedAt": "2026-07-27",
-      "publicationStatus": "prepared_recommended"
-    },
-    {
-      "id": "wakkap-es",
-      "name": "Wakkap Es",
-      "country": "ES",
-      "status": "approved",
-      "network": "awin",
-      "awinAdvertiserId": "17091",
-      "feedExpected": true,
-      "feedId": "39575",
-      "feedIds": null,
-      "catalogMode": "retail",
-      "landingDomains": [
-        "wakkap.com"
-      ],
-      "statusUpdatedAt": "2026-07-27",
-      "publicationStatus": "prepared_large_staged"
-    },
-    {
-      "id": "clarel-es",
-      "name": "Clarel",
-      "country": "ES",
-      "status": "approved",
-      "network": "awin",
-      "awinAdvertiserId": "84669",
-      "feedExpected": true,
-      "feedId": "95374",
-      "feedIds": null,
-      "catalogMode": "retail",
-      "landingDomains": [
-        "www.clarel.es"
-      ],
-      "statusUpdatedAt": "2026-07-28",
-      "publicationStatus": "published_staged",
-      "countries": [
-        "ES"
-      ],
-      "currency": "EUR",
-      "preparedCountries": [
-        "ES"
-      ],
-      "shippingEvidence": "https://www.clarel.es/es/condiciones-generales-de-compra"
-    },
-    {
-      "id": "la-drogueria-es",
-      "name": "La Drogueria de Percon",
-      "country": "ES",
-      "status": "approved",
-      "network": "awin",
-      "awinAdvertiserId": "63006",
-      "feedExpected": true,
-      "feedId": "115855",
-      "feedIds": null,
-      "catalogMode": "retail",
-      "landingDomains": [
-        "ladrogueria.com"
-      ],
-      "statusUpdatedAt": "2026-07-28",
-      "publicationStatus": "published_staged",
-      "countries": [
-        "ES",
-        "PT"
-      ],
-      "currency": "EUR",
-      "preparedCountries": [
-        "ES",
-        "PT"
-      ],
-      "shippingEvidence": "https://ladrogueria.com/content/19-promociones-y-descuentos"
-    },
-    {
-      "id": "deubaxxl-es",
-      "name": "DeubaXXL ES",
-      "country": "ES",
-      "status": "approved",
-      "network": "awin",
-      "awinAdvertiserId": "24018",
-      "feedExpected": true,
-      "feedId": "57049",
-      "feedIds": null,
-      "catalogMode": "retail",
-      "landingDomains": [
-        "deubaxxl.es"
-      ],
-      "statusUpdatedAt": "2026-07-27",
-      "publicationStatus": "prepared_recommended"
-    },
-    {
-      "id": "zwilling-es",
-      "name": "Zwilling ES",
-      "country": "ES",
-      "status": "approved",
-      "network": "awin",
-      "awinAdvertiserId": "13077",
-      "feedExpected": true,
-      "feedId": "110537",
-      "feedIds": null,
-      "catalogMode": "retail",
-      "landingDomains": [
-        "www.zwilling.com"
-      ],
-      "statusUpdatedAt": "2026-07-27",
-      "publicationStatus": "prepared_recommended"
-    },
-    {
-      "id": "nasopia-es",
-      "name": "Nasopia ES",
-      "country": "ES",
-      "status": "approved",
-      "network": "awin",
-      "awinAdvertiserId": "112314",
-      "feedExpected": true,
-      "feedId": "109096",
-      "feedIds": null,
-      "catalogMode": "retail",
-      "landingDomains": [
-        "nasopia.com"
-      ],
-      "statusUpdatedAt": "2026-07-27",
-      "publicationStatus": "prepared_recommended"
-    },
-    {
-      "id": "revolution-soft-es",
-      "name": "Revolution Soft",
-      "country": "ES",
-      "status": "approved",
-      "network": "awin",
-      "awinAdvertiserId": "51891",
-      "feedExpected": true,
-      "feedId": "85464",
-      "feedIds": null,
-      "catalogMode": "retail",
-      "landingDomains": [
-        "revolutionsoft.net"
-      ],
-      "statusUpdatedAt": "2026-07-27",
-      "publicationStatus": "prepared_recommended"
-    },
-    {
-      "id": "homo-naturals-es",
-      "name": "HOMO NATURALS",
-      "country": "ES",
-      "status": "approved",
-      "network": "awin",
-      "awinAdvertiserId": "58623",
-      "feedExpected": true,
-      "feedId": "87441",
-      "feedIds": null,
-      "catalogMode": "retail",
-      "landingDomains": [
-        "www.homonaturals.com"
-      ],
-      "statusUpdatedAt": "2026-07-27",
-      "publicationStatus": "prepared_recommended"
-    },
-    {
-      "id": "munecas-llorens-es",
-      "name": "Muñecas Llorens (ES)",
-      "country": "ES",
-      "status": "approved",
-      "network": "awin",
-      "awinAdvertiserId": "107237",
-      "feedExpected": true,
-      "feedId": "98483",
-      "feedIds": null,
-      "catalogMode": "retail",
-      "landingDomains": [
-        "llorensdolls.com"
-      ],
-      "statusUpdatedAt": "2026-07-28",
-      "publicationStatus": "published_refreshed",
-      "countries": [
-        "ES"
-      ],
-      "currency": "EUR",
-      "preparedCountries": [
-        "ES"
-      ],
-      "shippingEvidence": "https://llorensdolls.com/pages/terminos-y-condiciones"
-    },
-    {
-      "id": "isinwheel-es",
-      "name": "isinwheel.ES",
-      "country": "ES",
-      "status": "approved",
-      "network": "awin",
-      "awinAdvertiserId": "59763",
-      "feedExpected": true,
-      "feedId": "97023",
-      "feedIds": null,
-      "catalogMode": "retail",
-      "landingDomains": [
-        "www.isinwheel.es"
-      ],
-      "statusUpdatedAt": "2026-07-27",
-      "publicationStatus": "prepared_recommended"
-    },
-    {
-      "id": "sinocare-es",
-      "name": "Sinocare",
-      "country": "ES",
-      "status": "approved",
-      "network": "awin",
-      "awinAdvertiserId": "114180",
-      "feedExpected": true,
-      "feedId": "100983",
-      "feedIds": null,
-      "catalogMode": "retail",
-      "landingDomains": [
-        "en.sinocare.com"
-      ],
-      "statusUpdatedAt": "2026-07-27",
-      "publicationStatus": "held_editorial_health_review"
-    },
-    {
-      "id": "vegairoa-es",
-      "name": "Vegairoa",
-      "country": "ES",
-      "status": "approved",
-      "network": "awin",
-      "awinAdvertiserId": "55601",
-      "feedExpected": true,
-      "feedId": "86879",
-      "feedIds": null,
-      "catalogMode": "retail",
-      "landingDomains": [
-        "www.vegairoaprofesional.com"
-      ],
-      "statusUpdatedAt": "2026-07-27",
-      "publicationStatus": "prepared_recommended"
-    },
-    {
-      "id": "hivital-es",
-      "name": "HIVITAL",
-      "country": "ES",
-      "status": "approved",
-      "network": "awin",
-      "awinAdvertiserId": "20039",
-      "feedExpected": true,
-      "feedId": "45599",
-      "feedIds": null,
-      "catalogMode": "retail",
-      "landingDomains": [
-        "www.hivital.com"
-      ],
-      "statusUpdatedAt": "2026-07-27",
-      "publicationStatus": "held_editorial_health_review"
-    },
-    {
-      "id": "casecess",
-      "name": "CASECESS",
-      "country": "US",
-      "status": "approved",
-      "network": "impact",
-      "impactTrackingHost": "casecess.pxf.io",
-      "impactPublisherId": "7518894",
-      "impactCampaignId": "3757273",
-      "impactCreativeId": "47158",
-      "impactCatalogSource": "CATF_30305",
-      "impactDirectProductFallback": true,
-      "landingDomains": [
-        "www.casecess.com"
-      ],
-      "feedExpected": true,
-      "catalogMode": "retail",
-      "currency": "USD",
-      "statusUpdatedAt": "2026-07-27",
-      "publicationStatus": "prepared_for_usd_region_not_es"
-    },
-    {
-      "id": "perfumeria-comas-es",
-      "name": "Perfumería Comas ES",
-      "country": "ES",
-      "countries": [
-        "ES",
-        "FR"
-      ],
-      "status": "approved",
-      "network": "awin",
-      "awinAdvertiserId": "33073",
-      "feedExpected": true,
-      "feedId": "95720",
-      "feedIds": null,
-      "catalogMode": "retail",
-      "currency": "EUR",
-      "landingDomains": [
-        "perfumeriacomas.com"
-      ],
-      "statusUpdatedAt": "2026-07-28",
-      "publicationStatus": "published_staged",
-      "preparedCountries": [
-        "ES",
-        "FR"
-      ],
-      "shippingEvidence": "https://perfumeriacomas.com/es/envios-y-devoluciones"
-    },
-    {
-      "id": "juguetesonline-es",
-      "name": "JUGUETESONLINE ES",
-      "country": "ES",
-      "countries": [
-        "ES",
-        "PT"
-      ],
-      "status": "approved",
-      "network": "awin",
-      "awinAdvertiserId": "112796",
-      "feedExpected": true,
-      "feedId": "110906",
-      "feedIds": null,
-      "catalogMode": "retail",
-      "currency": "EUR",
-      "landingDomains": [
-        "www.juguetesonline.com"
-      ],
-      "statusUpdatedAt": "2026-07-28",
-      "publicationStatus": "published_staged",
-      "preparedCountries": [
-        "ES",
-        "PT"
-      ],
-      "shippingEvidence": "https://www.juguetesonline.com/policies/shipping-policy"
-    },
-    {
-      "id": "trotec-iberic-es-pt",
-      "name": "Trotec - Iberic (ES & PT)",
-      "country": "ES",
-      "countries": [
-        "ES",
-        "PT",
-        "FR",
-        "DE",
-        "IT",
-        "AT",
-        "BE",
-        "IE",
-        "NL",
-        "FI",
-        "SK",
-        "LV",
-        "LT",
-        "LU",
-        "EE",
-        "SI",
-        "HR",
-        "MC",
-        "GR",
-        "BG",
-        "MT",
-        "CY"
-      ],
-      "status": "approved",
-      "network": "awin",
-      "awinAdvertiserId": "115363",
-      "feedExpected": true,
-      "feedId": "110267",
-      "feedIds": null,
-      "catalogMode": "retail",
-      "currency": "EUR",
-      "landingDomains": [
-        "es.trotec.com"
-      ],
-      "statusUpdatedAt": "2026-07-28",
-      "publicationStatus": "published_staged",
-      "preparedCountries": [
-        "ES",
-        "PT",
-        "FR",
-        "DE",
-        "IT",
-        "AT",
-        "BE",
-        "IE",
-        "NL",
-        "FI",
-        "SK",
-        "LV",
-        "LT",
-        "LU",
-        "EE",
-        "SI",
-        "HR",
-        "MC",
-        "GR",
-        "BG",
-        "MT",
-        "CY"
-      ],
-      "shippingEvidence": "https://es.trotec.com/shop/faq-envio-y-entrega"
     },
     {
       "id": "paj-gps-es-pt",
@@ -792,62 +751,312 @@
       "shippingEvidence": "https://www.paj-gps.es/costes-de-envio/"
     },
     {
-      "id": "lenovo-es-553883",
-      "name": "Lenovo ES",
+      "id": "pccomponentes-es",
+      "name": "PcComponentes ES",
       "country": "ES",
-      "countries": [
-        "ES"
-      ],
-      "status": "approved",
-      "network": "impact",
-      "impactTrackingHost": "lenovo.evyy.net",
-      "impactPublisherId": "7518894",
-      "impactCampaignId": "553883",
-      "impactCreativeId": "3831",
-      "impactCatalogSource": "CATF_4182",
-      "impactDirectProductFallback": true,
-      "landingDomains": [
-        "www.lenovo.com",
-        "lenovo.com"
-      ],
+      "status": "pending",
       "feedExpected": true,
-      "catalogMode": "retail",
-      "currency": "EUR",
-      "statusUpdatedAt": "2026-07-28",
-      "publicationStatus": "published_staged",
-      "preparedCountries": [
-        "ES"
-      ],
-      "shippingEvidence": "https://www.lenovo.com/es/es/shopping-faq/"
+      "catalogMode": "retail"
     },
     {
-      "id": "lenovo-es-665754",
-      "name": "Lenovo ES",
+      "id": "perfumeria-comas-es",
+      "name": "Perfumería Comas ES",
       "country": "ES",
       "countries": [
-        "ES"
+        "ES",
+        "FR"
       ],
       "status": "approved",
-      "network": "impact",
-      "impactTrackingHost": "lenovo.evyy.net",
-      "impactPublisherId": "7518894",
-      "impactCampaignId": "665754",
-      "impactCreativeId": "3831",
-      "impactCatalogSource": "CATF_5021",
-      "impactDirectProductFallback": true,
-      "landingDomains": [
-        "www.lenovo.com",
-        "lenovo.com"
-      ],
+      "network": "awin",
+      "awinAdvertiserId": "33073",
       "feedExpected": true,
+      "feedId": "95720",
+      "feedIds": null,
       "catalogMode": "retail",
       "currency": "EUR",
+      "landingDomains": [
+        "perfumeriacomas.com"
+      ],
       "statusUpdatedAt": "2026-07-28",
       "publicationStatus": "published_staged",
       "preparedCountries": [
-        "ES"
+        "ES",
+        "FR"
       ],
-      "shippingEvidence": "https://www.lenovo.com/es/es/shopping-faq/"
+      "shippingEvidence": "https://perfumeriacomas.com/es/envios-y-devoluciones"
+    },
+    {
+      "id": "pixmania-es",
+      "name": "Pixmania ES",
+      "country": "ES",
+      "status": "pending",
+      "feedExpected": true,
+      "catalogMode": "retail"
+    },
+    {
+      "id": "rebuy-es",
+      "name": "reBuy ES",
+      "country": "ES",
+      "status": "pending",
+      "feedExpected": true,
+      "catalogMode": "refurbished_and_trade_in"
+    },
+    {
+      "id": "revolution-soft-es",
+      "name": "Revolution Soft",
+      "country": "ES",
+      "status": "approved",
+      "network": "awin",
+      "awinAdvertiserId": "51891",
+      "feedExpected": true,
+      "feedId": "85464",
+      "feedIds": null,
+      "catalogMode": "retail",
+      "landingDomains": [
+        "revolutionsoft.net"
+      ],
+      "statusUpdatedAt": "2026-07-27",
+      "publicationStatus": "prepared_recommended"
+    },
+    {
+      "id": "sephora-es",
+      "name": "Sephora ES",
+      "country": "ES",
+      "status": "pending",
+      "feedExpected": true,
+      "catalogMode": "retail",
+      "excludeBrands": [
+        "Chanel",
+        "Dior"
+      ]
+    },
+    {
+      "id": "shein-es",
+      "name": "SHEIN ES",
+      "country": "ES",
+      "status": "pending",
+      "feedExpected": true,
+      "catalogMode": "retail"
+    },
+    {
+      "id": "shokz-es",
+      "name": "SHOKZ ES",
+      "country": "ES",
+      "status": "approved",
+      "network": "impact",
+      "impactTrackingHost": "shokzes.pxf.io",
+      "impactPublisherId": "7518894",
+      "impactCampaignId": "3800995",
+      "impactCreativeId": "48345",
+      "impactCatalogSource": "CATF_31438",
+      "impactDirectProductFallback": true,
+      "landingDomains": [
+        "es.shokz.com"
+      ],
+      "feedExpected": true,
+      "catalogMode": "retail",
+      "statusUpdatedAt": "2026-07-25"
+    },
+    {
+      "id": "sinocare-es",
+      "name": "Sinocare",
+      "country": "ES",
+      "status": "approved",
+      "network": "awin",
+      "awinAdvertiserId": "114180",
+      "feedExpected": true,
+      "feedId": "100983",
+      "feedIds": null,
+      "catalogMode": "retail",
+      "landingDomains": [
+        "en.sinocare.com"
+      ],
+      "statusUpdatedAt": "2026-07-27",
+      "publicationStatus": "held_editorial_health_review"
+    },
+    {
+      "id": "size-official-es",
+      "name": "size?Official ES",
+      "country": "ES",
+      "status": "pending",
+      "feedExpected": true,
+      "catalogMode": "retail"
+    },
+    {
+      "id": "trotec-iberic-es-pt",
+      "name": "Trotec - Iberic (ES & PT)",
+      "country": "ES",
+      "countries": [
+        "ES",
+        "PT",
+        "FR",
+        "DE",
+        "IT",
+        "AT",
+        "BE",
+        "IE",
+        "NL",
+        "FI",
+        "SK",
+        "LV",
+        "LT",
+        "LU",
+        "EE",
+        "SI",
+        "HR",
+        "MC",
+        "GR",
+        "BG",
+        "MT",
+        "CY"
+      ],
+      "status": "approved",
+      "network": "awin",
+      "awinAdvertiserId": "115363",
+      "feedExpected": true,
+      "feedId": "110267",
+      "feedIds": null,
+      "catalogMode": "retail",
+      "currency": "EUR",
+      "landingDomains": [
+        "es.trotec.com"
+      ],
+      "statusUpdatedAt": "2026-07-28",
+      "publicationStatus": "published_staged",
+      "preparedCountries": [
+        "ES",
+        "PT",
+        "FR",
+        "DE",
+        "IT",
+        "AT",
+        "BE",
+        "IE",
+        "NL",
+        "FI",
+        "SK",
+        "LV",
+        "LT",
+        "LU",
+        "EE",
+        "SI",
+        "HR",
+        "MC",
+        "GR",
+        "BG",
+        "MT",
+        "CY"
+      ],
+      "shippingEvidence": "https://es.trotec.com/shop/faq-envio-y-entrega"
+    },
+    {
+      "id": "vegairoa-es",
+      "name": "Vegairoa",
+      "country": "ES",
+      "status": "approved",
+      "network": "awin",
+      "awinAdvertiserId": "55601",
+      "feedExpected": true,
+      "feedId": "86879",
+      "feedIds": null,
+      "catalogMode": "retail",
+      "landingDomains": [
+        "www.vegairoaprofesional.com"
+      ],
+      "statusUpdatedAt": "2026-07-27",
+      "publicationStatus": "prepared_recommended"
+    },
+    {
+      "id": "voghion-global-es",
+      "name": "Voghion Global",
+      "country": "ES",
+      "countries": [
+        "ES",
+        "PT",
+        "FR",
+        "DE",
+        "IT",
+        "AT",
+        "BE",
+        "NL",
+        "FI",
+        "SK",
+        "LV",
+        "LT",
+        "LU",
+        "EE",
+        "SI",
+        "HR",
+        "GR"
+      ],
+      "status": "approved",
+      "network": "awin",
+      "awinAdvertiserId": "44635",
+      "feedExpected": true,
+      "feedId": "98653",
+      "catalogMode": "retail_curated",
+      "landingDomains": [
+        "www.voghion.com",
+        "voghion.com",
+        "voghion-appin.onelink.me"
+      ],
+      "currency": "EUR",
+      "statusUpdatedAt": "2026-08-04",
+      "publicationStatus": "published_staged",
+      "preparedCountries": [
+        "ES",
+        "PT",
+        "FR",
+        "DE",
+        "IT",
+        "AT",
+        "BE",
+        "NL",
+        "FI",
+        "SK",
+        "LV",
+        "LT",
+        "LU",
+        "EE",
+        "SI",
+        "HR",
+        "GR"
+      ],
+      "shippingEvidence": "https://www.voghion.com/shipping-policy"
+    },
+    {
+      "id": "wakkap-es",
+      "name": "Wakkap Es",
+      "country": "ES",
+      "status": "approved",
+      "network": "awin",
+      "awinAdvertiserId": "17091",
+      "feedExpected": true,
+      "feedId": "39575",
+      "feedIds": null,
+      "catalogMode": "retail",
+      "landingDomains": [
+        "wakkap.com"
+      ],
+      "statusUpdatedAt": "2026-07-27",
+      "publicationStatus": "prepared_large_staged"
+    },
+    {
+      "id": "zwilling-es",
+      "name": "Zwilling ES",
+      "country": "ES",
+      "status": "approved",
+      "network": "awin",
+      "awinAdvertiserId": "13077",
+      "feedExpected": true,
+      "feedId": "110537",
+      "feedIds": null,
+      "catalogMode": "retail",
+      "landingDomains": [
+        "www.zwilling.com"
+      ],
+      "statusUpdatedAt": "2026-07-27",
+      "publicationStatus": "prepared_recommended"
     }
   ]
 }

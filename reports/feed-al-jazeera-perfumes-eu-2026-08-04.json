@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-04T14:00:00.000Z",
+  "sourceFile": "126135-115871-es_FR-Spanish_Feed.csv(1).gz",
+  "merchantId": "al-jazeera-perfumes-eu",
+  "advertiserId": "126135",
+  "mode": "refresh_v5_selection",
+  "requestedFamilies": null,
+  "referenceOfferIds": 85,
+  "rawRows": 181,
+  "merchantRows": 181,
+  "validRows": 85,
+  "selectedFamilies": 83,
+  "selectedRows": 85,
+  "rejected": {},
+  "selectedCategories": {
+    "Perfumería": 85
+  },
+  "missingReferenceOffers": [],
+  "outputSha256": "d8b4be0dac4edec13b223859a06ab3f4743ea5a407d423c6f709d93db24b26f8"
+}
