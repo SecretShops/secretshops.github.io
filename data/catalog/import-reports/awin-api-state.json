@@ -1,29 +1,29 @@
 {
   "schemaVersion": 1,
   "publisherId": "2996453",
-  "updatedAt": "2026-08-03T16:10:49.574Z",
+  "updatedAt": "2026-08-04T13:26:01.112Z",
   "feeds": {
     "63006:115855": {
       "merchantId": "la-drogueria-es",
       "advertiserId": "63006",
       "feedId": "115855",
-      "lastImported": "2026-08-03 07:03:28",
-      "sha256": "13b4c0358c50deb42ca549130ba480648e838e7158f24643e368659335581c85",
+      "lastImported": "2026-08-04 07:02:41",
+      "sha256": "098826cdadee7b8c086b91353a9ad4a8de357b3b91670023b8b79bd0165eabf9",
       "feedRows": 4453,
       "acceptedRows": 4453,
       "matchedExistingProducts": 114,
-      "updatedAt": "2026-08-03T16:10:49.574Z"
+      "updatedAt": "2026-08-04T13:26:01.112Z"
     },
     "122118:112474": {
       "merchantId": "muebles-style-spain",
       "advertiserId": "122118",
       "feedId": "112474",
-      "lastImported": "2026-08-03 12:03:23",
-      "sha256": "a1f8c162f3b4da509d4f5d5e6489b0a867f48a9810b2a4ee637637b6aa10e163",
-      "feedRows": 3103,
-      "acceptedRows": 3103,
+      "lastImported": "2026-08-04 12:02:54",
+      "sha256": "d5cad98481f9fa3c776b34eac7d7fc5a6c36e87a8eafdebd24e3e98f5ebe47f5",
+      "feedRows": 3117,
+      "acceptedRows": 3117,
       "matchedExistingProducts": 3100,
-      "updatedAt": "2026-08-03T16:10:49.574Z"
+      "updatedAt": "2026-08-04T13:26:01.112Z"
     },
     "127695:115881": {
       "merchantId": "omara-jewelry-es",
@@ -73,12 +73,12 @@
       "merchantId": "trotec-iberic-es-pt",
       "advertiserId": "115363",
       "feedId": "110267",
-      "lastImported": "2026-08-03 07:02:21",
-      "sha256": "37b076f37ec21cd3137d25d46f15f4cfa2ba7f8c70e553e388b2a88d88ba9b15",
-      "feedRows": 1076,
-      "acceptedRows": 1076,
+      "lastImported": "2026-08-04 07:01:57",
+      "sha256": "5d854cd519840a28fbb082ce95ee7b51c1fe0adbc96b793f6f625d82eecfa80c",
+      "feedRows": 1077,
+      "acceptedRows": 1077,
       "matchedExistingProducts": 120,
-      "updatedAt": "2026-08-03T16:10:49.574Z"
+      "updatedAt": "2026-08-04T13:26:01.112Z"
     }
   }
 }
