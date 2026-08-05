@@ -90,6 +90,19 @@ function enhanceStandaloneProduct() {
   const mediaImage = product.querySelector(".standalone-product-media img");
   if (!content || !title) return null;
 
+  const catalogLink = document.querySelector(".content-actions .button.primary")?.getAttribute("href") || "/#catalogo";
+  const regionName = document.querySelector(".content-actions .region-selector span:last-child")?.textContent?.trim() || "";
+  const navigation = createProductElement("nav", "product-detail-header standalone-detail-header");
+  navigation.setAttribute("aria-label", t("breadcrumbLabel"));
+  const back = createProductElement("a", "product-back-button", `← ${t("backToCatalog")}`);
+  back.href = catalogLink;
+  const context = createProductElement("span", "product-detail-context", `${t("productType")}${regionName ? ` · ${regionName}` : ""}`);
+  const categoryLink = document.querySelector(".standalone-breadcrumbs a:nth-of-type(2)");
+  const alternatives = createProductElement("a", "button secondary standalone-alternatives-link", "Ver alternativas");
+  alternatives.href = categoryLink?.getAttribute("href") || catalogLink;
+  navigation.append(back, context, alternatives);
+  product.insertAdjacentElement("beforebegin", navigation);
+
   content.querySelector(":scope > .eyebrow")?.remove();
   content.querySelector(":scope > .detail-summary")?.remove();
 

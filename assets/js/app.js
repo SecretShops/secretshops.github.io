@@ -42,6 +42,14 @@ import {
   variantLabels,
   variantValueAvailable
 } from "./variant-system.js";
+import {
+  classifyFunctionalFamily,
+  comparableRows,
+  comparisonContext,
+  functionalAlternatives,
+  functionalCompatibility,
+  normalizeFunctionalText
+} from "./functional-comparator.js";
 
 const REGIONS_URL = "/data/config/regions.json";
 const TAXONOMY_URL = "/data/catalog/category-taxonomy.json";
@@ -71,6 +79,23 @@ const DIRECTORY_CATEGORIES = [
 const HERO_ROTATION_MS = 12_000;
 const DEALS_ROTATION_MS = 18_000;
 const HOME_FEED_ROTATION_MS = 15 * 60_000;
+const COUNTRY_ALPHA3 = {
+  AR: "ARG", AT: "AUT", BE: "BEL", BG: "BGR", BR: "BRA", CL: "CHL",
+  CO: "COL", CY: "CYP", DE: "DEU", EE: "EST", ES: "ESP", FI: "FIN",
+  FR: "FRA", GB: "GBR", GR: "GRC", HR: "HRV", IE: "IRL", IT: "ITA",
+  LT: "LTU", LU: "LUX", LV: "LVA", MC: "MCO", MT: "MLT", MX: "MEX",
+  NL: "NLD", PE: "PER", PT: "PRT", SI: "SVN", SK: "SVK", US: "USA",
+  VE: "VEN"
+};
+const COUNTRY_ALIASES = {
+  ES: ["espana"],
+  GB: ["uk", "united kingdom", "reino unido", "gran bretana"],
+  US: ["usa", "eeuu", "estados unidos", "united states"],
+  NL: ["holanda", "netherlands", "paises bajos"],
+  DE: ["alemania", "germany", "deutschland"],
+  GR: ["grecia", "greece", "hellas"],
+  BG: ["bulgaria"]
+};
 let activeRegion = null;
 let regionsConfig = null;
 let catalogSources = [];
@@ -151,6 +176,9 @@ let homeFeedRotationTimer = null;
 let heroRotationOffset = 0;
 let catalogResultCount = 0;
 let catalogObserver = null;
+let lockedScrollY = null;
+let touchStartY = 0;
+const backgroundLocks = new Set();
 
 function currentFilters(overrides = {}) {
   return {
@@ -189,22 +217,106 @@ function showToast(message) {
   window.setTimeout(() => toast.remove(), 3200);
 }
 
-function openDialog(dialog) {
-  if (!dialog) return;
-  if (typeof dialog.showModal === "function" && !dialog.open) dialog.showModal();
+function lockBackground(token) {
+  if (!token || backgroundLocks.has(token)) return;
+  backgroundLocks.add(token);
+  if (lockedScrollY !== null) return;
+  lockedScrollY = window.scrollY || window.pageYOffset || 0;
+  document.body.style.position = "fixed";
+  document.body.style.top = `-${lockedScrollY}px`;
+  document.body.style.left = "0";
+  document.body.style.right = "0";
+  document.body.style.width = "100%";
   document.body.classList.add("modal-open");
 }
 
-function closeDialog(dialog) {
+function unlockBackground(token) {
+  if (token) backgroundLocks.delete(token);
+  if (backgroundLocks.size > 0 || lockedScrollY === null) return;
+  const restoreY = lockedScrollY;
+  lockedScrollY = null;
+  document.body.style.position = "";
+  document.body.style.top = "";
+  document.body.style.left = "";
+  document.body.style.right = "";
+  document.body.style.width = "";
+  document.body.classList.remove("modal-open");
+  window.scrollTo(0, restoreY);
+}
+
+function layerState(id, type = "dialog") {
+  return {
+    ...(history.state || {}),
+    secretshopLayer: { id, type }
+  };
+}
+
+function clearLayerState(id) {
+  if (history.state?.secretshopLayer?.id !== id) return;
+  const next = { ...(history.state || {}) };
+  delete next.secretshopLayer;
+  history.replaceState(next, "", location.href);
+}
+
+function openDialog(dialog, { historyEntry = true } = {}) {
   if (!dialog) return;
-  if (typeof dialog.close === "function" && dialog.open) dialog.close();
-  if (!$$("dialog[open]").some((item) => item !== dialog)) {
-    document.body.classList.remove("modal-open");
+  if (typeof dialog.showModal === "function" && !dialog.open) dialog.showModal();
+  const token = `dialog:${dialog.id || "anonymous"}`;
+  dialog.dataset.backgroundLock = token;
+  lockBackground(token);
+  if (historyEntry && history.state?.secretshopLayer?.id !== dialog.id) {
+    history.pushState(layerState(dialog.id), "", location.href);
   }
 }
 
-function syncBodyModalState() {
-  document.body.classList.toggle("modal-open", $$("dialog[open]").length > 0);
+function closeDialog(dialog, { consumeHistory = true } = {}) {
+  if (!dialog) return;
+  const token = dialog.dataset.backgroundLock || `dialog:${dialog.id || "anonymous"}`;
+  if (typeof dialog.close === "function" && dialog.open) dialog.close();
+  unlockBackground(token);
+  delete dialog.dataset.backgroundLock;
+  if (history.state?.secretshopLayer?.id === dialog.id) {
+    if (consumeHistory) history.back();
+    else clearLayerState(dialog.id);
+  }
+}
+
+function syncBodyModalState(event) {
+  const dialog = event?.target?.closest?.("dialog") || event?.target;
+  if (dialog instanceof HTMLDialogElement && !dialog.open) {
+    const token = dialog.dataset.backgroundLock || `dialog:${dialog.id || "anonymous"}`;
+    unlockBackground(token);
+    delete dialog.dataset.backgroundLock;
+  }
+  if (!$$("dialog[open]").length && !$$('[data-nav-menu].is-pinned').length) {
+    backgroundLocks.clear();
+    unlockBackground();
+  }
+}
+
+function scrollContainerForTouch(target) {
+  return target.closest?.(
+    "[data-scroll-isolated], .product-modal > div, .compare-modal > [data-compare-content], " +
+    ".saved-modal > [data-saved-content], .advanced-filters, .info-modal .prose, " +
+    ".mobile-menu nav, .nav-dropdown"
+  );
+}
+
+function preventScrollChaining(event) {
+  if (!backgroundLocks.size || event.touches?.length !== 1) return;
+  const container = scrollContainerForTouch(event.target);
+  if (!container) {
+    event.preventDefault();
+    return;
+  }
+  const currentY = event.touches[0].clientY;
+  const deltaY = currentY - touchStartY;
+  touchStartY = currentY;
+  const atTop = container.scrollTop <= 0;
+  const atBottom = Math.ceil(container.scrollTop + container.clientHeight) >= container.scrollHeight;
+  if ((atTop && deltaY > 0) || (atBottom && deltaY < 0) || container.scrollHeight <= container.clientHeight) {
+    event.preventDefault();
+  }
 }
 
 async function fetchCatalogSource(source) {
@@ -540,6 +652,32 @@ function localizedRegionName(region) {
   }
 }
 
+function regionSearchValue(region) {
+  return normalizeFunctionalText([
+    region.name,
+    localizedRegionName(region),
+    region.id,
+    region.countryCode,
+    COUNTRY_ALPHA3[region.countryCode],
+    ...(COUNTRY_ALIASES[region.countryCode] || [])
+  ].filter(Boolean).join(" "));
+}
+
+function filterRegionMenu(query) {
+  const container = $("[data-nav-regions]");
+  if (!container) return;
+  const normalized = normalizeFunctionalText(query);
+  let matches = 0;
+  $$("[data-region-option]", container).forEach((link) => {
+    const match = !normalized || link.dataset.regionSearch.includes(normalized);
+    const active = link.getAttribute("aria-current") === "page";
+    link.hidden = !match && !active;
+    if (match) matches += 1;
+  });
+  const empty = $("[data-region-empty]", container);
+  if (empty) empty.hidden = !normalized || matches > 0;
+}
+
 function familyMatchesCategory(family, categoryName) {
   const target = normalizedLabel(categoryName);
   return [...family.categories, ...family.groups]
@@ -777,16 +915,34 @@ function renderNavigationMenus() {
       </a>`;
   }
   if (regionMenu) {
-    regionMenu.innerHTML = publishedRegions(regionsConfig).map((region) => `
-      <a
-        href="${escapeHtml(region.basePath)}"
-        hreflang="${escapeHtml(region.locale)}"
-        ${region.id === activeRegion.id ? 'aria-current="page"' : ""}
-      >
-        <span class="region-nav-flag" aria-hidden="true">${escapeHtml(region.flag)}</span>
-        <span>${escapeHtml(localizedRegionName(region))}</span>
-        <small>${escapeHtml(region.currency)}</small>
-      </a>`).join("");
+    const regions = publishedRegions(regionsConfig);
+    regionMenu.innerHTML = `
+      <div class="region-search-box">
+        <label class="sr-only" for="region-search-input">Buscar país o código</label>
+        <input
+          id="region-search-input"
+          type="search"
+          inputmode="search"
+          autocomplete="off"
+          placeholder="Buscar país o código"
+          data-region-search
+        >
+      </div>
+      <div class="region-nav-scroll" data-scroll-isolated>
+        ${regions.map((region) => `
+          <a
+            href="${escapeHtml(region.basePath)}"
+            hreflang="${escapeHtml(region.locale)}"
+            data-region-option
+            data-region-search="${escapeHtml(regionSearchValue(region))}"
+            ${region.id === activeRegion.id ? 'aria-current="page"' : ""}
+          >
+            <span class="region-nav-flag" aria-hidden="true">${escapeHtml(region.flag)}</span>
+            <span>${escapeHtml(localizedRegionName(region))}</span>
+            <small>${escapeHtml(region.countryCode)} · ${escapeHtml(COUNTRY_ALPHA3[region.countryCode] || region.id.toUpperCase())}</small>
+          </a>`).join("")}
+        <p class="region-search-empty" data-region-empty hidden>No encontramos ese país.</p>
+      </div>`;
   }
   if (favoritePreview) {
     const selected = [...state.favorites]
@@ -938,6 +1094,39 @@ function renderContextHighlights(sourceFamilies) {
   scoreContainer.innerHTML = scores.map((family) => productCardMarkup(family)).join("");
 }
 
+function directoryContextMarkup(kind) {
+  if (kind === "category") {
+    const selected = localizeCategory(state.category, activeRegion.locale);
+    return `
+      <div class="directory-context-bar" data-directory-context>
+        <nav class="directory-breadcrumbs" aria-label="Ruta de navegación">
+          <button type="button" data-back-directory="categories">Todas las categorías</button>
+          <span aria-hidden="true">›</span>
+          <strong>${escapeHtml(selected)}</strong>
+        </nav>
+        <div class="directory-context-actions">
+          <button class="button secondary" type="button" data-back-directory="categories">Volver a todas las categorías</button>
+          <button class="button primary" type="button" data-view-all-products="category">Ver todos los productos</button>
+        </div>
+      </div>`;
+  }
+  if (kind === "store") {
+    return `
+      <div class="directory-context-bar" data-directory-context>
+        <nav class="directory-breadcrumbs" aria-label="Ruta de navegación">
+          <button type="button" data-back-directory="stores">Todas las tiendas</button>
+          <span aria-hidden="true">›</span>
+          <strong>${escapeHtml(state.store)}</strong>
+        </nav>
+        <div class="directory-context-actions">
+          <button class="button secondary" type="button" data-back-directory="stores">Volver a todas las tiendas</button>
+          <button class="button primary" type="button" data-view-all-products="store">Ver todos los productos</button>
+        </div>
+      </div>`;
+  }
+  return "";
+}
+
 function renderDirectoryView() {
   const panel = $("[data-directory-panel]");
   const catalogSection = $("#catalogo");
@@ -973,6 +1162,8 @@ function renderDirectoryView() {
   const storeGrid = $("[data-store-directory-grid]");
   const storeHero = $("[data-store-hero]");
   const catalogTitle = $("[data-catalog-title]");
+  const heading = $(".directory-heading", panel);
+  $("[data-directory-context]", panel)?.remove();
 
   categoryGrid.hidden = true;
   subcategorySection.hidden = true;
@@ -985,6 +1176,8 @@ function renderDirectoryView() {
     : t("moreProducts");
 
   if (!directoryView) return;
+  const contextMarkup = directoryContextMarkup(kind);
+  if (contextMarkup && heading) heading.insertAdjacentHTML("afterend", contextMarkup);
 
   if (kind === "categories") {
     eyebrow.textContent = t("categories");
@@ -1178,6 +1371,38 @@ function setStore(store, scroll = true) {
   if (scroll) scrollToCurrentView();
 }
 
+function navigateBackToDirectory(type) {
+  if (type === "stores") {
+    state.store = "all";
+    document.body.dataset.pageKind = "stores";
+    delete document.body.dataset.initialStore;
+    renderCatalog({ updateHistory: false });
+    history.pushState({}, "", storeDirectoryPath(activeRegion));
+  } else {
+    state.category = "all";
+    document.body.dataset.pageKind = "categories";
+    delete document.body.dataset.initialCategory;
+    renderCatalog({ updateHistory: false });
+    history.pushState({}, "", categoryDirectoryPath(activeRegion));
+  }
+  scrollToCurrentView();
+}
+
+function viewAllProductsFromContext(type) {
+  if (type === "store") {
+    state.store = "all";
+    delete document.body.dataset.initialStore;
+  } else if (type === "category") {
+    state.category = "all";
+    delete document.body.dataset.initialCategory;
+  }
+  document.body.dataset.pageKind = "home";
+  state.visible = PAGE_SIZE;
+  renderCatalog({ updateHistory: false });
+  history.pushState({}, "", activeRegion.basePath);
+  $("#catalogo")?.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
 function setCollection(collection) {
   if (collection === "deals") {
     clearFilters();
@@ -1251,13 +1476,27 @@ function toggleFavorite(familyId) {
 }
 
 function toggleCompare(familyId) {
-  if (!familyById.has(familyId)) return;
+  const candidate = familyById.get(familyId);
+  if (!candidate) return;
   if (state.compare.includes(familyId)) {
     state.compare = state.compare.filter((id) => id !== familyId);
   } else if (state.compare.length >= MAX_COMPARE) {
     showToast(t("compareMaximum", { count: MAX_COMPARE }));
     return;
   } else {
+    const incompatible = state.compare
+      .map((id) => familyById.get(id))
+      .filter(Boolean)
+      .find((selected) => {
+        const selectedType = classifyFunctionalFamily(selected);
+        const candidateType = classifyFunctionalFamily(candidate);
+        return selectedType && candidateType &&
+          !functionalCompatibility(selected, candidate).compatible;
+      });
+    if (incompatible) {
+      showToast("Estos productos resuelven funciones distintas o tienen una incompatibilidad crítica.");
+      return;
+    }
     state.compare.push(familyId);
     showToast(t("compareAdded"));
   }
@@ -1267,6 +1506,22 @@ function toggleCompare(familyId) {
     renderProductDialog(familyId, state.selectedVariantId);
   }
   if ($("#compare-dialog")?.open) renderComparison();
+}
+
+function addFunctionalPair(targetId, candidateId) {
+  const target = familyById.get(targetId);
+  const candidate = familyById.get(candidateId);
+  if (!target || !candidate) return;
+  const compatibility = functionalCompatibility(target, candidate);
+  if (!compatibility.compatible) {
+    showToast(compatibility.reason);
+    return;
+  }
+  state.compare = uniqueStrings([targetId, candidateId, ...state.compare]).slice(0, MAX_COMPARE);
+  persistPersonalState();
+  renderPersonalizedViews();
+  renderProductDialog(targetId, state.selectedVariantId);
+  showToast("Alternativas añadidas al comparador.");
 }
 
 function rememberViewed(familyId) {
@@ -1427,6 +1682,45 @@ function selectProductVariantAttribute(key, value) {
   renderProductDialog(family.id, next.id);
 }
 
+function functionalAttributeSummary(classification, limit = 2) {
+  return Object.values(classification?.attributes || {})
+    .map((attribute) => attribute?.display)
+    .filter(Boolean)
+    .slice(0, limit)
+    .join(" · ");
+}
+
+function functionalAlternativeMarkup(entry, targetFamily) {
+  const family = entry.family;
+  const price = displayOfferPrice(bestOffer(family, activeRegion.countryCode));
+  const attributes = functionalAttributeSummary(entry.classification);
+  const difference = Number.isFinite(entry.priceDifference)
+    ? entry.priceDifference === 0
+      ? "Mismo precio total"
+      : entry.priceDifference < 0
+        ? `${formatMoney(Math.abs(entry.priceDifference), activeRegion.currency, activeRegion.countryCode)} menos`
+        : `${formatMoney(entry.priceDifference, activeRegion.currency, activeRegion.countryCode)} más`
+    : "Diferencia de precio no calculable";
+  return `
+    <article class="functional-alternative-card">
+      <a class="functional-alternative-main" href="${escapeHtml(familyHref(family))}" data-open-family="${escapeHtml(family.id)}">
+        <img src="${escapeHtml(publicAssetUrl(family.image))}" alt="" loading="lazy">
+        <span class="functional-alternative-copy">
+          <span class="functional-relation">${escapeHtml(entry.relationLabel)}</span>
+          <strong>${escapeHtml(family.title)}</strong>
+          <small>${escapeHtml(price)} · ${escapeHtml(difference)}</small>
+          ${attributes ? `<small>${escapeHtml(attributes)}</small>` : ""}
+        </span>
+      </a>
+      <button
+        class="functional-compare-button"
+        type="button"
+        data-add-functional-pair="${escapeHtml(family.id)}"
+        data-functional-target="${escapeHtml(targetFamily.id)}"
+      >Comparar alternativas</button>
+    </article>`;
+}
+
 function renderProductDialog(familyId, preferredVariantId = null) {
   const family = familyById.get(familyId);
   if (!family) return;
@@ -1452,7 +1746,9 @@ function renderProductDialog(familyId, preferredVariantId = null) {
   const attributes = variantAttributeDetails(presentation);
   const compared = state.compare.includes(family.id);
   const favorite = state.favorites.has(family.id);
-  const related = relatedFamilies(families, family, 3);
+  const functional = classifyFunctionalFamily(family);
+  const alternatives = functionalAlternatives(families, family, 4);
+  const related = alternatives.length ? [] : relatedFamilies(families, family, 3);
   const content = $("[data-product-content]");
 
   const purchaseSummary = best ? `
@@ -1465,6 +1761,12 @@ function renderProductDialog(familyId, preferredVariantId = null) {
       <a class="offer-link product-buy-cta" href="${escapeHtml(offerRedirectPath(activeRegion.id, best.id))}" target="_blank" rel="nofollow sponsored noopener" data-outbound-offer="${escapeHtml(best.id)}">${escapeHtml(t("viewStoreOffer"))}</a>
     </section>` : "";
 
+  const stickyBuy = best ? `
+    <div class="product-sticky-buy" aria-label="Acción principal de compra">
+      <span><small>${escapeHtml(best.merchantName)}</small><strong>${escapeHtml(displayOfferPrice(best))}</strong></span>
+      <a class="offer-link" href="${escapeHtml(offerRedirectPath(activeRegion.id, best.id))}" target="_blank" rel="nofollow sponsored noopener" data-outbound-offer="${escapeHtml(best.id)}">Ver oferta</a>
+    </div>` : "";
+
   const variantControl = variantControlMarkup(presentation);
 
   const offersMarkup = offers.length > 1 ? `
@@ -1476,12 +1778,31 @@ function renderProductDialog(familyId, preferredVariantId = null) {
       <div class="offer-cards">${offers.map(offerCardMarkup).join("")}</div>
     </section>` : "";
 
+  const functionalMarkup = alternatives.length ? `
+    <section class="detail-section functional-alternatives" aria-labelledby="functional-alternatives-title">
+      <div class="detail-section-head">
+        <div>
+          <span class="functional-kicker">${escapeHtml(functional?.functionalLabel || "Misma necesidad")}</span>
+          <h3 id="functional-alternatives-title">Alternativas para la misma función</h3>
+        </div>
+        <span>No son productos idénticos</span>
+      </div>
+      <p class="functional-transparency">Compara precio, capacidad y prestaciones. Comprueba la compatibilidad antes de comprar.</p>
+      <div class="functional-alternative-grid">
+        ${alternatives.map((entry) => functionalAlternativeMarkup(entry, family)).join("")}
+      </div>
+    </section>` : "";
+
   content.innerHTML = `
-    <button class="modal-close product-close" type="button" data-close-product aria-label="${escapeHtml(t("close"))}">×</button>
+    <header class="product-detail-header">
+      <button class="product-back-button" type="button" data-close-product>← Volver a productos</button>
+      <span class="product-detail-context">${escapeHtml(functional?.functionalLabel || localizeCategory(family.primaryGroup, activeRegion.locale))} · ${escapeHtml(localizedRegionName(activeRegion))}</span>
+      <button class="modal-close product-close" type="button" data-close-product-secondary aria-label="${escapeHtml(t("close"))}">×</button>
+    </header>
     <article class="product-detail product-detail-simplified">
       <div class="detail-media">
         <div class="detail-main-image">
-          <button type="button" data-open-image="${escapeHtml(state.selectedImage)}" aria-label="${escapeHtml(t("enlargeImage"))}">
+          <button type="button" data-toggle-image-size aria-label="${escapeHtml(t("enlargeImage"))}">
             <img src="${escapeHtml(publicAssetUrl(state.selectedImage))}" alt="${escapeHtml(family.title)}">
           </button>
         </div>
@@ -1504,6 +1825,7 @@ function renderProductDialog(familyId, preferredVariantId = null) {
         ${variantControl}
         <p class="product-description-preview">${escapeHtml(family.description)}</p>
         ${offersMarkup}
+        ${functionalMarkup}
 
         <div class="product-accordions">
           <details class="product-accordion">
@@ -1533,8 +1855,9 @@ function renderProductDialog(familyId, preferredVariantId = null) {
 
           ${related.length ? `
             <details class="product-accordion">
-              <summary>${escapeHtml(t("similarAlternatives"))}</summary>
+              <summary>Productos relacionados</summary>
               <div class="product-accordion-body">
+                <p>Comparten categoría, pero no se consideran equivalentes funcionales.</p>
                 <div class="detail-related">
                   ${related.map((item) => `
                     <a href="${escapeHtml(familyHref(item))}" data-open-family="${escapeHtml(item.id)}">
@@ -1547,10 +1870,7 @@ function renderProductDialog(familyId, preferredVariantId = null) {
         </div>
       </div>
     </article>
-    <div class="image-viewer" data-image-viewer hidden>
-      <button type="button" data-close-image aria-label="${escapeHtml(t("closeExpandedImage"))}">×</button>
-      <img src="${escapeHtml(publicAssetUrl(state.selectedImage))}" alt="${escapeHtml(t("enlarged", { title: family.title }))}">
-    </div>`;
+    ${stickyBuy}`;
 }
 
 function openProduct(familyId, options = {}) {
@@ -1559,7 +1879,7 @@ function openProduct(familyId, options = {}) {
   state.selectedImage = null;
   rememberViewed(familyId);
   renderProductDialog(familyId, options.variantId);
-  openDialog($("#product-dialog"));
+  openDialog($("#product-dialog"), { historyEntry: false });
   if (options.route !== false) {
     const route = familyHref(family);
     if (location.pathname !== route) {
@@ -1573,12 +1893,14 @@ function openProduct(familyId, options = {}) {
 }
 
 function closeProduct({ clearRoute = true } = {}) {
-  closeDialog($("#product-dialog"));
+  const familyId = state.selectedFamilyId;
+  closeDialog($("#product-dialog"), { consumeHistory: false });
   state.selectedFamilyId = null;
   state.selectedVariantId = null;
   state.selectedImage = null;
   if (clearRoute && familyByProductPath.has(normalizeRoute(location.pathname))) {
-    updateUrl();
+    if (history.state?.product === familyId) history.back();
+    else updateUrl();
   }
 }
 
@@ -1659,10 +1981,44 @@ function renderComparison() {
     content.innerHTML = `<div class="saved-empty"><div><h3>${escapeHtml(t("comparatorEmpty"))}</h3><p>${escapeHtml(t("comparatorHelp"))}</p></div></div>`;
     return;
   }
+
+  const context = comparisonContext(selected);
+  const metricRows = comparableRows(selected);
+  const referencePrice = offerTotal(bestOffer(selected[0], activeRegion.countryCode));
   const cells = (valueForFamily) =>
-    selected.map((family) => `<td>${valueForFamily(family)}</td>`).join("");
+    selected.map((family, index) => `<td>${valueForFamily(family, index)}</td>`).join("");
+  const relationLabel = (family, index) => {
+    if (index === 0) return "Producto de referencia";
+    if (!context.compatible) return "Comparación manual: revisa la función";
+    const reference = selected[0];
+    if (normalizeFunctionalText(reference.brand) === normalizeFunctionalText(family.brand)) {
+      return "Misma familia o generación";
+    }
+    const price = offerTotal(bestOffer(family, activeRegion.countryCode));
+    if (Number.isFinite(referencePrice) && Number.isFinite(price) && price < referencePrice) {
+      return "Más económico, con prestaciones diferentes";
+    }
+    return "Alternativa para la misma función";
+  };
+  const priceDifference = (family, index) => {
+    if (index === 0 || !Number.isFinite(referencePrice)) return "Referencia";
+    const price = offerTotal(bestOffer(family, activeRegion.countryCode));
+    if (!Number.isFinite(price)) return "No calculable";
+    const difference = price - referencePrice;
+    if (difference === 0) return "Sin diferencia";
+    const amount = formatMoney(Math.abs(difference), activeRegion.currency, activeRegion.countryCode);
+    return difference < 0 ? `${amount} menos` : `${amount} más`;
+  };
+
   content.innerHTML = `
-    <div class="comparison-scroll">
+    <section class="comparison-context ${context.compatible ? "is-compatible" : "is-warning"}" aria-live="polite">
+      <div>
+        <span>${context.compatible ? "Comparación funcional" : "Revisión necesaria"}</span>
+        <strong>${escapeHtml(context.label)}</strong>
+      </div>
+      <p>${escapeHtml(context.warning)}</p>
+    </section>
+    <div class="comparison-scroll" data-scroll-isolated>
       <table class="comparison-table">
         <thead>
           <tr>
@@ -1678,29 +2034,32 @@ function renderComparison() {
           </tr>
         </thead>
         <tbody>
+          <tr><th>Relación</th>${cells((family, index) => escapeHtml(relationLabel(family, index)))}</tr>
           <tr><th>${escapeHtml(t("category"))}</th>${cells((family) => escapeHtml(localizeCategory(family.primaryGroup, activeRegion.locale)))}</tr>
-          <tr><th>SecretScore</th>${cells((family) => `<span class="score">${family.secretScore.toFixed(1)}</span>`)}</tr>
           <tr><th>${escapeHtml(t("price"))}</th>${cells((family) => escapeHtml(displayOfferPrice(bestOffer(family, activeRegion.countryCode))))}</tr>
+          <tr><th>Diferencia total</th>${cells((family, index) => escapeHtml(priceDifference(family, index)))}</tr>
+          ${metricRows.map((row) => `<tr><th>${escapeHtml(row.label)}</th>${row.values.map((value) => `<td>${escapeHtml(value)}</td>`).join("")}</tr>`).join("")}
           <tr><th>${escapeHtml(t("optionsLabel"))}</th>${cells((family) => formatter.format(family.variantCount))}</tr>
           <tr><th>${escapeHtml(t("storesLabel"))}</th>${cells((family) => escapeHtml(family.stores.join(", ")))}</tr>
+          <tr><th>Compatibilidad</th>${cells((family, index) => index === 0 ? "Referencia" : context.compatible ? "Compatible para la función; revisa requisitos" : "No confirmada")}</tr>
           <tr><th>${escapeHtml(t("viewDetail"))}</th>${cells((family) => `<a class="button secondary" href="${escapeHtml(familyHref(family))}" data-open-family="${escapeHtml(family.id)}">${escapeHtml(t("open"))}</a>`)}</tr>
         </tbody>
       </table>
     </div>
     <div class="comparison-cards">
-      ${selected.map((family) => `
+      ${selected.map((family, index) => `
         <article class="comparison-card">
+          <span class="functional-relation">${escapeHtml(relationLabel(family, index))}</span>
           <div class="comparison-card-head">
             <img src="${escapeHtml(publicAssetUrl(family.image))}" alt="">
             <div>
               <strong>${escapeHtml(family.title)}</strong>
-              <span class="score">SecretScore ${family.secretScore.toFixed(1)}</span>
+              <span>${escapeHtml(displayOfferPrice(bestOffer(family, activeRegion.countryCode)))}</span>
             </div>
           </div>
           <dl>
-            <div><dt>${escapeHtml(t("category"))}</dt><dd>${escapeHtml(localizeCategory(family.primaryGroup, activeRegion.locale))}</dd></div>
-            <div><dt>${escapeHtml(t("price"))}</dt><dd>${escapeHtml(displayOfferPrice(bestOffer(family, activeRegion.countryCode)))}</dd></div>
-            <div><dt>${escapeHtml(t("optionsLabel"))}</dt><dd>${formatter.format(family.variantCount)}</dd></div>
+            <div><dt>Diferencia</dt><dd>${escapeHtml(priceDifference(family, index))}</dd></div>
+            ${metricRows.slice(0, 4).map((row) => `<div><dt>${escapeHtml(row.label)}</dt><dd>${escapeHtml(row.values[index])}</dd></div>`).join("")}
             <div><dt>${escapeHtml(t("storesLabel"))}</dt><dd>${escapeHtml(family.stores.join(", "))}</dd></div>
           </dl>
           <div class="comparison-card-actions">
@@ -1708,7 +2067,8 @@ function renderComparison() {
             <button class="comparison-remove" type="button" data-toggle-compare="${escapeHtml(family.id)}">${escapeHtml(t("remove"))}</button>
           </div>
         </article>`).join("")}
-    </div>`;
+    </div>
+    <p class="comparison-transparency">SecretShop no afirma que productos distintos sean idénticos. El precio normalizado complementa, pero no sustituye, el precio total.</p>`;
 }
 
 function openComparison() {
@@ -1863,7 +2223,7 @@ function applyAdvancedFilters(event) {
     : state.store !== "all"
       ? "store"
       : "home";
-  closeDialog($("#filters-dialog"));
+  closeDialog($("#filters-dialog"), { consumeHistory: false });
   renderCatalog();
 }
 
@@ -1875,11 +2235,19 @@ function resetAdvancedFilters() {
   syncFilterControls();
 }
 
-function closePinnedMenus(except = null) {
+function closePinnedMenus(except = null, { consumeHistory = false } = {}) {
   $$("[data-nav-menu].is-pinned").forEach((menu) => {
     if (menu === except) return;
     menu.classList.remove("is-pinned");
     $("[data-pin-menu]", menu)?.setAttribute("aria-expanded", "false");
+    const token = menu.dataset.backgroundLock || `menu:${menu.dataset.layerId || "navigation"}`;
+    unlockBackground(token);
+    delete menu.dataset.backgroundLock;
+    const layerId = menu.dataset.layerId;
+    if (layerId && history.state?.secretshopLayer?.id === layerId) {
+      if (consumeHistory) history.back();
+      else clearLayerState(layerId);
+    }
   });
 }
 
@@ -1890,6 +2258,21 @@ function togglePinnedMenu(trigger) {
   closePinnedMenus(menu);
   menu.classList.toggle("is-pinned", next);
   trigger.setAttribute("aria-expanded", String(next));
+  if (next) {
+    const layerId = `menu-${Math.random().toString(36).slice(2, 9)}`;
+    const token = `menu:${layerId}`;
+    menu.dataset.layerId = layerId;
+    menu.dataset.backgroundLock = token;
+    lockBackground(token);
+    history.pushState(layerState(layerId, "menu"), "", location.href);
+    const regionInput = $("[data-region-search]", menu);
+    if (regionInput) window.setTimeout(() => regionInput.focus({ preventScroll: true }), 0);
+  } else {
+    const token = menu.dataset.backgroundLock;
+    unlockBackground(token);
+    if (history.state?.secretshopLayer?.id === menu.dataset.layerId) history.back();
+    delete menu.dataset.backgroundLock;
+  }
 }
 
 function focusCatalogSearch() {
@@ -1933,6 +2316,11 @@ function wireEvents() {
   });
 
   document.addEventListener("input", (event) => {
+    const regionInput = event.target.closest("[data-region-search]");
+    if (regionInput) {
+      filterRegionMenu(regionInput.value);
+      return;
+    }
     const input = event.target.closest("[data-search-input]");
     if (!input) return;
     window.clearTimeout(inputTimer);
@@ -2005,7 +2393,13 @@ function wireEvents() {
         closeSuggestions();
       }
     }
-    if (event.key === "Escape") closePinnedMenus();
+    if (event.key === "Escape") {
+      const pinned = $("[data-nav-menu].is-pinned");
+      if (pinned) {
+        event.preventDefault();
+        closePinnedMenus(null, { consumeHistory: true });
+      }
+    }
   });
 
   document.addEventListener("click", (event) => {
@@ -2013,6 +2407,31 @@ function wireEvents() {
     if (pinMenu) {
       event.preventDefault();
       togglePinnedMenu(pinMenu);
+      return;
+    }
+
+    const functionalPair = event.target.closest("[data-add-functional-pair]");
+    if (functionalPair) {
+      event.preventDefault();
+      event.stopPropagation();
+      addFunctionalPair(
+        functionalPair.dataset.functionalTarget,
+        functionalPair.dataset.addFunctionalPair
+      );
+      return;
+    }
+
+    const backDirectory = event.target.closest("[data-back-directory]");
+    if (backDirectory) {
+      event.preventDefault();
+      navigateBackToDirectory(backDirectory.dataset.backDirectory);
+      return;
+    }
+
+    const viewAllProducts = event.target.closest("[data-view-all-products]");
+    if (viewAllProducts) {
+      event.preventDefault();
+      viewAllProductsFromContext(viewAllProducts.dataset.viewAllProducts);
       return;
     }
 
@@ -2156,7 +2575,7 @@ function wireEvents() {
 
     const useSearch = event.target.closest("[data-use-search]");
     if (useSearch) {
-      closeDialog($("#saved-dialog"));
+      closeDialog($("#saved-dialog"), { consumeHistory: false });
       setQuery(useSearch.dataset.useSearch, { save: true, scroll: true });
       return;
     }
@@ -2192,21 +2611,17 @@ function wireEvents() {
       $$("[data-select-image]").forEach((button) => {
         button.classList.toggle("is-active", button === image);
       });
-      const openImage = $("[data-open-image]");
-      if (openImage) openImage.dataset.openImage = state.selectedImage;
       return;
     }
 
-    if (event.target.closest("[data-open-image]")) {
-      const viewer = $("[data-image-viewer]");
-      viewer.hidden = false;
-      $(".image-viewer img").src = publicAssetUrl(
-        event.target.closest("[data-open-image]").dataset.openImage
+    const imageSizeToggle = event.target.closest("[data-toggle-image-size]");
+    if (imageSizeToggle) {
+      const media = imageSizeToggle.closest(".detail-main-image");
+      const expanded = media?.classList.toggle("is-expanded");
+      imageSizeToggle.setAttribute(
+        "aria-label",
+        expanded ? "Reducir imagen" : t("enlargeImage")
       );
-      return;
-    }
-    if (event.target.closest("[data-close-image]")) {
-      $("[data-image-viewer]").hidden = true;
       return;
     }
 
@@ -2219,7 +2634,7 @@ function wireEvents() {
       return;
     }
 
-    if (event.target.closest("[data-close-product]")) {
+    if (event.target.closest("[data-close-product], [data-close-product-secondary]")) {
       closeProduct();
       return;
     }
@@ -2237,17 +2652,25 @@ function wireEvents() {
       closeSuggestions();
     }
     const navigationLink = event.target.closest("[data-nav-menu] a");
-    if (navigationLink || !event.target.closest("[data-nav-menu]")) closePinnedMenus();
+    if (navigationLink || !event.target.closest("[data-nav-menu]")) {
+      closePinnedMenus(null, { consumeHistory: false });
+    }
 
     const menuLink = event.target.closest("#menu-dialog a");
-    if (menuLink) closeDialog($("#menu-dialog"));
+    if (menuLink) closeDialog($("#menu-dialog"), { consumeHistory: false });
   });
 
   document.addEventListener("close", syncBodyModalState, true);
   document.addEventListener("cancel", (event) => {
+    event.preventDefault();
     if (event.target.id === "product-dialog") closeProduct();
-    else syncBodyModalState();
+    else closeDialog(event.target);
   }, true);
+
+  document.addEventListener("touchstart", (event) => {
+    if (event.touches?.length === 1) touchStartY = event.touches[0].clientY;
+  }, { passive: true });
+  document.addEventListener("touchmove", preventScrollChaining, { passive: false });
 
   document.addEventListener("error", (event) => {
     if (event.target instanceof HTMLImageElement) {
@@ -2268,7 +2691,15 @@ function wireEvents() {
     }
   }, true);
 
-  window.addEventListener("popstate", handleRouteChange);
+  window.addEventListener("popstate", () => {
+    closePinnedMenus(null, { consumeHistory: false });
+    $$("dialog[open]").forEach((dialog) => {
+      if (dialog.id !== "product-dialog") {
+        closeDialog(dialog, { consumeHistory: false });
+      }
+    });
+    handleRouteChange();
+  });
 }
 
 function motionAllowed() {

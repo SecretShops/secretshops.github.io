@@ -51,13 +51,23 @@ function dateLabel(value, locale) {
   }).format(date);
 }
 
+function promotionTypeLabel(promotion, withCode) {
+  const text = `${promotion.type || ""} ${promotion.title || ""} ${promotion.description || ""}`.toLowerCase();
+  if (withCode || promotion.type === "voucher") return "Código promocional";
+  if (/env[ií]o gratis|free shipping/.test(text)) return "Envío gratuito";
+  if (/rebaja|sale|descuento|dto|%/.test(text)) return "Rebaja directa";
+  if (/sin c[oó]digo/.test(text)) return "Descuento sin código";
+  return "Oferta";
+}
+
 function promotionCard(promotion, region, withCode) {
   const end = dateLabel(promotion.endAt, region.locale);
   const action = promotionRedirectPath(region.id, promotion.id);
+  const type = promotionTypeLabel(promotion, withCode);
   return `
     <article class="promotion-card${withCode ? " has-code" : ""}">
       <div class="promotion-card-head">
-        <span class="promotion-network">Verificada</span>
+        <span class="promotion-network">${escapeHtml(type)}</span>
         <strong>${escapeHtml(promotion.merchantName)}</strong>
       </div>
       <h3>${escapeHtml(promotion.title)}</h3>
@@ -66,14 +76,14 @@ function promotionCard(promotion, region, withCode) {
         <div class="promotion-code-row">
           <code>${escapeHtml(promotion.code)}</code>
           <button class="button secondary" type="button" data-copy-code="${escapeHtml(promotion.code)}">
-            Copiar código
+            Copiar
           </button>
         </div>
       ` : ""}
       <div class="promotion-card-footer">
-        <small>${end ? `Válida hasta ${escapeHtml(end)}` : "Vigencia comprobada por la red"}</small>
+        <small>${end ? `Hasta ${escapeHtml(end)}` : "Vigencia verificada"}</small>
         <a class="button" href="${escapeHtml(action)}" target="_blank" rel="nofollow sponsored noopener">
-          Ver promoción
+          Usar
         </a>
       </div>
     </article>
